@@ -1,8 +1,8 @@
 import { LoginService } from './../../services/login.service';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { User } from 'src/app/models/User';
+import { ActivatedRoute, Router } from '@angular/router';
+import { User } from 'src/app/model/User';
 
 @Component({
   selector: 'app-login',
@@ -13,14 +13,23 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   submitted = false;
 
-  constructor(private formBuilder: FormBuilder, private loginService: LoginService, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private loginService: LoginService, private router: Router, private active: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, this.passwordValidator]]
+      password: ['', [Validators.required, this.passwordValidator]],
     });
   }
+
+  userLogIn: User = {
+    firstName: "",
+    lastName: "",
+    password: "",
+    password2: "",
+    email: "",
+    role: ""
+  };
 
   get formControls() { return this.loginForm.controls; }
 
@@ -44,21 +53,27 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-
-    if (this.loginForm.invalid) {return;}
-
+    if (this.loginForm.invalid) { return; }
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.get('password')?.value;
-
-    this.loginService.login(email, password).subscribe(
-      (user: User) => {
-        console.log('Login successful', user);
-        this.router.navigate(['/home']); // ניתוב לדף הבית לאחר התחברות מוצלחת
-      },
-      error => {
-        console.error('Login failed', error);
-      }
-    );
+  //   this.loginService.getByPassword(password).subscribe((user: User) => {
+  //   this.userLogIn = user;
+  //   if (this.userLogIn['email'] != email) {
+  //     alert("error");
+  //   } else {
+  //   localStorage.setItem('user', email);
+  //   this.loginService.login(email, password);
+  //   if (this.userLogIn['role'] == "admin") {
+  //     this.router.navigate(['Admin'], { relativeTo: this.active });
+  //   }
+  //   if (this.userLogIn['role'] == "worker") {
+  //     this.router.navigate(['worker'], { relativeTo: this.active });
+  //   }
+  //   if (this.userLogIn['role'] == "customer") {
+  //     this.router.navigate(['customer'], { relativeTo: this.active });
+  //   }
+  //   }
+  // });
   }
 }
 
