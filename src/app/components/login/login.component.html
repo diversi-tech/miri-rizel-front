@@ -10,6 +10,15 @@
         formControlName="email"
         required
       />
+      <mat-error *ngIf="email.hasError('required')"> שדה חובה </mat-error>
+      <mat-error
+        *ngIf="
+          email.hasError('email') &&
+          !logInForm.controls['email'].hasError('required')
+        "
+      >
+        כתובת מייל לא תקינה
+      </mat-error>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Enter your password</mat-label>
@@ -17,9 +26,10 @@
         class="input-style"
         matInput
         formControlName="password"
+        required
         [type]="hide() ? 'password' : 'text'"
       />
-
+      <mat-error *ngIf="pass.hasError('required')"> שדה חובה </mat-error>
       <button
         mat-icon-button
         matSuffix
@@ -34,6 +44,8 @@
     <button type="submit" [disabled]="logInForm.invalid" class="submit-button">
       Continue
     </button>
-    <p class="signup-text">Don't have an account? <a href="#">Sign up</a></p>
+    <p class="signup-text">
+      Don't have an account? <a href="#" (click)="signUp()">Sign up</a>
+    </p>
   </form>
 </div>

@@ -3,6 +3,7 @@ import {
   AbstractControl,
   FormControl,
   FormGroup,
+  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { ResetPasswordService } from '../../services/reset-password.service';
@@ -20,7 +21,7 @@ export class ResetPasswordComponent implements OnInit {
     this.resetForm = new FormGroup({
       password: new FormControl(null, [
         Validators.required,
-        this.valid.bind(this),
+        this.passwordValidator.bind(this),
       ]),
       passwordAuthentication: new FormControl(null, [
         Validators.required,
@@ -74,23 +75,23 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   // תקינות סיסמה
-  valid(pass: AbstractControl) {
-    const value = pass.value;
+  passwordValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
 
     if (!value) {
       return null;
     }
 
-    const hasMinLength = value.length >= 8;
-    const hasUpperCase = /[A-Z]/.test(value);
+    const hasLowerCase = /[a-z]/.test(value);
+    const validLength = value.length >= 8;
     const hasNumber = /\d/.test(value);
 
-    const passwordValid = hasMinLength && hasUpperCase && hasNumber;
+    const passwordValid = hasLowerCase && validLength && hasNumber;
 
     return !passwordValid
       ? {
-          hasMinLength: hasMinLength,
-          hasUpperCase: hasUpperCase,
+          validLength: validLength,
+          hasLowerCase: hasLowerCase,
           hasNumber: hasNumber,
         }
       : null;
