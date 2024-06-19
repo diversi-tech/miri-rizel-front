@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { user } from 'src/app/Models/user';
+import { User } from 'src/app/Model/User';
 import { EditUserService } from 'src/app/Services/editUser/edit-user.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { EditUserService } from 'src/app/Services/editUser/edit-user.service';
   styleUrls: ['./edit-user.component.css']
 })
 export class EditUserComponent {
-  user: user = { first_name: "", last_name: "", password: "", role: "", email: "", created_date: "" }
+  user: User = { first_name: "", last_name: "", password: "", role: "", email: "", created_date: "" }
   flag: Boolean = false;
 
   constructor(private editUser: EditUserService) {

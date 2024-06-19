@@ -1,8 +1,8 @@
-export interface user {
+export interface User {
     first_name: string,
     last_name: string;
     password: string;
     email: string;
     role: string;
-    created_date:string
+    created_date:"";
 }
