@@ -5,7 +5,7 @@ import {
   FormGroup,
   ValidationErrors,
   Validators,
-  
+
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from 'src/app/Model/User';

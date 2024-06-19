@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { WorkerComponentComponent } from './Components/worker-component/worker-component.component';
-import { AdminComponentComponent } from './Components/admin-component/admin-component.component';
-import { CustomerComponentComponent } from './Components/customer-component/customer-component.component';
-import { HomeComponent } from './Components/home/home.component';
-import { ResetPasswordComponent } from './Components/reset-password/reset-password.component';
-import { AuthCodeGuard } from './Components/auth-code-dialog/auth-code.guard';
-import { LoginComponent } from './Components/login/login.component';
+import { WorkerComponentComponent } from './components/worker-component/worker-component.component';
+import { AdminComponentComponent } from './components/admin-component/admin-component.component';
+import { CustomerComponentComponent } from './components/customer-component/customer-component.component';
+import { HomeComponent } from './components/home/home.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { AuthCodeGuard } from './components/auth-code-dialog/auth-code.guard';
+import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
   { path: 'worker', component: WorkerComponentComponent },
