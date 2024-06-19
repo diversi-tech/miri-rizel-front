@@ -8,7 +8,6 @@ import { CustomerComponentComponent } from './components/customer-component/cust
 import { FormGroup, FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { AddUserComponent } from './components/add-user/add-user.component';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -27,7 +26,6 @@ import { AppRoutingModule } from './app-routing.module';
     WorkerComponentComponent,
     AdminComponentComponent,
     CustomerComponentComponent,
-    AddUserComponent,
     LoginComponent,
     HomeComponent
   ],
@@ -48,7 +46,6 @@ import { AppRoutingModule } from './app-routing.module';
     MatSelectModule,
     MatIconModule,
     ReactiveFormsModule,
-    // RouterModule.forRoot(routes),
     HttpClientModule,
 ],
 
