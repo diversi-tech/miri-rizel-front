@@ -21,6 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { AuthCodeDialogComponent } from './components/auth-code-dialog/auth-code-dialog.component';
 import { LoginComponent } from './components/login/login.component';
+import { EditUserComponent } from './components/edit-user/edit-user.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { LoginComponent } from './components/login/login.component';
     ResetPasswordComponent,
     DialogComponent,
     AuthCodeDialogComponent,
-    LoginComponent
+    LoginComponent,
+    EditUserComponent
   ],
 
   imports: [

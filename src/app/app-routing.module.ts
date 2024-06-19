@@ -7,11 +7,13 @@ import { HomeComponent } from './components/home/home.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { AuthCodeGuard } from './components/auth-code-dialog/auth-code.guard';
 import { LoginComponent } from './components/login/login.component';
+import { EditUserComponent } from './components/edit-user/edit-user.component';
 
 const routes: Routes = [
   { path: 'worker', component: WorkerComponentComponent },
   { path: 'admin', component: AdminComponentComponent },
   { path: 'customer', component: CustomerComponentComponent },
+  { path: 'editUser', component: EditUserComponent },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },

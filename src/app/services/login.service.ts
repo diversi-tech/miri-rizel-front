@@ -44,4 +44,5 @@ export class LoginService {
       `https://localhost:44337/api/getByPassword/${password}`
     );
   }
+
 }

@@ -59,9 +59,10 @@ export class ResetPasswordComponent implements OnInit {
     if (this.resetForm.valid) {
       const password = this.pass.value;
       // שליפה של הקוד לקוח
-      const id = '1234';
+      const currentUserEmail = localStorage.getItem('user');
+      console.log(currentUserEmail);
 
-      this.reset.savePassword(password, id).subscribe(
+      this.reset.savePassword(password, currentUserEmail!).subscribe(
         (res) => {
           console.log('Password updated successfully:', res);
           // ניתוב להתחברות עם הסיסמה החדשה

@@ -6,6 +6,17 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ResetPasswordService {
+
+  private serverPassword: string | null = null;
+
+  setServerPassword(password: string) {
+    this.serverPassword = password;
+  }
+
+  getServerPassword() {
+    return this.serverPassword;
+  }
+  
   private apiUrl = 'https://localhost:7141/home'; 
 
   constructor(private http: HttpClient) {}
