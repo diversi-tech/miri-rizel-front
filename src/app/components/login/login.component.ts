@@ -5,6 +5,7 @@ import {
   FormGroup,
   ValidationErrors,
   Validators,
+  
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from 'src/app/Model/User';
@@ -44,12 +45,13 @@ export class LoginComponent implements OnInit {
   }
 
   userLogIn: User = {
-    firstName: '',
-    lastName: '',
+    first_name: '',
+    last_name: '',
     password: '',
     // password2: "",
     email: '',
     role: '',
+    created_date:'',
   };
   // // תקינות סיסמה
   // passwordValidator(control: AbstractControl): ValidationErrors | null {
