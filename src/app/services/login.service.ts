@@ -2,16 +2,15 @@ import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 // import { User } from '../models/User';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { User } from '../model/User';
+import { User } from '../Model/User';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoginService {
+  constructor(public http: HttpClient) {}
+  baseUrl: string = 'https://localhost:7292/webapi/';
 
-  constructor(public http:HttpClient) { }
-  baseUrl:string="https://localhost:7292/webapi/"
-  
   // login(email:string,password:string):Observable<User>
   // {
   //   const params = new HttpParams()
@@ -21,8 +20,8 @@ export class LoginService {
   //       tap(user => {
   //         localStorage.setItem('user', JSON.stringify(user));
   //       })
-  //     );    
-    
+  //     );
+
   // }
 
   // getUser(): User | null {
@@ -33,12 +32,16 @@ export class LoginService {
   //   return null;
   // }
 
-  login(username: string, password: string) : Observable<Object>{
-    return this.http.post('https://localhost:44337/api/login', { username, password });
-}
+  login(username: string, password: string): Observable<Object> {
+    return this.http.post('https://localhost:44337/api/login', {
+      username,
+      password,
+    });
+  }
 
   getByPassword(password: string): Observable<User> {
-    return this.http.get<User>(`https://localhost:44337/api/getByPassword/${password}`);
-}
-
+    return this.http.get<User>(
+      `https://localhost:44337/api/getByPassword/${password}`
+    );
+  }
 }
