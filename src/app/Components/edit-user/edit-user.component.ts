@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { user } from 'src/app/Models/user';
-import { EditUserService } from 'src/app/Services/edit-user.service';
+import { EditUserService } from 'src/app/Services/editUser/edit-user.service';
 
 @Component({
   selector: 'app-edit-user',
