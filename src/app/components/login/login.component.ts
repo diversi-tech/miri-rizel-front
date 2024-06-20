@@ -9,10 +9,9 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from 'src/app/Model/User';
-import { ResetPasswordService } from '../../services/reset-password.service';
+import { ResetPasswordService } from '../../Services/reset-password.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
-import { CodeService } from 'src/app/services/code-service.service';
 
 @Component({
   selector: 'app-login',
@@ -35,7 +34,6 @@ export class LoginComponent implements OnInit {
     private resetPasswordService: ResetPasswordService,
     private dialog: MatDialog,
     private router: Router,
-    private codeService: CodeService
   ) {}
 
   hide = signal(true);
@@ -120,12 +118,18 @@ export class LoginComponent implements OnInit {
       this.resetPasswordService.resetPassword(this.email.value).subscribe(
         (response) => {
           this.router.navigate(['/ResetPassword']);
-          this.codeService.setServerPassword(response);
+          this.resetPasswordService.setServerPassword(response);
         },
         (err) => {
-          if (err.status == 200) {
-            this.router.navigate(['/ResetPassword']);
-            this.codeService.setServerPassword(err);
+          // בדיקה שהמייל קיים במערכת
+          if (err.status == 400) {
+            this.dialog.open(DialogComponent, {
+              data: {
+                title: 'שגיאה',
+                context: 'כתובת המייל אינה מופיעה במערכת',
+                buttonText: 'סגור',
+              },
+            });
           } else {
             this.dialog.open(DialogComponent, {
               data: {

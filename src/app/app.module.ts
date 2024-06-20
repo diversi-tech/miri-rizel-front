@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ResetPasswordComponent } from './Components/reset-password/reset-password.component';
-
+import { AddUserComponent } from './Components/add-user/add-user.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -34,6 +34,7 @@ import { RouterModule } from '@angular/router';
     AuthCodeDialogComponent,
     LoginComponent,
     EditUserComponent,
+    AddUserComponent,
   ],
 
   imports: [
