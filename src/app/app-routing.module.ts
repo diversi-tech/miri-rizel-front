@@ -9,6 +9,7 @@ import { AuthCodeGuard } from './Components/auth-code-dialog/auth-code.guard';
 import { LoginComponent } from './Components/login/login.component';
 import { AddUserComponent } from './Components/add-user/add-user.component';
 import { EditUserComponent } from './Components/edit-user/edit-user.component';
+import { SignUpComponent } from './Components/sign-up/sign-up.component';
 
 const routes: Routes = [
   { path: 'worker', component: WorkerComponentComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'edit', component: EditUserComponent },
   { path: 'add', component: AddUserComponent },
+  { path: 'sign-up', component: SignUpComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   {
     path: 'ResetPassword',

@@ -3,40 +3,21 @@
     <h1>התחברות</h1>
     <mat-form-field>
       <mat-label>Enter your email</mat-label>
-      <input
-        class="input-style"
-        matInput
-        placeholder="pat@example.com"
-        formControlName="email"
-        required
-      />
+      <input class="input-style" matInput placeholder="pat@example.com" formControlName="email" required />
       <mat-error *ngIf="email.hasError('required')"> שדה חובה </mat-error>
-      <mat-error
-        *ngIf="
+      <mat-error *ngIf="
           email.hasError('email') &&
           !logInForm.controls['email'].hasError('required')
-        "
-      >
+        ">
         כתובת מייל לא תקינה
       </mat-error>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Enter your password</mat-label>
-      <input
-        class="input-style"
-        matInput
-        formControlName="password"
-        required
-        [type]="hide() ? 'password' : 'text'"
-      />
+      <input class="input-style" matInput formControlName="password" required [type]="hide() ? 'password' : 'text'" />
       <mat-error *ngIf="pass.hasError('required')"> שדה חובה </mat-error>
-      <button
-        mat-icon-button
-        matSuffix
-        (click)="clickEvent($event)"
-        [attr.aria-label]="'Hide password'"
-        [attr.aria-pressed]="hide()"
-      >
+      <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hide()">
         <mat-icon>{{ hide() ? "visibility_off" : "visibility" }}</mat-icon>
       </button>
     </mat-form-field>
@@ -45,7 +26,7 @@
       Continue
     </button>
     <p class="signup-text">
-      Don't have an account? <a href="#" (click)="signUp()">Sign up</a>
+      Don't have an account? <a (click)="signUp()">Sign up</a>
     </p>
   </form>
 </div>
