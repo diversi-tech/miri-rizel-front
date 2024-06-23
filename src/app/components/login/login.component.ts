@@ -36,6 +36,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
   ) {}
 
+  
+
   hide = signal(true);
   clickEvent(event: MouseEvent) {
     this.hide.set(!this.hide);
@@ -91,7 +93,6 @@ export class LoginComponent implements OnInit {
     }
     const email = this.logInForm.get('email')?.value;
     const password = this.logInForm.get('password')?.value;
-    console.log(email, password);
     // קריאת שרת לבדוק שהמשתמש קיים ויכול להכנס למערכת
     //   this.loginService.getByPassword(password).subscribe((user: User) => {
     //   this.userLogIn = user;
