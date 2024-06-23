@@ -26,6 +26,14 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgxGoogleSignInModule } from 'ngx-google-sign-in';
 import { RouterModule } from '@angular/router';
 import { SignUpComponent } from './Components/sign-up/sign-up.component';
+import { TaskBoardComponent } from './Components/task-board/task-board.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { AddTaskComponent } from './Components/add-task/add-task.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +45,8 @@ import { SignUpComponent } from './Components/sign-up/sign-up.component';
     EditUserComponent,
     AddUserComponent,
     SignUpComponent,
+    TaskBoardComponent,
+    AddTaskComponent,
   ],
 
   imports: [
@@ -49,16 +59,19 @@ import { SignUpComponent } from './Components/sign-up/sign-up.component';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    // MatDividerModule,
     BrowserAnimationsModule,
     MatSlideToggleModule,
     MatCardModule,
     MatDialogModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule,
     FormsModule,
-
+    MatToolbarModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatTableModule,
+    InputTextModule,
+    ButtonModule,
 
   ],
   providers: [],
