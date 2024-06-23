@@ -10,6 +10,8 @@ import { LoginComponent } from './Components/login/login.component';
 import { AddUserComponent } from './Components/add-user/add-user.component';
 import { EditUserComponent } from './Components/edit-user/edit-user.component';
 import { SignUpComponent } from './Components/sign-up/sign-up.component';
+import { ListLeadsComponent } from './Components/list-leads/list-leads.component';
+import { LeadComponent } from './Components/lead/lead.component';
 
 const routes: Routes = [
   { path: 'worker', component: WorkerComponentComponent },
@@ -22,6 +24,11 @@ const routes: Routes = [
   { path: 'sign-up', component: SignUpComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   {
+    path: 'leads',
+    component: ListLeadsComponent,
+    children: [{ path: '', component: LeadComponent }],
+  },
+  {
     path: 'ResetPassword',
     component: ResetPasswordComponent,
     canActivate: [AuthCodeGuard],
@@ -32,4 +39,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

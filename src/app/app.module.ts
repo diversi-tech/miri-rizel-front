@@ -26,8 +26,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgxGoogleSignInModule } from 'ngx-google-sign-in';
 import { RouterModule } from '@angular/router';
 import { SignUpComponent } from './Components/sign-up/sign-up.component';
-import { ListLeadsComponent } from './Components/list-leads/list-leads.component';
 import { LeadComponent } from './Components/lead/lead.component';
+import { ListLeadsComponent } from './Components/list-leads/list-leads.component';
 
 @NgModule({
   declarations: [
@@ -39,8 +39,8 @@ import { LeadComponent } from './Components/lead/lead.component';
     EditUserComponent,
     AddUserComponent,
     SignUpComponent,
-    ListLeadsComponent,
     LeadComponent,
+    ListLeadsComponent,
   ],
 
   imports: [
@@ -62,10 +62,8 @@ import { LeadComponent } from './Components/lead/lead.component';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-
-
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
