@@ -17,4 +17,14 @@ export class ResetPasswordService {
   savePassword(pass: string, id: string): Observable<any> {
     return this.http.post<boolean>(`${this.apiUrl}`, { pass, id });
   }
+
+  private serverPassword: string | null = null;
+
+  setServerPassword(password: string) {
+    this.serverPassword = password;
+  }
+
+  getServerPassword() {
+    return this.serverPassword;
+  }
 }

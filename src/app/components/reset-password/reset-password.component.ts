@@ -6,7 +6,7 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { ResetPasswordService } from '../../services/reset-password.service';
+import { ResetPasswordService } from '../../Services/reset-password.service';
 import { Router } from '@angular/router';
 
 @Component({

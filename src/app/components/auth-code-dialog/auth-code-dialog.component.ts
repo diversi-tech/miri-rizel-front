@@ -1,6 +1,7 @@
 import { Component, QueryList, ViewChildren } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { CodeService } from 'src/app/services/code-service.service';
+import { ResetPasswordService } from 'src/app/Services/reset-password.service';
+
 
 @Component({
   selector: 'app-auth-code-dialog',
@@ -12,7 +13,7 @@ export class AuthCodeDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<AuthCodeDialogComponent>,
-    private codeService: CodeService
+    private codeService: ResetPasswordService
   ) {}
 
   onNoClick(): void {
