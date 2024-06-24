@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Lead } from 'src/app/Model/Lead';
 import { LeadService } from '../../../services/lead.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-lead',
@@ -21,7 +22,11 @@ export class AddLeadComponent {
   // });
   userForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private leadSrv: LeadService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private leadSrv: LeadService,
+    private router: Router
+  ) {
     // בניית הטופס בעזרת FormBuilder
     this.userForm = this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.minLength(2)]],
@@ -45,9 +50,16 @@ export class AddLeadComponent {
 
   submitForm = () => {
     let formData = this.userForm.value;
-    console.log('hello component');
-    this.leadSrv
-    .addLead(formData)
-    .subscribe((lead) => alert('הליד נוסף בהצלחה' + lead));
+    this.leadSrv.addLead(formData).subscribe((lead) => {
+      alert('הליד נוסף בהצלחה' + lead);
+      this.userForm.reset();
+      Object.keys(this.userForm.controls).forEach(key => {
+        this.userForm.controls[key].markAsUntouched();
+      });
+    });
+  };
+
+  backListLeadsPage = () => {
+    this.router.navigate(['leads']);
   };
 }
