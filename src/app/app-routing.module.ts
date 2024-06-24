@@ -20,7 +20,6 @@ const routes: Routes = [
   { path: 'edit', component: EditUserComponent },
   { path: 'add', component: AddUserComponent },
   { path: '', component: LoginComponent },
-  // { path: '', redirectTo: 'google', pathMatch: 'full' },
   {
     path: 'ResetPassword',
     component: ResetPasswordComponent,
@@ -32,4 +31,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
