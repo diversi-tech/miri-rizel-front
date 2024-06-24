@@ -1,0 +1,67 @@
+<form [formGroup]="userForm" (ngSubmit)="submitForm()">
+  <div class="form-group">
+    <label for="firstName">שם פרטי:</label>
+    <input
+      type="text"
+      id="firstName"
+      formControlName="firstName"
+      class="form-control"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="lastName">שם משפחה:</label>
+    <input
+      type="text"
+      id="lastName"
+      formControlName="lastName"
+      class="form-control"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="phone">טלפון:</label>
+    <input type="tel" id="phone" formControlName="phone" class="form-control" />
+  </div>
+
+  <div class="form-group">
+    <label for="email">אימייל:</label>
+    <input
+      type="email"
+      id="email"
+      formControlName="email"
+      class="form-control"
+    />
+  </div>
+  <div class="form-group">
+    <label for="source">:מקור</label>
+    <input
+      type="text"
+      id="source"
+      formControlName="source"
+      class="form-control"
+    />
+  </div>
+  <div class="form-group">
+    <label for="business_name">שם העסק:</label>
+    <input
+      type="text"
+      id="business_name"
+      formControlName="businessName"
+      class="form-control"
+    />
+  </div>
+  <div class="form-group">
+    <label for="notes">פתקים:</label>
+    <input
+      type="text"
+      id="notes"
+      formControlName="notes"
+      class="form-control"
+    />
+  </div>
+
+  <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid" >
+    שליחה
+  </button>
+</form>

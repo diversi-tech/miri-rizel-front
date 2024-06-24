@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-leads',
@@ -7,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class ListLeadsComponent {
 
+  constructor(private router: Router){}
+
+  addLead(){
+    this.router.navigate(['addLead']);
+  }
 }
