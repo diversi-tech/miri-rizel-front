@@ -1,8 +1,8 @@
 export interface User {
-    first_name: string,
-    last_name: string;
-    password: string;
-    email: string;
-    role: string;
-    created_date:"";
+    firstName?: string,
+    lastName?: string;
+    password?: string;
+    email?: string;
+    role?: string;
+    createdDate?:Date;
 }
