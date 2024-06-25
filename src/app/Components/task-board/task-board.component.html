@@ -1,28 +1,7 @@
-
-<p-table
-    #dt
-    [value]="tasks"
-    [(selection)]="selectedTasks"
-    dataKey="taskId"
-    [rowHover]="true"
-    [rows]="5"
-    [showCurrentPageReport]="true"
-    [rowsPerPageOptions]="[5, 25, 50]"
-    [loading]="loading"
-    [paginator]="true"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-    [filterDelay]="0"
-    [globalFilterFields]="['name', 'title','assignedTo.firstName', 'description', 'status']"
->
-<!-- // taskId: number,
-//     title: string,
-//     description: string,
-//     status: string,
-//     priority: string,
-//     dueDate: Date,
-//     assignedTo: number,
-//     projectId: number,
-//     createdDate: Date -->
+<p-table #dt [value]="tasks" [(selection)]="selectedTasks" dataKey="taskId" [rowHover]="true" [rows]="5"
+    [showCurrentPageReport]="true" [rowsPerPageOptions]="[5, 25, 50]" [loading]="loading" [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+    [globalFilterFields]="[ 'title','assignedTo.firstName', 'description', 'status']">
     <ng-template pTemplate="caption">
         <div class="table-header">
             List of Customers
@@ -55,17 +34,20 @@
                 <div class="flex justify-content-between align-items-center">
                     assignedTo
                     <p-sortIcon field="assignedTo.firstName"></p-sortIcon>
-                    <p-columnFilter field="assignedTo" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" class="ml-auto">
+                    <p-columnFilter field="assignedTo" matchMode="in" display="menu" [showMatchModes]="false"
+                        [showOperator]="false" [showAddButton]="false" class="ml-auto">
                         <ng-template pTemplate="header">
                             <div class="px-3 pt-3 pb-0">
                                 <span class="font-bold">assignedTo</span>
                             </div>
                         </ng-template>
                         <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                            <p-multiSelect [ngModel]="value" [options]="users" placeholder="Any" (onChange)="filter($event.value)" optionLabel="firstName">
+                            <p-multiSelect [ngModel]="value" [options]="users" placeholder="Any"
+                                (onChange)="filter($event.value)" optionLabel="firstName">
                                 <ng-template let-option pTemplate="item">
                                     <div class="inline-block vertical-align-middle">
-                                        <img [alt]="option.label" src="../../../assets/images/profile.png" width="24" class="vertical-align-middle" />
+                                        <img [alt]="option.label" src="../../../assets/images/profile.png" width="24"
+                                            class="vertical-align-middle" />
                                         <span class="ml-1 mt-1">{{ option.firstName+' '+option.lastName }}</span>
                                     </div>
                                 </ng-template>
@@ -94,7 +76,8 @@
                     <p-sortIcon field="status"></p-sortIcon>
                     <p-columnFilter field="status" matchMode="equals" display="menu" class="ml-auto">
                         <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                            <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)" placeholder="Any">
+                            <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)"
+                                placeholder="Any">
                                 <ng-template let-option pTemplate="item">
                                     <p-tag [value]="option.label" [severity]="getSeverity(option.label)"></p-tag>
                                 </ng-template>
@@ -107,9 +90,11 @@
                 <div class="flex justify-content-between align-items-center">
                     Activity
                     <p-sortIcon field="activity"></p-sortIcon>
-                    <p-columnFilter field="activity" matchMode="between" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" class="ml-auto">
+                    <p-columnFilter field="activity" matchMode="between" display="menu" [showMatchModes]="false"
+                        [showOperator]="false" [showAddButton]="false" class="ml-auto">
                         <ng-template pTemplate="filter" let-filter="filterCallback">
-                            <p-slider [ngModel]="activityValues" [range]="true" (onSlideEnd)="filter($event.values)" styleClass="m-3"></p-slider>
+                            <p-slider [ngModel]="activityValues" [range]="true" (onSlideEnd)="filter($event.values)"
+                                styleClass="m-3"></p-slider>
                             <div class="flex align-items-center justify-content-between px-2">
                                 <span>{{ activityValues[0] }}</span>
                                 <span>{{ activityValues[1] }}</span>
@@ -132,13 +117,15 @@
             </td>
             <td>
                 <span class="p-column-title">description</span>
-                <img src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png" [class]="'flag flag-' + 5" style="width: 20px" />
+                <img src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
+                    [class]="'flag flag-' + 5" style="width: 20px" />
                 <span class="ml-1 vertical-align-middle">{{ task.description}}</span>
             </td>
             <td>
                 <span class="p-column-title">Representative</span>
                 <!-- <img [alt]="getAssignment(task.assignedTo)!" src="../../../assets/images/profile.png" width="32" style="vertical-align: middle" /> -->
-                <span class="ml-1 vertical-align-middle">{{task.assignedTo.firstName+' '+task.assignedTo.lastName}}</span>
+                <span class="ml-1 vertical-align-middle">{{task.assignedTo.firstName+'
+                    '+task.assignedTo.lastName}}</span>
             </td>
             <td>
                 <span class="p-column-title">Date</span>

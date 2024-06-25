@@ -27,6 +27,8 @@ export class TaskBoardComponent implements OnInit {
 
   users!: User[];
 
+  any:any
+
   usersFormating: { name: string; id: number }[] = [];
 
   selectedCustomers!: Customer[];

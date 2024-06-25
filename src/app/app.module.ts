@@ -121,6 +121,8 @@ import { AnimateModule } from 'primeng/animate';
 import { CardModule } from 'primeng/card';
 import { BlockUIModule } from 'primeng/blockui';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { GenericBourdComponent } from './Components/generic-bourd/generic-bourd.component';
+import { ExempleComponent } from './Components/exemple/exemple.component';
 // import { CustomerService } from 'src/service/customerservice';
 @NgModule({
   declarations: [
@@ -134,6 +136,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     SignUpComponent,
     TaskBoardComponent,
     AddTaskComponent,
+    GenericBourdComponent,
+    ExempleComponent,
   ],
 
   imports: [

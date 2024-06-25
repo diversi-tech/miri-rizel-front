@@ -1,0 +1,41 @@
+<p-table #dt [value]="data" [loading]="loading" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10, 25, 50]"
+    [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [globalFilterFields]="globalFilterFields">
+    <ng-template pTemplate="caption">
+        <div class="table-header">
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <!-- <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search" /> -->
+            </span>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.sortable ? col.field : undefined">
+                <div class="flex justify-content-between align-items-center">
+                    {{ col.header }}
+                    <p-sortIcon *ngIf="col.sortable" [field]="col.field"></p-sortIcon>
+                    <p-columnFilter *ngIf="col.filterType" [type]="col.filterType" [field]="col.field" display="menu"
+                        class="ml-auto"></p-columnFilter>
+                </div>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData>
+        <tr>
+            <td *ngFor="let col of columns">
+                <span class="p-column-title">{{rowData[col.field]}}</span>
+                <p *ngIf="getTypeOfCol(col)!='date'"> {{ rowData[col.field] }}</p>
+                <p *ngIf="getTypeOfCol(col)=='date'"> {{ rowData[col.field]| date: 'MM/dd/yyyy' }}</p>
+                
+                <!-- {{ customer.date  }}  -->
+
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td [attr.colspan]="columns.length">No records found.</td>
+        </tr>
+    </ng-template>
+</p-table>
