@@ -4,7 +4,7 @@ declare global {
     google: any;
   }
 }
-import { LoginService } from '@app/Services/login.service';
+import { UserService } from '@app/Services/UserService';
 
 @Component({
   selector: 'app-google',
@@ -15,7 +15,7 @@ import { LoginService } from '@app/Services/login.service';
 @Injectable()
 export class GoogleComponent {
 
-  constructor(private login: LoginService) { }
+  constructor(private login: UserService) { }
 
   initGoogleOneTap(): void {
     if (window.google.accounts.id) {

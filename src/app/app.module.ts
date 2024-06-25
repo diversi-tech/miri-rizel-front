@@ -23,7 +23,7 @@ import { AuthCodeDialogComponent } from './Components/auth-code-dialog/auth-code
 import { LoginComponent } from './Components/login/login.component';
 // import { ErrorHandlingComponent } from './error-handling/error-handling.component';
 import { EditUserComponent } from './Components/edit-user/edit-user.component';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule, FormGroup } from '@angular/forms';
 import { NgxGoogleSignInModule } from 'ngx-google-sign-in';
 import { RouterModule } from '@angular/router';
 import { GoogleComponent } from './Components/google/google.component';
@@ -46,7 +46,12 @@ import { AddLeadComponent } from './Components/Lead-components/add-lead/add-lead
     LoginComponent,
     EditUserComponent,
     AddUserComponent,
-    GoogleComponent,  ],
+    GoogleComponent, 
+    SignUpComponent,
+    LeadComponent,
+    ListLeadsComponent,
+    AddLeadComponent,
+   ],
 
   imports: [
     BrowserModule,
@@ -67,7 +72,7 @@ import { AddLeadComponent } from './Components/Lead-components/add-lead/add-lead
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    SocialLoginModule
+    SocialLoginModule,
   ],
   
   providers: [
@@ -85,7 +90,7 @@ import { AddLeadComponent } from './Components/Lead-components/add-lead/add-lead
           },
          
         ],
-        callback: 'loginWithGoogle',
+        callback: 'initGoogleOneTap',
         onError: (err) => {
           console.error(err);
         }
