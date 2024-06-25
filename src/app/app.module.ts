@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
+import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import { ActionCodeInfo } from '@angular/fire/auth';
+import { AuthSettings } from '@angular/fire/auth';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -25,6 +26,12 @@ import { EditUserComponent } from './Components/edit-user/edit-user.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgxGoogleSignInModule } from 'ngx-google-sign-in';
 import { RouterModule } from '@angular/router';
+import { GoogleComponent } from './Components/google/google.component';
+import {
+  SocialLoginModule,
+  SocialAuthServiceConfig,
+} from '@abacritt/angularx-social-login';
+import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 import { SignUpComponent } from './Components/sign-up/sign-up.component';
 import { LeadComponent } from './Components/Lead-components/lead/lead.component';
 import { ListLeadsComponent } from './Components/Lead-components/list-leads/list-leads.component';
@@ -39,11 +46,7 @@ import { AddLeadComponent } from './Components/Lead-components/add-lead/add-lead
     LoginComponent,
     EditUserComponent,
     AddUserComponent,
-    SignUpComponent,
-    LeadComponent,
-    ListLeadsComponent,
-    AddLeadComponent,
-  ],
+    GoogleComponent,  ],
 
   imports: [
     BrowserModule,
@@ -64,8 +67,31 @@ import { AddLeadComponent } from './Components/Lead-components/add-lead/add-lead
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
+    SocialLoginModule
   ],
-  providers: [],
+  
+  providers: [
+    provideClientHydration(),
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+               '427515481723-ja7nlkmti3amubd5e5qbtdig27fc06ik.apps.googleusercontent.com'
+            )
+          },
+         
+        ],
+        callback: 'loginWithGoogle',
+        onError: (err) => {
+          console.error(err);
+        }
+      } as SocialAuthServiceConfig,
+    }
+  ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

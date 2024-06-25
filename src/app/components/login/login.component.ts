@@ -27,9 +27,9 @@ export class LoginComponent implements OnInit {
     private resetPasswordService: ResetPasswordService,
     private dialog: MatDialog,
     private router: Router,
-    private userService: UserService,
-    private active: ActivatedRoute
-  ) { }
+  ) {}
+
+  
 
   hide = signal(true);
   clickEvent(event: MouseEvent) {
@@ -46,32 +46,29 @@ export class LoginComponent implements OnInit {
     if (this.logInForm.invalid) {
       return;
     }
-    const email = this.email.value;
-    const password = this.pass.value;
-    this.userService.login(email, password).subscribe(
-      (user: User) => {        
-        if (user.role == "admin") {
-          this.router.navigate(['/admin'], { relativeTo: this.active });
-        }
-        if (user.role == "worker") {
-          this.router.navigate(['/worker'], { relativeTo: this.active });
-        }
-        if (user.role == "customer") {
-          this.router.navigate(['/customer'], { relativeTo: this.active });
-        }
-      },
-      error => {
-        this.dialog.open(DialogComponent, {
-          data: {
-            title: 'שגיאה',
-            context: 'ארעה תקלה במהלך ההתחברות, נסה שנית',
-            buttonText: 'סגור',
-          },
-        });
-      }
-    );
+    const email = this.logInForm.get('email')?.value;
+    const password = this.logInForm.get('password')?.value;
+    console.log(email, password);
+    // קריאת שרת לבדוק שהמשתמש קיים ויכול להכנס למערכת
+    //   this.loginService.getByPassword(password).subscribe((user: User) => {
+    //   this.userLogIn = user;
+    //   if (this.userLogIn['email'] != email) {
+    //     alert("error");
+    //   } else {
+    //   localStorage.setItem('user', email);
+    //   this.loginService.login(email, password);
+    //   if (this.userLogIn['role'] == "admin") {
+    //     this.router.navigate(['Admin'], { relativeTo: this.active });
+    //   }
+    //   if (this.userLogIn['role'] == "worker") {
+    //     this.router.navigate(['worker'], { relativeTo: this.active });
+    //   }
+    //   if (this.userLogIn['role'] == "customer") {
+    //     this.router.navigate(['customer'], { relativeTo: this.active });
+    //   }
+    //   }
+    // });
   }
-
   resetPassword() {
     if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email.value)) {
       this.resetPasswordService.resetPassword(this.email.value).subscribe(
