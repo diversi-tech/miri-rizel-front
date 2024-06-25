@@ -1,3 +1,5 @@
+import { User } from "./User";
+
 export interface Task {
     taskId: number,
     title: string,
@@ -5,7 +7,7 @@ export interface Task {
     status: string,
     priority: string,
     dueDate: Date,
-    assignedTo: number,
+    assignedTo: User,
     projectId: number,
     createdDate: Date
 }

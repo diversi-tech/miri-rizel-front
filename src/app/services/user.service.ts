@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { Observable, catchError, of, switchMap, tap, throwError } from 'rxjs';
 import { User } from '../Model/User';
 
 @Injectable({
@@ -59,6 +59,16 @@ export class UserService {
   getByMail(mail: string): Observable<User> {
     return this.http.get<User>(
       `${this.apiUrl}getByMail/${mail}`
+    );
+  }
+  getAll():Observable<Array<User>> {
+    return this.http.get<Array<User>>(`${this.apiUrl}`).pipe(
+      switchMap((response: Array<User>) => {
+        return of(response);
+      }),
+      catchError(error => {
+        return throwError(error);
+      })
     );
   }
 }

@@ -1,3 +1,4 @@
+import { User } from 'src/app/Model/User';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
@@ -7,6 +8,7 @@ import { CustomerService } from 'src/app/Services/customer.service';
 import { Table } from 'primeng/table';
 import { TaskService } from 'src/app/Services/task.service';
 import { Task } from 'src/app/Model/Task';
+import { UserService } from 'src/app/Services/user.service';
 // import { ProgressBarModule } from 'primeng/progressbar';
 // import { ToastModule } from 'primeng/toast';
 
@@ -17,10 +19,19 @@ import { Task } from 'src/app/Model/Task';
   // imports: [ProgressBarModule,ToastModule]
 
 })
+
 export class TaskBoardComponent implements OnInit {
   customers!: Customer[];
+
   tasks!: Task[];
+
+  users!: User[];
+
+  usersFormating: { name: string; id: number }[] = [];
+
   selectedCustomers!: Customer[];
+
+  selectedTasks!: Task[];
 
   representatives!: Representative[];
 
@@ -30,7 +41,7 @@ export class TaskBoardComponent implements OnInit {
 
   activityValues: number[] = [0, 100];
 
-  constructor(private customerService: CustomerService, private taskService: TaskService) { }
+  constructor(private customerService: CustomerService, private taskService: TaskService, private userService: UserService) { }
 
   ngOnInit() {
     this.customerService.getCustomersLarge().then((customers) => {
@@ -39,52 +50,56 @@ export class TaskBoardComponent implements OnInit {
 
       this.customers.forEach((customer) => (customer.date = new Date(<Date>customer.date)));
 
-      this.taskService.getAll().subscribe(
-        (tasks: Array<Task>) => {
-          this.tasks = tasks;
-          console.log('Games fetched successfully', this.tasks);
-        },
-        (error) => {
-          console.error('Error fetching games:', error);
-        }
-      );
-    });
 
-    this.representatives = [
-      { name: 'Amy Elsner', image: 'amyelsner.png' },
-      { name: 'Anna Fali', image: 'annafali.png' },
-      { name: 'Asiya Javayant', image: 'asiyajavayant.png' },
-      { name: 'Bernardo Dominic', image: 'bernardodominic.png' },
-      { name: 'Elwin Sharvill', image: 'elwinsharvill.png' },
-      { name: 'Ioni Bowcher', image: 'ionibowcher.png' },
-      { name: 'Ivan Magalhaes', image: 'ivanmagalhaes.png' },
-      { name: 'Onyama Limba', image: 'onyamalimba.png' },
-      { name: 'Stephen Shaw', image: 'stephenshaw.png' },
-      { name: 'Xuxue Feng', image: 'xuxuefeng.png' }
-    ];
+    });
+    this.taskService.getAll().subscribe(
+      (tasks: Array<Task>) => {
+        this.tasks = tasks;
+        this.loading = false;
+        this.tasks.forEach((task) => (task.dueDate = new Date(<Date>task.dueDate)));
+        console.log(this.tasks);
+
+      },
+      (error) => {
+        console.error('Error fetching tasks:', error);
+      }
+    );
+    this.userService.getAll().subscribe(
+      (users: Array<User>) => {
+        this.users = users
+        this.loading = false;
+
+        // users.forEach(u => this.usersFormating.push({ name: u.firstName + ' ' + u.lastName, id: u.userId }))
+        console.log(this.users);
+        // console.log(this.usersFormating);
+
+      },
+      (error) => {
+        console.error('Error fetching games:', error);
+      }
+    );
+    
 
     this.statuses = [
-      { label: 'Unqualified', value: 'unqualified' },
-      { label: 'Qualified', value: 'qualified' },
-      { label: 'New', value: 'new' },
-      { label: 'Negotiation', value: 'negotiation' },
-      { label: 'Renewal', value: 'renewal' },
-      { label: 'Proposal', value: 'proposal' }
+      { label: 'InProgress', value: 'InProgress' },
+      { label: 'Complited', value: 'Complited' },
+      { label: 'Beginning', value: 'Beginning' },
+     
     ];
   }
 
   getSeverity(status: string) {
     switch (status) {
-      case 'unqualified':
+      case 'a':
         return 'danger';
 
-      case 'qualified':
+      case 'Complited':
         return 'success';
 
-      case 'new':
+      case 'Beginning':
         return 'info';
 
-      case 'negotiation':
+      case 'InProgress':
         return 'warning';
 
       case 'renewal':
@@ -94,7 +109,12 @@ export class TaskBoardComponent implements OnInit {
 
     }
   }
+  getAssignment(assignetoId: number) {
+    // console.log(this.usersFormating.find(u => u.id == assignetoId));
+    
+    // return this.usersFormating.find(u => u.id == assignetoId)
 
+  }
 }
 
 
