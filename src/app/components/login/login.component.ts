@@ -73,6 +73,7 @@ export class LoginComponent implements OnInit {
   }
 
   resetPassword() {
+    debugger
     if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email.value)) {
       this.resetPasswordService.resetPassword(this.email.value).subscribe(
         (response) => {
@@ -112,6 +113,7 @@ export class LoginComponent implements OnInit {
   }
   signUp() {
     // פה יהיה ניתוב לדף הרישום
-    this.router.navigate(['/sign-up'])
+    // this.router.navigate(['/sign-up'])
+    this.router.navigate(['/project'])
   }
 }
