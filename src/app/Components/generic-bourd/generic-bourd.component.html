@@ -5,31 +5,69 @@
         <div class="table-header">
             <span class="p-input-icon-left">
                 <i class="pi pi-search"></i>
-                <!-- <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search" /> -->
+                <input pInputText type="text" (input)="filterGlobal($event)" placeholder="Global Search" />
             </span>
         </div>
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
-            <th *ngFor="let col of columns" [pSortableColumn]="col.sortable ? col.field : undefined">
+            <th *ngFor="let col of columns let i=index" [pSortableColumn]="col.sortable ? col.field : undefined">
                 <div class="flex justify-content-between align-items-center">
                     {{ col.header }}
                     <p-sortIcon *ngIf="col.sortable" [field]="col.field"></p-sortIcon>
-                    <p-columnFilter *ngIf="col.filterType" [type]="col.filterType" [field]="col.field" display="menu"
+                    <p-columnFilter *ngIf="col.filterType=='text'" type="text" [field]="col.field" display="menu"
                         class="ml-auto"></p-columnFilter>
+                    <p-columnFilter *ngIf="col.filterType=='date'" type="date" [field]="col.field" display="menu"
+                        class="ml-auto"></p-columnFilter>
+                    <p-columnFilter *ngIf="col.filterType=='position'" [field]="col.field" matchMode="equals"
+                        display="menu" class="ml-auto">
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                            <p-dropdown [ngModel]="value" [options]="getpositionData(i)"
+                                (onChange)="filter($event.value)" placeholder="Any">
+                                <ng-template let-option pTemplate="item">
+                                    <p-tag [value]="option.label" [severity]="getSeverity(option.label)"></p-tag>
+                                </ng-template>
+                            </p-dropdown>
+                        </ng-template>
+                    </p-columnFilter>
+                    <p-columnFilter *ngIf="col.filterType=='obj'" field="assignedTo" matchMode="in" display="menu"
+                        [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" class="ml-auto">
+                        <ng-template pTemplate="header">
+                            <div class="px-3 pt-3 pb-0">
+                                <span class="font-bold">assignedTo</span>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                            <p-multiSelect [ngModel]="value" [options]="getObjData(i)" placeholder="Any"
+                                (onChange)="filter($event.value)" optionLabel="firstName">
+                                <ng-template let-option pTemplate="item">
+                                    <div class="inline-block vertical-align-middle">
+                                        <span class="ml-1 mt-1">{{ option[getobjFields(i)] }}</span>
+                                    </div>
+                                </ng-template>
+                            </p-multiSelect>
+                        </ng-template>
+                    </p-columnFilter>
                 </div>
             </th>
         </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-rowData>
+    <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
         <tr>
-            <td *ngFor="let col of columns">
+            <td *ngFor="let col of columns let i = index">
                 <span class="p-column-title">{{rowData[col.field]}}</span>
-                <p *ngIf="getTypeOfCol(col)!='date'"> {{ rowData[col.field] }}</p>
-                <p *ngIf="getTypeOfCol(col)=='date'"> {{ rowData[col.field]| date: 'MM/dd/yyyy' }}</p>
-                
-                <!-- {{ customer.date  }}  -->
-
+                <p *ngIf="getTypeOfCol(col,rowIndex)=='text'"> {{rowData[col.field] }}</p>
+                <p *ngIf="getTypeOfCol(col,rowIndex)=='date'"> {{rowData[col.field]| date: 'MM/dd/yyyy' }}</p>
+                <span *ngIf="getTypeOfCol(col,rowIndex)=='obj'"
+                    class="ml-1 vertical-align-middle">{{rowData[col.field][getobjFields(i)]}}</span>
+                <p-tag *ngIf="getTypeOfCol(col,rowIndex)=='position'" [value]="rowData[col.field]"
+                    [severity]="getSeverity(rowData[col.field])"></p-tag>
+                <button pButton type="button" class="p-button-secondary" icon="pi pi-pencil"
+                    *ngIf="getTypeOfCol(col,rowIndex)=='edit'" (click)="onEdit(rowData)"></button>
+                <button pButton type="button" class="p-button-danger" icon="pi pi-trash"
+                    *ngIf="getTypeOfCol(col,rowIndex)=='delete'" (click)="onDelete(rowData)"></button>
+                <button pButton type="button" class="p-button-Help" icon="pi pi-angle-down"
+                    *ngIf="getTypeOfCol(col,rowIndex)=='popTable'" (click)="getDataForPopTable(rowData)"></button>
             </td>
         </tr>
     </ng-template>

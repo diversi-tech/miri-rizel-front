@@ -8,6 +8,6 @@ export interface Task {
     priority?: string,
     dueDate?: Date,
     assignedTo?: User,
-    projectId?: Project,
+    project?: Project,
     createdDate?: Date
 }
