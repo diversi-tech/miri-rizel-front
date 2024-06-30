@@ -59,10 +59,11 @@ export class ExempleComponent implements OnInit {
 
   filterData(objToFilter: any) {
     let userFilter: User[] = this.users.filter(u => u.lastName == objToFilter.assignedTo.lastName)
-    let loading = "true"
+    let loading:boolean = true
     let col$types = { 'lastName': 'text', 'firstName': 'text' }
-    let edito = "onEditTask($event)"
-    let deleteo = "onDeleteTask($event)"
-    this.genericBourd.PopTable(userFilter);
+    let positionD:[] = []
+    let objData = [this.users, this.projects]
+    let objFields = ['email','name']
+    this.genericBourd.PopTable(userFilter, loading, col$types,objData,objFields,positionD);
   }
 }

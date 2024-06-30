@@ -123,6 +123,7 @@ import { BlockUIModule } from 'primeng/blockui';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { GenericBourdComponent } from './Components/generic-bourd/generic-bourd.component';
 import { ExempleComponent } from './Components/exemple/exemple.component';
+import { AddTaskExemplComponent } from './Components/add-task-exempl/add-task-exempl.component';
 // import { CustomerService } from 'src/service/customerservice';
 @NgModule({
   declarations: [
@@ -138,6 +139,7 @@ import { ExempleComponent } from './Components/exemple/exemple.component';
     AddTaskComponent,
     GenericBourdComponent,
     ExempleComponent,
+    AddTaskExemplComponent,
   ],
 
   imports: [

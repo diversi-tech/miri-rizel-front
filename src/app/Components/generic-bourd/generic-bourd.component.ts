@@ -1,11 +1,16 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
 import { Table } from 'primeng/table';
+import Swal from 'sweetalert2';
 
 interface Column {
   field: string;
   header: string;
   sortable?: boolean;
   filterType?: string;
+}
+interface position {
+  id: number
+  description: string
 }
 
 @Component({
@@ -25,18 +30,14 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   @Output() edit = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
   @Output() dataUpdated = new EventEmitter<any>();
-
+  @ViewChild('popupContainer', { read: ViewContainerRef }) popupContainer!: ViewContainerRef;
   @ViewChild('dt') dt!: Table;
+  constructor(private resolver: ComponentFactoryResolver) { }
 
   columns: Column[] = [];
-  statuses = [
-    { label: 'InProgress', value: 'InProgress' },
-    { label: 'Complited', value: 'Complited' },
-    { label: 'Beginning', value: 'Beginning' },
 
-  ];
   ngOnInit() {
-    if ( this.data === undefined||(this.objData.length>0&&this.objFields==null)) {
+    if (this.data === undefined || (this.objData.length > 0 && this.objFields == null)) {
       throw new Error('The data input is required and must be provided.');
     }
     this.generateColumns();
@@ -47,6 +48,7 @@ export class GenericBourdComponent implements OnInit, OnChanges {
       this.generateColumns();
     }
   }
+
   onEdit(rowData: any) {
     this.edit.emit(rowData);
   }
@@ -54,6 +56,7 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   onDelete(rowData: any) {
     this.delete.emit(rowData);
   }
+
   generateColumns() {
     if (this.data.length === 0) {
       this.columns = [];
@@ -70,10 +73,10 @@ export class GenericBourdComponent implements OnInit, OnChanges {
         filterType: this.col$types[key]
       });
     })
-    if(this.popTable==true)
+    if (this.popTable == true)
       this.columns.push({
         field: 'popTable',
-        header: 'Show ღ',
+        header: 'Show ',
         sortable: false,
         filterType: 'popTable'
       });
@@ -85,13 +88,18 @@ export class GenericBourdComponent implements OnInit, OnChanges {
     });
     this.columns.push({
       field: 'delete',
-      header:'Delete',
+      header: 'Delete',
       sortable: false,
       filterType: 'delete'
     });
+    if (this.globalFilterFields.length == 0 || !this.globalFilterFields) {
+      this.columns.forEach(c => this.globalFilterFields.push(c.field))
+    }
+    if (this.positionData.length == 0 || !this.positionData) {
+      console.log(this.positionData);
+    }
 
   }
-
 
   getSeverity(status: string) {
     switch (status) {
@@ -117,10 +125,12 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   }
 
   capitalizeFirstLetter(field: string) {
-   let string= field.replace(/([A-Z])/g, ' $1').toLowerCase();
+    let string = field.replace(/([A-Z])/g, ' $1').toLowerCase();
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
   getTypeOfCol(col: Column, i: number) {
+    if (col.filterType == 'date')
+      this.data[i][col.field] = new Date(this.data[i][col.field])
     return col.filterType
   }
   getpositionData(i: number) {
@@ -157,9 +167,37 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   getDataForPopTable(obj: any) {
     this.dataUpdated.emit(obj)
   }
-  
-  PopTable(data: any) {
-    console.log("hooooooo", data);
+  getPosition(item: number,i:number): string {
+  // let List<any> n= this.getpositionData(i)
+    return ""
   }
-
+  PopTable(data: any, loading: boolean, col$types: any, Data1?: any, objFields?: string[], Data2?: any[]) {
+    Swal.fire({
+      title: 'Details',
+      html: '<div id="popupContainer"></div>',
+      didOpen: () => {
+        const container = document.getElementById('popupContainer');
+        if (container) {
+          const factory = this.resolver.resolveComponentFactory(GenericBourdComponent);
+          const componentRef = this.popupContainer.createComponent(factory);
+          componentRef.instance.data = data;
+          componentRef.instance.loading = loading;
+          componentRef.instance.globalFilterFields = ['title', 'description', 'priority', 'status', 'dueDate'];
+          componentRef.instance.col$types = col$types;
+          if (Data2 == null && objFields != null) {
+            componentRef.instance.objData = Data1;
+            componentRef.instance.objFields = objFields;
+          } else if (Data2 == null)
+            componentRef.instance.positionData = Data1;
+          else if (objFields != null) {
+            componentRef.instance.objData = Data1;
+            componentRef.instance.objFields = objFields;
+            componentRef.instance.positionData = Data2;
+          }
+          container.appendChild(componentRef.location.nativeElement);
+          componentRef.instance.loading = false
+        }
+      },
+    });
+  }
 }

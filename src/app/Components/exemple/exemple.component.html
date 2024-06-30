@@ -1,4 +1,5 @@
 <app-generic-bourd 
+[data]="tasks" 
 [loading]="loading"
 [globalFilterFields]="['title', 'description', 'priority', 'status','dueDate']"
 [col$types]="{'title':'text','description':'text','status':'position','priority':'position','dueDate':'date','assignedTo':'obj','project':'obj','createdDate':'date'}"

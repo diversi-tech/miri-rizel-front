@@ -62,7 +62,7 @@ export class UserService {
     );
   }
   getAll():Observable<Array<User>> {
-    return this.http.get<Array<User>>(`${this.apiUrl}`).pipe(
+    return this.http.get<Array<User>>(`${this.apiUrl}ReadAll`).pipe(
       switchMap((response: Array<User>) => {
         return of(response);
       }),

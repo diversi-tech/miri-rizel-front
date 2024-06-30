@@ -11,10 +11,12 @@
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
-            <th *ngFor="let col of columns let i=index" [pSortableColumn]="col.sortable ? col.field : undefined">
+            <th *ngFor="let col of columns let i=index"
+                [pSortableColumn]="col.filterType=='obj' ?col.field+'.'+getobjFields(i)  : col.field">
                 <div class="flex justify-content-between align-items-center">
                     {{ col.header }}
-                    <p-sortIcon *ngIf="col.sortable" [field]="col.field"></p-sortIcon>
+                    <p-sortIcon *ngIf="col.sortable"
+                        [field]="col.filterType=='obj' ?col.field+'.'+getobjFields(i)  : col.field"></p-sortIcon>
                     <p-columnFilter *ngIf="col.filterType=='text'" type="text" [field]="col.field" display="menu"
                         class="ml-auto"></p-columnFilter>
                     <p-columnFilter *ngIf="col.filterType=='date'" type="date" [field]="col.field" display="menu"
@@ -22,7 +24,7 @@
                     <p-columnFilter *ngIf="col.filterType=='position'" [field]="col.field" matchMode="equals"
                         display="menu" class="ml-auto">
                         <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                            <p-dropdown [ngModel]="value" [options]="getpositionData(i)"
+                            <p-dropdown [ngModel]="value" [options]="getpositionData(i).description"
                                 (onChange)="filter($event.value)" placeholder="Any">
                                 <ng-template let-option pTemplate="item">
                                     <p-tag [value]="option.label" [severity]="getSeverity(option.label)"></p-tag>
@@ -30,16 +32,11 @@
                             </p-dropdown>
                         </ng-template>
                     </p-columnFilter>
-                    <p-columnFilter *ngIf="col.filterType=='obj'" field="assignedTo" matchMode="in" display="menu"
+                    <p-columnFilter *ngIf="col.filterType=='obj'" [field]="col.field" matchMode="in" display="menu"
                         [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" class="ml-auto">
-                        <ng-template pTemplate="header">
-                            <div class="px-3 pt-3 pb-0">
-                                <span class="font-bold">assignedTo</span>
-                            </div>
-                        </ng-template>
                         <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                             <p-multiSelect [ngModel]="value" [options]="getObjData(i)" placeholder="Any"
-                                (onChange)="filter($event.value)" optionLabel="firstName">
+                                (onChange)="filter($event.value)" [optionLabel]="getobjFields(i)">
                                 <ng-template let-option pTemplate="item">
                                     <div class="inline-block vertical-align-middle">
                                         <span class="ml-1 mt-1">{{ option[getobjFields(i)] }}</span>
@@ -60,8 +57,8 @@
                 <p *ngIf="getTypeOfCol(col,rowIndex)=='date'"> {{rowData[col.field]| date: 'MM/dd/yyyy' }}</p>
                 <span *ngIf="getTypeOfCol(col,rowIndex)=='obj'"
                     class="ml-1 vertical-align-middle">{{rowData[col.field][getobjFields(i)]}}</span>
-                <p-tag *ngIf="getTypeOfCol(col,rowIndex)=='position'" [value]="rowData[col.field]"
-                    [severity]="getSeverity(rowData[col.field])"></p-tag>
+                <p-tag *ngIf="getTypeOfCol(col,rowIndex)=='position'" [value]="getPosition(rowData[col.field],i)"
+                    [severity]="getSeverity(rowData[col.field].description)"></p-tag>
                 <button pButton type="button" class="p-button-secondary" icon="pi pi-pencil"
                     *ngIf="getTypeOfCol(col,rowIndex)=='edit'" (click)="onEdit(rowData)"></button>
                 <button pButton type="button" class="p-button-danger" icon="pi pi-trash"
@@ -77,3 +74,4 @@
         </tr>
     </ng-template>
 </p-table>
+<div #popupContainer></div>
