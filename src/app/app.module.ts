@@ -1,48 +1,41 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
-import { ActionCodeInfo } from '@angular/fire/auth';
-import { AuthSettings } from '@angular/fire/auth';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { SocialLoginModule, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
+import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
 import { ResetPasswordComponent } from './Components/reset-password/reset-password.component';
 import { AddUserComponent } from './Components/add-user/add-user.component';
+import { DialogComponent } from './Components/dialog/dialog.component';
+import { AuthCodeDialogComponent } from './Components/auth-code-dialog/auth-code-dialog.component';
+import { LoginComponent } from './Components/login/login.component';
+import { EditUserComponent } from './Components/edit-user/edit-user.component';
+import { GoogleComponent } from './Components/google/google.component';
+import { SignUpComponent } from './Components/sign-up/sign-up.component';
+import { LeadComponent } from './Components/Lead-components/lead/lead.component';
+import { ListLeadsComponent } from './Components/Lead-components/list-leads/list-leads.component';
+import { AddLeadComponent } from './Components/Lead-components/add-lead/add-lead.component';
+import { TaskBoardComponent } from './Components/task-board/task-board.component';
+import { AddTaskComponent } from './Components/add-task/add-task.component';
+import { GenericBourdComponent } from './Components/generic-bourd/generic-bourd.component';
+import { ExempleComponent } from './Components/exemple/exemple.component';
+import { AddTaskExemplComponent } from './Components/add-task-exempl/add-task-exempl.component';
+
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCardModule } from '@angular/material/card';
-
 import { MatDialogModule } from '@angular/material/dialog';
-
-// import { MatDividerModule } from '@angular/material/driver';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DialogComponent } from './Components/dialog/dialog.component';
-import { AuthCodeDialogComponent } from './Components/auth-code-dialog/auth-code-dialog.component';
-import { LoginComponent } from './Components/login/login.component';
-// import { ErrorHandlingComponent } from './error-handling/error-handling.component';
-import { EditUserComponent } from './Components/edit-user/edit-user.component';
-import { ReactiveFormsModule, FormsModule, FormGroup } from '@angular/forms';
-import { NgxGoogleSignInModule } from 'ngx-google-sign-in';
-import { RouterModule } from '@angular/router';
-import { GoogleComponent } from './Components/google/google.component';
-import {
-  SocialLoginModule,
-  SocialAuthServiceConfig,
-} from '@abacritt/angularx-social-login';
-import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
-import { SignUpComponent } from './Components/sign-up/sign-up.component';
-import { LeadComponent } from './Components/Lead-components/lead/lead.component';
-import { ListLeadsComponent } from './Components/Lead-components/list-leads/list-leads.component';
-import { AddLeadComponent } from './Components/Lead-components/add-lead/add-lead.component';
-
-import { TaskBoardComponent } from './Components/task-board/task-board.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
-import { AddTaskComponent } from './Components/add-task/add-task.component';
 
 import { AccordionModule } from 'primeng/accordion';
 import { AutoCompleteModule } from 'primeng/autocomplete';
@@ -132,10 +125,7 @@ import { AnimateModule } from 'primeng/animate';
 import { CardModule } from 'primeng/card';
 import { BlockUIModule } from 'primeng/blockui';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { GenericBourdComponent } from './Components/generic-bourd/generic-bourd.component';
-import { ExempleComponent } from './Components/exemple/exemple.component';
-import { AddTaskExemplComponent } from './Components/add-task-exempl/add-task-exempl.component';
-// import { CustomerService } from 'src/service/customerservice';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -145,37 +135,33 @@ import { AddTaskExemplComponent } from './Components/add-task-exempl/add-task-ex
     LoginComponent,
     EditUserComponent,
     AddUserComponent,
-    GoogleComponent, 
+    GoogleComponent,
     SignUpComponent,
     LeadComponent,
     ListLeadsComponent,
     AddLeadComponent,
-   ],
     TaskBoardComponent,
     AddTaskComponent,
     GenericBourdComponent,
     ExempleComponent,
     AddTaskExemplComponent,
   ],
-
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
     HttpClientModule,
+    FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
+    RouterModule,
+    SocialLoginModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    BrowserAnimationsModule,
     MatSlideToggleModule,
     MatCardModule,
     MatDialogModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
-    SocialLoginModule,
     MatToolbarModule,
     MatSortModule,
     MatPaginatorModule,
@@ -267,10 +253,8 @@ import { AddTaskExemplComponent } from './Components/add-task-exempl/add-task-ex
     TreeSelectModule,
     TreeTableModule,
     AnimateModule,
-    CardModule,
-
+    CardModule
   ],
-  
   providers: [
     provideClientHydration(),
     {
@@ -281,10 +265,9 @@ import { AddTaskExemplComponent } from './Components/add-task-exempl/add-task-ex
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-               '427515481723-ja7nlkmti3amubd5e5qbtdig27fc06ik.apps.googleusercontent.com'
+              '427515481723-ja7nlkmti3amubd5e5qbtdig27fc06ik.apps.googleusercontent.com'
             )
           },
-         
         ],
         callback: 'initGoogleOneTap',
         onError: (err) => {
@@ -295,4 +278,4 @@ import { AddTaskExemplComponent } from './Components/add-task-exempl/add-task-ex
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
