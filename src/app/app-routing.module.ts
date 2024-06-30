@@ -9,6 +9,10 @@ import { AuthCodeGuard } from './Components/auth-code-dialog/auth-code.guard';
 import { LoginComponent } from './Components/login/login.component';
 import { AddUserComponent } from './Components/add-user/add-user.component';
 import { EditUserComponent } from './Components/edit-user/edit-user.component';
+import { GoogleComponent } from './Components/google/google.component';
+import { AddLeadComponent } from './Components/Lead-components/add-lead/add-lead.component';
+import { ListLeadsComponent } from './Components/Lead-components/list-leads/list-leads.component';
+import { LeadComponent } from './Components/Lead-components/lead/lead.component';
 import { SignUpComponent } from './Components/sign-up/sign-up.component';
 import { TaskBoardComponent } from './Components/task-board/task-board.component';
 
@@ -21,6 +25,13 @@ const routes: Routes = [
   { path: 'edit', component: EditUserComponent },
   { path: 'add', component: AddUserComponent },
   { path: 'sign-up', component: SignUpComponent },
+  {path: 'addLead', component: AddLeadComponent},
+  {
+    path: 'leads',
+    component: ListLeadsComponent,
+    children: [{ path: '', component: LeadComponent }],
+  },
+  { path: '', component: LoginComponent },
   { path: 'task', component: TaskBoardComponent },
   { path: '', redirectTo: '/task', pathMatch: 'full' },
   {
@@ -34,4 +45,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

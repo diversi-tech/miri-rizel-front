@@ -29,7 +29,9 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private active: ActivatedRoute
-  ) { }
+  ) {}
+
+  
 
   hide = signal(true);
   clickEvent(event: MouseEvent) {
@@ -71,7 +73,6 @@ export class LoginComponent implements OnInit {
       }
     );
   }
-
   resetPassword() {
     if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email.value)) {
       this.resetPasswordService.resetPassword(this.email.value).subscribe(
