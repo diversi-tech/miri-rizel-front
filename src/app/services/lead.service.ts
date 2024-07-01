@@ -21,7 +21,7 @@ export class LeadService {
   }
 
   getAllLeads(): Observable<Lead[]> {
-    return this.http.get<Lead[]>(`${this.apiUrl}/ReadAll`);
+    return this.http.get<Lead[]>(`${this.apiUrl}`);
   }
 
   editLead(lead: Lead,id:Number): Observable<Lead>  {
