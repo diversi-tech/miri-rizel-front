@@ -15,7 +15,7 @@ import { LeadService } from '@app/services/lead.service';
 })
 export class ListLeadsComponent {
 
- //constructor(private router: Router){}
+  //constructor(private router: Router){}
   Leads: Lead[] = [];
   users: User[] = [];
   projects: Project[] = [];
@@ -25,54 +25,25 @@ export class ListLeadsComponent {
   constructor(private leadService: LeadService, private userService: UserService, private router: Router) { }
 
   ngOnInit() {
-    console.log("ExempleComponent");
-
     this.leadService.getAllLeads().subscribe(
       (Leads: Array<Lead>) => {
         this.Leads = Leads;
-        this.loading= false;
-        // // this.loading = false;
-        // console.log(this.Leads);
-        // this.userService.getAll().subscribe(
-        //   (users: Array<User>) => {
-        //     this.users = users;
-        //     this.loading = false;
-        //     console.log(this.users);
-        //   },
+        this.loading = false;
       }
-    //   (error) => {
-    //         console.error('Error fetching users:', error);
-    //         this.loading = false; // לוודא שהטעינה מפסיקה גם במקרה של שגיאה
-    //       }
-    //     );
-    //   },
-    //   (error) => {
-    //     console.error('Error fetching Leads:', error);
-    //     this.loading = false; // לוודא שהטעינה מפסיקה גם במקרה של שגיאה
-    //   }
-    // );
     )
   }
   onEditLead(Lead: Lead) {
-    // Handle edit logic here
-    console.log('Edit Lead:', Lead);
+    this.router.navigate(['editLead'], { queryParams: { greeting: Lead.leadId } });
   }
 
-  onDeleteLead(Lead: Lead) {
-    // Handle delete logic here
-    console.log('Delete Lead:', Lead);
+  onDeleteLead(lead: Lead) {
+    // this.leadService.deleteLead(lead.leadId).subscribe(() => {
+    //   this.Leads = this.Leads.filter((l) => l.leadId !== lead.leadId);
+    // });
+    this.router.navigate(['deleteLead'], { queryParams: { greeting: lead.leadId } });
   }
 
-  filterData(objToFilter: any) {
-    let userFilter: User[] = this.users.filter(u => u.lastName == objToFilter.assignedTo.lastName)
-    let loading:boolean = true
-    let col$types = { 'lastName': 'text', 'firstName': 'text' }
-    let positionD:[] = []
-    let objData = [this.users, this.projects]
-    let objFields = ['email','name']
-    this.genericBourd.PopTable(userFilter, loading, col$types,objData,objFields,positionD);
-  }
-  addLead(){
+  addLead() {
     this.router.navigate(['addLead']);
   }
 }

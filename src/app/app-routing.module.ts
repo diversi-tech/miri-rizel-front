@@ -15,6 +15,8 @@ import { ListLeadsComponent } from './Components/Lead-components/list-leads/list
 import { LeadComponent } from './Components/Lead-components/lead/lead.component';
 import { SignUpComponent } from './Components/sign-up/sign-up.component';
 import { TaskBoardComponent } from './Components/task-board/task-board.component';
+import { EditLeadComponent } from './Components/Lead-components/edit-lead/edit-lead.component';
+import { DeleteLeadComponent } from './Components/Lead-components/delete-lead/delete-lead.component';
 
 const routes: Routes = [
   { path: 'worker', component: WorkerComponentComponent },
@@ -26,12 +28,14 @@ const routes: Routes = [
   { path: 'add', component: AddUserComponent },
   { path: 'sign-up', component: SignUpComponent },
   {path: 'addLead', component: AddLeadComponent},
+  {path: 'editLead', component: EditLeadComponent},
+  {path: 'deleteLead', component: DeleteLeadComponent},
   {
     path: 'leads',
     component: ListLeadsComponent,
     children: [{ path: '', component: LeadComponent }],
   },
-  { path: '', component: LoginComponent },
+  { path: '', component: ListLeadsComponent },
   { path: 'task', component: TaskBoardComponent },
   { path: '', redirectTo: '/task', pathMatch: 'full' },
   {

@@ -17,7 +17,7 @@ export class LeadService {
   }
 
   addLead(lead: Lead): Observable<Lead> {
-    return this.http.post<Lead>(`${this.apiUrl}/Add`, lead);
+    return this.http.post<Lead>(`${this.apiUrl}`, lead);
   }
 
   getAllLeads(): Observable<Lead[]> {
@@ -25,13 +25,12 @@ export class LeadService {
   }
 
   editLead(lead: Lead,id:Number): Observable<Lead>  {
-    console.log(lead.leadId);
     lead.leadId = id;
-    console.log(lead.leadId);
-    return this.http.put<Lead>(`${this.apiUrl}/Update`, lead);
+    return this.http.put<Lead>(`${this.apiUrl}`, lead);
   }
 
-  deleteLead(id: Number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/Delete/?id=${id}`);
+  deleteLead(id: Number) {
+    console.log(id);
+    return this.http.delete(`${this.apiUrl}?id=${id}`);
   }
 }
