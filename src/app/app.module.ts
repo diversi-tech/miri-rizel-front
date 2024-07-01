@@ -34,6 +34,15 @@ import { MatTableModule } from '@angular/material/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { AddTaskComponent } from './Components/add-task/add-task.component';
+import { DropdownModule } from 'primeng/dropdown';
+
+import { Component } from '@angular/core';
+import { CalendarModule } from 'primeng/calendar';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -72,9 +81,16 @@ import { AddTaskComponent } from './Components/add-task/add-task.component';
     MatTableModule,
     InputTextModule,
     ButtonModule,
-
-  ],
+    CalendarModule,
+    FormsModule,
+    AutoCompleteModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule,
+    MatAutocompleteModule,
+    DropdownModule  ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {
+}

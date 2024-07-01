@@ -10,6 +10,8 @@ import { LoginComponent } from './Components/login/login.component';
 import { AddUserComponent } from './Components/add-user/add-user.component';
 import { EditUserComponent } from './Components/edit-user/edit-user.component';
 import { SignUpComponent } from './Components/sign-up/sign-up.component';
+import { AddTaskComponent } from './Components/add-task/add-task.component';
+import { TaskBoardComponent } from './Components/task-board/task-board.component';
 
 const routes: Routes = [
   { path: 'worker', component: WorkerComponentComponent },
@@ -20,6 +22,10 @@ const routes: Routes = [
   { path: 'edit', component: EditUserComponent },
   { path: 'add', component: AddUserComponent },
   { path: 'sign-up', component: SignUpComponent },
+  { path: 'task-board', component: TaskBoardComponent },
+  { path: 'add-task', component: AddTaskComponent },
+  { path: 'add-task/:id', component: AddTaskComponent },
+  // { path: '', redirectTo: '/add-task', pathMatch: 'full' },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   {
     path: 'ResetPassword',

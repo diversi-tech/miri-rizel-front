@@ -8,6 +8,9 @@ import {
 } from '@angular/forms';
 import { ResetPasswordService } from '../../Services/reset-password.service';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/Services/user.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-reset-password',
@@ -15,7 +18,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./reset-password.component.css'],
 })
 export class ResetPasswordComponent implements OnInit {
-  constructor(private reset: ResetPasswordService, private route: Router) {}
+  constructor(private reset: ResetPasswordService, private route: Router, private userService: UserService, private dialog: MatDialog,) { }
 
   ngOnInit(): void {
     this.resetForm = new FormGroup({
@@ -59,13 +62,21 @@ export class ResetPasswordComponent implements OnInit {
     if (this.resetForm.valid) {
       const password = this.pass.value;
       // שליפה של הקוד לקוח
-      const id = '1234';
-
-      this.reset.savePassword(password, id).subscribe(
+      const email = this.userService.getUserMail();
+      this.userService.savePassword(email!, password).subscribe(
         (res) => {
-          console.log('Password updated successfully:', res);
           // ניתוב להתחברות עם הסיסמה החדשה
-          this.route.navigate(['/LogIn']);
+          if (res === true) {
+            this.dialog.open(DialogComponent, {
+              data: {
+                title: 'סיסמתך עודכנה בהצלחה',
+                context: 'הנך מועבר להתחברות מחדש',
+                buttonText: 'סגור',
+              },
+            });
+
+            this.route.navigate(['/login']);
+          }
         },
         (error) => {
           console.error('Error updating password:', error);
@@ -90,10 +101,10 @@ export class ResetPasswordComponent implements OnInit {
 
     return !passwordValid
       ? {
-          validLength: validLength,
-          hasLowerCase: hasLowerCase,
-          hasNumber: hasNumber,
-        }
+        validLength: validLength,
+        hasLowerCase: hasLowerCase,
+        hasNumber: hasNumber,
+      }
       : null;
   }
 
