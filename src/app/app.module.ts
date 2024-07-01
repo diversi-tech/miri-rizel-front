@@ -24,6 +24,7 @@ import { AddTaskComponent } from './Components/add-task/add-task.component';
 import { GenericBourdComponent } from './Components/generic-bourd/generic-bourd.component';
 import { ExempleComponent } from './Components/exemple/exemple.component';
 import { AddTaskExemplComponent } from './Components/add-task-exempl/add-task-exempl.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -43,8 +44,6 @@ import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { BadgeModule } from 'primeng/badge';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
-import { ButtonModule } from 'primeng/button';
-import { CalendarModule } from 'primeng/calendar';
 import { CarouselModule } from 'primeng/carousel';
 import { CascadeSelectModule } from 'primeng/cascadeselect';
 import { ChartModule } from 'primeng/chart';
@@ -126,6 +125,13 @@ import { CardModule } from 'primeng/card';
 import { BlockUIModule } from 'primeng/blockui';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
+import { ButtonModule } from 'primeng/button';
+
+import { Component } from '@angular/core';
+import { CalendarModule } from 'primeng/calendar';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -254,7 +260,38 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     TreeSelectModule,
     TreeTableModule,
     AnimateModule,
-    CardModule
+    CardModule,
+    MatDatepickerModule,
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    BrowserAnimationsModule,
+    MatSlideToggleModule,
+    MatCardModule,
+    MatDialogModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    MatToolbarModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatTableModule,
+    InputTextModule,
+    ButtonModule,
+    CalendarModule,
+    FormsModule,
+    AutoCompleteModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule,
+    MatAutocompleteModule,
+    DropdownModule
   ],
   providers: [
     provideClientHydration(),
@@ -271,7 +308,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
           },
         ],
         callback: 'initGoogleOneTap',
-        onError: (err) => {
+        onError: (err:any) => {
           console.error(err);
         }
       } as SocialAuthServiceConfig,
@@ -279,4 +316,4 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
