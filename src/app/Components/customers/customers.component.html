@@ -1,7 +1,7 @@
 <div *ngFor="let customer of customers, let i = index">
     <div>{{ customer.firstName }}</div>
     <div>{{ customer.lastName }}</div>
-
+<div>{{ customer.status.description }}</div>
     <button (click)="editCustomer(customer.customerId,i)">לעריכת הלקוח</button>
     <div>
         <button (click)="deleteCustomer(customer.customerId)">למחיקת הלקוח</button>
@@ -65,12 +65,17 @@
                 </div>
                 <div class="form-group">
                     <label for="status">סטטוס</label>
-                    <input type="text" formControlName="status" required placeholder="סטטוס" />
+                    <select id="status" formControlName="status" class="form-control"  (change)="selectItem($event)">
+                        <option *ngFor="let statusCode of statusCodeUser "  [value]="statusCode.id">
+                            {{ statusCode.description }}
+                        </option>
+                    </select>
                     <div *ngIf="submitted && customerForm.controls['status'].errors">
                         <span *ngIf="customerForm.controls['status'].errors['required']">status is required.</span>
                         <span *ngIf="customerForm.controls['status'].errors['status']">Invalid status format.</span>
                     </div>
                 </div>
+                
                 <div class="form-group">
                     <label for="createdDate">תאריך</label>
                     <input type="date" formControlName="createdDate" required placeholder="תאריך" />
@@ -139,12 +144,17 @@
     </div>
     <div class="form-group">
         <label for="status">סטטוס</label>
-        <input type="text" formControlName="status" required placeholder="סטטוס" />
-        <div *ngIf="submitted1 && customerForm.controls['status'].errors">
-            <span *ngIf="customerForm.controls['status'].errors['required']">שדה חובה </span>
+        <select id="status" formControlName="status" class="form-control"  (change)="selectItem($event)">
+            <option *ngFor="let statusCode of statusCodeUser "  [value]="statusCode.id">
+                {{ statusCode.description }}
+            </option>
+        </select>
+        <div *ngIf="submitted && customerForm.controls['status'].errors">
+            <span *ngIf="customerForm.controls['status'].errors['required']">status is required.</span>
             <span *ngIf="customerForm.controls['status'].errors['status']">Invalid status format.</span>
         </div>
     </div>
+    
     <div class="form-group">
         <label for="createdDate">תאריך</label>
         <input type="date" formControlName="createdDate" required placeholder="תאריך" />

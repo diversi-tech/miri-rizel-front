@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { StatusCodeUser } from '@app/Model/StatusCodeUser';
 import { Customer } from 'src/app/Model/Customers';
 import { CustomersService } from 'src/app/Services/customers.service';
 import { ValidatorsService } from 'src/app/Services/validators.service';
@@ -10,6 +11,7 @@ import { ValidatorsService } from 'src/app/Services/validators.service';
   styleUrls: ['./customers.component.css']
 })
 export class CustomersComponent implements OnInit {
+  statusCodeUser: StatusCodeUser[] = []
   customers: Customer[] = [];
   newCustomerFlag: boolean = false;
   editCustomerFlag: boolean = false;
@@ -18,9 +20,12 @@ export class CustomersComponent implements OnInit {
   submitted1 = false
   date: Date = new Date();
   customerForm!: FormGroup;
-  editcustomer: Customer = { customerId: 0, firstName: "", lastName: "", phone: "", email: "", businessName: "", source: "", status: "", createdDate: this.date };
-  newCustomer: Customer = { customerId: 0, firstName: "", lastName: "", phone: "", email: "", businessName: "", source: "", status: "", createdDate: this.date };
+  editcustomer!: Customer;
+  newCustomer!: Customer;
+  s!: StatusCodeUser;
+  selectedStatus!: StatusCodeUser;
 
+  status: any;
   ngOnInit(): void {
     this.customerForm = this.formBuilder.group({
       customerId: [0],
@@ -33,10 +38,17 @@ export class CustomersComponent implements OnInit {
       status: ['', [Validators.required]],
       createdDate: ['', [Validators.required]],
     });
+    this.selectedStatus = this.statusCodeUser[0];
   }
 
-  constructor(private formBuilder: FormBuilder, private customerService: CustomersService,private validatorsService:ValidatorsService) {
+  constructor(private formBuilder: FormBuilder, private customerService: CustomersService, private validatorsService: ValidatorsService) {
     this.customerService.GetAllCustomers().subscribe(res => this.customers = res);
+    this.customerService.GetAllStatusUser().subscribe(res => {
+      this.statusCodeUser = res,
+      console.log(this.statusCodeUser);
+
+    })
+
   }
   get formControls() { return this.customerForm.controls; }
 
@@ -46,21 +58,24 @@ export class CustomersComponent implements OnInit {
   }
 
   addCustomerSubmit() {
+
     this.submitted1 = true;
     this.newCustomer = this.customerForm.value;
-      if (this.customerForm.invalid)
+    this.selectedStatus = this.statusCodeUser.find(s => s.id == this.status) as StatusCodeUser;
+    this.newCustomer.status = this.selectedStatus;
+    console.log(this.customerForm);
+    
+    if (this.customerForm.invalid)
       return;
+
     this.customerService.AddNewCustomer(this.newCustomer).subscribe(() => {
       this.customerService.GetAllCustomers().subscribe(res => this.customers = res);
       this.submitted1 = false; this.newCustomerFlag = false;
-      this.customerForm.reset(); 
+      this.customerForm.reset();
     });
-    // <-- Make sure to call reset() as a method with ()
-    console.log(this.customers);
   }
 
   editCustomer(customerId: number, index: number) {
-    console.log(index);
     this.editCustomerFlag = true;
     this.editCustomerId = index;
     this.customerService.GetCustomerById(customerId).subscribe(res1 => {
@@ -68,22 +83,23 @@ export class CustomersComponent implements OnInit {
       this.customerForm.setValue(res1)
       this.customerService.GetAllCustomers().subscribe(res => this.customers = res);
     });
-    console.log(this.editCustomerId);
   }
 
   editCustomerSubmit(id: number): void {
+
     this.submitted = true;
-    console.log("submit111");
     this.editcustomer = this.customerForm.value;
-    this.editcustomer.customerId = id;
+    this.editcustomer.status = this.selectedStatus;
     if (this.customerForm.invalid)
       return;
+    this.editcustomer.customerId = id;
+    this.selectedStatus = this.statusCodeUser.find(s => s.id == this.status) as StatusCodeUser;
     this.customerService.EditCustomer(this.editcustomer).subscribe(() => {
       this.customerService.GetAllCustomers().subscribe(res => this.customers = res);
       this.submitted = false;
       this.editCustomerId = -1;
       this.editCustomerFlag = false;
-      this.customerForm.reset(); 
+      this.customerForm.reset();
     });
   }
 
@@ -92,5 +108,13 @@ export class CustomersComponent implements OnInit {
       this.customerService.GetAllCustomers().subscribe(res => this.customers = res);
     });
   }
+
+  selectItem(event: any) {
+    this.status = event.target.value;
+    console.log(`status: ${this.status}`);
+
+  }
+
+
 
 }

@@ -1,3 +1,5 @@
+import { StatusCodeUser } from "./StatusCodeUser";
+
 export interface Customer {
     customerId: number,
     firstName: string,
@@ -6,7 +8,7 @@ export interface Customer {
     email: string,
     businessName: string,
     source: string,
-    status: string,
-    createdDate: Date,
+    status: StatusCodeUser,
+    createdDate?: Date,
     // projects: Project[],
 }
