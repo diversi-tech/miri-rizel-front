@@ -28,34 +28,9 @@ export class ListLeadsComponent {
   constructor(private leadService: LeadService, private userService: UserService, private router: Router, private resolver: ComponentFactoryResolver) { }
 
   ngOnInit() {
-    console.log("ExempleComponent");
-
-    this.leadService.getAllLeads().subscribe(
-      (Leads: Array<Lead>) => {
-        this.Leads = Leads;
-        this.loading= false;
-        // // this.loading = false;
-        // console.log(this.Leads);
-        // this.userService.getAll().subscribe(
-        //   (users: Array<User>) => {
-        //     this.users = users;
-        //     this.loading = false;
-        //     console.log(this.users);
-        //   },
-      }
-    //   (error) => {
-    //         console.error('Error fetching users:', error);
-    //         this.loading = false; // לוודא שהטעינה מפסיקה גם במקרה של שגיאה
-    //       }
-    //     );
-    //   },
-    //   (error) => {
-    //     console.error('Error fetching Leads:', error);
-    //     this.loading = false; // לוודא שהטעינה מפסיקה גם במקרה של שגיאה
-    //   }
-    // );
-    )
+    this.refreshData();
   }
+
   onEditLead(Lead: Lead) {
     // Handle edit logic here
     console.log('Edit Lead:', Lead);
@@ -76,10 +51,20 @@ export class ListLeadsComponent {
     this.genericBourd.PopTable(userFilter, loading, col$types,objData,objFields,positionD);
   }
   componentType!: Type<any>;
-  addLead(){
+   addLead(){
     this.componentType = AddLeadComponent;
     this.popUpAddOrEdit("Add Lead");
     }
+
+     refreshData() {
+      this.leadService.getAllLeads().subscribe(
+        (Leads: Array<Lead>) => {
+          this.Leads = Leads;
+          this.loading= false;
+          console.log("refreshData: ", this.Leads);
+        })
+    }
+  
 
     popUpAddOrEdit(title: string){
       Swal.fire({
@@ -90,8 +75,10 @@ export class ListLeadsComponent {
           const container = document.getElementById('popupContainer');
           if (container) {
              const factory = this.resolver.resolveComponentFactory(this.componentType);
-            const componentRef = this.popupContainer.createComponent(factory);
-            container.appendChild(componentRef.location.nativeElement);
+             const componentRef = this.popupContainer.createComponent(factory);
+             componentRef.instance.dataRefreshed.subscribe(() => {
+              this.refreshData();})
+             container.appendChild(componentRef.location.nativeElement);
           }
         },
       });
