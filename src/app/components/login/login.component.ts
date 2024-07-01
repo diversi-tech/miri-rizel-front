@@ -5,7 +5,7 @@ import { User } from 'src/app/Model/User';
 import { ResetPasswordService } from '../../Services/reset-password.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
-import { UserService } from 'src/app/Services/user.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -114,6 +114,6 @@ export class LoginComponent implements OnInit {
   signUp() {
     // פה יהיה ניתוב לדף הרישום
     // this.router.navigate(['/sign-up'])
-    this.router.navigate(['/project'])
+    this.router.navigate(['/Addproject'])
   }
 }

@@ -26,7 +26,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgxGoogleSignInModule } from 'ngx-google-sign-in';
 import { RouterModule } from '@angular/router';
 import { SignUpComponent } from './Components/sign-up/sign-up.component';
-import { ProjectComponent } from './Components/project/project.component';
+import { ProjectsTableComponent } from './projects-table/projects-table.component';
+import { AddProjectComponent } from './Components/add-project/add-project.component';
+
 
 
 @NgModule({
@@ -39,7 +41,9 @@ import { ProjectComponent } from './Components/project/project.component';
     EditUserComponent,
     AddUserComponent,
     SignUpComponent,
-    ProjectComponent,
+    ProjectsTableComponent,
+    AddProjectComponent,
+   
    
   ],
 

@@ -8,17 +8,18 @@ import { DatePipe, DATE_PIPE_DEFAULT_OPTIONS, formatDate } from '@angular/common
   providedIn: 'root',
 })
 export class ProjectsService {
-    private apiUrl = 'https://localhost:7141/projects/';
+    private apiUrl = 'https://localhost:7141/projects';
 
     constructor(private http: HttpClient) {}
+
     addProject(projectDetails: Project): Observable<any> {
        debugger
-       const url = `${this.apiUrl}Add`;
-  
-       
+       const url = `${this.apiUrl}`;
         return this.http.post(url, projectDetails);
       }
-    //   resetPassword(email: string): Observable<any> {
-    //     return this.http.post<any>(`${this.apiUrl}Reset`, { email });
-    //   }
+      getprojects():Observable<boolean>{
+        debugger
+        return this.http.get<boolean>(`${this.apiUrl}`)
+      }
+   
 }

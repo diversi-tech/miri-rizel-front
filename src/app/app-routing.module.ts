@@ -10,7 +10,8 @@ import { LoginComponent } from './Components/login/login.component';
 import { AddUserComponent } from './Components/add-user/add-user.component';
 import { EditUserComponent } from './Components/edit-user/edit-user.component';
 import { SignUpComponent } from './Components/sign-up/sign-up.component';
-import { ProjectComponent } from './Components/project/project.component';
+
+import { AddProjectComponent } from './Components/add-project/add-project.component';
 
 const routes: Routes = [
   { path: 'worker', component: WorkerComponentComponent },
@@ -22,7 +23,8 @@ const routes: Routes = [
   { path: 'add', component: AddUserComponent },
   { path: 'sign-up', component: SignUpComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'project', component: ProjectComponent },
+ 
+  { path: 'Addproject', component: AddProjectComponent },
   {
     path: 'ResetPassword',
     component: ResetPasswordComponent,
