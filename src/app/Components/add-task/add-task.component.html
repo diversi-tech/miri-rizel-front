@@ -13,7 +13,7 @@
       <textarea matInput formControlName="description"></textarea>
     </mat-form-field>
 
-    <mat-form-field>
+     <mat-form-field>
       <mat-label>הכנס תאריך יעד</mat-label>
       <input class="input-style" matInput [matDatepicker]="picker" formControlName="dueDate" required
         placeholder="dd/mm/yyyy" />
@@ -30,25 +30,22 @@
           </ng-container>
         </ng-template>
       </mat-error>
-    </mat-form-field>
+    </mat-form-field> 
 
 
     <div class="card flex justify-content-center">
       <p-dropdown formControlName="priority" [options]="priorities" optionLabel="description"
         placeholder="בחר עדיפות" />
-      <div *ngIf="priority!.invalid && (priority!.touched || priority!.dirty)">
-        <small class="error">שדה חובה</small>
-      </div>
+        <mat-error *ngIf="priority!.invalid && (priority!.touched || priority!.dirty)">שדה חובה </mat-error>
     </div>
     <br>
     <div class="card flex justify-content-center">
       <p-dropdown formControlName="status" [options]="statuses" optionLabel="description" placeholder="בחר סטטוס" />
-      <div *ngIf="status!.invalid && (status!.touched || status!.dirty)">
-        <small class="error">שדה חובה</small>
-      </div>
+      <mat-error *ngIf="status!.invalid && (status!.touched || status!.dirty)">שדה חובה </mat-error>
     </div>
     <br>
-    <div class="card flex justify-content-center">
+    <label for="assignedTo">בחר לקוח</label>
+    <div id="assignedTo" class="card flex justify-content-center">
       <p-autoComplete [dropdown]="true" [suggestions]="filteredUsers" (completeMethod)="filterUserAuto($event)"
         field="firstName" (onSelect)="onUserSelected($event)" formControlName="assignedTo">
         <ng-template let-user pTemplate="item">
@@ -62,7 +59,8 @@
       </mat-error>
     </div>
     <br>
-    <div class="card flex justify-content-center">
+    <label for="project">בחר פרויקט</label>
+    <div id="project" class="card flex justify-content-center">
       <p-autoComplete [dropdown]="true" [suggestions]="filteredProjects" (completeMethod)="filterProjectAuto($event)"
         field="name" (onSelect)="onProjectSelected($event)" formControlName="project">
       </p-autoComplete>

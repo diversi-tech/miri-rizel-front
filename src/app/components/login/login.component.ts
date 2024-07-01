@@ -80,7 +80,6 @@ export class LoginComponent implements OnInit {
       }
     );
   }
-
   resetPassword() {
     if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email.value)) {
       localStorage.setItem('user', JSON.stringify(this.email.value));

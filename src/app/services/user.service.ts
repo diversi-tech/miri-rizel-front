@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { Observable, catchError, of, switchMap, tap, throwError } from 'rxjs';
 import { User } from '../Model/User';
 
 @Injectable({
@@ -65,4 +65,14 @@ export class UserService {
   savePassword(email: string, password: string): Observable<any> {
     return this.http.put<boolean>(`${this.apiUrl}`, { email, password });
   }
+  // getAll():Observable<Array<User>> {
+  //   return this.http.get<Array<User>>(`${this.apiUrl}ReadAll`).pipe(
+  //     switchMap((response: Array<User>) => {
+  //       return of(response);
+  //     }),
+  //     catchError(error => {
+  //       return throwError(error);
+  //     })
+  //   );
+  // }
 }

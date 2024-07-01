@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Task } from '../Model/Task';
+import {  catchError, of, switchMap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -31,4 +32,18 @@ export class TaskService {
   getAllPriorities(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}readAllPriority`)
   }
+
+  editUserPost(task: Task) {
+    this.http.put(`${this.apiUrl}`, task);
+  }
+  getAll():Observable<Array<Task>> {
+    return this.http.get<Array<Task>>(`${this.apiUrl}`).pipe(
+      switchMap((response: Array<Task>) => {
+        return of(response);
+      }),
+      catchError(error => {
+        return throwError(error);
+      })
+    );
+  } 
 }

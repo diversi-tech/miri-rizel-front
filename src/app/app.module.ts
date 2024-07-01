@@ -1,48 +1,137 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
+import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { SocialLoginModule, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
+import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
 import { ResetPasswordComponent } from './Components/reset-password/reset-password.component';
 import { AddUserComponent } from './Components/add-user/add-user.component';
+import { DialogComponent } from './Components/dialog/dialog.component';
+import { AuthCodeDialogComponent } from './Components/auth-code-dialog/auth-code-dialog.component';
+import { LoginComponent } from './Components/login/login.component';
+import { EditUserComponent } from './Components/edit-user/edit-user.component';
+import { GoogleComponent } from './Components/google/google.component';
+import { SignUpComponent } from './Components/sign-up/sign-up.component';
+import { LeadComponent } from './Components/Lead-components/lead/lead.component';
+import { ListLeadsComponent } from './Components/Lead-components/list-leads/list-leads.component';
+import { AddLeadComponent } from './Components/Lead-components/add-lead/add-lead.component';
+import { TaskBoardComponent } from './Components/task-board/task-board.component';
+import { AddTaskComponent } from './Components/add-task/add-task.component';
+import { GenericBourdComponent } from './Components/generic-bourd/generic-bourd.component';
+import { ExempleComponent } from './Components/exemple/exemple.component';
+import { AddTaskExemplComponent } from './Components/add-task-exempl/add-task-exempl.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCardModule } from '@angular/material/card';
-
 import { MatDialogModule } from '@angular/material/dialog';
-
-// import { MatDividerModule } from '@angular/material/driver';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DialogComponent } from './Components/dialog/dialog.component';
-import { AuthCodeDialogComponent } from './Components/auth-code-dialog/auth-code-dialog.component';
-import { LoginComponent } from './Components/login/login.component';
-// import { ErrorHandlingComponent } from './error-handling/error-handling.component';
-import { EditUserComponent } from './Components/edit-user/edit-user.component';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { NgxGoogleSignInModule } from 'ngx-google-sign-in';
-import { RouterModule } from '@angular/router';
-import { SignUpComponent } from './Components/sign-up/sign-up.component';
-import { TaskBoardComponent } from './Components/task-board/task-board.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
-import { InputTextModule } from 'primeng/inputtext';
-import { ButtonModule } from 'primeng/button';
-import { AddTaskComponent } from './Components/add-task/add-task.component';
+
+import { AccordionModule } from 'primeng/accordion';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { AvatarModule } from 'primeng/avatar';
+import { AvatarGroupModule } from 'primeng/avatargroup';
+import { BadgeModule } from 'primeng/badge';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { CarouselModule } from 'primeng/carousel';
+import { CascadeSelectModule } from 'primeng/cascadeselect';
+import { ChartModule } from 'primeng/chart';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ChipModule } from 'primeng/chip';
+import { ChipsModule } from 'primeng/chips';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { ColorPickerModule } from 'primeng/colorpicker';
+import { ContextMenuModule } from 'primeng/contextmenu';
+import { DataViewModule } from 'primeng/dataview';
+import { VirtualScrollerModule } from 'primeng/virtualscroller';
+import { DialogModule } from 'primeng/dialog';
+import { DividerModule } from 'primeng/divider';
+import { DockModule } from 'primeng/dock';
+import { DragDropModule } from 'primeng/dragdrop';
 import { DropdownModule } from 'primeng/dropdown';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { EditorModule } from 'primeng/editor';
+import { FieldsetModule } from 'primeng/fieldset';
+import { FileUploadModule } from 'primeng/fileupload';
+import { GalleriaModule } from 'primeng/galleria';
+import { InplaceModule } from 'primeng/inplace';
+import { InputMaskModule } from 'primeng/inputmask';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ImageModule } from 'primeng/image';
+import { KnobModule } from 'primeng/knob';
+import { ListboxModule } from 'primeng/listbox';
+import { MegaMenuModule } from 'primeng/megamenu';
+import { MenuModule } from 'primeng/menu';
+import { MenubarModule } from 'primeng/menubar';
+import { MessageModule } from 'primeng/message';
+import { MessagesModule } from 'primeng/messages';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { OrderListModule } from 'primeng/orderlist';
+import { OrganizationChartModule } from 'primeng/organizationchart';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { PaginatorModule } from 'primeng/paginator';
+import { PanelModule } from 'primeng/panel';
+import { PanelMenuModule } from 'primeng/panelmenu';
+import { PasswordModule } from 'primeng/password';
+import { PickListModule } from 'primeng/picklist';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { RatingModule } from 'primeng/rating';
+import { ScrollerModule } from 'primeng/scroller';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { ScrollTopModule } from 'primeng/scrolltop';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { SidebarModule } from 'primeng/sidebar';
+import { SkeletonModule } from 'primeng/skeleton';
+import { SlideMenuModule } from 'primeng/slidemenu';
+import { SliderModule } from 'primeng/slider';
+import { SpeedDialModule } from 'primeng/speeddial';
+import { SpinnerModule } from 'primeng/spinner';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { SplitterModule } from 'primeng/splitter';
+import { StepsModule } from 'primeng/steps';
+import { TabMenuModule } from 'primeng/tabmenu';
+import { TableModule } from 'primeng/table';
+import { TabViewModule } from 'primeng/tabview';
+import { TagModule } from 'primeng/tag';
+import { TerminalModule } from 'primeng/terminal';
+import { TieredMenuModule } from 'primeng/tieredmenu';
+import { TimelineModule } from 'primeng/timeline';
+import { ToastModule } from 'primeng/toast';
+import { ToggleButtonModule } from 'primeng/togglebutton';
+import { ToolbarModule } from 'primeng/toolbar';
+import { TooltipModule } from 'primeng/tooltip';
+import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
+import { TreeModule } from 'primeng/tree';
+import { TreeSelectModule } from 'primeng/treeselect';
+import { TreeTableModule } from 'primeng/treetable';
+import { AnimateModule } from 'primeng/animate';
+import { CardModule } from 'primeng/card';
+import { BlockUIModule } from 'primeng/blockui';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+
+import { ButtonModule } from 'primeng/button';
 
 import { Component } from '@angular/core';
 import { CalendarModule } from 'primeng/calendar';
-import { AutoCompleteModule } from 'primeng/autocomplete';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -53,12 +142,126 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     LoginComponent,
     EditUserComponent,
     AddUserComponent,
+    GoogleComponent,
     SignUpComponent,
+    LeadComponent,
+    ListLeadsComponent,
+    AddLeadComponent,
     TaskBoardComponent,
     AddTaskComponent,
+    GenericBourdComponent,
+    ExempleComponent,
+    AddTaskExemplComponent,
   ],
-
   imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    RouterModule,
+    SocialLoginModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatSlideToggleModule,
+    MatCardModule,
+    MatDialogModule,
+    MatToolbarModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatTableModule,
+    InputTextModule,
+    ButtonModule,
+    ToastModule,
+    ProgressBarModule,
+    TagModule,
+    AvatarModule,
+    AvatarGroupModule,
+    AccordionModule,
+    AutoCompleteModule,
+    BadgeModule,
+    BreadcrumbModule,
+    BlockUIModule,
+    CalendarModule,
+    CarouselModule,
+    CascadeSelectModule,
+    ChartModule,
+    CheckboxModule,
+    ChipsModule,
+    ChipModule,
+    ColorPickerModule,
+    ConfirmDialogModule,
+    ConfirmPopupModule,
+    ContextMenuModule,
+    VirtualScrollerModule,
+    DataViewModule,
+    DialogModule,
+    DividerModule,
+    DockModule,
+    DragDropModule,
+    DropdownModule,
+    DynamicDialogModule,
+    EditorModule,
+    FieldsetModule,
+    FileUploadModule,
+    GalleriaModule,
+    InplaceModule,
+    InputMaskModule,
+    InputSwitchModule,
+    InputTextareaModule,
+    InputNumberModule,
+    ImageModule,
+    KnobModule,
+    ListboxModule,
+    MegaMenuModule,
+    MenuModule,
+    MenubarModule,
+    MessageModule,
+    MessagesModule,
+    MultiSelectModule,
+    OrganizationChartModule,
+    OrderListModule,
+    OverlayPanelModule,
+    PaginatorModule,
+    PanelModule,
+    PanelMenuModule,
+    PasswordModule,
+    PickListModule,
+    ProgressSpinnerModule,
+    RadioButtonModule,
+    RatingModule,
+    SelectButtonModule,
+    SidebarModule,
+    ScrollerModule,
+    ScrollPanelModule,
+    ScrollTopModule,
+    SkeletonModule,
+    SlideMenuModule,
+    SliderModule,
+    SpeedDialModule,
+    SpinnerModule,
+    SplitterModule,
+    SplitButtonModule,
+    StepsModule,
+    TableModule,
+    TabMenuModule,
+    TabViewModule,
+    TerminalModule,
+    TieredMenuModule,
+    TimelineModule,
+    ToggleButtonModule,
+    ToolbarModule,
+    TooltipModule,
+    TriStateCheckboxModule,
+    TreeModule,
+    TreeSelectModule,
+    TreeTableModule,
+    AnimateModule,
+    CardModule,
+    MatDatepickerModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -88,9 +291,29 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatNativeDateModule,
     MatSelectModule,
     MatAutocompleteModule,
-    DropdownModule  ],
-  providers: [],
+    DropdownModule
+  ],
+  providers: [
+    provideClientHydration(),
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '427515481723-ja7nlkmti3amubd5e5qbtdig27fc06ik.apps.googleusercontent.com'
+            )
+          },
+        ],
+        callback: 'initGoogleOneTap',
+        onError: (err:any) => {
+          console.error(err);
+        }
+      } as SocialAuthServiceConfig,
+    }
+  ],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule { }
