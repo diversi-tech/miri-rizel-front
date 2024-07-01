@@ -1,0 +1,94 @@
+
+  <div class="add-container">
+    <!-- <button [formGroup]="ProjectForm" (ngSubmit)="submit()">bjhdc</button> -->
+    <form [formGroup]="ProjectForm" (ngSubmit)="submit()">
+      <mat-form-field class="form-field" appearance="fill">
+        <mat-label>ת.ז</mat-label>
+        <input matInput type="number" id="projectId" formControlName="projectId" />
+      </mat-form-field>
+
+      <mat-form-field class="form-field" appearance="fill">
+        <mat-label>שם</mat-label>
+        <input matInput type="text" id="Name" formControlName="Name" />
+      </mat-form-field>
+
+      <mat-form-field class="form-field" appearance="fill">
+        <mat-label>תאור</mat-label>
+        <input matInput type="text" id="description" formControlName="description" />
+        
+
+      </mat-form-field>
+      <mat-form-field class="form-field" appearance="fill">
+        <mat-label>תחילת פרויקט</mat-label>
+        <input matInput type="date" id="startDate" formControlName="startDate" />
+      </mat-form-field>
+
+      <mat-form-field class="form-field" appearance="fill">
+        <mat-label>סיום פרויקט</mat-label>
+        <input matInput type="date" id="endDate" formControlName="endDate" />
+      </mat-form-field>
+
+      <mat-form-field class="form-field" appearance="fill">
+        <mat-label>סטאטוס </mat-label>
+        <input matInput type="text" id="status" formControlName="status" />
+      </mat-form-field>
+
+      <mat-form-field class="form-field" appearance="fill">
+        <mat-label>createdDate </mat-label>
+        <input matInput type="date" id="createdDate" formControlName="createdDate" />
+      </mat-form-field>
+
+      <mat-form-field class="form-field" appearance="fill">
+        <mat-label>customerId </mat-label>
+        <input matInput type="number" id="customerId" formControlName="customerId" />
+      </mat-form-field>
+
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="ProjectForm.invalid"
+      >
+        סיום
+      </button>
+    </form>
+  </div>
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
