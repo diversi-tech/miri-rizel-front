@@ -1,5 +1,4 @@
-
-<div class="edit-container">
+<div *ngIf="flag" class="edit-container">
     <form [formGroup]="editForm" (ngSubmit)="toEnter()">
 
         <div>

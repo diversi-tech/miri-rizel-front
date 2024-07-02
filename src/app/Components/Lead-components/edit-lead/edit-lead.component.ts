@@ -1,8 +1,9 @@
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LeadService } from '@app/services/lead.service';
-import { Component, OnInit } from '@angular/core';
+import { LeadService } from '@app/Services/lead.service';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Lead } from '@app/Model/Lead';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit-lead',
@@ -10,33 +11,44 @@ import { Lead } from '@app/Model/Lead';
   styleUrls: ['./edit-lead.component.css']
 })
 export class EditLeadComponent {
+  @Output() dataRefreshed: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor(private formBuilder: FormBuilder, private lead: LeadService, private router: Router, private active: ActivatedRoute) {
-    this.active.queryParams.subscribe(params => {
-      this.greeting = params['greeting'];
-      console.dir(this.greeting); 
-      this.lead.GetLeadById(this.greeting).subscribe((lead2: Lead) => {
-        this.LeadToKnowInput = lead2;
-        this.editForm = this.formBuilder.group({
-          email: [this.LeadToKnowInput.email, [Validators.required, Validators.email]],
-          firstName: [this.LeadToKnowInput.firstName, [Validators.required]],
-          lastName: [this.LeadToKnowInput.lastName, [Validators.required]],
-          phone: [this.LeadToKnowInput.phone, [Validators.required]],
-          source: [this.LeadToKnowInput.source, [Validators.required]],
-          lastContactedDate: [this.LeadToKnowInput.lastContactedDate, [Validators.required, this.futureDateValidator()]],
-          businessName: [this.LeadToKnowInput.businessName, [Validators.required]],
-          notes: [this.LeadToKnowInput.notes, [Validators.required]],
-        });
-      });
+  constructor(private formBuilder: FormBuilder, private lead: LeadService, private router: Router, private active: ActivatedRoute) { }
+
+  fullForm() {
+    this.editForm = this.formBuilder.group({
+      email: [this.LeadToKnowInput.email, [Validators.required, Validators.email]],
+      firstName: [this.LeadToKnowInput.firstName, [Validators.required]],
+      lastName: [this.LeadToKnowInput.lastName, [Validators.required]],
+      phone: [this.LeadToKnowInput.phone, [Validators.required]],
+      source: [this.LeadToKnowInput.source, [Validators.required]],
+      lastContactedDate: [this.extractDate(String(this.LeadToKnowInput.lastContactedDate)), [Validators.required, this.futureDateValidator()]],
+      businessName: [this.LeadToKnowInput.businessName, [Validators.required]],
+      notes: [this.LeadToKnowInput.notes, [Validators.required]],
     });
-    this.active.queryParams.subscribe(params => {
-      const greeting = params['greeting'];
-  });
+    this.flag = true;
   }
 
-  greeting: Number = 0;
+  extractDate(dateTime: string): string {
+    const date = new Date(dateTime);
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2); // Months are zero-based
+    const day = ('0' + date.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
+  }
+
+  setData(data: any) {
+    this.data = data;
+    this.lead.GetLeadById(this.data).subscribe((lead2: Lead) => {
+      this.LeadToKnowInput = lead2;
+      this.fullForm();
+    });
+  }
+
+  data: any;
   editForm!: FormGroup;
   submitted = false;
+  flag = false;
   showInput: boolean = false;
   allLeads: Lead[] = [];
   LeadToKnowInput: Lead = { leadId: 1, firstName: '', lastName: '', phone: '', email: '', source: '', createdDate: new Date(), lastContactedDate: new Date(), businessName: '', notes: '' };
@@ -50,32 +62,23 @@ export class EditLeadComponent {
     };
   }
 
-  ngOnInit(): void {
-    this.loadAllLeads();
-  }
-
-  loadAllLeads(): void {
-    this.lead.getAllLeads().subscribe((l: any) => {
-      l.forEach((c: any) => {
-        this.allLeads.push(c);
-      });
-    });
-  }
-
   get formControls() { return this.editForm.controls; }
 
-  toEnter() {
-    console.log(this.greeting);
+  async toEnter() {
     this.submitted = true;
     if (this.editForm.invalid) { return; }
-    this.lead.editLead(this.editForm.value, this.greeting).subscribe(updatedLead => {
-      console.log('Lead successfully updated:', updatedLead);
-    }, error => {
-      console.error('Error editing lead:', error);
+    this.lead.editLead(this.editForm.value, this.data).subscribe()
+    await this.delay(50);
+    Object.keys(this.editForm.controls).forEach((key) => {
+      this.editForm.controls[key].markAsUntouched();
     });
-    this.router.navigate(['../']);
+    this.dataRefreshed.emit();
+    Swal.close();
   }
 
+  delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 }
 
 

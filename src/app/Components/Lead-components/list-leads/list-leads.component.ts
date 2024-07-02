@@ -1,12 +1,13 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ComponentFactoryResolver, Type, ViewChild, ViewContainerRef, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Project } from 'src/app/Model/Project';
 import { Lead } from 'src/app/Model/Lead';
-import { User } from 'src/app/Model/User';
-import { TaskService } from 'src/app/Services/task.service';
-import { UserService } from 'src/app/Services/user.service';
 import { GenericBourdComponent } from '../../generic-bourd/generic-bourd.component';
-import { LeadService } from '@app/services/lead.service';
+import { LeadService } from 'src/app/Services/lead.service';
+import Swal from 'sweetalert2';
+import { EditLeadComponent } from '../edit-lead/edit-lead.component';
+import { DialogComponent } from '@app/Components/dialog/dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-list-leads',
@@ -15,35 +16,66 @@ import { LeadService } from '@app/services/lead.service';
 })
 export class ListLeadsComponent {
 
-  //constructor(private router: Router){}
   Leads: Lead[] = [];
-  users: User[] = [];
   projects: Project[] = [];
   loading: boolean = true;
+  componentType!: Type<any>;
   @ViewChild(GenericBourdComponent) genericBourd!: GenericBourdComponent;
-
-  constructor(private leadService: LeadService, private userService: UserService, private router: Router) { }
+  @ViewChild('popupContainer', { read: ViewContainerRef }) popupContainer!: ViewContainerRef;
+  constructor(private dialog:MatDialog ,private leadService: LeadService, private router: Router, private resolver: ComponentFactoryResolver) { }
 
   ngOnInit() {
-    this.leadService.getAllLeads().subscribe(
-      (Leads: Array<Lead>) => {
-        this.Leads = Leads;
-        this.loading = false;
-      }
-    )
+    this.loadLeads();
   }
+
+  loadLeads(): void {
+    this.leadService.getAllLeads().subscribe(res => {
+      this.Leads = res;
+      this.loading = false;
+    });
+  }
+
   onEditLead(Lead: Lead) {
-    this.router.navigate(['editLead'], { queryParams: { greeting: Lead.leadId } });
+    this.componentType = EditLeadComponent;
+    this.popUpAddOrEdit("Edit Lead", Lead.leadId);
   }
 
   onDeleteLead(lead: Lead) {
-    // this.leadService.deleteLead(lead.leadId).subscribe(() => {
-    //   this.Leads = this.Leads.filter((l) => l.leadId !== lead.leadId);
-    // });
-    this.router.navigate(['deleteLead'], { queryParams: { greeting: lead.leadId } });
+      this.leadService.deleteLead(lead.leadId).subscribe((res:any)=>{this.loadLeads();
+  });
+  }
+ 
+  addLead(){
+    // this.componentType = AddLeadComponent;
+    // this.popUpAddOrEdit("Add Lead");
+  } 
+
+  popUpAddOrEdit(title: string, l:Number) {
+    Swal.fire({
+      title: title,
+      html: '<div id="popupContainer"></div>',
+      showConfirmButton: false,
+      didOpen: () => {
+        const container = document.getElementById('popupContainer');
+        if (container) {
+          const factory = this.resolver.resolveComponentFactory(this.componentType);
+          const componentRef = this.popupContainer.createComponent(factory);
+          componentRef.instance.setData(l);
+          componentRef.instance.dataRefreshed.subscribe(() => {
+            this.refreshData();})
+          container.appendChild(componentRef.location.nativeElement);
+        }
+      },
+    });
   }
 
-  addLead() {
-    this.router.navigate(['addLead']);
+  refreshData() {
+    this.leadService.getAllLeads().subscribe(
+      (Leads: Array<Lead>) => {
+        this.Leads = Leads;
+        this.loading= false;
+        console.log("refreshData: ", this.Leads);
+      })
   }
 }
+

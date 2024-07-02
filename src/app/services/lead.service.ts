@@ -26,11 +26,11 @@ export class LeadService {
 
   editLead(lead: Lead,id:Number): Observable<Lead>  {
     lead.leadId = id;
+    console.log(lead);
     return this.http.put<Lead>(`${this.apiUrl}`, lead);
   }
 
-  deleteLead(id: Number) {
-    console.log(id);
-    return this.http.delete(`${this.apiUrl}?id=${id}`);
+  deleteLead(id: Number): Observable<boolean> {
+    return this.http.delete<boolean>(`${this.apiUrl}?id=${id}`);
   }
 }

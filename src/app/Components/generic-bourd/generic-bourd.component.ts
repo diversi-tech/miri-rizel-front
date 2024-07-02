@@ -30,6 +30,7 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   @Output() edit = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
   @Output() dataUpdated = new EventEmitter<any>();
+  @Output() showAddComponent = new EventEmitter<any>();
   @ViewChild('popupContainer', { read: ViewContainerRef }) popupContainer!: ViewContainerRef;
   @ViewChild('dt') dt!: Table;
   constructor(private resolver: ComponentFactoryResolver) { }
@@ -200,4 +201,7 @@ export class GenericBourdComponent implements OnInit, OnChanges {
       },
     });
   }
+  openAddComponent(){
+    this.showAddComponent.emit();
+  };
 }

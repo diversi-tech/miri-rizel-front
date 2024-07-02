@@ -128,7 +128,7 @@ import { AnimateModule } from 'primeng/animate';
 import { CardModule } from 'primeng/card';
 import { BlockUIModule } from 'primeng/blockui';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { DeleteLeadComponent } from './Components/Lead-components/delete-lead/delete-lead.component';
+
 
 @NgModule({
   declarations: [
@@ -151,7 +151,6 @@ import { DeleteLeadComponent } from './Components/Lead-components/delete-lead/de
     AddTaskExemplComponent,
     EditLeadComponent,
     CustomerComponentComponent,
-    DeleteLeadComponent
   ],
   imports: [
     BrowserModule,
