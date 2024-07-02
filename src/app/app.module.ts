@@ -125,6 +125,7 @@ import { AnimateModule } from 'primeng/animate';
 import { CardModule } from 'primeng/card';
 import { BlockUIModule } from 'primeng/blockui';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { EditProjectComponent } from './Components/edit-project/edit-project.component';
 
 @NgModule({
   declarations: [
@@ -145,6 +146,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     GenericBourdComponent,
     ExempleComponent,
     AddTaskExemplComponent,
+    EditProjectComponent,
   ],
   imports: [
     BrowserModule,
