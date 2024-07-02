@@ -55,6 +55,7 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   }
 
   onDelete(rowData: any) {
+    debugger
     this.delete.emit(rowData);
   }
 
@@ -202,6 +203,7 @@ export class GenericBourdComponent implements OnInit, OnChanges {
     });
   }
   openAddComponent() {
+    debugger
     this.showAddComponent.emit();
   };
 }

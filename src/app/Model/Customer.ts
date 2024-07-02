@@ -10,7 +10,7 @@ export interface Representative {
 
 export interface Customer {
     id?: number;
-    name?: string;
+    firstName?: string;
     country?: Country;
     company?: string;
     date?: string | Date;

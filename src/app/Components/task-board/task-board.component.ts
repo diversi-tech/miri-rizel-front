@@ -46,14 +46,8 @@ export class TaskBoardComponent implements OnInit {
   constructor(private customerService: CustomerService, private taskService: TaskService, private userService: UserService) { }
 
   ngOnInit() {
-    this.customerService.getCustomersLarge().then((customers) => {
-      this.customers = customers;
-      this.loading = false;
+    
 
-      this.customers.forEach((customer) => (customer.date = new Date(<Date>customer.date)));
-
-
-    });
     this.taskService.getAll().subscribe(
       (tasks: Array<Task>) => {
         this.tasks = tasks;

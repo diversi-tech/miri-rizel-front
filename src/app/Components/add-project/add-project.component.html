@@ -1,0 +1,23 @@
+<p>add-project works!</p>
+<form class="add-container" [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+    <label for="name">Name:</label>
+    <input type="text" id="name" formControlName="name">
+  
+    <label for="description">Description:</label>
+    <textarea id="description" formControlName="description"></textarea>
+  
+    <label for="startDate">Start Date:</label>
+    <input type="date" id="startDate" formControlName="startDate">
+  
+    <label for="endDate">End Date:</label>
+    <input type="date" id="endDate" formControlName="endDate">
+  
+    <label for="status">Status:</label>
+    <input type="text" id="status" formControlName="status">
+  
+    <label for="customerId">Customer ID:</label>
+    <input type="number" id="customerId" formControlName="customerId">
+  <span *ngIf="!projectForm.valid">your details isnt correct</span>
+    <button type="submit" [disabled]="!projectForm.valid">Add Project</button>
+  </form>
+  

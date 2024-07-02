@@ -1,3 +1,5 @@
+import { Customer } from './Customer';
+import { Customer2 } from './Customer2';
 import { User } from './User';
 
 export interface Project {
@@ -7,7 +9,6 @@ export interface Project {
   startDate?: Date;
   endDate?: Date;
   status?: string;
-  // customerId?: Customer;
-  //   customer_id: number;
+  customer_id: Customer2;
   createdDate?: Date;
 }
