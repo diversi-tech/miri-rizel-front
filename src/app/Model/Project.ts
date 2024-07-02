@@ -1,10 +1,13 @@
+import { User } from './User';
+
 export interface Project {
-    name?: string,
-    description?: string;
-    startDate?:Date;
-    endDate?:Date;
-    status?: string;
-    customerId?:number;
-    createdDate?:Date;
-    projectId?:number
+  projectId: number;
+  name: string;
+  description?: string;
+  startDate?: Date;
+  endDate?: Date;
+  status?: string;
+  // customerId?: Customer;
+  //   customer_id: number;
+  createdDate?: Date;
 }

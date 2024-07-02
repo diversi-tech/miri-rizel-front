@@ -168,8 +168,8 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   getDataForPopTable(obj: any) {
     this.dataUpdated.emit(obj)
   }
-  getPosition(item: number,i:number): string {
-  // let List<any> n= this.getpositionData(i)
+  getPosition(item: number, i: number): string {
+    // let List<any> n= this.getpositionData(i)
     return ""
   }
   PopTable(data: any, loading: boolean, col$types: any, Data1?: any, objFields?: string[], Data2?: any[]) {
@@ -201,7 +201,7 @@ export class GenericBourdComponent implements OnInit, OnChanges {
       },
     });
   }
-  openAddComponent(){
+  openAddComponent() {
     this.showAddComponent.emit();
   };
 }

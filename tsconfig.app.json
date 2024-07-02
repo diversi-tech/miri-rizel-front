@@ -3,7 +3,8 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
-    "types": []
+    // שינוי שלי השורה הבאה לסנכרון עם יומן גוגל
+    "types": ["gapi", "gapi.auth2", "gapi.client.calendar"]
   },
   "files": [
     "src/main.ts"
