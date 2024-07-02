@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { EditLeadComponent } from '../edit-lead/edit-lead.component';
 import { DialogComponent } from '@app/Components/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { AddLeadComponent } from '../add-lead/add-lead.component';
 
 @Component({
   selector: 'app-list-leads',
@@ -46,11 +47,11 @@ export class ListLeadsComponent {
   }
  
   addLead(){
-    // this.componentType = AddLeadComponent;
-    // this.popUpAddOrEdit("Add Lead");
+    this.componentType = AddLeadComponent;
+    this.popUpAddOrEdit("Add Lead");
   } 
 
-  popUpAddOrEdit(title: string, l:Number) {
+  popUpAddOrEdit(title: string, l?:Number) {
     Swal.fire({
       title: title,
       html: '<div id="popupContainer"></div>',
@@ -60,6 +61,7 @@ export class ListLeadsComponent {
         if (container) {
           const factory = this.resolver.resolveComponentFactory(this.componentType);
           const componentRef = this.popupContainer.createComponent(factory);
+          if(l!=null && l!=undefined)         
           componentRef.instance.setData(l);
           componentRef.instance.dataRefreshed.subscribe(() => {
             this.refreshData();})
