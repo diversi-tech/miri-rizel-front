@@ -1,4 +1,9 @@
+.editCustomer {
+  display: none; /* הטמעת את הנכות הנוכחית באופן כברירת מחדל */
+}
+
 .addCustomer{
+
     max-width: 400px;
     margin: auto;
     padding: 20px;
@@ -66,7 +71,11 @@
   .editCustomer button:hover {
     background: #0056B3;
   }
-  .editCustomer div span {
+  .editCustomer  span {
     color: red;
     font-size: 12px;
   }
+  #editCustomerForm {
+    display: none; /* Initially hide the form */
+  }
+  

@@ -21,9 +21,10 @@ export class CustomersService {
   } 
   EditCustomer(editCustomer:Customer):Observable<boolean>{
    
-    console.log(editCustomer);
+  
     editCustomer.status=editCustomer.status as StatusCodeUser;
-    console.log(editCustomer.status.id);
+    console.log(editCustomer.status);
+    
     
     return this.http.put<boolean>(`https://localhost:7141/Customer/editCustomer/`,editCustomer);
   } 

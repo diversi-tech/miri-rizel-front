@@ -9,7 +9,7 @@ import { EditUserService } from '../../Services/edit-user.service';
   styleUrls: ['./edit-user.component.css']
 })
 export class EditUserComponent {
-  user: User = { firstName: "", lastName: "", password: "", role: "", email: "", createdDate: new Date() }
+  user: User = { userId:0,firstName: "", lastName: "", password: "", role: "", email: "", createdDate:new Date}
   flag: Boolean = false;
 
   constructor(private editUser:EditUserService) {

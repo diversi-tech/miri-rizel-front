@@ -1,5 +1,5 @@
 export interface Lead {
-  leadId: string;
+  leadId: Number;
   firstName: string;
   lastName: string;
   phone: string;

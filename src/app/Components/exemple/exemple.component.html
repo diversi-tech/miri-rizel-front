@@ -1,0 +1,13 @@
+<app-generic-bourd 
+[data]="tasks" 
+[loading]="loading"
+[globalFilterFields]="['title', 'description', 'priority', 'status','dueDate']"
+[col$types]="{'title':'text','description':'text','status':'position','priority':'position','dueDate':'date','assignedTo':'obj','project':'obj','createdDate':'date'}"
+[positionData]="[]"
+[objData]="[users,projects]"
+[objFields]="['email','name']"
+[popTable]="true"
+(edit)="onEditTask($event)"
+(delete)="onDeleteTask($event)"
+(dataUpdated)="filterData($event)">
+</app-generic-bourd>
