@@ -1,17 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/Services/user.service';
 
 @Component({
   selector: 'app-add-user',
   templateUrl: './add-user.component.html',
-  styleUrls: ['./add-user.component.css']
+  styleUrls: ['./add-user.component.css'],
 })
 export class AddUserComponent implements OnInit {
-
-  constructor(private formBuilder: FormBuilder, private users: UserService, private router: Router, private active: ActivatedRoute) {
-  }
+  constructor(
+    private formBuilder: FormBuilder,
+    private users: UserService,
+    private router: Router,
+    private active: ActivatedRoute
+  ) {}
 
   addForm!: FormGroup;
   submitted = false;
@@ -19,14 +28,16 @@ export class AddUserComponent implements OnInit {
   ngOnInit(): void {
     this.addForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required,this.passwordValidator]],
+      password: ['', [Validators.required, this.passwordValidator]],
       ConfirmPassword: ['', [Validators.required]],
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
     });
   }
 
-  get formControls() { return this.addForm.controls; }
+  get formControls() {
+    return this.addForm.controls;
+  }
 
   passwordValidator(pass: AbstractControl): ValidationErrors | null {
     const value = pass.value;
@@ -37,8 +48,7 @@ export class AddUserComponent implements OnInit {
     const hasLowerCase = /[a-z]/.test(value);
     const validLength = value.length >= 8;
     const passwordValid = hasNumber && hasLowerCase && validLength;
-    console.log(!passwordValid);
-    
+
     if (!passwordValid) {
       return { passwordInvalid: true };
     }
@@ -48,8 +58,8 @@ export class AddUserComponent implements OnInit {
   passwordsMatch: boolean = true;
 
   validatePasswords() {
-    const passwordOne = this.userDetails.password
-    const passwordTwo = this.userDetails.password2
+    const passwordOne = this.userDetails.password;
+    const passwordTwo = this.userDetails.password2;
     this.passwordsMatch = passwordOne === passwordTwo;
   }
 
@@ -58,10 +68,11 @@ export class AddUserComponent implements OnInit {
     password2: '',
   };
 
-
   toEnter() {
     this.submitted = true;
-    if (this.addForm.invalid) { return; }
+    if (this.addForm.invalid) {
+      return;
+    }
     //קריאת שרת להוספת המשתמש
     // this.users.addUser(this.userDetails).subscribe(
     //   response => {
@@ -73,31 +84,3 @@ export class AddUserComponent implements OnInit {
     // );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

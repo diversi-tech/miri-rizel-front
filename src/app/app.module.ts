@@ -28,6 +28,7 @@ import { AddTaskComponent } from './Components/add-task/add-task.component';
 import { GenericBourdComponent } from './Components/generic-bourd/generic-bourd.component';
 import { ExempleComponent } from './Components/exemple/exemple.component';
 import { AddTaskExemplComponent } from './Components/add-task-exempl/add-task-exempl.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -47,8 +48,6 @@ import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { BadgeModule } from 'primeng/badge';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
-import { ButtonModule } from 'primeng/button';
-import { CalendarModule } from 'primeng/calendar';
 import { CarouselModule } from 'primeng/carousel';
 import { CascadeSelectModule } from 'primeng/cascadeselect';
 import { ChartModule } from 'primeng/chart';
@@ -132,6 +131,16 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { CustomersComponent } from './Components/customers/customers.component';
 import { FormCustomerComponent } from './Components/form-customer/form-customer.component';
 
+import { ButtonModule } from 'primeng/button';
+
+import { Component } from '@angular/core';
+import { CalendarModule } from 'primeng/calendar';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { DocumentComponent } from './Components/document/document.component';
+// import { DocumentComponent } from './Components/document/document.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -153,6 +162,7 @@ import { FormCustomerComponent } from './Components/form-customer/form-customer.
     ExempleComponent,
     AddTaskExemplComponent,
     FormCustomerComponent,
+    DocumentComponent,
   ],
    
     
@@ -265,7 +275,38 @@ import { FormCustomerComponent } from './Components/form-customer/form-customer.
     TreeSelectModule,
     TreeTableModule,
     AnimateModule,
-    CardModule
+    CardModule,
+    MatDatepickerModule,
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    BrowserAnimationsModule,
+    MatSlideToggleModule,
+    MatCardModule,
+    MatDialogModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    MatToolbarModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatTableModule,
+    InputTextModule,
+    ButtonModule,
+    CalendarModule,
+    FormsModule,
+    AutoCompleteModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule,
+    MatAutocompleteModule,
+    DropdownModule
   ],
   providers: [
     provideClientHydration(),
@@ -277,12 +318,12 @@ import { FormCustomerComponent } from './Components/form-customer/form-customer.
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              '427515481723-ja7nlkmti3amubd5e5qbtdig27fc06ik.apps.googleusercontent.com'
+             " 592574124687-bvpc5dmgfms66j1q6725fi5gevmsmtmf.apps.googleusercontent.com"
             )
           },
         ],
         callback: 'initGoogleOneTap',
-        onError: (err) => {
+        onError: (err:any) => {
           console.error(err);
         }
       } as SocialAuthServiceConfig,
@@ -290,4 +331,4 @@ import { FormCustomerComponent } from './Components/form-customer/form-customer.
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

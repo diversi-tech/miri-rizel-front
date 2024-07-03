@@ -30,6 +30,7 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   @Output() edit = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
   @Output() dataUpdated = new EventEmitter<any>();
+  @Output() showAddComponent = new EventEmitter<any>();
   @ViewChild('popupContainer', { read: ViewContainerRef }) popupContainer!: ViewContainerRef;
   @ViewChild('dt') dt!: Table;
   constructor(private resolver: ComponentFactoryResolver) { }
@@ -167,8 +168,8 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   getDataForPopTable(obj: any) {
     this.dataUpdated.emit(obj)
   }
-  getPosition(item: number,i:number): string {
-  // let List<any> n= this.getpositionData(i)
+  getPosition(item: number, i: number): string {
+    // let List<any> n= this.getpositionData(i)
     return ""
   }
   PopTable(data: any, loading: boolean, col$types: any, Data1?: any, objFields?: string[], Data2?: any[]) {
@@ -200,4 +201,7 @@ export class GenericBourdComponent implements OnInit, OnChanges {
       },
     });
   }
+  openAddComponent() {
+    this.showAddComponent.emit();
+  };
 }

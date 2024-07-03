@@ -24,6 +24,8 @@ export class CustomersComponent implements OnInit {
   customerForm!: FormGroup;
   selectedStatus!: StatusCodeUser;
   status: any;
+  private originalParent: HTMLElement | null = null;
+
 // תוסיף את זה לפני הקומפוננטה
 newCustomer!: Customer; // אתה יכול להשתמש כדי ש להשמין
 
@@ -65,7 +67,7 @@ newCustomer!: Customer; // אתה יכול להשתמש כדי ש להשמין
   get formControls() { return this.customerForm.controls; }
 
   addCustomer() {
-    this.newCustomerFlag = true;
+    this.openEditCustomerPopup("הוספת לקוח","addCustomer");
   }
 
   addCustomerSubmit() {
@@ -82,41 +84,41 @@ newCustomer!: Customer; // אתה יכול להשתמש כדי ש להשמין
       this.submitted1 = false;
       this.newCustomerFlag = false;
       this.customerForm.reset();
+      Swal.close();
     });
   }
- 
 
-  openEditCustomerPopup() {
-    
-    const formElement = document.getElementById('editCustomerForm');
-    Swal.fire({
-      title: 'עריכת לקוח',
-      html: `<div id="popupContainer"></div>`,
-      showConfirmButton: false,
-      didOpen: () => {
-        const container = document.getElementById('popupContainer');
-        if (container && formElement) {
-          formElement.style.display = 'block';
-          container.appendChild(formElement);
-          this.customerService.GetCustomerById(this.customerForm.value.customerId).subscribe(res => {
-            this.customerForm.setValue(res);
-          });
+  openEditCustomerPopup(title: string, formId: string) {
+    const formElement = document.getElementById(formId);
+
+    if (formElement) {
+      this.originalParent = formElement.parentElement;
+
+      Swal.fire({
+        title: title,
+        html: `<div id="popupContainer"></div>`,
+        showConfirmButton: false,
+        didOpen: () => {
+          const container = document.getElementById('popupContainer');
+          if (container) {
+            container.appendChild(formElement);
+            formElement.style.display = 'block';
+          }
+        },
+        willClose: () => {
+          this.customerForm.reset();
+          if (formElement && this.originalParent) {
+            formElement.style.display = 'none';
+            this.originalParent.appendChild(formElement);
+          }
         }
-      },
-      willClose: () => {
-                this.customerForm.reset()
-        if(formElement) 
-          formElement.style.display = 'none'; // בצע את השינוי רק אם formElement אינו null
-        
-      }
-      
-    });
-  }
+      });
+   }}
 
   editCustomer(customer: Customer) {
     this.customerService.GetCustomerById(customer.customerId).subscribe(res1 => {
       this.customerForm.setValue(res1);
-      this.openEditCustomerPopup();
+      this.openEditCustomerPopup("עריכת משתמש","editCustomer");
     });
   }
 

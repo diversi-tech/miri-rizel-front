@@ -17,7 +17,7 @@ export class LeadService {
   }
 
   addLead(lead: Lead): Observable<Lead> {
-    return this.http.post<Lead>(`${this.apiUrl}/Add`, lead);
+    return this.http.post<Lead>(`${this.apiUrl}`, lead);
   }
 
   getAllLeads(): Observable<Lead[]> {
