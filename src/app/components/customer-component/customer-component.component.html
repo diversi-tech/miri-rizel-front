@@ -1,1 +1,14 @@
-<p>customer-component works!</p>
+
+<app-generic-bourd 
+[data]="Customers" 
+[loading]="loading"
+[globalFilterFields]="['firstName', 'lastName']"
+[col$types]="{'name':'text','country':'position'}"
+[positionData]="[]"
+[objData]="[]"
+[objFields]="[]"
+
+(edit)="onEditCustomer($event)"
+(delete)="onDeleteCustomer($event)"
+>
+</app-generic-bourd>

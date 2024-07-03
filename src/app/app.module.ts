@@ -19,11 +19,14 @@ import { SignUpComponent } from './Components/sign-up/sign-up.component';
 import { LeadComponent } from './Components/Lead-components/lead/lead.component';
 import { ListLeadsComponent } from './Components/Lead-components/list-leads/list-leads.component';
 import { AddLeadComponent } from './Components/Lead-components/add-lead/add-lead.component';
+import { EditLeadComponent } from './Components/Lead-components/edit-lead/edit-lead.component';
 import { TaskBoardComponent } from './Components/task-board/task-board.component';
 import { AddTaskComponent } from './Components/add-task/add-task.component';
 import { GenericBourdComponent } from './Components/generic-bourd/generic-bourd.component';
 import { ExempleComponent } from './Components/exemple/exemple.component';
 import { AddTaskExemplComponent } from './Components/add-task-exempl/add-task-exempl.component';
+import { CustomerComponentComponent } from './Components/customer-component/customer-component.component';
+
 import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { MatButtonModule } from '@angular/material/button';
@@ -156,10 +159,15 @@ import { EditProjectComponent } from './Components/edit-project/edit-project.com
     GenericBourdComponent,
     ExempleComponent,
     AddTaskExemplComponent,
+
     ProjectTableComponent,
     AddProjectComponent,
     EditProjectComponent,
    
+
+    EditLeadComponent,
+    CustomerComponentComponent,
+
   ],
   imports: [
     BrowserModule,

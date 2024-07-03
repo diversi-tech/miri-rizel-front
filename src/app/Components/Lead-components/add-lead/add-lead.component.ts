@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -16,12 +16,10 @@ import Swal from 'sweetalert2';
   styleUrls: ['./add-lead.component.css'],
 })
 export class AddLeadComponent {
-  // userForm = new FormGroup({
-  //   firstName: new FormControl<string>(''),
-  //   lastName: new FormControl<string>(''),
-
-  // });
+  
+  @Output() dataRefreshed: EventEmitter<void> = new EventEmitter<void>();
   userForm: FormGroup;
+ 
 
   constructor(
     private formBuilder: FormBuilder,
@@ -49,7 +47,7 @@ export class AddLeadComponent {
     });
   }
 
-  submitForm = () => {
+   submitForm = () => {
     let formData = this.userForm.value;
     this.leadSrv.addLead(formData).subscribe((lead) => {
       alert('הליד נוסף בהצלחה' + lead);
@@ -57,8 +55,10 @@ export class AddLeadComponent {
       Object.keys(this.userForm.controls).forEach((key) => {
         this.userForm.controls[key].markAsUntouched();
       });
+       this.dataRefreshed.emit();
+      Swal.close();
     });
-    Swal.close();
+        
   };
 
   backListLeadsPage = () => {
