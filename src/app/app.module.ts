@@ -131,6 +131,7 @@ import { BlockUIModule } from 'primeng/blockui';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { CustomersComponent } from './Components/customers/customers.component';
 import { FormCustomerComponent } from './Components/form-customer/form-customer.component';
+import { DocumentComponent } from './Components/document/document.component';
 
 @NgModule({
   declarations: [
@@ -153,6 +154,7 @@ import { FormCustomerComponent } from './Components/form-customer/form-customer.
     ExempleComponent,
     AddTaskExemplComponent,
     FormCustomerComponent,
+    DocumentComponent,
   ],
    
     
