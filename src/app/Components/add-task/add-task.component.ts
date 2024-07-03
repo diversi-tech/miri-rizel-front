@@ -1,5 +1,5 @@
-import {FormBuilder, FormGroup, Validators, AbstractControl, FormControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { Component, ComponentFactoryResolver, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Project } from 'src/app/Model/Project';
 import { Task } from 'src/app/Model/Task';
@@ -12,6 +12,9 @@ import { DialogComponent } from '../dialog/dialog.component';
 import { Observable, map, startWith } from 'rxjs';
 import { StatusCodeProject } from 'src/app/Model/StatusCodeProject';
 import { Priority } from 'src/app/Model/Priority';
+import Swal from 'sweetalert2';
+import { TaskBoardComponent } from '../task-board/task-board.component';
+import { Location } from '@angular/common';
 
 interface AutoCompleteCompleteEvent {
   originalEvent: Event;
@@ -23,6 +26,18 @@ interface AutoCompleteCompleteEvent {
   styleUrls: ['./add-task.component.css'],
 })
 export class AddTaskComponent implements OnInit {
+
+  @Output() dataRefreshed: EventEmitter<void> = new EventEmitter<void>();
+
+  data: any;
+  setData(data: any) {
+    if (data) {
+      this.data = data;
+      this.isEdit = true;
+      this.loadTask(data);
+      this.titlePage = "עריכת משימה"
+    }
+  }
 
   taskForm: FormGroup = new FormGroup({});
 
@@ -36,10 +51,7 @@ export class AddTaskComponent implements OnInit {
   statuses: StatusCodeProject[] = [];
   priorities: Priority[] = [];
 
-  // selectedProject: any;
-  // selectedUser: any;
-
-  date: Date | undefined;
+  // date: Date | undefined;
 
   filteredProjects: Project[] = [];
   filteredUsers: User[] = [];
@@ -51,10 +63,13 @@ export class AddTaskComponent implements OnInit {
     private projectService: ProjectService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private resolver: ComponentFactoryResolver,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
+
     this.taskForm = this.fb.group({
       taskId: [''],
       title: ['', Validators.required],
@@ -132,14 +147,12 @@ export class AddTaskComponent implements OnInit {
 
 
   userExistsValidator(user: User) {
-    debugger
     if (user && !this.users.find(u => u.userId === user.userId))
       return false
     return true;
   }
 
   projectExistsValidator(project: Project) {
-    debugger
     if (project && !this.projects.find(u => u.projectId === project.projectId))
       return false
     return true;
@@ -213,7 +226,6 @@ export class AddTaskComponent implements OnInit {
 
 
   onSubmit(): void {
-    debugger
     if (this.taskForm.invalid) {
       this.taskForm.markAllAsTouched();
       return;
@@ -241,22 +253,29 @@ export class AddTaskComponent implements OnInit {
       return;
     }
     this.newTask = this.taskForm.value;
-    this.newTask.assignedTo=this.assignedTo?.value
+    this.newTask.assignedTo = this.assignedTo?.value
 
     if (this.taskForm.valid) {
       if (!this.isEdit) {
+        debugger
         this.newTask.createdDate = new Date();
         this.taskService.addTask(this.newTask).subscribe(
           (response) => {
-            if (response.isCompletedSuccessfully) {
+            console.log("add");
+            console.log(response == true);
+            if (response) {
+              this.dataRefreshed.emit();
+              Swal.close()
+              this.router.navigate(['/task-board']);
               this.dialog.open(DialogComponent, {
                 data: {
                   title: 'המשימה נוספה בהצלחה',
                   context: this.newTask.title,
                   buttonText: 'סגור',
                 },
-              });
-              this.router.navigate(['/task-board']);
+              }).afterClosed().subscribe(() => {
+                this.location.go(this.location.path()); // זה יגרום לרענון של הדף הנוכחי
+              });;
             }
           },
           (error) => {
@@ -267,15 +286,20 @@ export class AddTaskComponent implements OnInit {
       else {
         this.taskService.updateTask(this.newTask).subscribe(
           (response) => {
+            console.log("update");
+            console.log(response);
             if (response == true) {
+              this.dataRefreshed.emit();
+              Swal.close()
               this.dialog.open(DialogComponent, {
                 data: {
                   title: 'המשימה עודכנה בהצלחה',
                   context: this.newTask.title,
                   buttonText: 'סגור',
                 },
+              }).afterClosed().subscribe(() => {
+                this.location.go(this.location.path()); // זה יגרום לרענון של הדף הנוכחי
               });
-              this.router.navigate(['/task-board']);
             }
           },
           (error) => {

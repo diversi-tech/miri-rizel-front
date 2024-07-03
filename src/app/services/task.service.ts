@@ -29,6 +29,11 @@ export class TaskService {
     return this.http.get<any>(`${this.apiUrl}readAllStatus`)
   }
 
+  deleteTask(id:number):Observable<any>{
+    debugger
+    return this.http.delete<any>(`${this.apiUrl}?id=${id}`);
+  }
+
   getAllPriorities(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}readAllPriority`)
   }

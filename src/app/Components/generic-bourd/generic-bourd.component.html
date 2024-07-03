@@ -1,6 +1,7 @@
 <p-toolbar styleClass="mb-4 gap-2">
     <ng-template pTemplate="left">
-        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openAddComponent()"></button>
+        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
+            (click)="openAddComponent()"></button>
     </ng-template>
 </p-toolbar>
 <p-table #dt [value]="data" [loading]="loading" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10, 25, 50]"
@@ -29,7 +30,7 @@
                     <p-columnFilter *ngIf="col.filterType=='position'" [field]="col.field" matchMode="equals"
                         display="menu" class="ml-auto">
                         <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                            <p-dropdown [ngModel]="value" [options]="getpositionData(i).description"
+                            <p-dropdown [ngModel]="value" [options]="getPosData(i).description"
                                 (onChange)="filter($event.value)" placeholder="Any">
                                 <ng-template let-option pTemplate="item">
                                     <p-tag [value]="option.label" [severity]="getSeverity(option.label)"></p-tag>
@@ -62,7 +63,7 @@
                 <p *ngIf="getTypeOfCol(col,rowIndex)=='date'"> {{rowData[col.field]| date: 'MM/dd/yyyy' }}</p>
                 <span *ngIf="getTypeOfCol(col,rowIndex)=='obj'"
                     class="ml-1 vertical-align-middle">{{rowData[col.field][getobjFields(i)]}}</span>
-                <p-tag *ngIf="getTypeOfCol(col,rowIndex)=='position'" [value]="getPosition(rowData[col.field],i)"
+                       <p-tag *ngIf="getTypeOfCol(col,rowIndex)=='position'" [value]="getPosition(rowData[col.field],i)"
                     [severity]="getSeverity(rowData[col.field].description)"></p-tag>
                 <button pButton type="button" class="p-button-secondary" icon="pi pi-pencil"
                     *ngIf="getTypeOfCol(col,rowIndex)=='edit'" (click)="onEdit(rowData)"></button>

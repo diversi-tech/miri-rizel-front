@@ -22,8 +22,6 @@ import { AddLeadComponent } from './Components/Lead-components/add-lead/add-lead
 import { TaskBoardComponent } from './Components/task-board/task-board.component';
 import { AddTaskComponent } from './Components/add-task/add-task.component';
 import { GenericBourdComponent } from './Components/generic-bourd/generic-bourd.component';
-import { ExempleComponent } from './Components/exemple/exemple.component';
-import { AddTaskExemplComponent } from './Components/add-task-exempl/add-task-exempl.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { MatButtonModule } from '@angular/material/button';
@@ -150,8 +148,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     TaskBoardComponent,
     AddTaskComponent,
     GenericBourdComponent,
-    ExempleComponent,
-    AddTaskExemplComponent,
   ],
   imports: [
     BrowserModule,
