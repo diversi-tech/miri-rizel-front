@@ -1,1 +1,10 @@
-<p>document works!</p>
+<label for="file-upload" class="custom-file-upload">
+    העלאת מסמכים לדרייב
+  </label>
+  <input 
+    id="file-upload" 
+    type="file" 
+    (change)="onFileChange($event)" 
+    style="display: none;" 
+  />
+  

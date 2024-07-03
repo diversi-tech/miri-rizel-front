@@ -14,6 +14,7 @@ import { AddLeadComponent } from './Components/Lead-components/add-lead/add-lead
 import { ListLeadsComponent } from './Components/Lead-components/list-leads/list-leads.component';
 import { LeadComponent } from './Components/Lead-components/lead/lead.component';
 import { SignUpComponent } from './Components/sign-up/sign-up.component';
+import { DocumentComponent } from './Components/document/document.component';
 // import { TaskBoardComponent } from './Components/task-board/task-board.component';
 
 
@@ -29,6 +30,8 @@ const routes: Routes = [
   { path: 'add', component: AddUserComponent },
   { path: 'sign-up', component: SignUpComponent },
   {path: 'addLead', component: AddLeadComponent},
+  {path: 'document', component: DocumentComponent},
+
   {
     path: 'leads',
     component: ListLeadsComponent,
