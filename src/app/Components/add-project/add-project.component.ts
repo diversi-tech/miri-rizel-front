@@ -1,7 +1,14 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Customer2 } from '@app/Model/Customer2';
+import { StatusCodeProject } from '@app/Model/StatusCodeProject';
+import { CustomerService } from '@app/Services/customer.service';
 import { ProjectService } from '@app/Services/project.service';
+import { TaskService } from '@app/Services/task.service';
 import { Project } from 'src/app/Model/Project';
+import { DialogComponent } from '../dialog/dialog.component';
 
 
 @Component({
@@ -9,27 +16,53 @@ import { Project } from 'src/app/Model/Project';
   templateUrl: './add-project.component.html',
   styleUrls: ['./add-project.component.css']
 })
-export class AddProjectComponent {
+export class AddProjectComponent implements OnInit {
 
-  
-  projectForm:FormGroup= new FormGroup({}); 
-
+  statuses: StatusCodeProject[] = [];
+  projectForm: FormGroup = new FormGroup({});
+  custom: Customer2[] = [];
   constructor(
     private fb: FormBuilder,
-    private projectService:ProjectService
+    private projectService: ProjectService,
+    private statusService: TaskService,
+    private customerService: CustomerService,
+    private route: ActivatedRoute,
+    private dialog: MatDialog,
+    private router: Router
   ) {
+    
+  }
+
+
+  ngOnInit(): void {
     this.createForm();
+    this.statusService.getAllStatus().subscribe(
+      (data: any) => {
+        this.statuses = data;
+      },
+      (error: any) => {
+        console.error('Error fetching status:', error);
+      }
+    );
+    this.customerService.getAll().subscribe(
+      (data: any) => {
+        this.custom = data;
+      },
+      (error: any) => {
+        console.error('Error fetching customers:', error);
+      }
+    );
   }
 
   createForm() {
     this.projectForm = this.fb.group({
       name: ['', Validators.required],
-      description: '',
-      startDate: ['', Validators.required],
-      endDate: ['', Validators.required],
+      description:  ['', Validators.required],
+      startDate: ['',[ Validators.required,this.futureDateValidator.bind(this)]],
+      endDate: ['',[ Validators.required,this.futureDateValidator.bind(this),  this.dateValidator.bind(this) ]],
       status: '',
       customerId: ['', Validators.required]
-    }, { validator: this.dateValidator });
+    });
   }
 
   onSubmit() {
@@ -38,18 +71,33 @@ export class AddProjectComponent {
       this.projectService.addProject(newProject)
         .subscribe(
           (response) => {
-            console.log('Project added successfully:', response);
-            // כאן נוסיף פעולות נוספות בהתאם לצורך
+            if (response.isCompletedSuccessfully) {
+              this.dialog.open(DialogComponent, {
+                data: {
+                  title: 'המשימה נוספה בהצלחה',
+                  context: newProject.name,
+                  buttonText: 'סגור',
+                },
+              });
+              this.router.navigate(['/projectTable']);
+            }
           },
           (error) => {
-            console.error('Error adding project:', error);
-            // טיפול בשגיאות
+            console.error('Error adding project', error);
           }
         );
-    } else {
-      console.error('Form is invalid');
-      // טיפול בכניסות לא תקינות
     }
+  }
+  get name() { return this.projectForm.get('name') }
+  get description() { return this.projectForm.get('description') }
+  get startDate() { return this.projectForm.get('startDate') }
+  get endDate() { return this.projectForm.get('endDate') }
+  get status() { return this.projectForm.get('status') }
+  futureDateValidator(control: AbstractControl): ValidationErrors | null {
+    const selectedDate = new Date(control.value);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return selectedDate > today ? null : { notFutureDate: true };
   }
 
   dateValidator(group: FormGroup) {

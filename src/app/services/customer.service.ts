@@ -6,8 +6,16 @@ import { Injectable } from '@angular/core';
   })
 
 export class CustomerService {
-    private apiUrl = 'https://localhost:7141/Customer/';
+    private apiUrl = 'https://localhost:7141/Customer';
     constructor(private http: HttpClient) {}
 getById(id: Number): Observable<any> {
     return this.http.get(`${this.apiUrl}/GetById?custometId=${id}`);
-  }}
+  }
+  getAll(): Observable<any> {
+    return this.http.get(`${this.apiUrl}`);
+  }
+
+
+
+
+}
