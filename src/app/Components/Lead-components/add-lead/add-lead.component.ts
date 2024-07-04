@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -6,8 +6,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { Lead } from 'src/app/Model/Lead';
-import { LeadService } from '../../../services/lead.service';
+import { LeadService } from '../../../Services/lead.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-lead',
@@ -15,12 +16,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./add-lead.component.css'],
 })
 export class AddLeadComponent {
-  // userForm = new FormGroup({
-  //   firstName: new FormControl<string>(''),
-  //   lastName: new FormControl<string>(''),
-
-  // });
+  
+  @Output() dataRefreshed: EventEmitter<void> = new EventEmitter<void>();
   userForm: FormGroup;
+ 
 
   constructor(
     private formBuilder: FormBuilder,
@@ -48,15 +47,18 @@ export class AddLeadComponent {
     });
   }
 
-  submitForm = () => {
+   submitForm = () => {
     let formData = this.userForm.value;
     this.leadSrv.addLead(formData).subscribe((lead) => {
       alert('הליד נוסף בהצלחה' + lead);
       this.userForm.reset();
-      Object.keys(this.userForm.controls).forEach(key => {
+      Object.keys(this.userForm.controls).forEach((key) => {
         this.userForm.controls[key].markAsUntouched();
       });
+       this.dataRefreshed.emit();
+      Swal.close();
     });
+        
   };
 
   backListLeadsPage = () => {
