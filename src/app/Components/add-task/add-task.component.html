@@ -13,7 +13,7 @@
       <textarea matInput formControlName="description"></textarea>
     </mat-form-field>
 
-     <mat-form-field>
+    <!-- <mat-form-field>
       <mat-label>הכנס תאריך יעד</mat-label>
       <input class="input-style" matInput [matDatepicker]="picker" formControlName="dueDate" required
         placeholder="dd/mm/yyyy" />
@@ -30,13 +30,29 @@
           </ng-container>
         </ng-template>
       </mat-error>
-    </mat-form-field> 
+    </mat-form-field> -->
 
+    <div class="card flex justify-content-center">
+      <label for="date">הכנס תאריך יעד</label>
+      <br>
+      <p-calendar id="date" formControlName="dueDate" placeholder="mm/dd/yyyy" />
+      <mat-error *ngIf="dueDate!.invalid && (dueDate!.touched || dueDate!.dirty)">
+        <ng-container *ngIf="dueDate!.errors?.['required']; else notFutureDate">
+          שדה חובה
+        </ng-container>
+        <ng-template #notFutureDate>
+          <ng-container *ngIf="dueDate!.errors?.['notFutureDate']">
+            התאריך חייב להיות עתידי
+          </ng-container>
+        </ng-template>
+      </mat-error>
+    </div>
 
+    <br>
     <div class="card flex justify-content-center">
       <p-dropdown formControlName="priority" [options]="priorities" optionLabel="description"
         placeholder="בחר עדיפות" />
-        <mat-error *ngIf="priority!.invalid && (priority!.touched || priority!.dirty)">שדה חובה </mat-error>
+      <mat-error *ngIf="priority!.invalid && (priority!.touched || priority!.dirty)">שדה חובה </mat-error>
     </div>
     <br>
     <div class="card flex justify-content-center">

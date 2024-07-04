@@ -31,7 +31,7 @@ const routes: Routes = [
   { path: 'add-task', component: AddTaskComponent },
   { path: 'add-task/:id', component: AddTaskComponent },
   // { path: '', redirectTo: '/add-task', pathMatch: 'full' },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  // { path: '', redirectTo: '/login', pathMatch: 'full' },
   {path: 'addLead', component: AddLeadComponent},
   {path: 'editLead', component: EditLeadComponent},
   {
