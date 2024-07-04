@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class LeadService {
-  private apiUrl = 'https://localhost:7141/Lead';
+  private apiUrl = 'https://localhost:7141/Lead/ReadAll';
 
   constructor(private http: HttpClient) { }
 
