@@ -33,6 +33,13 @@ export class ValidatorsService {
       return true;
   }
   
-
+  futureDate(): (date: string) => boolean {
+    return (date: string): boolean => {
+      const today = new Date();
+      const inputDate = new Date(date);
+      // משווה את התאריך עם היום הנוכחי
+      return inputDate > today;
+    };
+  }
   
 }
