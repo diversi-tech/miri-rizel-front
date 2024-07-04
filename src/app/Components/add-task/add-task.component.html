@@ -34,6 +34,7 @@
       <p-dropdown formControlName="priority" [options]="priorities" optionLabel="description"
         placeholder="בחר עדיפות" />
       <mat-error *ngIf="priority!.invalid && (priority!.touched || priority!.dirty)">שדה חובה </mat-error>
+      <mat-error *ngIf="priority!.invalid && (priority!.touched || priority!.dirty)">שדה חובה </mat-error>
     </div>
     <br>
     <div class="card flex justify-content-center">

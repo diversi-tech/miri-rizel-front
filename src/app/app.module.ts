@@ -309,7 +309,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
           },
         ],
         callback: 'initGoogleOneTap',
-        onError: (err:any) => {
+        onError: (err: any) => {
           console.error(err);
         }
       } as SocialAuthServiceConfig,

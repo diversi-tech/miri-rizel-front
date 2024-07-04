@@ -30,7 +30,6 @@ export class TaskService {
   }
 
   deleteTask(id:number):Observable<any>{
-    debugger
     return this.http.delete<any>(`${this.apiUrl}?id=${id}`);
   }
 

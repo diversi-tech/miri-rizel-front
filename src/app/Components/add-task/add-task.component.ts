@@ -9,12 +9,11 @@ import { TaskService } from 'src/app/Services/task.service';
 import { UserService } from 'src/app/Services/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
-import { Observable, map, startWith } from 'rxjs';
 import { StatusCodeProject } from 'src/app/Model/StatusCodeProject';
 import { Priority } from 'src/app/Model/Priority';
 import Swal from 'sweetalert2';
-import { TaskBoardComponent } from '../task-board/task-board.component';
 import { Location } from '@angular/common';
+import { GoogleAuthService } from '@app/Services/google-auth.service';
 
 interface AutoCompleteCompleteEvent {
   originalEvent: Event;
@@ -42,16 +41,21 @@ export class AddTaskComponent implements OnInit {
   taskForm: FormGroup = new FormGroup({});
 
   newTask: Task = {};
+
   titlePage: string = "הוספת משימה"
 
   isEdit: boolean = false;
 
   users: User[] = [];
+
   projects: Project[] = [];
+
   statuses: StatusCodeProject[] = [];
+
   priorities: Priority[] = [];
 
   filteredProjects: Project[] = [];
+
   filteredUsers: User[] = [];
 
   constructor(
@@ -63,10 +67,12 @@ export class AddTaskComponent implements OnInit {
     private dialog: MatDialog,
     private router: Router,
     private resolver: ComponentFactoryResolver,
-    private location: Location
+    private location: Location,
+    private GoogleAuthService: GoogleAuthService
   ) { }
 
   ngOnInit(): void {
+
 
     this.taskForm = this.fb.group({
       taskId: [''],
@@ -205,7 +211,6 @@ export class AddTaskComponent implements OnInit {
   filterProjectAuto(event: AutoCompleteCompleteEvent) {
     let filtered: any[] = [];
     let query = event.query;
-
     for (let i = 0; i < (this.projects as any[]).length; i++) {
       let project = (this.projects as any[])[i];
       if (project.name.toLowerCase().includes(query)) {
@@ -255,53 +260,79 @@ export class AddTaskComponent implements OnInit {
     if (this.taskForm.valid) {
       if (!this.isEdit) {
         this.newTask.createdDate = new Date();
-        console.log(this.newTask);
-        
         this.taskService.addTask(this.newTask).subscribe(
           (response) => {
             if (response) {
               this.dataRefreshed.emit();
               Swal.close()
+              Swal.fire({
+                title: "!המשימה נוספה בהצלחה",
+                text: " האם תרצה להוסיף את המשימה ל-Google Tasks?",
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: "שמור",
+                denyButtonText: `אל תשמור`
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  this.scheduleMeeting()
+                } else if (result.isDenied) {
+                  Swal.fire("Google Tasks המשימה לא נוספה ל", "", "info");
+                }
+              });
+              this.location.go(this.location.path());
               this.router.navigate(['/task-board']);
-              this.dialog.open(DialogComponent, {
-                data: {
-                  title: 'המשימה נוספה בהצלחה',
-                  context: this.newTask.title,
-                  buttonText: 'סגור',
-                },
-              }).afterClosed().subscribe(() => {
-                this.location.go(this.location.path()); // זה יגרום לרענון של הדף הנוכחי
-              });;
             }
           },
           (error) => {
-            console.error('Error adding task', error);
+            this.dialog.open(DialogComponent, {
+              data: {
+                title: 'Error adding task',
+                context: (" התרחשה בעיה מהצד שלנו"),
+                buttonText: 'סגור',
+              },
+            })
           }
         );
       }
       else {
         this.taskService.updateTask(this.newTask).subscribe(
           (response) => {
-            if (response == true) {
-              this.dataRefreshed.emit();
-              Swal.close()
-              this.dialog.open(DialogComponent, {
-                data: {
-                  title: 'המשימה עודכנה בהצלחה',
-                  context: this.newTask.title,
-                  buttonText: 'סגור',
-                },
-              }).afterClosed().subscribe(() => {
-                this.location.go(this.location.path()); // זה יגרום לרענון של הדף הנוכחי
-              });
-            }
+            this.dataRefreshed.emit();
+            Swal.close()
+            this.dialog.open(DialogComponent, {
+              data: {
+                title: 'המשימה עודכנה בהצלחה',
+                context: this.newTask.title,
+                buttonText: 'סגור',
+              },
+            }).afterClosed().subscribe(() => {
+              this.location.go(this.location.path()); // זה יגרום לרענון של הדף הנוכחי
+            });
           },
           (error) => {
-            console.error('Error update task', error);
+            this.dialog.open(DialogComponent, {
+              data: {
+                title: 'Error update task',
+                context: (" התרחשה בעיה מהצד שלנו"),
+                buttonText: 'סגור',
+              },
+            })
           }
         );
       }
     }
   }
-}
 
+  scheduleMeeting() {
+    let appointmentTime = new Date(this.taskForm.value.dueDate);
+    const startTime = appointmentTime.toISOString().slice(0, 18) + '-07:00';
+    const eventDetails = {
+      email: this.taskForm.value.assignedTo.email,
+      startTime: startTime,
+      nameT: this.taskForm.value.title,
+      description: this.taskForm.value.description
+    };
+    console.info(eventDetails);
+    this.GoogleAuthService.createGoogleEvent(eventDetails)
+  }
+}

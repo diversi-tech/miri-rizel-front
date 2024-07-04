@@ -37,7 +37,8 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   constructor(private resolver: ComponentFactoryResolver) { }
 
   columns: Column[] = [];
-
+  isListView: boolean = true;
+  layout: string = 'list';
   ngOnInit() {
     if (this.data === undefined || (this.objData.length > 0 && this.objFields == null)) {
       throw new Error('The data input is required and must be provided.');
@@ -50,13 +51,30 @@ export class GenericBourdComponent implements OnInit, OnChanges {
       this.generateColumns();
     }
   }
-
+  toggleView(): void {
+    this.isListView = !this.isListView;
+  }
+  getToggleView() {
+    return this.isListView
+  }
   onEdit(rowData: any) {
     this.edit.emit(rowData);
   }
 
   onDelete(rowData: any) {
-    this.delete.emit(rowData);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.delete.emit(rowData);
+      }
+    });
   }
 
   generateColumns() {
@@ -78,19 +96,19 @@ export class GenericBourdComponent implements OnInit, OnChanges {
     if (this.popTable == true)
       this.columns.push({
         field: 'popTable',
-        header: 'Show ',
+        header: '',
         sortable: false,
         filterType: 'popTable'
       });
     this.columns.push({
       field: 'edit',
-      header: 'Edit',
+      header: '',
       sortable: false,
       filterType: 'edit'
     });
     this.columns.push({
       field: 'delete',
-      header: 'Delete',
+      header: '',
       sortable: false,
       filterType: 'delete'
     });
@@ -103,6 +121,8 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   }
 
   getSeverity(status: string) {
+    console.log(status);
+    
     switch (status) {
       case 'TO DO':
         return 'danger';
@@ -139,8 +159,8 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   getPosData(i: number) {
     let index: number = 0
     for (let c = 0; c < i; c++)
-      if (this.columns[c].filterType == 'priority')
-        index++;
+      if (this.columns[c].filterType == 'position')
+        index++;      
     return this.positionData[index]
   }
   getObjData(i: number) {
