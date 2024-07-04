@@ -22,9 +22,11 @@
     "@angular/platform-browser": "^16.2.12",
     "@angular/platform-browser-dynamic": "^16.2.12",
     "@angular/router": "^16.2.12",
+
     "@types/gapi": "^0.0.47",
     "@types/gapi.auth2": "^0.0.60",
     "@types/gapi.client.calendar": "^3.0.12",
+
     "angularx-social-login": "^4.1.0",
     "chart.js": "^4.4.3",
     "environment": "^1.1.0",
@@ -44,6 +46,9 @@
     "@angular-devkit/build-angular": "^16.2.14",
     "@angular/cli": "~16.1.0",
     "@angular/compiler-cli": "^16.1.0",
+    "@types/gapi": "^0.0.47",
+    "@types/gapi.auth2": "^0.0.60",
+    "@types/gapi.client.calendar": "^3.0.12",
     "@types/jasmine": "~4.3.0",
     "jasmine-core": "~4.6.0",
     "karma": "~6.4.0",
