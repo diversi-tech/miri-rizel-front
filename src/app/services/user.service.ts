@@ -4,19 +4,23 @@ import { Observable, catchError, of, switchMap, tap, throwError } from 'rxjs';
 import { User } from '../Model/User';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
+ 
+  constructor(private http: HttpClient) {}
+  private apiUrl = 'https://localhost:7141/User/';
 
-  constructor(private http: HttpClient) {
-
+  getAll(): Observable<any> {
+    return this.http.get(`${this.apiUrl}`);
+ 
   }
-  private apiUrl = 'https://localhost:7141/User/'
 
   addUser(userDetails: any): Observable<any> {
     const url = `${this.apiUrl}/addUser`;
     return this.http.post(url, userDetails);
   }
+
   editUser(email: any): Observable<any> {
     return this.http.get(`${this.apiUrl}?email=${email}`);
   }
@@ -25,15 +29,15 @@ export class UserService {
   }
 
   login(email: string, password: string): Observable<User> {
+    debugger
     const params = new HttpParams()
       .set('email', email)
       .set('password', password);
     return this.http.get<User>(`${this.apiUrl}Login`, { params }).pipe(
-      tap(user => {
+      tap((user) => {
         localStorage.setItem('user', JSON.stringify(user));
       })
     );
-
   }
 
   getUserMail(): string | null {
@@ -52,23 +56,24 @@ export class UserService {
   // }
 
   getByPassword(password: string): Observable<User> {
-    return this.http.get<User>(
-      `${this.apiUrl}getByPassword/${password}`
-    );
-  } 
+    return this.http.get<User>(`${this.apiUrl}getByPassword/${password}`);
+  }
+
   getByMail(mail: string): Observable<User> {
-    return this.http.get<User>(
-      `${this.apiUrl}getByMail/${mail}`
-    );
+    return this.http.get<User>(`${this.apiUrl}getByMail/${mail}`);
   }
-  getAll():Observable<Array<User>> {
-    return this.http.get<Array<User>>(`${this.apiUrl}ReadAll`).pipe(
-      switchMap((response: Array<User>) => {
-        return of(response);
-      }),
-      catchError(error => {
-        return throwError(error);
-      })
-    );
+
+  savePassword(email: string, password: string): Observable<any> {
+    return this.http.put<boolean>(`${this.apiUrl}`, { email, password });
   }
+  // getAll():Observable<Array<User>> {
+  //   return this.http.get<Array<User>>(`${this.apiUrl}ReadAll`).pipe(
+  //     switchMap((response: Array<User>) => {
+  //       return of(response);
+  //     }),
+  //     catchError(error => {
+  //       return throwError(error);
+  //     })
+  //   );
+  // }
 }

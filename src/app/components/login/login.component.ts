@@ -1,3 +1,4 @@
+
 import { Component, OnInit, signal } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators, } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -6,7 +7,6 @@ import { ResetPasswordService } from '../../Services/reset-password.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 import { UserService } from 'src/app/Services/user.service';
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -18,11 +18,9 @@ export class LoginComponent implements OnInit {
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [
         Validators.required,
-
       ]),
     });
   }
-
   constructor(
     private resetPasswordService: ResetPasswordService,
     private dialog: MatDialog,
@@ -30,20 +28,14 @@ export class LoginComponent implements OnInit {
     private userService: UserService,
     private active: ActivatedRoute
   ) {}
-
-  
-
   hide = signal(true);
   clickEvent(event: MouseEvent) {
     this.hide.set(!this.hide);
     event.stopPropagation();
   }
-
   logInForm: FormGroup = new FormGroup({});
-
   get email() { return this.logInForm.controls['email'] }
   get pass() { return this.logInForm.controls['password'] }
-
   onSubmit() {
     if (this.logInForm.invalid) {
       return;
@@ -51,14 +43,14 @@ export class LoginComponent implements OnInit {
     const email = this.email.value;
     const password = this.pass.value;
     this.userService.login(email, password).subscribe(
-      (user: User) => {        
-        if (user.role == "admin") {
+      (user: User) => {
+        if (user.role == 1) {
           this.router.navigate(['/admin'], { relativeTo: this.active });
         }
-        if (user.role == "worker") {
+        if (user.role == 2) {
           this.router.navigate(['/worker'], { relativeTo: this.active });
         }
-        if (user.role == "customer") {
+        if (user.role == 3) {
           this.router.navigate(['/customer'], { relativeTo: this.active });
         }
       },

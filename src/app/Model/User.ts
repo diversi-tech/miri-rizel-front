@@ -1,9 +1,9 @@
 export interface User {
-    userId?: number,
+    userId?:number,
     firstName?: string,
     lastName?: string;
     password?: string;
     email?: string;
-    role?: string;
+    role?: number;
     createdDate?:Date;
 }

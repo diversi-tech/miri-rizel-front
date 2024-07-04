@@ -1,1 +1,76 @@
-<p>add-task works!</p>
+<div class="add-task-form">
+  <form (ngSubmit)="onSubmit()" [formGroup]="taskForm">
+    <h1>{{this.titlePage}}</h1>
+
+    <mat-form-field>
+      <mat-label>הכנס כותרת</mat-label>
+      <input class="input-style" matInput formControlName="title" required />
+      <mat-error *ngIf="title!.invalid && (title!.touched || title!.dirty)">שדה חובה </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>הכנס תיאור</mat-label>
+      <textarea matInput formControlName="description"></textarea>
+    </mat-form-field>
+
+    <div class="card flex justify-content-center">
+      <label for="date">הכנס תאריך יעד</label>
+      <br>
+      <p-calendar id="date" formControlName="dueDate" placeholder="mm/dd/yyyy" />
+      <mat-error *ngIf="dueDate!.invalid && (dueDate!.touched || dueDate!.dirty)">
+        <ng-container *ngIf="dueDate!.errors?.['required']; else notFutureDate">
+          שדה חובה
+        </ng-container>
+        <ng-template #notFutureDate>
+          <ng-container *ngIf="dueDate!.errors?.['notFutureDate']">
+            התאריך חייב להיות עתידי
+          </ng-container>
+        </ng-template>
+      </mat-error>
+    </div>
+
+    <br>
+    <div class="card flex justify-content-center">
+      <p-dropdown formControlName="priority" [options]="priorities" optionLabel="description"
+        placeholder="בחר עדיפות" />
+      <mat-error *ngIf="priority!.invalid && (priority!.touched || priority!.dirty)">שדה חובה </mat-error>
+      <mat-error *ngIf="priority!.invalid && (priority!.touched || priority!.dirty)">שדה חובה </mat-error>
+    </div>
+    <br>
+    <div class="card flex justify-content-center">
+      <p-dropdown formControlName="status" [options]="statuses" optionLabel="description" placeholder="בחר סטטוס" />
+      <mat-error *ngIf="status!.invalid && (status!.touched || status!.dirty)">שדה חובה </mat-error>
+    </div>
+    <br>
+    <label for="assignedTo">בחר לקוח</label>
+    <div id="assignedTo" class="card flex justify-content-center">
+      <p-autoComplete [dropdown]="true" [suggestions]="filteredUsers" (completeMethod)="filterUserAuto($event)"
+        field="firstName" (onSelect)="onUserSelected($event)" formControlName="assignedTo">
+        <ng-template let-user pTemplate="item">
+          {{ displayFn(user) }}
+        </ng-template>
+      </p-autoComplete>
+      <mat-error *ngIf="assignedTo!.invalid && (assignedTo!.touched || assignedTo!.dirty)">
+        <ng-container *ngIf="assignedTo!.errors?.['required']">
+          שדה חובה
+        </ng-container>
+      </mat-error>
+    </div>
+    <br>
+    <label for="project">בחר פרויקט</label>
+    <div id="project" class="card flex justify-content-center">
+      <p-autoComplete [dropdown]="true" [suggestions]="filteredProjects" (completeMethod)="filterProjectAuto($event)"
+        field="name" (onSelect)="onProjectSelected($event)" formControlName="project">
+      </p-autoComplete>
+      <mat-error *ngIf="project!.invalid && (project!.touched || project!.dirty)">
+        <ng-container *ngIf="project!.errors?.['required']">
+          שדה חובה
+        </ng-container>
+      </mat-error>
+    </div>
+    <br>
+    <button type="submit" class="submit-button">
+      שמירת משימה
+    </button>
+  </form>
+</div>

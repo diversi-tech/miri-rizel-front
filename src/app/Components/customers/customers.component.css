@@ -1,7 +1,9 @@
 .editCustomer {
-  display: none; /* הטמעת את הנכות הנוכחית באופן כברירת מחדל */
+  display: none; 
 }
-
+.addCustomer {
+  display: none; 
+}
 .addCustomer{
 
     max-width: 400px;

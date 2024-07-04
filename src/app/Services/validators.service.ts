@@ -32,7 +32,6 @@ export class ValidatorsService {
     }
       return true;
   }
-  
   futureDate(): (date: string) => boolean {
     return (date: string): boolean => {
       const today = new Date();
@@ -41,5 +40,8 @@ export class ValidatorsService {
       return inputDate > today;
     };
   }
+
+
+
   
 }

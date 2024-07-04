@@ -1,5 +1,5 @@
-<!-- <p>list-leads works!</p>
-<button (click)="addLead()">להוספת ליד</button> -->
+<!-- <p>list-leads works!</p>-->
+<!-- <button (click)="addLead()">להוספת ליד</button>  -->
 <app-generic-bourd 
 [data]="Leads" 
 [loading]="loading"
@@ -8,8 +8,9 @@
 [positionData]="[]"
 [objData]="[]"
 [objFields]="[]"
-
 (edit)="onEditLead($event)"
 (delete)="onDeleteLead($event)"
+(showAddComponent)="addLead()"
 >
 </app-generic-bourd>
+<div #popupContainer></div>

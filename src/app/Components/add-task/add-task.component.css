@@ -1,0 +1,56 @@
+
+.add-task-form {
+  direction: rtl;
+    max-width:600px;
+    margin: auto;
+    /* padding: 20px; */
+    /* border: 1px solid #ccc; */
+    /* border-radius: 5px; */
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+    text-align: center;
+  }
+  
+  .login-form h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  mat-form-field {
+    width: 80%;
+    margin-bottom: 15px;
+  }
+  
+  .input-style {
+    width: 100%;
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 12px;
+    text-align: left;
+  }
+  
+  .submit-button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 80%;
+  }
+  
+  .submit-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  .card{
+    direction: ltr;
+  }
+
+  .mat-datepicker-popup {
+    z-index: 1000 !important;
+  }
+  
