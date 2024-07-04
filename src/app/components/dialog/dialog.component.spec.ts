@@ -1,16 +1,16 @@
 // import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-// import { ListLeadsComponent } from './list-leads.component';
+// import { DialogComponent } from './dialog.component';
 
-// describe('ListLeadsComponent', () => {
-//   let component: ListLeadsComponent;
-//   let fixture: ComponentFixture<ListLeadsComponent>;
+// describe('DialogComponent', () => {
+//   let component: DialogComponent;
+//   let fixture: ComponentFixture<DialogComponent>;
 
 //   beforeEach(() => {
 //     TestBed.configureTestingModule({
-//       declarations: [ListLeadsComponent]
+//       declarations: [DialogComponent]
 //     });
-//     fixture = TestBed.createComponent(ListLeadsComponent);
+//     fixture = TestBed.createComponent(DialogComponent);
 //     component = fixture.componentInstance;
 //     fixture.detectChanges();
 //   });

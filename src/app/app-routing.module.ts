@@ -15,6 +15,9 @@ import { ListLeadsComponent } from './Components/Lead-components/list-leads/list
 import { LeadComponent } from './Components/Lead-components/lead/lead.component';
 import { SignUpComponent } from './Components/sign-up/sign-up.component';
 import { AddTaskComponent } from './Components/add-task/add-task.component';
+import { TaskBoardComponent } from './Components/task-board/task-board.component';
+import { EditLeadComponent } from './Components/Lead-components/edit-lead/edit-lead.component';
+import { AddTaskComponent } from './Components/add-task/add-task.component';
 // import { TaskBoardComponent } from './Components/task-board/task-board.component';
 // import { TaskBoardComponent } from './Components/task-board/task-board.component';
 
@@ -31,6 +34,11 @@ const routes: Routes = [
   { path: 'edit', component: EditUserComponent },
   { path: 'add', component: AddUserComponent },
   { path: 'sign-up', component: SignUpComponent },
+  { path: 'task-board', component: TaskBoardComponent },
+  { path: 'add-task', component: AddTaskComponent },
+  { path: 'add-task/:id', component: AddTaskComponent },
+  // { path: '', redirectTo: '/add-task', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   // { path: 'document', component: DocumentComponent },
   // { path: 'task-board', component: TaskBoardComponent },
   { path: 'add-task', component: AddTaskComponent },
@@ -38,11 +46,15 @@ const routes: Routes = [
   // { path: '', redirectTo: '/add-task', pathMatch: 'full' },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   {path: 'addLead', component: AddLeadComponent},
+  {path: 'editLead', component: EditLeadComponent},
   {
     path: 'leads',
     component: ListLeadsComponent,
     children: [{ path: '', component: LeadComponent }],
   },
+  { path: '', component: ListLeadsComponent },
+  { path: 'task', component: TaskBoardComponent },
+  // { path: '', redirectTo: '/task', pathMatch: 'full' },
   // { path: '', component: LoginComponent },
   // { path: 'task', component: TaskBoardComponent },
   // { path: '', redirectTo: '/task', pathMatch: 'full' },

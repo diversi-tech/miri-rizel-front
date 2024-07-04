@@ -23,9 +23,14 @@ import { SignUpComponent } from './Components/sign-up/sign-up.component';
 import { LeadComponent } from './Components/Lead-components/lead/lead.component';
 import { ListLeadsComponent } from './Components/Lead-components/list-leads/list-leads.component';
 import { AddLeadComponent } from './Components/Lead-components/add-lead/add-lead.component';
+import { EditLeadComponent } from './Components/Lead-components/edit-lead/edit-lead.component';
+import { TaskBoardComponent } from './Components/task-board/task-board.component';
 // import { TaskBoardComponent } from './Components/task-board/task-board.component';
 import { AddTaskComponent } from './Components/add-task/add-task.component';
 import { GenericBourdComponent } from './Components/generic-bourd/generic-bourd.component';
+import { CustomerComponentComponent } from './Components/customer-component/customer-component.component';
+
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ExempleComponent } from './Components/exemple/exemple.component';
 import { AddTaskExemplComponent } from './Components/add-task-exempl/add-task-exempl.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -128,6 +133,14 @@ import { AnimateModule } from 'primeng/animate';
 import { CardModule } from 'primeng/card';
 import { BlockUIModule } from 'primeng/blockui';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+
+import { ButtonModule } from 'primeng/button';
+
+import { Component } from '@angular/core';
+import { CalendarModule } from 'primeng/calendar';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CustomersComponent } from './Components/customers/customers.component';
 import { FormCustomerComponent } from './Components/form-customer/form-customer.component';
 
@@ -159,6 +172,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     // TaskBoardComponent,
     AddTaskComponent,
     GenericBourdComponent,
+    EditLeadComponent,
+    CustomerComponentComponent,
     ExempleComponent,
     AddTaskExemplComponent,
     FormCustomerComponent,
@@ -307,6 +322,38 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatSelectModule,
     MatAutocompleteModule,
     DropdownModule
+    CardModule,
+    MatDatepickerModule,
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    BrowserAnimationsModule,
+    MatSlideToggleModule,
+    MatCardModule,
+    MatDialogModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    MatToolbarModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatTableModule,
+    InputTextModule,
+    ButtonModule,
+    CalendarModule,
+    FormsModule,
+    AutoCompleteModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule,
+    MatAutocompleteModule,
+    DropdownModule
   ],
   providers: [
     provideClientHydration(),
@@ -323,6 +370,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
           },
         ],
         callback: 'initGoogleOneTap',
+        onError: (err: any) => {
         onError: (err:any) => {
           console.error(err);
         }
@@ -331,4 +379,5 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
   ],
   bootstrap: [AppComponent],
 })
+export class AppModule { }
 export class AppModule { }

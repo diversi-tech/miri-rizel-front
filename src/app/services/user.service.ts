@@ -7,11 +7,13 @@ import { User } from '../Model/User';
   providedIn: 'root',
 })
 export class UserService {
+ 
   constructor(private http: HttpClient) {}
   private apiUrl = 'https://localhost:7141/User/';
 
   getAll(): Observable<any> {
     return this.http.get(`${this.apiUrl}`);
+ 
   }
 
   addUser(userDetails: any): Observable<any> {
@@ -22,7 +24,6 @@ export class UserService {
   editUser(email: any): Observable<any> {
     return this.http.get(`${this.apiUrl}?email=${email}`);
   }
-  
   editUserPost(user: User) {
     this.http.put(`${this.apiUrl}`, user);
   }
@@ -57,7 +58,7 @@ export class UserService {
   getByPassword(password: string): Observable<User> {
     return this.http.get<User>(`${this.apiUrl}getByPassword/${password}`);
   }
-  
+
   getByMail(mail: string): Observable<User> {
     return this.http.get<User>(`${this.apiUrl}getByMail/${mail}`);
   }
