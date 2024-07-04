@@ -17,12 +17,7 @@ import { SignUpComponent } from './Components/sign-up/sign-up.component';
 import { AddTaskComponent } from './Components/add-task/add-task.component';
 import { TaskBoardComponent } from './Components/task-board/task-board.component';
 import { EditLeadComponent } from './Components/Lead-components/edit-lead/edit-lead.component';
-import { AddTaskComponent } from './Components/add-task/add-task.component';
 // import { TaskBoardComponent } from './Components/task-board/task-board.component';
-// import { TaskBoardComponent } from './Components/task-board/task-board.component';
-
-// import { DocumentComponent } from './Components/document/document.component';
-
 
 
 const routes: Routes = [
@@ -52,10 +47,10 @@ const routes: Routes = [
     component: ListLeadsComponent,
     children: [{ path: '', component: LeadComponent }],
   },
-  { path: '', component: ListLeadsComponent },
+  // { path: 'leads', component: ListLeadsComponent },
   { path: 'task', component: TaskBoardComponent },
   // { path: '', redirectTo: '/task', pathMatch: 'full' },
-  // { path: '', component: LoginComponent },
+  { path: '', component: LoginComponent },
   // { path: 'task', component: TaskBoardComponent },
   // { path: '', redirectTo: '/task', pathMatch: 'full' },
   { path: '', component: LoginComponent },

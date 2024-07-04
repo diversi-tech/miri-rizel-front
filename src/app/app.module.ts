@@ -25,16 +25,10 @@ import { ListLeadsComponent } from './Components/Lead-components/list-leads/list
 import { AddLeadComponent } from './Components/Lead-components/add-lead/add-lead.component';
 import { EditLeadComponent } from './Components/Lead-components/edit-lead/edit-lead.component';
 import { TaskBoardComponent } from './Components/task-board/task-board.component';
-// import { TaskBoardComponent } from './Components/task-board/task-board.component';
 import { AddTaskComponent } from './Components/add-task/add-task.component';
 import { GenericBourdComponent } from './Components/generic-bourd/generic-bourd.component';
 import { CustomerComponentComponent } from './Components/customer-component/customer-component.component';
-
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { ExempleComponent } from './Components/exemple/exemple.component';
-import { AddTaskExemplComponent } from './Components/add-task-exempl/add-task-exempl.component';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -46,7 +40,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
-
 import { AccordionModule } from 'primeng/accordion';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { AvatarModule } from 'primeng/avatar';
@@ -133,27 +126,14 @@ import { AnimateModule } from 'primeng/animate';
 import { CardModule } from 'primeng/card';
 import { BlockUIModule } from 'primeng/blockui';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-
-import { ButtonModule } from 'primeng/button';
-
-import { Component } from '@angular/core';
-import { CalendarModule } from 'primeng/calendar';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatSelectModule } from '@angular/material/select';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CustomersComponent } from './Components/customers/customers.component';
 import { FormCustomerComponent } from './Components/form-customer/form-customer.component';
-
 import { ButtonModule } from 'primeng/button';
-
 import { Component } from '@angular/core';
 import { CalendarModule } from 'primeng/calendar';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-// import { DocumentComponent } from './Components/document/document.component';
-// import { DocumentComponent } from './Components/document/document.component';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -169,13 +149,11 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     ListLeadsComponent,
     AddLeadComponent,
       CustomersComponent,
-    // TaskBoardComponent,
+    TaskBoardComponent,
     AddTaskComponent,
     GenericBourdComponent,
     EditLeadComponent,
     CustomerComponentComponent,
-    ExempleComponent,
-    AddTaskExemplComponent,
     FormCustomerComponent,
     // DocumentComponent,
   ],
@@ -321,7 +299,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatNativeDateModule,
     MatSelectModule,
     MatAutocompleteModule,
-    DropdownModule
+    DropdownModule,
     CardModule,
     MatDatepickerModule,
     BrowserModule,
@@ -371,7 +349,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
         ],
         callback: 'initGoogleOneTap',
         onError: (err: any) => {
-        onError: (err:any) => {
           console.error(err);
         }
       } as SocialAuthServiceConfig,
@@ -379,5 +356,4 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
 export class AppModule { }

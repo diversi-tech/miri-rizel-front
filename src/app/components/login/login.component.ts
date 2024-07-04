@@ -44,13 +44,13 @@ export class LoginComponent implements OnInit {
     const password = this.pass.value;
     this.userService.login(email, password).subscribe(
       (user: User) => {
-        if (user.role == 0) {
+        if (user.role == 1) {
           this.router.navigate(['/admin'], { relativeTo: this.active });
         }
-        if (user.role == 1) {
+        if (user.role == 2) {
           this.router.navigate(['/worker'], { relativeTo: this.active });
         }
-        if (user.role == 2) {
+        if (user.role == 3) {
           this.router.navigate(['/customer'], { relativeTo: this.active });
         }
       },

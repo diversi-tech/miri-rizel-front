@@ -22,13 +22,13 @@ import { Priority } from '@app/Model/Priority';
 import { ProjectService } from '@app/Services/project.service';
 
 
-// @Component({
-//   selector: 'app-task-board',
-//   templateUrl: './task-board.component.html',
-//   styleUrls: ['./task-board.component.css'],
-//   // imports: [ProgressBarModule,ToastModule]
+@Component({
+  selector: 'app-task-board',
+  templateUrl: './task-board.component.html',
+  styleUrls: ['./task-board.component.css'],
+  // imports: [ProgressBarModule,ToastModule]
 
-// })
+})
 
 export class TaskBoardComponent implements OnInit {
   tasks: Task[] = [];

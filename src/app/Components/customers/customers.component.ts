@@ -99,12 +99,12 @@ export class CustomersComponent implements OnInit {
     }
     this.newCustomer = this.customerForm.value;
     this.newCustomer.status = this.selectedStatus;
+    console.log(this.newCustomer);
+    this.newCustomer.customerId=0;
     this.customerService.AddNewCustomer(this.newCustomer).subscribe(() => {
       this.loadCustomers();
-      this.submitted1 = false;
-      this.newCustomerFlag = false;
       this.customerForm.reset();
-      console.log("dlas;");
+      this.submitted1 = false;
       
       Swal.close();
     });
@@ -118,7 +118,7 @@ export class CustomersComponent implements OnInit {
   }
   editCustomerSubmit(): void {
     console.log("f,l,l");
-    
+
     this.submitted = true;
     if (this.customerForm.invalid) {
       return;
@@ -132,7 +132,7 @@ export class CustomersComponent implements OnInit {
       this.loadCustomers();
       this.customerForm.reset();
       this.submitted = false;
-     
+
     });
   }
 
@@ -146,14 +146,14 @@ export class CustomersComponent implements OnInit {
     this.selectedStatus = this.statusCodeUser.find(s => s.id == this.status) as StatusCodeUser;
   }
 
-  customNameValidator(): (control: FormControl ) => ValidationErrors | null {
+  customNameValidator(): (control: FormControl) => ValidationErrors | null {
     return (control: FormControl): ValidationErrors | null => {
-      return this.validatorsService.name(control.value) ? null : { invalidName: true};
+      return this.validatorsService.name(control.value) ? null : { invalidName: true };
     };
   }
   customPhoneValidator(): (control: FormControl) => ValidationErrors | null {
     return (control: FormControl): ValidationErrors | null => {
-      return this.validatorsService.phone(control.value) ? null : { invalidPhone:true };
+      return this.validatorsService.phone(control.value) ? null : { invalidPhone: true };
     };
   }
 
