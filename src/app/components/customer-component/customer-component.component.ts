@@ -1,12 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Project } from 'src/app/Model/Project';
 import { Country, Customer, Representative } from 'src/app/Model/Customer';
-import { User } from 'src/app/Model/User';
-import { TaskService } from 'src/app/Services/task.service';
-import { UserService } from 'src/app/Services/user.service';
 import { GenericBourdComponent } from '../generic-bourd/generic-bourd.component';
-import { CustomerService } from '../../Services/customer.service';
 
 @Component({
   selector: 'app-customer-component',
@@ -22,7 +17,7 @@ export class CustomerComponentComponent {
     loading: boolean = true;
     @ViewChild(GenericBourdComponent) genericBourd!: GenericBourdComponent;
   
-    constructor(private customerService: CustomerService,  private router: Router) { }
+    constructor( private router: Router) { }
   
     ngOnInit() {
       // this.customerService.getAllLeads().subscribe(
