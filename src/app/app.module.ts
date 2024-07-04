@@ -138,7 +138,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { DocumentComponent } from './Components/document/document.component';
+// import { DocumentComponent } from './Components/document/document.component';
 // import { DocumentComponent } from './Components/document/document.component';
 
 @NgModule({
@@ -162,7 +162,7 @@ import { DocumentComponent } from './Components/document/document.component';
     ExempleComponent,
     AddTaskExemplComponent,
     FormCustomerComponent,
-    DocumentComponent,
+    // DocumentComponent,
   ],
    
     

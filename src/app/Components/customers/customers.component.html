@@ -2,10 +2,9 @@
     [col$types]="{'firstName':'text','lastName':'text','email':'text','phone':'text','businessName':'text','source':'text','status':'position','createdDate':'date'}"
     [positionData]="[status]" 
     (edit)="editCustomer($event)" 
-    (delete)="deleteCustomer($event)"
-    (showAddComponent)="addCustomer()">
+    (delete)="deleteCustomer($event)">
 </app-generic-bourd>
-<form class="editCustomer"  id="editCustomer" [formGroup]="customerForm" (ngSubmit)="editCustomerSubmit()">
+<form class="editCustomer"  id="editCustomerForm" [formGroup]="customerForm" (ngSubmit)="editCustomerSubmit()">
     <div class="form-group">
         <div class="form-group">
             <label for="firstName">שם פרטי</label>
@@ -88,7 +87,7 @@
     </div>
 </form>
 
-    <form class="addCustomer" id="addCustomer" [formGroup]="customerForm"  (ngSubmit)="addCustomerSubmit()">
+    <form class="addCustomer" [formGroup]="customerForm" *ngIf="newCustomerFlag" (ngSubmit)="addCustomerSubmit()">
     <div class="form-group">
         <label for="firstName">שם פרטי</label>
         <input   type="text" formControlName="firstName" required placeholder="שם פרטי" />

@@ -18,7 +18,7 @@ import { AddTaskComponent } from './Components/add-task/add-task.component';
 // import { TaskBoardComponent } from './Components/task-board/task-board.component';
 // import { TaskBoardComponent } from './Components/task-board/task-board.component';
 
-import { DocumentComponent } from './Components/document/document.component';
+// import { DocumentComponent } from './Components/document/document.component';
 
 
 
@@ -31,7 +31,7 @@ const routes: Routes = [
   { path: 'edit', component: EditUserComponent },
   { path: 'add', component: AddUserComponent },
   { path: 'sign-up', component: SignUpComponent },
-  { path: 'document', component: DocumentComponent },
+  // { path: 'document', component: DocumentComponent },
   // { path: 'task-board', component: TaskBoardComponent },
   { path: 'add-task', component: AddTaskComponent },
   { path: 'add-task/:id', component: AddTaskComponent },

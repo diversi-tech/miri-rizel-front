@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { StatusCodeUser } from '@app/Model/StatusCodeUser';
 import { Customer } from 'src/app/Model/Customers';
@@ -25,11 +25,9 @@ export class CustomersComponent implements OnInit {
   selectedStatus!: StatusCodeUser;
   status: any;
   private originalParent: HTMLElement | null = null;
+  newCustomer!: Customer;
 
-// תוסיף את זה לפני הקומפוננטה
-newCustomer!: Customer; // אתה יכול להשתמש כדי ש להשמין
-
-  constructor(private formBuilder: FormBuilder, private customerService: CustomersService, private validatorsService: ValidatorsService) {}
+  constructor(private formBuilder: FormBuilder, private customerService: CustomersService, private validatorsService: ValidatorsService) { }
 
   ngOnInit(): void {
     this.customerForm = this.formBuilder.group({
@@ -43,7 +41,7 @@ newCustomer!: Customer; // אתה יכול להשתמש כדי ש להשמין
       status: ['', [Validators.required]],
       createdDate: ['', [Validators.required]],
     });
-    
+
     this.loadCustomers();
     this.loadStatusUsers();
   }
@@ -65,35 +63,10 @@ newCustomer!: Customer; // אתה יכול להשתמש כדי ש להשמין
   }
 
   get formControls() { return this.customerForm.controls; }
-
-  addCustomer() {
-    this.openEditCustomerPopup("הוספת לקוח","addCustomer");
-  }
-
-  addCustomerSubmit() {
-    this.submitted1 = true;
-    if (this.customerForm.invalid) {
-      return;
-    }
-
-    this.newCustomer = this.customerForm.value;
-    this.newCustomer.status = this.selectedStatus;
-    
-    this.customerService.AddNewCustomer(this.newCustomer).subscribe(() => {
-      this.loadCustomers();
-      this.submitted1 = false;
-      this.newCustomerFlag = false;
-      this.customerForm.reset();
-      Swal.close();
-    });
-  }
-
   openEditCustomerPopup(title: string, formId: string) {
     const formElement = document.getElementById(formId);
-
     if (formElement) {
       this.originalParent = formElement.parentElement;
-
       Swal.fire({
         title: title,
         html: `<div id="popupContainer"></div>`,
@@ -113,28 +86,53 @@ newCustomer!: Customer; // אתה יכול להשתמש כדי ש להשמין
           }
         }
       });
-   }}
-
+    }
+  }
+  addCustomer() {
+    console.log("sd");
+    this.openEditCustomerPopup("הוספת לקוח", "addCustomer");
+  }
+  addCustomerSubmit() {
+    this.submitted1 = true;
+    if (this.customerForm.invalid) {
+      return;
+    }
+    this.newCustomer = this.customerForm.value;
+    this.newCustomer.status = this.selectedStatus;
+    this.customerService.AddNewCustomer(this.newCustomer).subscribe(() => {
+      this.loadCustomers();
+      this.submitted1 = false;
+      this.newCustomerFlag = false;
+      this.customerForm.reset();
+      console.log("dlas;");
+      
+      Swal.close();
+    });
+  }
   editCustomer(customer: Customer) {
     this.customerService.GetCustomerById(customer.customerId).subscribe(res1 => {
       this.customerForm.setValue(res1);
-      this.openEditCustomerPopup("עריכת משתמש","editCustomer");
+      console.log("ssss");
+      this.openEditCustomerPopup("עריכת משתמש", "editCustomer");
     });
   }
-
   editCustomerSubmit(): void {
+    console.log("f,l,l");
+    
     this.submitted = true;
     if (this.customerForm.invalid) {
       return;
     }
-    
     this.customerForm.value.status = this.selectedStatus;
-    
+    console.log("f,l,ltttgggg");
+
     this.customerService.EditCustomer(this.customerForm.value).subscribe(() => {
+      console.log("f,l,lgggg");
+      Swal.close();
       this.loadCustomers();
       this.customerForm.reset();
       this.submitted = false;
-      Swal.close();
+     
     });
   }
 
@@ -143,9 +141,26 @@ newCustomer!: Customer; // אתה יכול להשתמש כדי ש להשמין
       this.loadCustomers();
     });
   }
-
   selectItem(event: any) {
     this.status = event.target.value;
     this.selectedStatus = this.statusCodeUser.find(s => s.id == this.status) as StatusCodeUser;
   }
+
+  customNameValidator(): (control: FormControl ) => ValidationErrors | null {
+    return (control: FormControl): ValidationErrors | null => {
+      return this.validatorsService.name(control.value) ? null : { invalidName: true};
+    };
+  }
+  customPhoneValidator(): (control: FormControl) => ValidationErrors | null {
+    return (control: FormControl): ValidationErrors | null => {
+      return this.validatorsService.phone(control.value) ? null : { invalidPhone:true };
+    };
+  }
+
+  customFutureDateValidator(): (control: FormControl) => ValidationErrors | null {
+    return (control: FormControl): ValidationErrors | null => {
+      return this.validatorsService.futureDate()(control.value) ? null : { invalidDate: true };
+    };
+  }
+
 }
