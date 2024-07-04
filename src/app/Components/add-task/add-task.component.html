@@ -13,25 +13,6 @@
       <textarea matInput formControlName="description"></textarea>
     </mat-form-field>
 
-    <!-- <mat-form-field>
-      <mat-label>הכנס תאריך יעד</mat-label>
-      <input class="input-style" matInput [matDatepicker]="picker" formControlName="dueDate" required
-        placeholder="dd/mm/yyyy" />
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-
-      <mat-error *ngIf="dueDate!.invalid && (dueDate!.touched || dueDate!.dirty)">
-        <ng-container *ngIf="dueDate!.errors?.['required']; else notFutureDate">
-          שדה חובה
-        </ng-container>
-        <ng-template #notFutureDate>
-          <ng-container *ngIf="dueDate!.errors?.['notFutureDate']">
-            התאריך חייב להיות עתידי
-          </ng-container>
-        </ng-template>
-      </mat-error>
-    </mat-form-field> -->
-
     <div class="card flex justify-content-center">
       <label for="date">הכנס תאריך יעד</label>
       <br>

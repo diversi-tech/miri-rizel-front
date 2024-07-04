@@ -51,8 +51,6 @@ export class AddTaskComponent implements OnInit {
   statuses: StatusCodeProject[] = [];
   priorities: Priority[] = [];
 
-  // date: Date | undefined;
-
   filteredProjects: Project[] = [];
   filteredUsers: User[] = [];
 
@@ -141,7 +139,7 @@ export class AddTaskComponent implements OnInit {
   futureDateValidator(control: AbstractControl): ValidationErrors | null {
     const selectedDate = new Date(control.value);
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    // today.setHours(0, 0, 0, 0);
     return selectedDate > today ? null : { notFutureDate: true };
   }
 
@@ -224,7 +222,6 @@ export class AddTaskComponent implements OnInit {
     });
   }
 
-
   onSubmit(): void {
     if (this.taskForm.invalid) {
       this.taskForm.markAllAsTouched();
@@ -257,12 +254,11 @@ export class AddTaskComponent implements OnInit {
 
     if (this.taskForm.valid) {
       if (!this.isEdit) {
-        debugger
         this.newTask.createdDate = new Date();
+        console.log(this.newTask);
+        
         this.taskService.addTask(this.newTask).subscribe(
           (response) => {
-            console.log("add");
-            console.log(response == true);
             if (response) {
               this.dataRefreshed.emit();
               Swal.close()
@@ -286,8 +282,6 @@ export class AddTaskComponent implements OnInit {
       else {
         this.taskService.updateTask(this.newTask).subscribe(
           (response) => {
-            console.log("update");
-            console.log(response);
             if (response == true) {
               this.dataRefreshed.emit();
               Swal.close()

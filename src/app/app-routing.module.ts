@@ -16,6 +16,7 @@ import { LeadComponent } from './Components/Lead-components/lead/lead.component'
 import { SignUpComponent } from './Components/sign-up/sign-up.component';
 import { AddTaskComponent } from './Components/add-task/add-task.component';
 import { TaskBoardComponent } from './Components/task-board/task-board.component';
+import { EditLeadComponent } from './Components/Lead-components/edit-lead/edit-lead.component';
 
 const routes: Routes = [
   { path: 'worker', component: WorkerComponentComponent },
@@ -32,12 +33,13 @@ const routes: Routes = [
   // { path: '', redirectTo: '/add-task', pathMatch: 'full' },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   {path: 'addLead', component: AddLeadComponent},
+  {path: 'editLead', component: EditLeadComponent},
   {
     path: 'leads',
     component: ListLeadsComponent,
     children: [{ path: '', component: LeadComponent }],
   },
-  // { path: '', component: LoginComponent },
+  { path: '', component: ListLeadsComponent },
   { path: 'task', component: TaskBoardComponent },
   // { path: '', redirectTo: '/task', pathMatch: 'full' },
   {
