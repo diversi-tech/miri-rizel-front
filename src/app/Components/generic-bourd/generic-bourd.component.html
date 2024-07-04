@@ -23,7 +23,7 @@
                 [pSortableColumn]="col.filterType=='obj' ?col.field+'.'+getobjFields(i)  : col.field">
                 <div class="flex justify-content-between align-items-center">
                     {{ col.header }}
-                    <p-sortIcon *ngIf="col.sortable"
+                    <p-sortIcon *ngIf="col.sortable==true"
                         [field]="col.filterType=='obj' ?col.field+'.'+getobjFields(i)  : col.field"></p-sortIcon>
                     <p-columnFilter *ngIf="col.filterType=='text'" type="text" [field]="col.field" display="menu"
                         class="ml-auto"></p-columnFilter>
@@ -32,10 +32,10 @@
                     <p-columnFilter *ngIf="col.filterType=='position'" [field]="col.field" matchMode="equals"
                         display="menu" class="ml-auto">
                         <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                            <p-dropdown [ngModel]="value" [options]="getPosData(i).description"
+                            <p-dropdown [ngModel]="value" [options]="getPosData(i)"
                                 (onChange)="filter($event.value)" placeholder="Any">
                                 <ng-template let-option pTemplate="item">
-                                    <p-tag [value]="option.label" [severity]="getSeverity(option.label)"></p-tag>
+                                    <p-tag [value]="option.description" [severity]="getSeverity(option.description)"></p-tag>
                                 </ng-template>
                             </p-dropdown>
                         </ng-template>

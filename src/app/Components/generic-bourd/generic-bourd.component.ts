@@ -96,19 +96,19 @@ export class GenericBourdComponent implements OnInit, OnChanges {
     if (this.popTable == true)
       this.columns.push({
         field: 'popTable',
-        header: 'Show ',
+        header: '',
         sortable: false,
         filterType: 'popTable'
       });
     this.columns.push({
       field: 'edit',
-      header: 'Edit',
+      header: '',
       sortable: false,
       filterType: 'edit'
     });
     this.columns.push({
       field: 'delete',
-      header: 'Delete',
+      header: '',
       sortable: false,
       filterType: 'delete'
     });
@@ -121,6 +121,8 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   }
 
   getSeverity(status: string) {
+    console.log(status);
+    
     switch (status) {
       case 'TO DO':
         return 'danger';
@@ -157,8 +159,8 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   getPosData(i: number) {
     let index: number = 0
     for (let c = 0; c < i; c++)
-      if (this.columns[c].filterType == 'priority')
-        index++;
+      if (this.columns[c].filterType == 'position')
+        index++;      
     return this.positionData[index]
   }
   getObjData(i: number) {

@@ -44,7 +44,6 @@ export class TaskBoardComponent implements OnInit {
     this.taskService.getAllPriorities().subscribe(
       (data) => {
         this.priorities = data
-        console.log(" this.priorities", this.priorities);
         
       }
     )
@@ -65,7 +64,6 @@ export class TaskBoardComponent implements OnInit {
     this.taskService.getAll().subscribe(
       (tasks: Array<Task>) => {
         this.tasks = tasks;
-        console.log(this.tasks);
         this.userService.getAll().subscribe(
           (users: Array<User>) => {
             this.users = users;
