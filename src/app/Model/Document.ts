@@ -1,9 +1,9 @@
 export interface document {
-    DocumentId?: number,
-    Title?: string,
-    Description?: string,
-    FilePath?: string,
-    RelatedTo?: string,
-    RelatedId?: string
-    CreatedDate?: Date
+    documentId?: number,
+    title?: string,
+    description?: string,
+    filePath?: string,
+    relatedTo?: string,
+    relatedId?: string
+    createdDate?: Date
 }
