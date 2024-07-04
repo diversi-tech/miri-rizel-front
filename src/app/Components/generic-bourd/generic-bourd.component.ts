@@ -120,9 +120,7 @@ export class GenericBourdComponent implements OnInit, OnChanges {
     }
   }
 
-  getSeverity(status: string) {
-    console.log(status);
-    
+  getSeverity(status: string) {    
     switch (status) {
       case 'TO DO':
         return 'danger';
