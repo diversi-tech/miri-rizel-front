@@ -6,7 +6,6 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { ResetPasswordService } from '../../Services/reset-password.service';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/Services/user.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -18,7 +17,7 @@ import { DialogComponent } from '../dialog/dialog.component';
   styleUrls: ['./reset-password.component.css'],
 })
 export class ResetPasswordComponent implements OnInit {
-  constructor(private reset: ResetPasswordService, private route: Router, private userService: UserService, private dialog: MatDialog,) { }
+  constructor(private route: Router, private userService: UserService, private dialog: MatDialog,) { }
 
   ngOnInit(): void {
     this.resetForm = new FormGroup({
@@ -33,7 +32,6 @@ export class ResetPasswordComponent implements OnInit {
     });
   }
 
-  // פונקציות ומשתנים להסתרת והצגת הסיסמאות
   hide = signal(true);
   hideAuth = signal(true);
 
@@ -58,14 +56,11 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   onSubmit() {
-    // שליחת הסיסמה החדשה
     if (this.resetForm.valid) {
       const password = this.pass.value;
-      // שליפה של הקוד לקוח
       const email = this.userService.getUserMail();
       this.userService.savePassword(email!, password).subscribe(
         (res) => {
-          // ניתוב להתחברות עם הסיסמה החדשה
           if (res === true) {
             this.dialog.open(DialogComponent, {
               data: {
@@ -85,7 +80,6 @@ export class ResetPasswordComponent implements OnInit {
     }
   }
 
-  // תקינות סיסמה
   passwordValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
 
@@ -108,7 +102,6 @@ export class ResetPasswordComponent implements OnInit {
       : null;
   }
 
-  // אימות סיסמה
   isMatched(password: AbstractControl) {
     if (!password.value) return { req: true };
     if (password.value != this.pass.value) return { notValid: true };

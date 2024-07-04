@@ -5,8 +5,10 @@
     [objData]="[users,projects]" 
     [objFields]="['email','name']" 
     [posFields]="['description','description']"
+    [popTable]="true"
     (edit)="onEditTask($event)" 
     (delete)="onDeleteTask($event)" 
+    (dataUpdated)="filterData($event)"
     (showAddComponent)="addTask()">
 </app-generic-bourd>
 <div #popupContainer></div>

@@ -23,7 +23,6 @@ import { EditLeadComponent } from './Components/Lead-components/edit-lead/edit-l
 import { TaskBoardComponent } from './Components/task-board/task-board.component';
 import { AddTaskComponent } from './Components/add-task/add-task.component';
 import { GenericBourdComponent } from './Components/generic-bourd/generic-bourd.component';
-import { ExempleComponent } from './Components/exemple/exemple.component';
 import { CustomerComponentComponent } from './Components/customer-component/customer-component.component';
 
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -152,7 +151,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     TaskBoardComponent,
     AddTaskComponent,
     GenericBourdComponent,
-    ExempleComponent,
     EditLeadComponent,
     CustomerComponentComponent,
   ],
@@ -311,7 +309,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
           },
         ],
         callback: 'initGoogleOneTap',
-        onError: (err:any) => {
+        onError: (err: any) => {
           console.error(err);
         }
       } as SocialAuthServiceConfig,

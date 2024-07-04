@@ -29,6 +29,14 @@ export class AddTaskComponent implements OnInit {
   @Output() dataRefreshed: EventEmitter<void> = new EventEmitter<void>();
 
   data: any;
+  setData(data: any) {
+    if (data) {
+      this.data = data;
+      this.isEdit = true;
+      this.loadTask(data);
+      this.titlePage = "עריכת משימה"
+    }
+  }
 
   taskForm: FormGroup = new FormGroup({});
 
@@ -64,6 +72,7 @@ export class AddTaskComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
 
     this.taskForm = this.fb.group({
       taskId: [''],
@@ -136,18 +145,10 @@ export class AddTaskComponent implements OnInit {
   futureDateValidator(control: AbstractControl): ValidationErrors | null {
     const selectedDate = new Date(control.value);
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    // today.setHours(0, 0, 0, 0);
     return selectedDate > today ? null : { notFutureDate: true };
   }
 
-setData(data: any) {
-    if (data) {
-      this.data = data;
-      this.isEdit = true;
-      this.loadTask(data);
-      this.titlePage = "עריכת משימה"
-    }
-  }
 
   userExistsValidator(user: User) {
     if (user && !this.users.find(u => u.userId === user.userId))
@@ -225,7 +226,6 @@ setData(data: any) {
       project: selectedProject
     });
   }
-
 
   onSubmit(): void {
     if (this.taskForm.invalid) {
@@ -335,6 +335,4 @@ setData(data: any) {
     console.info(eventDetails);
     this.GoogleAuthService.createGoogleEvent(eventDetails)
   }
-
 }
-
