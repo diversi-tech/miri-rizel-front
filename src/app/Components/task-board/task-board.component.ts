@@ -2,7 +2,6 @@ import { User } from 'src/app/Model/User';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { Customer, Representative } from 'src/app/Model/Customer';
-import { CustomerService } from 'src/app/Services/customer.service';
 // import { ButtonModule } from 'primeng/button';
 import { Table } from 'primeng/table';
 import { TaskService } from 'src/app/Services/task.service';
@@ -27,7 +26,7 @@ import { ProjectService } from '@app/Services/project.service';
   selector: 'app-task-board',
   templateUrl: './task-board.component.html',
   styleUrls: ['./task-board.component.css'],
-  // imports: []
+  // imports: [ProgressBarModule,ToastModule]
 
 })
 
@@ -40,23 +39,11 @@ export class TaskBoardComponent implements OnInit {
   priorities: Priority[] = [];
   projects: Project[] = [];
   // 
-  tasks: Task[] = [];
-  users: User[] = [];
-  statuses: StatusCodeProject[] = [];
-
-  // 
-  priorities: Priority[] = [];
-  projects: Project[] = [];
-  // 
 
   loading: boolean = true;
   @ViewChild(GenericBourdComponent) genericBourd!: GenericBourdComponent;
   @ViewChild('popupContainer', { read: ViewContainerRef }) popupContainer!: ViewContainerRef;
-  @ViewChild(GenericBourdComponent) genericBourd!: GenericBourdComponent;
-  @ViewChild('popupContainer', { read: ViewContainerRef }) popupContainer!: ViewContainerRef;
 
-  constructor(private location: Location
-    , private taskService: TaskService, private userService: UserService, private projectService: ProjectService, private resolver: ComponentFactoryResolver, private dialog: MatDialog) { }
   constructor(private location: Location
     , private taskService: TaskService, private userService: UserService, private projectService: ProjectService, private resolver: ComponentFactoryResolver, private dialog: MatDialog) { }
 
@@ -99,7 +86,6 @@ export class TaskBoardComponent implements OnInit {
       (error) => {
         console.error('Error fetching tasks:', error);
         this.loading = false; // לוודא שהטעינה מפסיקה גם במקרה של שגיאה
-        this.loading = false; // לוודא שהטעינה מפסיקה גם במקרה של שגיאה
       }
     );
   }
@@ -120,46 +106,7 @@ export class TaskBoardComponent implements OnInit {
     this.taskService.getAll().subscribe(
       (tasks: any) => {
         this.tasks = tasks;
-  }
-
-  componentType!: Type<any>;
-  addTask() {
-    this.componentType = AddTaskComponent;
-    this.popUpAddOrEdit(null);
-  }
-
-
-  onEditTask(task: Task) {
-    this.componentType = AddTaskComponent;
-    this.popUpAddOrEdit(task.taskId!);
-  }
-
-  refreshData() {
-    this.taskService.getAll().subscribe(
-      (tasks: any) => {
-        this.tasks = tasks;
         this.loading = false;
-        console.log("refreshData: ", this.tasks);
-      })
-  }
-
-  popUpAddOrEdit(taskId: number | null) {
-    Swal.fire({
-      html: '<div id="popupContainer"></div>',
-      showConfirmButton: false,
-      didOpen: () => {
-        const container = document.getElementById('popupContainer');
-        if (container) {
-          const factory = this.resolver.resolveComponentFactory(this.componentType);
-          const componentRef = this.popupContainer.createComponent(factory);
-          componentRef.instance.setData(taskId);
-          componentRef.instance.dataRefreshed.subscribe(() => {
-            this.refreshData();
-          })
-          container.appendChild(componentRef.location.nativeElement);
-        }
-      },
-    });
         console.log("refreshData: ", this.tasks);
       })
   }
