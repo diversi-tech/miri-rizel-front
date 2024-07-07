@@ -25,6 +25,7 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   @Input() positionData: any[] = [];
   @Input() objData: any[] = [];
   @Input() objFields: string[] = [];
+  @Input() posFields: string[] = [];
   @Input() col$types: any = {};
   @Input() popTable!: boolean;
   @Output() edit = new EventEmitter<any>();
@@ -36,7 +37,8 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   constructor(private resolver: ComponentFactoryResolver) { }
 
   columns: Column[] = [];
-
+  isListView: boolean = true;
+  layout: string = 'list';
   ngOnInit() {
     if (this.data === undefined || (this.objData.length > 0 && this.objFields == null)) {
       throw new Error('The data input is required and must be provided.');
@@ -49,14 +51,32 @@ export class GenericBourdComponent implements OnInit, OnChanges {
       this.generateColumns();
     }
   }
-
+  toggleView(): void {
+    this.isListView = !this.isListView;
+  }
+  getToggleView() {
+    return this.isListView
+  }
   onEdit(rowData: any) {
     this.edit.emit(rowData);
   }
 
   onDelete(rowData: any) {
-    debugger
-    this.delete.emit(rowData);
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.delete.emit(rowData);
+      }
+    });
+
   }
 
   generateColumns() {
@@ -78,19 +98,19 @@ export class GenericBourdComponent implements OnInit, OnChanges {
     if (this.popTable == true)
       this.columns.push({
         field: 'popTable',
-        header: 'Show ',
+        header: '',
         sortable: false,
         filterType: 'popTable'
       });
     this.columns.push({
       field: 'edit',
-      header: 'Edit',
+      header: '',
       sortable: false,
       filterType: 'edit'
     });
     this.columns.push({
       field: 'delete',
-      header: 'Delete',
+      header: '',
       sortable: false,
       filterType: 'delete'
     });
@@ -100,29 +120,30 @@ export class GenericBourdComponent implements OnInit, OnChanges {
     if (this.positionData.length == 0 || !this.positionData) {
       console.log(this.positionData);
     }
-
   }
 
-  getSeverity(status: string) {
+  getSeverity(status: string) {    
     switch (status) {
-      case 'a':
+      case 'TO DO':
         return 'danger';
 
-      case 'Complited':
-        return 'success';
-
-      case 'Beginning':
+      case 'In PROGRESS':
         return 'info';
 
-      case 'InProgress':
-        return 'warning';
+      case 'DONE':
+        return 'success';
 
-      case 'renewal':
-        return 'null';
+      case 'High':
+        return 'danger';
+
+      case 'Low':
+        return 'success';
+
+      case 'Medium':
+        return 'info';
 
       default:
         return 'null';
-
     }
   }
 
@@ -135,11 +156,11 @@ export class GenericBourdComponent implements OnInit, OnChanges {
       this.data[i][col.field] = new Date(this.data[i][col.field])
     return col.filterType
   }
-  getpositionData(i: number) {
+  getPosData(i: number) {
     let index: number = 0
     for (let c = 0; c < i; c++)
-      if (this.columns[c].filterType == 'priority')
-        index++;
+      if (this.columns[c].filterType == 'position')
+        index++;      
     return this.positionData[index]
   }
   getObjData(i: number) {
@@ -159,6 +180,15 @@ export class GenericBourdComponent implements OnInit, OnChanges {
 
   }
 
+  getposFields(i: number): string {
+    let index: number = 0
+    for (let c = 0; c < i; c++)
+      if (this.columns[c].filterType == 'position')
+        index++;
+    return this.posFields[index]
+
+  }
+
   filterGlobal(event: Event) {
     const input = event.target as HTMLInputElement;
     if (this.dt) {
@@ -169,9 +199,10 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   getDataForPopTable(obj: any) {
     this.dataUpdated.emit(obj)
   }
-  getPosition(item: number, i: number): string {
-    // let List<any> n= this.getpositionData(i)
-    return ""
+  getPosition(item: any, i: number): string {
+    // debugger
+    // let List<any> n= this.getposData(i)
+    return item.description
   }
   PopTable(data: any, loading: boolean, col$types: any, Data1?: any, objFields?: string[], Data2?: any[]) {
     Swal.fire({
@@ -195,6 +226,7 @@ export class GenericBourdComponent implements OnInit, OnChanges {
             componentRef.instance.objData = Data1;
             componentRef.instance.objFields = objFields;
             componentRef.instance.positionData = Data2;
+            componentRef.instance.posFields = this.posFields;
           }
           container.appendChild(componentRef.location.nativeElement);
           componentRef.instance.loading = false

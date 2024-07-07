@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/Model/User';
-import { UserService } from 'src/app/Services/user.service';
+import { EditUserService } from '../../Services/edit-user.service';
 
 @Component({
   selector: 'app-edit-user',
@@ -12,7 +12,7 @@ export class EditUserComponent {
   user: User = {userId:0, firstName: "", lastName: "", password: "", role: 0, email: "", createdDate: new Date }
   flag: Boolean = false;
 
-  constructor(private editUser:UserService) {
+  constructor(private editUser:EditUserService) {
 
   }
   edit() {

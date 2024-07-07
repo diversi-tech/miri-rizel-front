@@ -4,7 +4,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { SocialLoginModule, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
 import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,7 +13,12 @@ import { DialogComponent } from './Components/dialog/dialog.component';
 import { AuthCodeDialogComponent } from './Components/auth-code-dialog/auth-code-dialog.component';
 import { LoginComponent } from './Components/login/login.component';
 import { EditUserComponent } from './Components/edit-user/edit-user.component';
+import { NgxGoogleSignInModule } from 'ngx-google-sign-in';
 import { GoogleComponent } from './Components/google/google.component';
+import {
+  SocialLoginModule,
+  SocialAuthServiceConfig,
+} from '@abacritt/angularx-social-login';
 import { SignUpComponent } from './Components/sign-up/sign-up.component';
 import { LeadComponent } from './Components/Lead-components/lead/lead.component';
 import { ListLeadsComponent } from './Components/Lead-components/list-leads/list-leads.component';
@@ -23,12 +27,8 @@ import { EditLeadComponent } from './Components/Lead-components/edit-lead/edit-l
 import { TaskBoardComponent } from './Components/task-board/task-board.component';
 import { AddTaskComponent } from './Components/add-task/add-task.component';
 import { GenericBourdComponent } from './Components/generic-bourd/generic-bourd.component';
-import { ExempleComponent } from './Components/exemple/exemple.component';
-import { AddTaskExemplComponent } from './Components/add-task-exempl/add-task-exempl.component';
 import { CustomerComponentComponent } from './Components/customer-component/customer-component.component';
-
 import { MatDatepickerModule } from '@angular/material/datepicker';
-
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -40,7 +40,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
-
 import { AccordionModule } from 'primeng/accordion';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { AvatarModule } from 'primeng/avatar';
@@ -127,9 +126,9 @@ import { AnimateModule } from 'primeng/animate';
 import { CardModule } from 'primeng/card';
 import { BlockUIModule } from 'primeng/blockui';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-
+import { CustomersComponent } from './Components/customers/customers.component';
+import { FormCustomerComponent } from './Components/form-customer/form-customer.component';
 import { ButtonModule } from 'primeng/button';
-
 import { Component } from '@angular/core';
 import { CalendarModule } from 'primeng/calendar';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -138,6 +137,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ProjectTableComponent } from './Components/project-table/project-table.component';
 import { AddProjectComponent } from './Components/add-project/add-project.component';
 import { EditProjectComponent } from './Components/edit-project/edit-project.component';
+
 
 
 @NgModule({
@@ -154,12 +154,10 @@ import { EditProjectComponent } from './Components/edit-project/edit-project.com
     LeadComponent,
     ListLeadsComponent,
     AddLeadComponent,
+      CustomersComponent,
     TaskBoardComponent,
     AddTaskComponent,
     GenericBourdComponent,
-    ExempleComponent,
-    AddTaskExemplComponent,
-
     ProjectTableComponent,
     AddProjectComponent,
     EditProjectComponent,
@@ -168,7 +166,15 @@ import { EditProjectComponent } from './Components/edit-project/edit-project.com
     EditLeadComponent,
     CustomerComponentComponent,
 
+    EditLeadComponent,
+    CustomerComponentComponent,
+    FormCustomerComponent,
+    // DocumentComponent,
   ],
+   
+    
+
+
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -307,6 +313,38 @@ import { EditProjectComponent } from './Components/edit-project/edit-project.com
     MatNativeDateModule,
     MatSelectModule,
     MatAutocompleteModule,
+    DropdownModule,
+    CardModule,
+    MatDatepickerModule,
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    BrowserAnimationsModule,
+    MatSlideToggleModule,
+    MatCardModule,
+    MatDialogModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    MatToolbarModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatTableModule,
+    InputTextModule,
+    ButtonModule,
+    CalendarModule,
+    FormsModule,
+    AutoCompleteModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule,
+    MatAutocompleteModule,
     DropdownModule
   ],
   providers: [
@@ -319,12 +357,12 @@ import { EditProjectComponent } from './Components/edit-project/edit-project.com
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              '427515481723-ja7nlkmti3amubd5e5qbtdig27fc06ik.apps.googleusercontent.com'
+             " 592574124687-bvpc5dmgfms66j1q6725fi5gevmsmtmf.apps.googleusercontent.com"
             )
           },
         ],
         callback: 'initGoogleOneTap',
-        onError: (err:any) => {
+        onError: (err: any) => {
           console.error(err);
         }
       } as SocialAuthServiceConfig,
