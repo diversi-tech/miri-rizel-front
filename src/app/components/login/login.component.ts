@@ -105,6 +105,6 @@ export class LoginComponent implements OnInit {
   }
   signUp() {
     // פה יהיה ניתוב לדף הרישום
-    this.router.navigate(['/sign-up'])
+   // this.router.navigate(['/']);
   }
 }

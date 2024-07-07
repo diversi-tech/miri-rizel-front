@@ -16,8 +16,14 @@ import { LeadComponent } from './Components/Lead-components/lead/lead.component'
 import { SignUpComponent } from './Components/sign-up/sign-up.component';
 import { AddTaskComponent } from './Components/add-task/add-task.component';
 import { TaskBoardComponent } from './Components/task-board/task-board.component';
+
+import { AddProjectComponent } from './Components/add-project/add-project.component';
+import { ProjectTableComponent } from './Components/project-table/project-table.component';
+import { ExempleComponent } from './Components/exemple/exemple.component';
+
 import { EditLeadComponent } from './Components/Lead-components/edit-lead/edit-lead.component';
 // import { TaskBoardComponent } from './Components/task-board/task-board.component';
+
 
 
 const routes: Routes = [
@@ -31,7 +37,10 @@ const routes: Routes = [
   { path: 'sign-up', component: SignUpComponent },
   { path: 'task-board', component: TaskBoardComponent },
   { path: 'add-task', component: AddTaskComponent },
+  { path: 'addProject', component: AddProjectComponent },
   { path: 'add-task/:id', component: AddTaskComponent },
+  { path: 'projectTable', component: ProjectTableComponent },
+  { path: 'example', component:ExempleComponent},
   // { path: '', redirectTo: '/add-task', pathMatch: 'full' },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   // { path: 'document', component: DocumentComponent },
