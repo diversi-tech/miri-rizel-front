@@ -9,7 +9,7 @@ import { User } from '../Model/User';
 export class UserService {
  
   constructor(private http: HttpClient) {}
-  private apiUrl = 'https://localhost:7141/User/';
+  private apiUrl = 'https://localhost:7141/User/ReadAll';
 
   getAll(): Observable<any> {
     return this.http.get(`${this.apiUrl}`);

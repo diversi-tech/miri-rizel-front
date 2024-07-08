@@ -2,7 +2,7 @@
     [col$types]="{'firstName':'text','lastName':'text','email':'text','phone':'text','businessName':'text','source':'text','status':'position','createdDate':'date'}"
     [positionData]="[status]" 
     (edit)="editCustomer($event)" 
-    (delete)="deleteCustomer($event)"
+  
     (showAddComponent)="addCustomer()">
 </app-generic-bourd>
 <form class="editCustomer"  id="editCustomer" [formGroup]="customerForm" (ngSubmit)="editCustomerSubmit()">
@@ -57,7 +57,7 @@
         </div>
         <div class="form-group">
             <label for="status">סטטוס</label>
-            <select formControlName="status" class="form-control" (change)="selectItem($event)">
+            <select formControlName="status" class="form-control" >
                 <option *ngFor="let statusCode of statusCodeUser " [value]="statusCode.id">
                     {{ statusCode.description }}
                 </option>
@@ -132,7 +132,7 @@
     </div>
     <div class="form-group">
         <label for="status">סטטוס</label>
-        <select id="status" formControlName="status" class="form-control"  (change)="selectItem($event)">
+        <select id="status" formControlName="status" class="form-control">
             <option *ngFor="let statusCode of statusCodeUser "  [value]="statusCode.id">
                 {{ statusCode.description }}
             </option>

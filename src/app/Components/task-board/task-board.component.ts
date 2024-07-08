@@ -152,14 +152,5 @@ export class TaskBoardComponent implements OnInit {
     );
   }
 
-  filterData(objToFilter: any) {
-    let userFilter: User[] = this.users.filter(u => u.lastName == objToFilter.assignedTo.lastName)
-    let loading: boolean = true
-    let col$types = { 'lastName': 'text', 'firstName': 'text' }
-    let positionData = [this.priorities, this.priorities]
-    let objData = [this.users, this.projects]
-    let objFields = ['email', 'name']
-    let positionFields = ['description', 'description']
-    this.genericBourd.PopTable(userFilter, loading, col$types, objData, objFields, positionData);
-  }
+  
 }
