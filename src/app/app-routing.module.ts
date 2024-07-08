@@ -5,7 +5,7 @@ import { AdminComponentComponent } from './Components/admin-component/admin-comp
 import { CustomersComponent} from './Components/customers/customers.component';
 import { HomeComponent } from './Components/home/home.component';
 import { ResetPasswordComponent } from './Components/reset-password/reset-password.component';
-import { AuthCodeGuard } from './Components/auth-code-dialog/auth-code.guard';
+import { AuthCodeGuard } from './Guard/auth-code.guard';
 import { LoginComponent } from './Components/login/login.component';
 import { EditUserComponent } from './Components/edit-user/edit-user.component';
 import { AddUserComponent } from './Components/add-user/add-user.component';
@@ -24,10 +24,11 @@ import { TaskBoardComponent } from './Components/task-board/task-board.component
 import { HomePageComponent } from './Components/home-page/home-page.component';
 import { CustomerProfileComponent } from './Components/customer-profile/customer-profile.component';
 import { ListDocumentComponent } from './Components/documens/list-document/list-document.component';
+import { AuthGuard } from './Guard/auth.guard';
 const routes: Routes = [
-  { path: 'worker', component: WorkerComponentComponent },
-  { path: 'admin', component: AdminComponentComponent },
-  { path: 'customer', component: CustomersComponent },
+  { path: 'customer', component: CustomersComponent, canActivate: [AuthGuard], data: { roles: [3, 2, 1] } },
+  { path: 'worker', component: WorkerComponentComponent, canActivate: [AuthGuard], data: { roles: [2, 1] } },
+  { path: 'admin', component: AdminComponentComponent, canActivate: [AuthGuard], data: { roles: [1] } },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
   { path: 'edit', component: EditUserComponent },
@@ -41,7 +42,7 @@ const routes: Routes = [
   { path: 'signUp', component:SignUpComponent },
   {path: 'home/:role', component: HomePageComponent},
   {path:'customer-profile',component:CustomerProfileComponent},
-
+  
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   // { path: 'document', component: DocumentComponent },
   // { path: 'task-board', component: TaskBoardComponent },

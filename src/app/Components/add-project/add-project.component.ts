@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Customer2 } from '@app/Model/Customer2';
+import { Customer } from '@app/Model/Customer';
 import { StatusCodeProject } from '@app/Model/StatusCodeProject';
 import { CustomersService } from '@app/Services/customers.service';
 import { ProjectService } from '@app/Services/project.service';
@@ -20,7 +20,7 @@ export class AddProjectComponent implements OnInit {
 
   statuses: StatusCodeProject[] = [];
   projectForm: FormGroup = new FormGroup({});
-  custom: Customer2[] = [];
+  custom: Customer[] = [];
   constructor(
     private fb: FormBuilder,
     private projectService: ProjectService,

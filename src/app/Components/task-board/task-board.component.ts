@@ -1,7 +1,6 @@
 import { User } from 'src/app/Model/User';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
-import { Customer, Representative } from 'src/app/Model/Customer';
 // import { ButtonModule } from 'primeng/button';
 import { Table } from 'primeng/table';
 import { TaskService } from 'src/app/Services/task.service';
@@ -35,10 +34,8 @@ export class TaskBoardComponent implements OnInit {
   users: User[] = [];
   statuses: StatusCodeProject[] = [];
 
-  // 
   priorities: Priority[] = [];
   projects: Project[] = [];
-  // 
 
   loading: boolean = true;
   @ViewChild(GenericBourdComponent) genericBourd!: GenericBourdComponent;
@@ -134,12 +131,14 @@ export class TaskBoardComponent implements OnInit {
     this.taskService.deleteTask(task.taskId!).subscribe(
       (data: any) => {
         if (data == true) {
-          this.dialog.open(DialogComponent, {
-            data: {
-              title: 'המשימה נמחקה בהצלחה',
-              buttonText: 'סגור',
-            },
-          }).afterClosed().subscribe(() => {
+          Swal.fire({
+            text: "The task was successfully deleted",
+            icon: "success",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#3085D6",
+            confirmButtonText: "Close"
+          }).then((result) => {
             this.taskService.getAll().subscribe((data) => {
               this.tasks = data
             })

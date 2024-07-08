@@ -27,7 +27,6 @@ import { EditLeadComponent } from './Components/Lead-components/edit-lead/edit-l
 import { TaskBoardComponent } from './Components/task-board/task-board.component';
 import { AddTaskComponent } from './Components/add-task/add-task.component';
 import { GenericBourdComponent } from './Components/generic-bourd/generic-bourd.component';
-import { CustomerComponentComponent } from './Components/customer-component/customer-component.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -168,9 +167,7 @@ import { CustomerProfileComponent } from './Components/customer-profile/customer
     AddProjectComponent,
     EditProjectComponent,
     EditLeadComponent,
-    CustomerComponentComponent,
     EditLeadComponent,
-    CustomerComponentComponent,
     FormCustomerComponent,
     // DocumentComponent,
     DocumentComponent,
