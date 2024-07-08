@@ -20,6 +20,7 @@ export class ProjectTableComponent {
   @ViewChild(GenericBourdComponent) genericBourd!: GenericBourdComponent;
   @ViewChild('popupContainer', { read: ViewContainerRef }) popupContainer!: ViewContainerRef;
   constructor(private ProjectService: ProjectService, private resolver: ComponentFactoryResolver, private costomerService: CustomersService) { }
+  constructor(private ProjectService: ProjectService, private resolver: ComponentFactoryResolver, private costomerService: CustomersService) { }
 
   ngOnInit() {
     console.log("projectComponent");

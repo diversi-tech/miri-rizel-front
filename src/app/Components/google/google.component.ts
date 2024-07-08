@@ -1,10 +1,15 @@
 import { Component, Injectable, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { User } from '@app/Model/User';
 declare global {
   interface Window {
     google: any;
   }
 }
-import { UserService } from '@app/Services/UserService';
+import { UserService } from '@app/Services/user.service';
+import { DialogComponent } from '../dialog/dialog.component';
+import { Password } from 'primeng/password';
 
 @Component({
   selector: 'app-google',
@@ -15,7 +20,8 @@ import { UserService } from '@app/Services/UserService';
 @Injectable()
 export class GoogleComponent {
 
-  constructor(private login: UserService) { }
+  constructor(private dialog: MatDialog,
+    private router: Router,private login: UserService) { }
 
   initGoogleOneTap(): void {
     if (window.google.accounts.id) {
@@ -35,11 +41,31 @@ export class GoogleComponent {
       var decodedToken = this.parseJwt(idToken);
       var email = decodedToken.email;
       var userName = decodedToken.name;
-      this.login.login(userName, email);
-    } else {
-      alert('Google Sign-In was cancelled.');
-    }
-  }
+      console.log(userName);
+      console.log(email);
+      this.login.loginGoogle(email,userName).subscribe(
+        (user: User) => {
+          console.log("user");
+          if (user.role == 1) {
+            this.router.navigate(['/admin']);
+          }
+          if (user.role == 2) {
+            this.router.navigate(['/worker']);
+          }
+          if (user.role == 3) {
+            this.router.navigate(['/customer']);
+          }
+        },
+        error => {
+          this.dialog.open(DialogComponent, {
+            data: {
+              title: 'שגיאה',
+              context: 'ארעה תקלה במהלך ההתחברות, נסה שנית',
+              buttonText: 'סגור',
+            },
+          });
+        }
+      );}}
 
   parseJwt(token: string) {
     var base64Url = token.split('.')[1];

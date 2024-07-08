@@ -44,26 +44,28 @@ export class LoginComponent implements OnInit {
     const password = this.pass.value;
     this.userService.login(email, password).subscribe(
       (user: User) => {
-        if (user.role == 1) {
-          this.router.navigate(['/admin'], { relativeTo: this.active });
-        }
-        if (user.role == 2) {
-          this.router.navigate(['/worker'], { relativeTo: this.active });
-        }
-        if (user.role == 3) {
-          this.router.navigate(['/customer'], { relativeTo: this.active });
-        }
-      },
-      error => {
-        this.dialog.open(DialogComponent, {
-          data: {
-            title: 'שגיאה',
-            context: 'ארעה תקלה במהלך ההתחברות, נסה שנית',
-            buttonText: 'סגור',
-          },
-        });
-      }
-    );
+        this.router.navigate(['/home', user.role]);
+    //     console.log("user");
+    //     if (user.role == 1) {
+    //       this.router.navigate(['/admin'], { relativeTo: this.active });
+    //     }
+    //     if (user.role == 2) {
+    //       this.router.navigate(['/worker'], { relativeTo: this.active });
+    //     }
+    //     if (user.role == 3) {
+    //       this.router.navigate(['/customer'], { relativeTo: this.active });
+    //     }
+    //   },
+    //   error => {
+    //     this.dialog.open(DialogComponent, {
+    //       data: {
+    //         title: 'שגיאה',
+    //         context: 'ארעה תקלה במהלך ההתחברות, נסה שנית',
+    //         buttonText: 'סגור',
+    //       },
+    //     });
+    }
+   );
   }
   resetPassword() {
     if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email.value)) {
@@ -105,6 +107,6 @@ export class LoginComponent implements OnInit {
   }
   signUp() {
     // פה יהיה ניתוב לדף הרישום
-   // this.router.navigate(['/']);
+   this.router.navigate(['../signUp']);
   }
 }

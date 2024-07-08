@@ -117,15 +117,12 @@ export class CustomersComponent implements OnInit {
     });
   }
   editCustomerSubmit(): void {
-    console.log("f,l,l");
 
     this.submitted = true;
     if (this.customerForm.invalid) {
       return;
     }
     this.customerForm.value.status = this.selectedStatus;
-    console.log("f,l,ltttgggg");
-
     this.customerService.EditCustomer(this.customerForm.value).subscribe(() => {
       console.log("f,l,lgggg");
       Swal.close();

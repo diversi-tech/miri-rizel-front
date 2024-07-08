@@ -22,10 +22,7 @@ export class CustomersService {
   EditCustomer(editCustomer:Customer):Observable<boolean>{
    
   
-    editCustomer.status=editCustomer.status as StatusCodeUser;
-    console.log(editCustomer.status);
-    
-    
+    editCustomer.status=editCustomer.status as StatusCodeUser;    
     return this.http.put<boolean>(`https://localhost:7141/Customer/editCustomer/`,editCustomer);
   } 
   

@@ -62,7 +62,7 @@ export class EditLeadComponent {
     };
   }
 
-  get formControls() { return this.editForm.controls; }
+  get formControls() { return this.editForm.controls;}
 
   async toEnter() {
     this.submitted = true;

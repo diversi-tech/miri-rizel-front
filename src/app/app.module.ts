@@ -137,6 +137,14 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ProjectTableComponent } from './Components/project-table/project-table.component';
 import { AddProjectComponent } from './Components/add-project/add-project.component';
 import { EditProjectComponent } from './Components/edit-project/edit-project.component';
+
+
+
+import { DocumentComponent } from './Components/documens/document/document.component';
+import { ListDocumentComponent } from './Components/documens/list-document/list-document.component';
+import { HomePageComponent } from './Components/home-page/home-page.component';
+import { CustomerProfileComponent } from './Components/customer-profile/customer-profile.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -152,6 +160,7 @@ import { EditProjectComponent } from './Components/edit-project/edit-project.com
     ListLeadsComponent,
     AddLeadComponent,
     CustomersComponent,
+    CustomersComponent,
     TaskBoardComponent,
     AddTaskComponent,
     GenericBourdComponent,
@@ -164,6 +173,10 @@ import { EditProjectComponent } from './Components/edit-project/edit-project.com
     CustomerComponentComponent,
     FormCustomerComponent,
     // DocumentComponent,
+    DocumentComponent,
+    ListDocumentComponent,
+    HomePageComponent,
+    CustomerProfileComponent,
   ],
   imports: [
     BrowserModule,

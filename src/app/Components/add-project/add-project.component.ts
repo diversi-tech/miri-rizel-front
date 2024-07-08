@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Customer2 } from '@app/Model/Customer2';
 import { StatusCodeProject } from '@app/Model/StatusCodeProject';
+import { CustomersService } from '@app/Services/customers.service';
 import { ProjectService } from '@app/Services/project.service';
 import { TaskService } from '@app/Services/task.service';
 import { Project } from 'src/app/Model/Project';
