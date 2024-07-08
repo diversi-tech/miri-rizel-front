@@ -34,7 +34,6 @@
       <p-dropdown formControlName="priority" [options]="priorities" optionLabel="description"
         placeholder="בחר עדיפות" />
       <mat-error *ngIf="priority!.invalid && (priority!.touched || priority!.dirty)">שדה חובה </mat-error>
-      <mat-error *ngIf="priority!.invalid && (priority!.touched || priority!.dirty)">שדה חובה </mat-error>
     </div>
     <br>
     <div class="card flex justify-content-center">
@@ -55,6 +54,10 @@
           שדה חובה
         </ng-container>
       </mat-error>
+      <br>
+      <p class="error-message" *ngIf="!assignedTo!.errors?.['required'] && userExistError">
+        יש לבחור לקוח שקיים במערכת
+      </p>
     </div>
     <br>
     <label for="project">בחר פרויקט</label>
@@ -67,6 +70,10 @@
           שדה חובה
         </ng-container>
       </mat-error>
+      <br>
+      <p class="error-message" *ngIf="!project!.errors?.['required'] && projectExistError">
+        יש לבחור פרויקט שקיים במערכת
+      </p>
     </div>
     <br>
     <button type="submit" class="submit-button">

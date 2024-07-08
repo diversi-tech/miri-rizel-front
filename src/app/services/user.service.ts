@@ -11,7 +11,7 @@ export class UserService {
   private apiUrl = 'https://localhost:7141/User/';
 
   getAll(): Observable<any> {
-    return this.http.get(`${this.apiUrl}ReadAll`);
+    return this.http.get(`${this.apiUrl}`);
   }
 
   addUser(userDetails: any): Observable<any> {
@@ -28,7 +28,6 @@ export class UserService {
   }
 
   login(email: string, password: string): Observable<User> {
-    debugger
     const params = new HttpParams()
       .set('email', email)
       .set('password', password);

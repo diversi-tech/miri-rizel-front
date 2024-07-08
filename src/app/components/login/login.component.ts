@@ -51,7 +51,6 @@
 //   }
 
 //   onSubmit() {
-//     debugger
 //     if (this.logInForm.invalid) {
 //       return;
 //     }
@@ -142,6 +141,7 @@ import { ResetPasswordService } from '../../Services/reset-password.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 import { UserService } from 'src/app/Services/user.service';
+import { AuthService } from '@app/Services/auth-service.service';
 
 @Component({
   selector: 'app-login',
@@ -161,7 +161,8 @@ export class LoginComponent implements OnInit {
     public dialog: MatDialog,
     public router: Router,
     private userService: UserService,
-    public active: ActivatedRoute
+    public active: ActivatedRoute,
+    private authService: AuthService
   ) { }
 
   hide = signal(true);
@@ -223,6 +224,8 @@ export class LoginComponent implements OnInit {
     const password = this.pass.value;
     this.userService.login(email, password).subscribe(
       (user: User) => {
+        if(user.role)
+          this.authService.login(user.role);
         if (user.role == 1) {
           this.router.navigate(['/admin'], { relativeTo: this.active });
         }

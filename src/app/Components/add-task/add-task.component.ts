@@ -7,8 +7,6 @@ import { User } from 'src/app/Model/User';
 import { ProjectService } from 'src/app/Services/project.service';
 import { TaskService } from 'src/app/Services/task.service';
 import { UserService } from 'src/app/Services/user.service';
-import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../dialog/dialog.component';
 import { StatusCodeProject } from 'src/app/Model/StatusCodeProject';
 import { Priority } from 'src/app/Model/Priority';
 import Swal from 'sweetalert2';
@@ -39,7 +37,6 @@ export class AddTaskComponent implements OnInit {
   }
 
   taskForm: FormGroup = new FormGroup({});
-
   newTask: Task = {};
 
   titlePage: string = "הוספת משימה"
@@ -47,16 +44,15 @@ export class AddTaskComponent implements OnInit {
   isEdit: boolean = false;
 
   users: User[] = [];
-
   projects: Project[] = [];
-
   statuses: StatusCodeProject[] = [];
-
   priorities: Priority[] = [];
 
   filteredProjects: Project[] = [];
-
   filteredUsers: User[] = [];
+
+  userExistError: boolean = false;
+  projectExistError: boolean = false
 
   constructor(
     private fb: FormBuilder,
@@ -64,15 +60,12 @@ export class AddTaskComponent implements OnInit {
     private userService: UserService,
     private projectService: ProjectService,
     private route: ActivatedRoute,
-    private dialog: MatDialog,
     private router: Router,
-    private resolver: ComponentFactoryResolver,
     private location: Location,
     private GoogleAuthService: GoogleAuthService
   ) { }
 
   ngOnInit(): void {
-
 
     this.taskForm = this.fb.group({
       taskId: [''],
@@ -188,6 +181,7 @@ export class AddTaskComponent implements OnInit {
   }
 
   filterUserAuto(event: AutoCompleteCompleteEvent) {
+    this.userExistError=false
     let filtered: any[] = [];
     let query = event.query;
 
@@ -202,6 +196,7 @@ export class AddTaskComponent implements OnInit {
   }
 
   onUserSelected(event: any): void {
+    this.userExistError=false
     const selectedUser = event.value;
     this.taskForm.patchValue({
       assignedTo: selectedUser
@@ -209,6 +204,7 @@ export class AddTaskComponent implements OnInit {
   }
 
   filterProjectAuto(event: AutoCompleteCompleteEvent) {
+    this.projectExistError=false
     let filtered: any[] = [];
     let query = event.query;
     for (let i = 0; i < (this.projects as any[]).length; i++) {
@@ -221,6 +217,7 @@ export class AddTaskComponent implements OnInit {
   }
 
   onProjectSelected(event: any): void {
+    this.projectExistError=false;
     const selectedProject = event.value;
     this.taskForm.patchValue({
       project: selectedProject
@@ -228,30 +225,19 @@ export class AddTaskComponent implements OnInit {
   }
 
   onSubmit(): void {
+
     if (this.taskForm.invalid) {
       this.taskForm.markAllAsTouched();
       return;
     }
 
     if (!this.userExistsValidator(this.assignedTo?.value)) {
-      this.dialog.open(DialogComponent, {
-        data: {
-          title: 'שגיאה',
-          context: 'יש לבחור לקוח שקיים במערכת',
-          buttonText: 'סגור',
-        },
-      });
+      this.userExistError = true
       return;
     }
 
     if (!this.projectExistsValidator(this.project?.value)) {
-      this.dialog.open(DialogComponent, {
-        data: {
-          title: 'שגיאה',
-          context: 'יש לבחור פרויקט שקיים במערכת',
-          buttonText: 'סגור',
-        },
-      });
+      this.projectExistError = true;
       return;
     }
     this.newTask = this.taskForm.value;
@@ -284,12 +270,13 @@ export class AddTaskComponent implements OnInit {
             }
           },
           (error) => {
-            this.dialog.open(DialogComponent, {
-              data: {
-                title: 'Error adding task',
-                context: (" התרחשה בעיה מהצד שלנו"),
-                buttonText: 'סגור',
-              },
+            Swal.fire({
+              text: "התרחשה בעיה מהצד שלנו",
+              icon: "error",
+              showCancelButton: false,
+              showCloseButton: true,
+              confirmButtonColor: "#d33",
+              confirmButtonText: "סגור"
             })
           }
         );
@@ -299,23 +286,25 @@ export class AddTaskComponent implements OnInit {
           (response) => {
             this.dataRefreshed.emit();
             Swal.close()
-            this.dialog.open(DialogComponent, {
-              data: {
-                title: 'המשימה עודכנה בהצלחה',
-                context: this.newTask.title,
-                buttonText: 'סגור',
-              },
-            }).afterClosed().subscribe(() => {
-              this.location.go(this.location.path()); // זה יגרום לרענון של הדף הנוכחי
+            Swal.fire({
+              text: "המשימה עודכנה בהצלחה",
+              icon: "success",
+              showCancelButton: false,
+              showCloseButton: true,
+              confirmButtonColor: "#3085d6",
+              confirmButtonText: "Close"
+            }).then((res) => {
+              this.location.go(this.location.path());
             });
           },
           (error) => {
-            this.dialog.open(DialogComponent, {
-              data: {
-                title: 'Error update task',
-                context: (" התרחשה בעיה מהצד שלנו"),
-                buttonText: 'סגור',
-              },
+            Swal.fire({
+              text: "התרחשה בעיה מהצד שלנו",
+              icon: "error",
+              showCancelButton: false,
+              showCloseButton: true,
+              confirmButtonColor: "#d33",
+              confirmButtonText: "סגור"
             })
           }
         );

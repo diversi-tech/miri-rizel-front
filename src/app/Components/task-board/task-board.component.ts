@@ -9,7 +9,7 @@ import { Task } from 'src/app/Model/Task';
 import { UserService } from 'src/app/Services/user.service';
 // import { ProgressBarModule } from 'primeng/progressbar';
 // import { ToastModule } from 'primeng/toast';
-import { ComponentFactoryResolver, ViewContainerRef, Component, OnInit, Type, ViewChild } from '@angular/core';
+import { ComponentFactoryResolver, ViewContainerRef, Component, OnInit, Type, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { Project } from 'src/app/Model/Project';
 import { GenericBourdComponent } from '../generic-bourd/generic-bourd.component';
 import { AddTaskComponent } from '../add-task/add-task.component';
@@ -35,17 +35,17 @@ export class TaskBoardComponent implements OnInit {
   users: User[] = [];
   statuses: StatusCodeProject[] = [];
 
-  // 
+
   priorities: Priority[] = [];
   projects: Project[] = [];
-  // 
+
 
   loading: boolean = true;
   @ViewChild(GenericBourdComponent) genericBourd!: GenericBourdComponent;
   @ViewChild('popupContainer', { read: ViewContainerRef }) popupContainer!: ViewContainerRef;
 
-  constructor(private location: Location
-    , private taskService: TaskService, private userService: UserService, private projectService: ProjectService, private resolver: ComponentFactoryResolver, private dialog: MatDialog) { }
+  constructor(private location: Location, private cdr: ChangeDetectorRef,
+    private taskService: TaskService, private userService: UserService, private projectService: ProjectService, private resolver: ComponentFactoryResolver, private dialog: MatDialog) { }
 
   ngOnInit() {
 
@@ -134,12 +134,14 @@ export class TaskBoardComponent implements OnInit {
     this.taskService.deleteTask(task.taskId!).subscribe(
       (data: any) => {
         if (data == true) {
-          this.dialog.open(DialogComponent, {
-            data: {
-              title: 'המשימה נמחקה בהצלחה',
-              buttonText: 'סגור',
-            },
-          }).afterClosed().subscribe(() => {
+          Swal.fire({
+            text: "The task was successfully deleted",
+            icon: "success",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#3085d6",
+            confirmButtonText: "Close"
+          }).then((result) => {
             this.taskService.getAll().subscribe((data) => {
               this.tasks = data
             })

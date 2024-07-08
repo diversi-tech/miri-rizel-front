@@ -13,12 +13,12 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { AuthCodeDialogComponent } from './auth-code-dialog.component';
+import { AuthCodeDialogComponent } from '../Components/auth-code-dialog/auth-code-dialog.component';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthCodeGuard implements CanActivate {
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,

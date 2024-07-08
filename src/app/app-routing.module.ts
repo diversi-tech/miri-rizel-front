@@ -5,7 +5,7 @@ import { AdminComponentComponent } from './Components/admin-component/admin-comp
 import { CustomerComponentComponent } from './Components/customer-component/customer-component.component';
 import { HomeComponent } from './Components/home/home.component';
 import { ResetPasswordComponent } from './Components/reset-password/reset-password.component';
-import { AuthCodeGuard } from './Components/auth-code-dialog/auth-code.guard';
+import { AuthCodeGuard } from './Guards/auth-code.guard';
 import { LoginComponent } from './Components/login/login.component';
 import { AddUserComponent } from './Components/add-user/add-user.component';
 import { EditUserComponent } from './Components/edit-user/edit-user.component';
@@ -17,11 +17,12 @@ import { SignUpComponent } from './Components/sign-up/sign-up.component';
 import { AddTaskComponent } from './Components/add-task/add-task.component';
 import { TaskBoardComponent } from './Components/task-board/task-board.component';
 import { EditLeadComponent } from './Components/Lead-components/edit-lead/edit-lead.component';
+import { AuthGuard } from './Guards/auth.guard';
 
 const routes: Routes = [
-  { path: 'worker', component: WorkerComponentComponent },
-  { path: 'admin', component: AdminComponentComponent },
-  { path: 'customer', component: CustomerComponentComponent },
+  { path: 'customer', component: CustomerComponentComponent, canActivate: [AuthGuard], data: { roles: [3, 2, 1] } },
+  { path: 'worker', component: WorkerComponentComponent, canActivate: [AuthGuard], data: { roles: [2, 1] } },
+  { path: 'admin', component: AdminComponentComponent, canActivate: [AuthGuard], data: { roles: [1] } },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
   { path: 'edit', component: EditUserComponent },
@@ -30,10 +31,9 @@ const routes: Routes = [
   { path: 'task-board', component: TaskBoardComponent },
   { path: 'add-task', component: AddTaskComponent },
   { path: 'add-task/:id', component: AddTaskComponent },
-  // { path: '', redirectTo: '/add-task', pathMatch: 'full' },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  {path: 'addLead', component: AddLeadComponent},
-  {path: 'editLead', component: EditLeadComponent},
+  { path: 'addLead', component: AddLeadComponent },
+  { path: 'editLead', component: EditLeadComponent },
   {
     path: 'leads',
     component: ListLeadsComponent,
@@ -41,7 +41,6 @@ const routes: Routes = [
   },
   { path: '', component: ListLeadsComponent },
   { path: 'task', component: TaskBoardComponent },
-  // { path: '', redirectTo: '/task', pathMatch: 'full' },
   {
     path: 'ResetPassword',
     component: ResetPasswordComponent,
@@ -53,4 +52,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

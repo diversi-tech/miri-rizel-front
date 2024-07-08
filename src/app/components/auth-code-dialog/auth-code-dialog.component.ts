@@ -21,7 +21,6 @@ export class AuthCodeDialogComponent {
   }
 
   validateCode(): void {
-    debugger;
     const validCode = this.codeService.getServerPassword();
     const enteredCode = this.code.join('');
     if (enteredCode === validCode?.toString()) {

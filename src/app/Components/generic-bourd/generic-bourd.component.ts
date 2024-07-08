@@ -121,7 +121,6 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   }
 
   getSeverity(status: string) {
-    console.log(status);
     
     switch (status) {
       case 'TO DO':
@@ -200,7 +199,6 @@ export class GenericBourdComponent implements OnInit, OnChanges {
     this.dataUpdated.emit(obj)
   }
   getPosition(item: any, i: number): string {
-    // debugger
     // let List<any> n= this.getposData(i)
     return item.description
   }
