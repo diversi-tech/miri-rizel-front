@@ -15,12 +15,13 @@ import { ListLeadsComponent } from './Components/Lead-components/list-leads/list
 import { LeadComponent } from './Components/Lead-components/lead/lead.component';
 import { SignUpComponent } from './Components/sign-up/sign-up.component';
 import { AddTaskComponent } from './Components/add-task/add-task.component';
+import { AddProjectComponent } from './Components/add-project/add-project.component';
+import { ProjectTableComponent } from './Components/project-table/project-table.component';
 import { EditLeadComponent } from './Components/Lead-components/edit-lead/edit-lead.component';
+// import { TaskBoardComponent } from './Components/task-board/task-board.component';
 import { DocumentComponent } from './Components/documens/document/document.component';
 import { TaskBoardComponent } from './Components/task-board/task-board.component';
 import { ListDocumentComponent } from './Components/documens/list-document/list-document.component';
-
-
 const routes: Routes = [
   { path: 'worker', component: WorkerComponentComponent },
   { path: 'admin', component: AdminComponentComponent },
@@ -32,8 +33,10 @@ const routes: Routes = [
   { path: 'sign-up', component: SignUpComponent },
   { path: 'task-board', component: TaskBoardComponent },
   { path: 'add-task', component: AddTaskComponent },
+  { path: 'addProject', component: AddProjectComponent },
   { path: 'add-task/:id', component: AddTaskComponent },
-  // { path: '', redirectTo: '/add-task', pathMatch: 'full' },
+  { path: 'projectTable', component: ProjectTableComponent },
+  { path: 'signUp', component:SignUpComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   // { path: 'document', component: DocumentComponent },
   // { path: 'task-board', component: TaskBoardComponent },
@@ -44,7 +47,7 @@ const routes: Routes = [
   {path: 'addLead', component: AddLeadComponent},
   {path: 'editLead', component: EditLeadComponent},
   {path: 'document', component: DocumentComponent},
-  {path: 'documents', component: ListDocumentComponent},
+  // {path: 'documents', component: ListDocumentComponent},
 
   {
     path: 'leads',

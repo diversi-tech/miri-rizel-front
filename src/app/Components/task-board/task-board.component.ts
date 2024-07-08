@@ -48,7 +48,6 @@ export class TaskBoardComponent implements OnInit {
     , private taskService: TaskService, private userService: UserService, private projectService: ProjectService, private resolver: ComponentFactoryResolver, private dialog: MatDialog) { }
 
   ngOnInit() {
-
     this.taskService.getAllPriorities().subscribe(
       (data) => {
         this.priorities = data
@@ -66,6 +65,7 @@ export class TaskBoardComponent implements OnInit {
         this.statuses = data
       }
     )
+
 
     this.taskService.getAll().subscribe(
       (tasks: Array<Task>) => {

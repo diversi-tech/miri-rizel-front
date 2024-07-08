@@ -62,6 +62,7 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   }
 
   onDelete(rowData: any) {
+
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -75,6 +76,7 @@ export class GenericBourdComponent implements OnInit, OnChanges {
         this.delete.emit(rowData);
       }
     });
+
   }
 
   generateColumns() {
@@ -233,6 +235,7 @@ export class GenericBourdComponent implements OnInit, OnChanges {
     });
   }
   openAddComponent() {
+    debugger
     this.showAddComponent.emit();
   };
 }

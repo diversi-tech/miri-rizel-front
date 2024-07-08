@@ -134,6 +134,12 @@ import { CalendarModule } from 'primeng/calendar';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { ProjectTableComponent } from './Components/project-table/project-table.component';
+import { AddProjectComponent } from './Components/add-project/add-project.component';
+import { EditProjectComponent } from './Components/edit-project/edit-project.component';
+
+
+
 import { DocumentComponent } from './Components/documens/document/document.component';
 import { ListDocumentComponent } from './Components/documens/list-document/list-document.component';
 
@@ -152,9 +158,15 @@ import { ListDocumentComponent } from './Components/documens/list-document/list-
     ListLeadsComponent,
     AddLeadComponent,
     CustomersComponent,
+    CustomersComponent,
     TaskBoardComponent,
     AddTaskComponent,
     GenericBourdComponent,
+    ProjectTableComponent,
+    AddProjectComponent,
+    EditProjectComponent,
+    EditLeadComponent,
+    CustomerComponentComponent,
     EditLeadComponent,
     CustomerComponentComponent,
     FormCustomerComponent,
