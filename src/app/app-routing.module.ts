@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { WorkerComponentComponent } from './Components/worker-component/worker-component.component';
 import { AdminComponentComponent } from './Components/admin-component/admin-component.component';
-import { CustomersComponent} from './Components/customers/customers.component';
+import { CustomersComponent } from './Components/customers/customers.component';
 import { HomeComponent } from './Components/home/home.component';
 import { ResetPasswordComponent } from './Components/reset-password/reset-password.component';
 import { AuthCodeGuard } from './Guard/auth-code.guard';
@@ -34,43 +34,29 @@ const routes: Routes = [
   { path: 'edit', component: EditUserComponent },
   { path: 'add', component: AddUserComponent },
   { path: 'sign-up', component: SignUpComponent },
-  { path: 'task-board', component: TaskBoardComponent },
-  { path: 'add-task', component: AddTaskComponent },
   { path: 'addProject', component: AddProjectComponent },
   { path: 'add-task/:id', component: AddTaskComponent },
   { path: 'projectTable', component: ProjectTableComponent },
-  { path: 'signUp', component:SignUpComponent },
-  {path: 'home/:role', component: HomePageComponent},
-  {path:'customer-profile',component:CustomerProfileComponent},
-  
+  { path: 'signUp', component: SignUpComponent },
+  { path: 'home/:role', component: HomePageComponent },
+  { path: 'customer-profile', component: CustomerProfileComponent },
+
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   // { path: 'document', component: DocumentComponent },
   // { path: 'task-board', component: TaskBoardComponent },
   { path: 'add-task', component: AddTaskComponent },
   { path: 'add-task/:id', component: AddTaskComponent },
-  // { path: '', redirectTo: '/add-task', pathMatch: 'full' },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  {path: 'addLead', component: AddLeadComponent},
-  {path: 'editLead', component: EditLeadComponent},
-  {path: 'document', component: DocumentComponent},
-  // {path: 'documents', component: ListDocumentComponent},
+  { path: 'addLead', component: AddLeadComponent },
+  { path: 'editLead', component: EditLeadComponent },
+  { path: 'document', component: DocumentComponent },
 
   {
     path: 'leads',
     component: ListLeadsComponent,
     children: [{ path: '', component: LeadComponent }],
   },
-  // { path: 'leads', component: ListLeadsComponent },
-    // { path: 'leads', component: ListLeadsComponent },
 
   { path: 'task', component: TaskBoardComponent },
-  // { path: '', redirectTo: '/task', pathMatch: 'full' },
-  { path: '', component: LoginComponent },
-  // { path: 'task', component: TaskBoardComponent },
-  // { path: '', redirectTo: '/task', pathMatch: 'full' },
-  { path: '', component: LoginComponent },
-  { path: 'task', component: TaskBoardComponent },
-  { path: '', redirectTo: '/task', pathMatch: 'full' },
   {
     path: 'ResetPassword',
     component: ResetPasswordComponent,
@@ -82,4 +68,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

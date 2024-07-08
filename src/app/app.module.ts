@@ -15,6 +15,7 @@ import { LoginComponent } from './Components/login/login.component';
 import { EditUserComponent } from './Components/edit-user/edit-user.component';
 import { NgxGoogleSignInModule } from 'ngx-google-sign-in';
 import { GoogleComponent } from './Components/google/google.component';
+
 import {
   SocialLoginModule,
   SocialAuthServiceConfig,
@@ -136,7 +137,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ProjectTableComponent } from './Components/project-table/project-table.component';
 import { AddProjectComponent } from './Components/add-project/add-project.component';
 import { EditProjectComponent } from './Components/edit-project/edit-project.component';
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 import { DocumentComponent } from './Components/documens/document/document.component';
@@ -200,6 +201,7 @@ import { ExportToSheetComponent } from './Components/export-to-sheet/export-to-s
     InputTextModule,
     ButtonModule,
     ToastModule,
+    MatProgressSpinnerModule,
     ProgressBarModule,
     TagModule,
     AvatarModule,
@@ -359,7 +361,7 @@ import { ExportToSheetComponent } from './Components/export-to-sheet/export-to-s
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-             " 592574124687-bvpc5dmgfms66j1q6725fi5gevmsmtmf.apps.googleusercontent.com"
+              " 592574124687-bvpc5dmgfms66j1q6725fi5gevmsmtmf.apps.googleusercontent.com"
             )
           },
         ],

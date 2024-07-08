@@ -27,8 +27,12 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private active: ActivatedRoute
-  ) {}
+  ) { }
+
   hide = signal(true);
+
+  isLoading: boolean = false
+
   clickEvent(event: MouseEvent) {
     this.hide.set(!this.hide);
     event.stopPropagation();
@@ -44,37 +48,40 @@ export class LoginComponent implements OnInit {
     const password = this.pass.value;
     this.userService.login(email, password).subscribe(
       (user: User) => {
-        this.router.navigate(['/home', user.role]);
-    //     console.log("user");
-    //     if (user.role == 1) {
-    //       this.router.navigate(['/admin'], { relativeTo: this.active });
-    //     }
-    //     if (user.role == 2) {
-    //       this.router.navigate(['/worker'], { relativeTo: this.active });
-    //     }
-    //     if (user.role == 3) {
-    //       this.router.navigate(['/customer'], { relativeTo: this.active });
-    //     }
-    //   },
-    //   error => {
-    //     this.dialog.open(DialogComponent, {
-    //       data: {
-    //         title: 'שגיאה',
-    //         context: 'ארעה תקלה במהלך ההתחברות, נסה שנית',
-    //         buttonText: 'סגור',
-    //       },
-    //     });
-    }
-   );
+        this.router.navigate(['/home', user.role])
+        //     console.log("user");
+        //     if (user.role == 1) {
+        //       this.router.navigate(['/admin'], { relativeTo: this.active });
+        //     }
+        //     if (user.role == 2) {
+        //       this.router.navigate(['/worker'], { relativeTo: this.active });
+        //     }
+        //     if (user.role == 3) {
+        //       this.router.navigate(['/customer'], { relativeTo: this.active });
+        //     }
+        //   },
+        //   error => {
+        //     this.dialog.open(DialogComponent, {
+        //       data: {
+        //         title: 'שגיאה',
+        //         context: 'ארעה תקלה במהלך ההתחברות, נסה שנית',
+        //         buttonText: 'סגור',
+        //       },
+        //     });
+      }
+    );
   }
   resetPassword() {
     if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email.value)) {
+      this.isLoading = true
+      this.resetPasswordService.setUserEmail(this.email.value)
       this.resetPasswordService.resetPassword(this.email.value).subscribe(
         (response) => {
           this.router.navigate(['/ResetPassword']);
           this.resetPasswordService.setServerPassword(response);
         },
         (err) => {
+          this.isLoading = false
           if (err.status == 400) {
             this.dialog.open(DialogComponent, {
               data: {
@@ -92,10 +99,10 @@ export class LoginComponent implements OnInit {
               },
             });
           }
-          // }
         }
       );
     } else {
+      this.isLoading = false;
       this.dialog.open(DialogComponent, {
         data: {
           title: 'שגיאה',
@@ -106,7 +113,6 @@ export class LoginComponent implements OnInit {
     }
   }
   signUp() {
-    // פה יהיה ניתוב לדף הרישום
-   this.router.navigate(['../signUp']);
+    this.router.navigate(['../signUp']);
   }
 }

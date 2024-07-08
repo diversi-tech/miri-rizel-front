@@ -1,4 +1,3 @@
-
 <div class="login-form">
   <form (ngSubmit)="onSubmit()" [formGroup]="logInForm">
     <h1>התחברות</h1>
@@ -18,11 +17,17 @@
       <input class="input-style" matInput formControlName="password" required [type]="hide() ? 'password' : 'text'" />
       <mat-error *ngIf="pass.hasError('required')"> שדה חובה </mat-error>
       <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'"
-        [attr.aria-pressed]="hide()">
+        [attr.aria-pressed]="hide()" type="button">
         <mat-icon>{{ hide() ? "visibility_off" : "visibility" }}</mat-icon>
       </button>
     </mat-form-field>
-    <p class="forgot-password" (click)="resetPassword()">Forgot password?</p>
+    <br>
+    <div *ngIf="isLoading" class="lock-screen">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="disabled">
+      <p class="forgot-password" (click)="resetPassword()">Forgot password?</p>
+    </div>
     <button type="submit" [disabled]="logInForm.invalid" class="submit-button">
       Continue
     </button>
@@ -31,6 +36,6 @@
     </p>
   </form>
   <form (ngSubmit)="onSubmit()">
-      <app-google></app-google>
+    <app-google></app-google>
   </form>
 </div>
