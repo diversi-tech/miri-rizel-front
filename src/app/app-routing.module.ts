@@ -47,7 +47,7 @@ const routes: Routes = [
   {path: 'addLead', component: AddLeadComponent},
   {path: 'editLead', component: EditLeadComponent},
   {path: 'document', component: DocumentComponent},
-  // {path: 'documents', component: ListDocumentComponent},
+  {path: 'documents', component: ListDocumentComponent},
 
   {
     path: 'leads',
