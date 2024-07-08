@@ -25,7 +25,6 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   @Input() positionData: any[] = [];
   @Input() objData: any[] = [];
   @Input() objFields: string[] = [];
-  @Input() posFields: string[] = [];
   @Input() col$types: any = {};
   @Input() popTable!: boolean;
   @Output() edit = new EventEmitter<any>();
@@ -122,7 +121,7 @@ export class GenericBourdComponent implements OnInit, OnChanges {
     }
   }
 
-  getSeverity(status: string) {    
+  getSeverity(status: string) {
     switch (status) {
       case 'TO DO':
         return 'danger';
@@ -156,38 +155,38 @@ export class GenericBourdComponent implements OnInit, OnChanges {
       this.data[i][col.field] = new Date(this.data[i][col.field])
     return col.filterType
   }
+  //מחזיר את המערך של הפוזישן הרצוי
   getPosData(i: number) {
     let index: number = 0
     for (let c = 0; c < i; c++)
       if (this.columns[c].filterType == 'position')
-        index++;      
+        index++;
     return this.positionData[index]
   }
+  //מחזיר את המערך של אוביקטים הרצוי
   getObjData(i: number) {
     let index: number = 0
     for (let c = 0; c < i; c++)
       if (this.columns[c].filterType == 'obj')
         index++;
     return this.objData[index]
-
   }
-  getobjFields(i: number): string {
-    let index: number = 0
-    for (let c = 0; c < i; c++)
-      if (this.columns[c].filterType == 'obj')
-        index++;
-    return this.objFields[index]
+  //מחזיר את השדה של האוביקט שאותו רוצים להראות
+  getobjFields(i: number, type: string): string {
 
+    if (type == 'obj') {
+      let index: number = 0
+      for (let c = 0; c < i; c++)
+        if (this.columns[c].filterType == 'obj')
+          index++;
+      return this.objFields[index]
+    }
+    else if (type == 'position')
+      return 'description'
+    else return ''
   }
 
-  getposFields(i: number): string {
-    let index: number = 0
-    for (let c = 0; c < i; c++)
-      if (this.columns[c].filterType == 'position')
-        index++;
-    return this.posFields[index]
-
-  }
+ 
 
   filterGlobal(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -226,7 +225,6 @@ export class GenericBourdComponent implements OnInit, OnChanges {
             componentRef.instance.objData = Data1;
             componentRef.instance.objFields = objFields;
             componentRef.instance.positionData = Data2;
-            componentRef.instance.posFields = this.posFields;
           }
           container.appendChild(componentRef.location.nativeElement);
           componentRef.instance.loading = false
@@ -238,4 +236,7 @@ export class GenericBourdComponent implements OnInit, OnChanges {
     debugger
     this.showAddComponent.emit();
   };
+d(b:any){
+  
+}
 }

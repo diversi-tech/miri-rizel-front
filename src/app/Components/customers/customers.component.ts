@@ -131,33 +131,7 @@ export class CustomersComponent implements OnInit {
       this.submitted = false;
 
     });
-  }
 
-  deleteCustomer(customer: Customer) {
-    this.customerService.DeleteCustomer(customer.customerId).subscribe(() => {
-      this.loadCustomers();
-    });
-  }
-  selectItem(event: any) {
-    this.status = event.target.value;
-    this.selectedStatus = this.statusCodeUser.find(s => s.id == this.status) as StatusCodeUser;
-  }
 
-  customNameValidator(): (control: FormControl) => ValidationErrors | null {
-    return (control: FormControl): ValidationErrors | null => {
-      return this.validatorsService.name(control.value) ? null : { invalidName: true };
-    };
-  }
-  customPhoneValidator(): (control: FormControl) => ValidationErrors | null {
-    return (control: FormControl): ValidationErrors | null => {
-      return this.validatorsService.phone(control.value) ? null : { invalidPhone: true };
-    };
-  }
-
-  customFutureDateValidator(): (control: FormControl) => ValidationErrors | null {
-    return (control: FormControl): ValidationErrors | null => {
-      return this.validatorsService.futureDate()(control.value) ? null : { invalidDate: true };
-    };
-  }
-
+}
 }

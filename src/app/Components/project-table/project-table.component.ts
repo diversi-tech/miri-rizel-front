@@ -1,8 +1,7 @@
-
+import { CustomersService } from '@app/Services/customers.service';
 import { Component, ComponentFactoryResolver, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { Country, Customer, Representative } from '@app/Model/Customer';
 import { Customer2 } from '@app/Model/Customer2';
-import { CustomersService } from '@app/Services/customers.service';
 import { ProjectService } from '@app/Services/project.service';
 import { Project } from 'src/app/Model/Project';
 import Swal from 'sweetalert2';

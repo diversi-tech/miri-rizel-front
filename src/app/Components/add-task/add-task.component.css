@@ -1,56 +1,76 @@
-
 .add-task-form {
-  direction: rtl;
-    max-width:600px;
-    margin: auto;
-    /* padding: 20px; */
-    /* border: 1px solid #ccc; */
-    /* border-radius: 5px; */
-    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
-    text-align: center;
-  }
-  
-  .login-form h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  mat-form-field {
-    width: 80%;
-    margin-bottom: 15px;
-  }
-  
-  .input-style {
-    width: 100%;
-  }
-  
-  .error-message {
-    color: red;
-    font-size: 12px;
-    text-align: left;
-  }
-  
-  .submit-button {
-    background-color: #28a745;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    width: 80%;
-  }
-  
-  .submit-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  /* border: 3px solid #000000; */
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+  /* direction: rtl; */
+}
 
-  .card{
-    direction: ltr;
-  }
+.line {
+  background-color: #5CFFAC;
+  width: 100%;
+  height: 10px;
+}
 
-  .mat-datepicker-popup {
-    z-index: 1000 !important;
-  }
+.add-task-form h1 {
+  font-size: 24px;
+  color: #000000;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.input-style {
+  border-color: #5CFFAC;
+}
+
+.mat-form-field.mat-focused .mat-form-field-ripple {
+  background-color: #5CFFAC;
+}
+
+.card {
+  /* background-color: #f9f9f9; */
+  /* border: 1px solid #ddd; */
+  /* padding: 10px; */
+  /* border-radius: 8px; */
+  /* margin-bottom: 10px; */
+}
+.mat-form-field{
+  color: #000; 
+   width: 1000px;
+
   
+}
+.card label {
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.p-dropdown,
+.p-calendar,
+.p-autocomplete {
+  width: 100%;
+}
+
+button.submit-button {
+  background-color: #5CFFAC;
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+}
+
+button.submit-button:hover {
+  background-color: #81f9c5;
+}
+
+.mat-error {
+  color: #ff0000;
+}

@@ -178,10 +178,6 @@ import { CustomerProfileComponent } from './Components/customer-profile/customer
     HomePageComponent,
     CustomerProfileComponent,
   ],
-   
-    
-
-
   imports: [
     BrowserModule,
     AppRoutingModule,
