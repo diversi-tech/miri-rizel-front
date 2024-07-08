@@ -3,6 +3,9 @@
         <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
             (click)="openAddComponent()"></button>
     </ng-template>
+    <ng-template pTemplate="right">
+        <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="spreadSheetsFromTableData(this.data)" class="p-button-success mr-2" pTooltip=" XSL-יצא נתוני טבלה זו ל" tooltipPosition="bottom" id="spreadSheetBtn"></button>
+    </ng-template>
 </p-toolbar>
 
 <p-table #dt [value]="data" [loading]="loading" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10, 25, 50]"
