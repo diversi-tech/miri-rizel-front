@@ -233,7 +233,6 @@ export class GenericBourdComponent implements OnInit, OnChanges {
     });
   }
   openAddComponent() {
-    debugger
     this.showAddComponent.emit();
   };
 d(b:any){

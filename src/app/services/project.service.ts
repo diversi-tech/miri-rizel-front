@@ -15,7 +15,6 @@ export class ProjectService {
     return this.http.get(`${this.apiUrl}`);
   }
   addProject(projectDetails: Project): Observable<any> {
-    debugger
     const url = `${this.apiUrl}`;
      return this.http.post(url, projectDetails);
    }
