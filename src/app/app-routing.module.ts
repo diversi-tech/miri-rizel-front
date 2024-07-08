@@ -19,7 +19,6 @@ import { TaskBoardComponent } from './Components/task-board/task-board.component
 
 import { AddProjectComponent } from './Components/add-project/add-project.component';
 import { ProjectTableComponent } from './Components/project-table/project-table.component';
-import { ExempleComponent } from './Components/exemple/exemple.component';
 
 import { EditLeadComponent } from './Components/Lead-components/edit-lead/edit-lead.component';
 // import { TaskBoardComponent } from './Components/task-board/task-board.component';
@@ -40,8 +39,7 @@ const routes: Routes = [
   { path: 'addProject', component: AddProjectComponent },
   { path: 'add-task/:id', component: AddTaskComponent },
   { path: 'projectTable', component: ProjectTableComponent },
-  { path: 'example', component:ExempleComponent},
-  // { path: '', redirectTo: '/add-task', pathMatch: 'full' },
+  { path: 'signUp', component:SignUpComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   // { path: 'document', component: DocumentComponent },
   // { path: 'task-board', component: TaskBoardComponent },

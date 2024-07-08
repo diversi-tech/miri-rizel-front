@@ -154,18 +154,15 @@ import { EditProjectComponent } from './Components/edit-project/edit-project.com
     LeadComponent,
     ListLeadsComponent,
     AddLeadComponent,
-      CustomersComponent,
+    CustomersComponent,
     TaskBoardComponent,
     AddTaskComponent,
     GenericBourdComponent,
     ProjectTableComponent,
     AddProjectComponent,
     EditProjectComponent,
-   
-
     EditLeadComponent,
     CustomerComponentComponent,
-
     EditLeadComponent,
     CustomerComponentComponent,
     FormCustomerComponent,

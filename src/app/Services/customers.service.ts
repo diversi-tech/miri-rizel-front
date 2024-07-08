@@ -11,7 +11,7 @@ export class CustomersService {
 
   constructor(private http:HttpClient) { }
   GetAllCustomers(): Observable<Customer[]> {
-    return this.http.get<Customer[]>("https://localhost:7141/Customer/GetAllCustomers");
+    return this.http.get<Customer[]>("https://localhost:7141/Customer");
   }
   GetCustomerById(customerId:number): Observable<Customer> {
     return this.http.get<Customer>(`https://localhost:7141/Customer/getCustomerById/?custometId=${customerId}` );

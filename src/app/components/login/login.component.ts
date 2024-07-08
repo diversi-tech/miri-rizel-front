@@ -44,6 +44,7 @@ export class LoginComponent implements OnInit {
     const password = this.pass.value;
     this.userService.login(email, password).subscribe(
       (user: User) => {
+        console.log("user");
         if (user.role == 1) {
           this.router.navigate(['/admin'], { relativeTo: this.active });
         }
@@ -105,6 +106,6 @@ export class LoginComponent implements OnInit {
   }
   signUp() {
     // פה יהיה ניתוב לדף הרישום
-   // this.router.navigate(['/']);
+   this.router.navigate(['../signUp']);
   }
 }
