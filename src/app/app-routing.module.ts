@@ -21,6 +21,8 @@ import { EditLeadComponent } from './Components/Lead-components/edit-lead/edit-l
 // import { TaskBoardComponent } from './Components/task-board/task-board.component';
 import { DocumentComponent } from './Components/documens/document/document.component';
 import { TaskBoardComponent } from './Components/task-board/task-board.component';
+import { HomePageComponent } from './Components/home-page/home-page.component';
+import { CustomerProfileComponent } from './Components/customer-profile/customer-profile.component';
 import { ListDocumentComponent } from './Components/documens/list-document/list-document.component';
 const routes: Routes = [
   { path: 'worker', component: WorkerComponentComponent },
@@ -37,6 +39,9 @@ const routes: Routes = [
   { path: 'add-task/:id', component: AddTaskComponent },
   { path: 'projectTable', component: ProjectTableComponent },
   { path: 'signUp', component:SignUpComponent },
+  {path: 'home/:role', component: HomePageComponent},
+  {path:'customer-profile',component:CustomerProfileComponent},
+
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   // { path: 'document', component: DocumentComponent },
   // { path: 'task-board', component: TaskBoardComponent },

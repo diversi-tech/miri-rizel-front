@@ -142,6 +142,8 @@ import { EditProjectComponent } from './Components/edit-project/edit-project.com
 
 import { DocumentComponent } from './Components/documens/document/document.component';
 import { ListDocumentComponent } from './Components/documens/list-document/list-document.component';
+import { HomePageComponent } from './Components/home-page/home-page.component';
+import { CustomerProfileComponent } from './Components/customer-profile/customer-profile.component';
 
 @NgModule({
   declarations: [
@@ -173,6 +175,8 @@ import { ListDocumentComponent } from './Components/documens/list-document/list-
     // DocumentComponent,
     DocumentComponent,
     ListDocumentComponent,
+    HomePageComponent,
+    CustomerProfileComponent,
   ],
    
     
