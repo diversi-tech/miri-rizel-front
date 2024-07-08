@@ -1,22 +1,14 @@
-export interface Country {
-    name?: string;
-    code?: string;
-}
-
-export interface Representative {
-    name?: string;
-    image?: string;
-}
+import { StatusCodeUser } from "./StatusCodeUser";
 
 export interface Customer {
-    id?: number;
-    firstName?: string;
-    country?: Country;
-    company?: string;
-    date?: string | Date;
-    status?: string;
-    activity?: number;
-    representative?: Representative;
-    verified?: boolean;
-    balance?: number;
+    customerId: number,
+    firstName: string,
+    lastName: string;
+    phone: string,
+    email: string,
+    businessName: string,
+    source: string,
+    status: StatusCodeUser,
+    createdDate?: Date,
+    // projects: Project[],
 }

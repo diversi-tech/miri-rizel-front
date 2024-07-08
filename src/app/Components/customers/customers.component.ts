@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { StatusCodeUser } from '@app/Model/StatusCodeUser';
-import { Customer } from 'src/app/Model/Customers';
+import { Customer } from 'src/app/Model/Customer';
 import { CustomersService } from 'src/app/Services/customers.service';
 import { ValidatorsService } from 'src/app/Services/validators.service';
 

@@ -1,19 +1,16 @@
 <div class="add-task-form">
   <form (ngSubmit)="onSubmit()" [formGroup]="taskForm">
     <h1>{{this.titlePage}}</h1>
-  <div class="line"></div>
-
+    <div class="line"></div>
     <mat-form-field>
       <mat-label>הכנס כותרת</mat-label>
       <input class="input-style" matInput formControlName="title" required />
       <mat-error *ngIf="title!.invalid && (title!.touched || title!.dirty)">שדה חובה </mat-error>
     </mat-form-field>
-
     <mat-form-field>
       <mat-label>הכנס תיאור</mat-label>
       <textarea matInput formControlName="description"></textarea>
     </mat-form-field>
-
     <div class="card flex justify-content-center">
       <label for="date">הכנס תאריך יעד</label>
       <br>
@@ -29,12 +26,10 @@
         </ng-template>
       </mat-error>
     </div>
-
     <br>
     <div class="card flex justify-content-center">
       <p-dropdown formControlName="priority" [options]="priorities" optionLabel="description"
         placeholder="בחר עדיפות" />
-      <mat-error *ngIf="priority!.invalid && (priority!.touched || priority!.dirty)">שדה חובה </mat-error>
       <mat-error *ngIf="priority!.invalid && (priority!.touched || priority!.dirty)">שדה חובה </mat-error>
     </div>
     <br>
@@ -56,6 +51,10 @@
           שדה חובה
         </ng-container>
       </mat-error>
+      <br>
+      <p class="error-message" *ngIf="!assignedTo!.errors?.['required'] && userExistError">
+        יש לבחור לקוח שקיים במערכת
+      </p>
     </div>
     <br>
     <label for="project">בחר פרויקט</label>
@@ -68,6 +67,10 @@
           שדה חובה
         </ng-container>
       </mat-error>
+      <br>
+      <p class="error-message" *ngIf="!project!.errors?.['required'] && projectExistError">
+        יש לבחור פרויקט שקיים במערכת
+      </p>
     </div>
     <br>
     <button type="submit" class="submit-button">

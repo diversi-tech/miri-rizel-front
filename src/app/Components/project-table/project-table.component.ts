@@ -1,13 +1,14 @@
 import { CustomersService } from '@app/Services/customers.service';
 import { Component, ComponentFactoryResolver, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
-import { Country, Customer, Representative } from '@app/Model/Customer';
-import { Customer2 } from '@app/Model/Customer2';
+import { Customer } from '@app/Model/Customer';
 import { ProjectService } from '@app/Services/project.service';
 import { Project } from 'src/app/Model/Project';
 import Swal from 'sweetalert2';
 import { AddProjectComponent } from '../add-project/add-project.component';
 import { EditProjectComponent } from '../edit-project/edit-project.component';
 import { GenericBourdComponent } from '../generic-bourd/generic-bourd.component';
+import { StatusCodeProject } from '@app/Model/StatusCodeProject';
+import { TaskService } from '@app/Services/task.service';
 @Component({
   selector: 'app-project-table',
   templateUrl: './project-table.component.html',
@@ -15,11 +16,12 @@ import { GenericBourdComponent } from '../generic-bourd/generic-bourd.component'
 })
 export class ProjectTableComponent {
   projects: Project[] = [];
-  customers: Customer2 []=[];
+  customers: Customer[] = [];
+  statuses: StatusCodeProject[] = [];
   loading: boolean = true;
   @ViewChild(GenericBourdComponent) genericBourd!: GenericBourdComponent;
   @ViewChild('popupContainer', { read: ViewContainerRef }) popupContainer!: ViewContainerRef;
-  constructor(private ProjectService: ProjectService, private resolver: ComponentFactoryResolver, private costomerService: CustomersService) { }
+  constructor(private ProjectService: ProjectService, private resolver: ComponentFactoryResolver, private taskService: TaskService, private CustomerService: CustomersService) { }
 
   ngOnInit() {
     console.log("projectComponent");
@@ -28,18 +30,22 @@ export class ProjectTableComponent {
         this.projects = p;
         console.log(this.projects);
         this.loading = false;
-        debugger
+        this.taskService.getAllStatus().subscribe(
+          (data) => {
+            this.statuses = data
+          })
+        this.CustomerService.GetAllCustomers().subscribe(
+          (data) => {
+            this.customers = data
+          })
       },
       (error) => {
         console.error('Error fetching project:', error);
-        this.loading = true; // לוודא שהטעינה מפסיקה גם במקרה של שגיאה
+        this.loading = true;
       }
     );
-    
+
   }
-
-
-
   componentType!: Type<any>;
   onEditProject(p: Project) {
     this.componentType = EditProjectComponent;
