@@ -4,75 +4,67 @@ import { Observable, catchError, of, switchMap, tap, throwError } from 'rxjs';
 import { User } from '../Model/User';
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class UserService {
-  constructor(private http: HttpClient) { }
-  private apiUrl = 'https://localhost:7141/User/';
 
-  getAll(): Observable<any> {
-    return this.http.get(`${this.apiUrl}`);
-  }
+    constructor(private http: HttpClient) { }
+    private apiUrl = 'https://localhost:7141/User';
 
-  addUser(userDetails: any): Observable<any> {
-    const url = `${this.apiUrl}/addUser`;
-    return this.http.post(url, userDetails);
-  }
+    getAll(): Observable<any> {
+        return this.http.get(`${this.apiUrl}`);
 
-  editUser(email: any): Observable<any> {
-    return this.http.get(`${this.apiUrl}?email=${email}`);
-  }
-
-  editUserPost(user: User) {
-    this.http.put(`${this.apiUrl}`, user);
-  }
-
-  login(email: string, password: string): Observable<User> {
-    const params = new HttpParams()
-      .set('email', email)
-      .set('password', password);
-    return this.http.get<User>(`${this.apiUrl}Login`, { params }).pipe(
-      tap((user) => {
-        localStorage.setItem('user', JSON.stringify(user));
-      })
-    );
-  }
-
-  getUserMail(): string | null {
-    const userJson = localStorage.getItem('user');
-    if (userJson) {
-      return JSON.parse(userJson);
     }
-    return null;
-  }
 
-  // login(username: string, password: string): Observable<Object> {
-  //   return this.http.post('https://localhost:44337/api/login', {
-  //     username,
-  //     password,
-  //   });
-  // }
+    addUser(userDetails: any): Observable<any> {
+        const url = `${this.apiUrl}`;
+        userDetails.role = 2;
+        console.log(userDetails);
+        return this.http.post(url, userDetails);
+    }
 
-  getByPassword(password: string): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}getByPassword/${password}`);
-  }
+    editUser(email: any): Observable<any> {
+        return this.http.get(`${this.apiUrl}?email=${email}`);
+    }
+    editUserPost(user: User) {
+        this.http.put(`${this.apiUrl}`, user);
+    }
 
-  getByMail(mail: string): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}getByMail/${mail}`);
-  }
+    login(email: string, password: string): Observable<User> {
+        return this.http.get<User>(`https://localhost:7141/User/Login?email=${email}&password=${password}`).pipe(
+            tap((user) => {
+                localStorage.setItem('user', JSON.stringify(user));
+            })
+        );
+    }
 
-  savePassword(email: string, password: string): Observable<any> {
-    return this.http.put<boolean>(`${this.apiUrl}`, { email, password });
-  }
-  // getAll():Observable<Array<User>> {
-  //   return this.http.get<Array<User>>(`${this.apiUrl}ReadAll`).pipe(
-  //     switchMap((response: Array<User>) => {
-  //       return of(response);
-  //     }),
-  //     catchError(error => {
-  //       return throwError(error);
-  //     })
-  //   );
-  // }
-  
+    loginGoogle(email: string, name: string): Observable<User> {
+
+        return this.http.get<User>(`https://localhost:7141/User/LoginGoogle?email=${email}&name=${name}`).pipe(
+            tap((user) => {
+                localStorage.setItem('user', JSON.stringify(user));
+            })
+        );
+    }
+
+    getUserMail(): string | null {
+        const userJson = localStorage.getItem('user');
+        if (userJson) {
+            return JSON.parse(userJson);
+        }
+        return null;
+    }
+
+    getByPassword(password: string): Observable<User> {
+        return this.http.get<User>(`${this.apiUrl}getByPassword/${password}`);
+    }
+
+    getByMail(mail: string): Observable<User> {
+        return this.http.get<User>(`${this.apiUrl}getByMail/${mail}`);
+    }
+
+    savePassword(email: string, password: string): Observable<any> {
+        return this.http.put<boolean>(`${this.apiUrl}`, { email, password });
+    }
+
 }

@@ -48,7 +48,6 @@ export class TaskBoardComponent implements OnInit {
     private taskService: TaskService, private userService: UserService, private projectService: ProjectService, private resolver: ComponentFactoryResolver, private dialog: MatDialog) { }
 
   ngOnInit() {
-
     this.taskService.getAllPriorities().subscribe(
       (data) => {
         this.priorities = data
@@ -66,6 +65,7 @@ export class TaskBoardComponent implements OnInit {
         this.statuses = data
       }
     )
+
 
     this.taskService.getAll().subscribe(
       (tasks: Array<Task>) => {
@@ -154,14 +154,5 @@ export class TaskBoardComponent implements OnInit {
     );
   }
 
-  filterData(objToFilter: any) {
-    let userFilter: User[] = this.users.filter(u => u.lastName == objToFilter.assignedTo.lastName)
-    let loading: boolean = true
-    let col$types = { 'lastName': 'text', 'firstName': 'text' }
-    let positionData = [this.priorities, this.priorities]
-    let objData = [this.users, this.projects]
-    let objFields = ['email', 'name']
-    let positionFields = ['description', 'description']
-    this.genericBourd.PopTable(userFilter, loading, col$types, objData, objFields, positionData);
-  }
+  
 }
