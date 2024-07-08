@@ -140,6 +140,9 @@ import { EditProjectComponent } from './Components/edit-project/edit-project.com
 
 
 
+import { DocumentComponent } from './Components/documens/document/document.component';
+import { ListDocumentComponent } from './Components/documens/list-document/list-document.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -155,6 +158,7 @@ import { EditProjectComponent } from './Components/edit-project/edit-project.com
     ListLeadsComponent,
     AddLeadComponent,
     CustomersComponent,
+    CustomersComponent,
     TaskBoardComponent,
     AddTaskComponent,
     GenericBourdComponent,
@@ -167,6 +171,8 @@ import { EditProjectComponent } from './Components/edit-project/edit-project.com
     CustomerComponentComponent,
     FormCustomerComponent,
     // DocumentComponent,
+    DocumentComponent,
+    ListDocumentComponent,
   ],
    
     
