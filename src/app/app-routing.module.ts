@@ -15,10 +15,10 @@ import { ListLeadsComponent } from './Components/Lead-components/list-leads/list
 import { LeadComponent } from './Components/Lead-components/lead/lead.component';
 import { SignUpComponent } from './Components/sign-up/sign-up.component';
 import { AddTaskComponent } from './Components/add-task/add-task.component';
-import { TaskBoardComponent } from './Components/task-board/task-board.component';
 import { EditLeadComponent } from './Components/Lead-components/edit-lead/edit-lead.component';
-import { DocumentComponent } from './Components/document/document.component';
-// import { TaskBoardComponent } from './Components/task-board/task-board.component';
+import { DocumentComponent } from './Components/documens/document/document.component';
+import { TaskBoardComponent } from './Components/task-board/task-board.component';
+import { ListDocumentComponent } from './Components/documens/list-document/list-document.component';
 
 
 const routes: Routes = [
@@ -44,6 +44,7 @@ const routes: Routes = [
   {path: 'addLead', component: AddLeadComponent},
   {path: 'editLead', component: EditLeadComponent},
   {path: 'document', component: DocumentComponent},
+  {path: 'documents', component: ListDocumentComponent},
 
   {
     path: 'leads',
@@ -51,13 +52,15 @@ const routes: Routes = [
     children: [{ path: '', component: LeadComponent }],
   },
   // { path: 'leads', component: ListLeadsComponent },
+    // { path: 'leads', component: ListLeadsComponent },
+
   { path: 'task', component: TaskBoardComponent },
   // { path: '', redirectTo: '/task', pathMatch: 'full' },
   { path: '', component: LoginComponent },
   // { path: 'task', component: TaskBoardComponent },
   // { path: '', redirectTo: '/task', pathMatch: 'full' },
   { path: '', component: LoginComponent },
-  // { path: 'task', component: TaskBoardComponent },
+  { path: 'task', component: TaskBoardComponent },
   { path: '', redirectTo: '/task', pathMatch: 'full' },
   {
     path: 'ResetPassword',

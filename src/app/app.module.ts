@@ -134,7 +134,8 @@ import { CalendarModule } from 'primeng/calendar';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { DocumentComponent } from './Components/document/document.component';
+import { DocumentComponent } from './Components/documens/document/document.component';
+import { ListDocumentComponent } from './Components/documens/list-document/list-document.component';
 
 @NgModule({
   declarations: [
@@ -150,7 +151,7 @@ import { DocumentComponent } from './Components/document/document.component';
     LeadComponent,
     ListLeadsComponent,
     AddLeadComponent,
-      CustomersComponent,
+    CustomersComponent,
     TaskBoardComponent,
     AddTaskComponent,
     GenericBourdComponent,
@@ -159,6 +160,7 @@ import { DocumentComponent } from './Components/document/document.component';
     FormCustomerComponent,
     // DocumentComponent,
     DocumentComponent,
+    ListDocumentComponent,
   ],
    
     
