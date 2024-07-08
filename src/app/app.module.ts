@@ -144,6 +144,8 @@ import { DocumentComponent } from './Components/documens/document/document.compo
 import { ListDocumentComponent } from './Components/documens/list-document/list-document.component';
 import { HomePageComponent } from './Components/home-page/home-page.component';
 import { CustomerProfileComponent } from './Components/customer-profile/customer-profile.component';
+import { ExportToSheetComponent } from './Components/export-to-sheet/export-to-sheet.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -174,6 +176,7 @@ import { CustomerProfileComponent } from './Components/customer-profile/customer
     ListDocumentComponent,
     HomePageComponent,
     CustomerProfileComponent,
+    ExportToSheetComponent,
   ],
   imports: [
     BrowserModule,
