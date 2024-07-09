@@ -13,6 +13,7 @@ export class SignUpComponent {
   signUpForm!: FormGroup;
   submitted = false;
   passwordsMatch = true;
+  userData: String="signUp"
 
   userDetails = {
     password: '',
