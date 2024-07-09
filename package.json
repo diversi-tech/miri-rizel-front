@@ -6,11 +6,11 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test" 
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {
-    "@abacritt/angularx-social-login": "^2.0.0",
+    "@abacritt/angularx-social-login": "^1.2.0",
     "@angular/animations": "^16.1.0",
     "@angular/cdk": "^16.1.0",
     "@angular/common": "^16.1.0",
