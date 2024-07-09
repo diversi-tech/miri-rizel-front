@@ -40,6 +40,8 @@ export class LoginComponent implements OnInit {
   logInForm: FormGroup = new FormGroup({});
   get email() { return this.logInForm.controls['email'] }
   get pass() { return this.logInForm.controls['password'] }
+  userData: String="logIn"
+
   onSubmit() {
     if (this.logInForm.invalid) {
       return;
@@ -60,14 +62,14 @@ export class LoginComponent implements OnInit {
         //       this.router.navigate(['/customer'], { relativeTo: this.active });
         //     }
         //   },
-        //   error => {
-        //     this.dialog.open(DialogComponent, {
-        //       data: {
-        //         title: 'שגיאה',
-        //         context: 'ארעה תקלה במהלך ההתחברות, נסה שנית',
-        //         buttonText: 'סגור',
-        //       },
-        //     });
+          // error => {
+          //   this.dialog.open(DialogComponent, {
+          //     data: {
+          //       title: 'שגיאה',
+          //       context: 'ארעה תקלה במהלך ההתחברות, נסה שנית',
+          //       buttonText: 'סגור',
+          //     },
+          //   })};
       }
     );
   }

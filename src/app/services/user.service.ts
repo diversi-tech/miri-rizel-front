@@ -60,7 +60,8 @@ export class UserService {
   }
 
   getByMail(mail: string): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}getByMail/${mail}`);
+    console.log(mail);    
+    return this.http.get<User>(`https://localhost:7141/User/GetByEmail?email=${mail}`);
   }
 
   savePassword(email: string, password: string): Observable<any> {
