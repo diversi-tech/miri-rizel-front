@@ -6,8 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "postinstall": "sed -i 's/rxjs\\/Rx/rxjs/' ./node_modules/ngx-google-sign-in/src/ngx-google-sign-in.service.d.ts"
+    "test": "ng test" 
   },
   "private": true,
   "dependencies": {
