@@ -107,7 +107,7 @@ export class GenericBourdComponent implements OnInit, OnChanges {
     Object.keys(this.col$types).forEach((key) => {
       this.columns.push({
         field: key,
-        header: this.capitalizeFirstLetter(key),
+        header: key,
         sortable: true,
         filterType: this.col$types[key],
       });
@@ -164,10 +164,10 @@ export class GenericBourdComponent implements OnInit, OnChanges {
     }
   }
 
-  capitalizeFirstLetter(field: string) {
-    let string = field.replace(/([A-Z])/g, ' $1').toLowerCase();
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
+  // capitalizeFirstLetter(field: string) {
+  //   let string = field.replace(/([A-Z])/g, ' $1').toLowerCase();
+  //   return string.charAt(0).toUpperCase() + string.slice(1);
+  // }
   getTypeOfCol(col: Column, i: number) {
     if (col.filterType == 'date')
       this.data[i][col.field] = new Date(this.data[i][col.field]);
@@ -371,7 +371,7 @@ export class GenericBourdComponent implements OnInit, OnChanges {
     Object.keys(this.col$types).forEach((key) => {
       columnsToSheets.push({
         field: key,
-        header: this.capitalizeFirstLetter(key),
+        header: key,
         sortable: true,
         filterType: this.col$types[key],
       });

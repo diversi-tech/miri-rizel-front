@@ -1,7 +1,7 @@
 <div class="auth-container">
-  <h1 mat-dialog-title>אימות החשבון שלך</h1>
+  <h1 mat-dialog-title>{{'VerifyAccountTitle'|translate}}</h1>
   <div mat-dialog-content>
-    <p>הכנס את קוד האימות שנשלח אליך במייל</p>
+    <p>{{'VerifyAccountLabel'|translate}}</p>
     <div class="code-inputs">
       <input matInput [(ngModel)]="code[0]" maxlength="1" (input)="focusNext($event, 1)" (keydown)="focusPrevious($event, 0)" #input0 />
       <input matInput [(ngModel)]="code[1]" maxlength="1" (input)="focusNext($event, 2)" (keydown)="focusPrevious($event, 1)" #input1 />
@@ -12,7 +12,7 @@
   </div>
 
   <div mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">בטל</button>
-    <button mat-button (click)="validateCode()">אשר</button>
+    <button mat-button (click)="onNoClick()">{{'Cancle'|translate}}</button>
+    <button mat-button (click)="validateCode()">{{'Approve'|translate}}</button>
   </div>
 </div>
