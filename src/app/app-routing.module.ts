@@ -9,7 +9,6 @@ import { AuthCodeGuard } from './Guard/auth-code.guard';
 import { LoginComponent } from './Components/login/login.component';
 import { EditUserComponent } from './Components/edit-user/edit-user.component';
 import { AddUserComponent } from './Components/add-user/add-user.component';
-import { GoogleComponent } from './Components/google/google.component';
 import { AddLeadComponent } from './Components/Lead-components/add-lead/add-lead.component';
 import { ListLeadsComponent } from './Components/Lead-components/list-leads/list-leads.component';
 import { LeadComponent } from './Components/Lead-components/lead/lead.component';
