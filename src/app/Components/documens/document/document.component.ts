@@ -14,6 +14,7 @@ export class DocumentComponent implements OnInit {
   documentForm!: FormGroup;
   submitted: boolean = false;
   private originalParent: HTMLElement | null = null;
+  trueTitle: boolean = false;
   date!: Date;
   constructor(
     private documentService: DocumentService,
@@ -24,11 +25,11 @@ export class DocumentComponent implements OnInit {
   ngOnInit(): void {
     this.documentForm = this.formBuilder.group({
       documentId: [0],
-      title: ['', [Validators.required, this.customNameValidator()]],
+      title: ['', [Validators.required]],
       description: ['', [Validators.required]],
       filePath: ['', [Validators.required]],
       relatedTo: ['', [Validators.required]],
-      relatedId: ['', [Validators.required]],
+      relatedId: [0, [Validators.required]],
       createdDate: ['', [Validators.required]],
 
     });
@@ -74,8 +75,9 @@ export class DocumentComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length) {
       this.file = input.files[0];
+      const title = this.documentForm.controls['title'].value;
       const formData = new FormData(); {
-        formData.append('file',this.file,this.file.name);
+        formData.append('file', this.file, title);
 
       }
       this.documentService.upFile(formData).subscribe(res => {
@@ -87,21 +89,26 @@ export class DocumentComponent implements OnInit {
     };
   }
 
-
   addDocumentSubmit(): void {
-    this.submitted = true;
-if(this.documentForm.invalid)
-  return;
-    this.documentForm.patchValue({
-      createdDate: this.date
-    })
-    console.log(this.documentForm.value);
-alert('הקובץ הועלאה בהצלחה')
-    // this.documentService.addDocument(this.documentForm.value).subscribe(response => {
-    //   console.log('File uploaded successfully', response);
-    // }, error => {
-    //   console.error('File upload failed', error);
-    // });
-  }
+    console.log("mkmkl");
 
+    this.submitted = true;
+    this.documentForm.patchValue({
+      createdDate: new Date()
+    });
+    if(this.documentForm.value.description.invalid)
+     return;
+    if(this.documentForm.value.filePath.invalid)
+       return;
+
+    this.documentService.addDocument(this.documentForm.value).subscribe(res=>{
+      alert('הקובץ הועלאה בהצלחה')
+    })
+
+    
+
+  }
+  changeTitle() {
+    this.trueTitle = true;
+  }
 }
