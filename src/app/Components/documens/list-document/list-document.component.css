@@ -34,4 +34,30 @@
     padding: 5px;
     cursor: pointer; /* סמן עכבר של לחיצה */
   }
-  
+  .file-list {
+    padding: 20px;
+}
+
+.file-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+/* .file-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+} */
+
+.thumbnail {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.document-file {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
