@@ -5,6 +5,8 @@
     (delete)="deleteCustomer($event)"
     (showAddComponent)="addCustomer()">
 </app-generic-bourd>
+<button (click)="addDocument()">להוספת מסמך</button>
+
 <form class="editCustomer"  id="editCustomer" [formGroup]="customerForm" (ngSubmit)="editCustomerSubmit()">
     <div class="form-group">
         <div class="form-group">
