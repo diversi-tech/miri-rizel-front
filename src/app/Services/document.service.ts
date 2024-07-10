@@ -1,21 +1,22 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/enviroments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DocumentService {
-  private baseUrl = 'https://localhost:7141/api/FileUpload';  // שנה לכתובת ה-API שלך
+  private apiUrl = `${environment.apiUrl}api/FileUpload/`
 
   constructor(private http: HttpClient) { }
   upFile(file: FormData): Observable<string> {
-    return this.http.post<string>(`${this.baseUrl}/upload`, file);
+    return this.http.post<string>(`${this.apiUrl}/upload`, file);
   }
   addDocument(document: FormData):Observable<boolean> {
-    return this.http.post<boolean>(`${this.baseUrl}/upload`, document);
+    return this.http.post<boolean>(`${this.apiUrl}/upload`, document);
   }
   getFiles(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/list`);
+    return this.http.get<any>(`${this.apiUrl}/list`);
   }
 }

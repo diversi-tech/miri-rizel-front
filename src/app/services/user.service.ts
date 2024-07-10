@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, of, switchMap, tap, throwError } from 'rxjs';
 import { User } from '../Model/User';
+import { environment } from 'src/enviroments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,7 @@ import { User } from '../Model/User';
 export class UserService {
 
   constructor(private http: HttpClient) { }
-  private apiUrl = 'https://localhost:7141/User';
+  private apiUrl = `${environment.apiUrl}user/`
 
   getAll(): Observable<any> {
     return this.http.get(`${this.apiUrl}`);
@@ -31,7 +32,7 @@ export class UserService {
   }
 
   login(email: string, password: string): Observable<User> {
-    return this.http.get<User>(`https://localhost:7141/User/Login?email=${email}&password=${password}`).pipe(
+    return this.http.get<User>(`${this.apiUrl}Login?email=${email}&password=${password}`).pipe(
       tap((user) => {
         localStorage.setItem('user', JSON.stringify(user));
       })
@@ -39,7 +40,7 @@ export class UserService {
   }
 
   loginGoogle(email: string, name: string): Observable<User> {
-    return this.http.get<User>(`https://localhost:7141/User/LoginGoogle?email=${email}&name=${name}`).pipe(
+    return this.http.get<User>(`${this.apiUrl}LoginGoogle?email=${email}&name=${name}`).pipe(
       tap((user) => {
         localStorage.setItem('user', JSON.stringify(user));
       })
@@ -61,7 +62,7 @@ export class UserService {
 
   getByMail(mail: string): Observable<User> {
     console.log(mail);    
-    return this.http.get<User>(`https://localhost:7141/User/GetByEmail?email=${mail}`);
+    return this.http.get<User>(`${this.apiUrl}GetByEmail?email=${mail}`);
   }
 
   savePassword(email: string, password: string): Observable<any> {
