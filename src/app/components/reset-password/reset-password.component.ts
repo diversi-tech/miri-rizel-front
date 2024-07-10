@@ -38,12 +38,12 @@ export class ResetPasswordComponent implements OnInit {
   hideAuth = signal(true);
 
   clickEvent(event: MouseEvent) {
-    this.hide.set(!this.hide);
+    this.hide.set(!this.hide());
     event.stopPropagation();
   }
 
   clickEventAuth(event: MouseEvent) {
-    this.hideAuth.set(!this.hideAuth);
+    this.hideAuth.set(!this.hideAuth());
     event.stopPropagation();
   }
 

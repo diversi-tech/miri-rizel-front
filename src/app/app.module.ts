@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -138,6 +138,16 @@ import { HomePageComponent } from './Components/home-page/home-page.component';
 import { CustomerProfileComponent } from './Components/customer-profile/customer-profile.component';
 import { ExportToSheetComponent } from './Components/export-to-sheet/export-to-sheet.component';
 
+
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { NavComponent } from './Components/nav/nav.component';
+
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -168,8 +178,17 @@ import { ExportToSheetComponent } from './Components/export-to-sheet/export-to-s
     HomePageComponent,
     CustomerProfileComponent,
     ExportToSheetComponent,
+    NavComponent,
   ],
   imports: [
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
+    TranslateModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
