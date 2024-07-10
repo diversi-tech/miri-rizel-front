@@ -159,5 +159,7 @@ export class CustomersComponent implements OnInit {
       return this.validatorsService.futureDate()(control.value) ? null : { invalidDate: true };
     };
   }
-
+addDocument(){
+  
+}
 }
