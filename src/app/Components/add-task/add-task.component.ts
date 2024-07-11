@@ -59,6 +59,8 @@ export class AddTaskComponent implements OnInit {
   ngOnInit(): void {
     this.taskForm = this.fb.group({
       taskId: [''],
+      createdDate: [''],
+      googleId: [''],
       title: ['', Validators.required],
       description: [''],
       status: ['', Validators.required],
@@ -138,6 +140,8 @@ export class AddTaskComponent implements OnInit {
       (task: any) => {
         this.taskForm.patchValue({
           taskId: task.taskId,
+          googleId: task.googleId,
+          createdDate: task.createdDate,
           title: task.title,
           description: task.description,
           status: task.status,
@@ -228,7 +232,7 @@ export class AddTaskComponent implements OnInit {
                   denyButtonText: translations['DontAdd']
                 }).then((result) => {
                   if (result.isConfirmed) {
-                    this.scheduleMeeting()
+                    this.scheduleMeeting(response.taskId)
                   } else if (result.isDenied) {
                     Swal.fire(translations['TaskNotAddToGoogle'], "", "info");
                   }
@@ -266,6 +270,8 @@ export class AddTaskComponent implements OnInit {
                 confirmButtonColor: "#3085D6",
                 confirmButtonText: translations['Close']
               }).then((res) => {
+                if (this.taskForm.value.googleId)
+                  this.scheduleMeeting(this.taskForm.value.googleId)
                 this.location.go(this.location.path());
               });
             })
@@ -286,7 +292,7 @@ export class AddTaskComponent implements OnInit {
       }
     }
   }
-  scheduleMeeting() {
+  scheduleMeeting(data: any) {
     let appointmentTime = new Date(this.taskForm.value.dueDate);
     const startTime = appointmentTime.toISOString().slice(0, 18) + '-07:00';
     const eventDetails = {
@@ -296,6 +302,11 @@ export class AddTaskComponent implements OnInit {
       description: this.taskForm.value.description
     };
     console.info(eventDetails);
-    this.GoogleAuthService.createGoogleEvent(eventDetails)
+    if (this.isEdit)
+      // שליחת הקוד אירוע
+      this.GoogleAuthService.updateGoogleEvent(eventDetails, data)
+    else
+      // שליחת הקוד משימה
+      this.GoogleAuthService.createGoogleEvent(eventDetails, data)
   }
 }

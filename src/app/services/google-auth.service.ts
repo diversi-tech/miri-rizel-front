@@ -1,5 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
+import { environment } from 'src/enviroments/environment';
 import Swal from 'sweetalert2';
+import { TaskService } from './task.service';
 
 declare var gapi: any;
 declare var google: any;
@@ -8,8 +10,8 @@ declare var google: any;
   providedIn: 'root'
 })
 export class GoogleAuthService {
-  private CLIENT_ID = "592088999303-njnsom6mvdcn0kpesi2ibtlhmblcfcda.apps.googleusercontent.com";
-  private API_KEY = "AIzaSyAe4wCi-LL97X_H7fhfaYnB_0cPqfdYVNU";
+  private CLIENT_ID = environment.CLIENT_ID;
+  private API_KEY = environment.API_KEY;
   private DISCOVERY_DOC = "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest";
   private SCOPES = "https://www.googleapis.com/auth/calendar";
 
@@ -17,7 +19,7 @@ export class GoogleAuthService {
   private gapiInited = false;
   private gisInited = false;
 
-  constructor(private ngZone: NgZone) {
+  constructor(private ngZone: NgZone,private taskService:TaskService) {
     this.loadGapi();
     this.loadGis();
   }
@@ -70,7 +72,7 @@ export class GoogleAuthService {
     });
   }
 
-  public createGoogleEvent(eventDetails: any) {
+  public createGoogleEvent(eventDetails: any,taskId:number) {
     if (!this.gapiInited || !this.gisInited) {
       console.error("GAPI or GIS not initialized");
       this.reinitializeGapi();
@@ -81,7 +83,7 @@ export class GoogleAuthService {
         console.error("Error during token request", resp.error);
         throw resp;
       }
-      await this.scheduleEvent(eventDetails);
+      await this.scheduleEvent(eventDetails,taskId);
     };
     try {
       if (gapi.client.getToken() === null) {
@@ -95,7 +97,7 @@ export class GoogleAuthService {
     console.log('Token request initiated');
   }
 
-  private async scheduleEvent(eventDetails: any) {
+  private async scheduleEvent(eventDetails: any,taskId:number) {
     const event = {
       summary: eventDetails.nameT,
       location: "",
@@ -108,7 +110,6 @@ export class GoogleAuthService {
         dateTime: eventDetails.startTime,
         timeZone: "Asia/Jerusalem",
       },
-      recurrence: ["RRULE:FREQ=DAILY;COUNT=2"],
       attendees: [{ email: eventDetails.email }],
       reminders: {
         useDefault: false,
@@ -123,10 +124,83 @@ export class GoogleAuthService {
       resource: event,
     });
     request.execute((event: any) => {
+      console.log("event created: ", event);
+      this.taskService.updateGoogleId(taskId, event.id).subscribe((res) => {
+        console.log(res);
+      }, (err) => {
+        console.log(err);
+      })
       Swal.fire({
         position: "top-end",
         icon: "success",
         title: "המשימה נשמרה",
+        html: `
+        לצפיה בלוח המשימות
+    <a href="${event.htmlLink}" target="_blank" autofocus>לחץ כאן</a> `,
+        showConfirmButton: false,
+        timer: 3000
+      });
+    });
+  }
+
+  public updateGoogleEvent(eventDetails: any, googleId: string) {
+    if (!this.gapiInited || !this.gisInited) {
+      console.error("GAPI or GIS not initialized");
+      this.reinitializeGapi();
+      return;
+    }
+    this.tokenClient.callback = async (resp: any) => {
+      if (resp.error !== undefined) {
+        console.error("Error during token request", resp.error);
+        throw resp;
+      }
+      await this.scheduleUpdateEvent(eventDetails, googleId);
+    };
+    try {
+      if (gapi.client.getToken() === null) {
+        this.tokenClient.requestAccessToken({ prompt: "consent" });
+      } else {
+        this.tokenClient.requestAccessToken({ prompt: "" });
+      }
+    } catch (error) {
+      console.error("Error requesting access token", error);
+    }
+    console.log('Token request initiated');
+  }
+
+  private async scheduleUpdateEvent(eventDetails: any, googleId: string) {
+    const event = {
+      summary: eventDetails.nameT,
+      location: "",
+      description: eventDetails.description,
+      start: {
+        dateTime: eventDetails.startTime,
+        timeZone: "Asia/Jerusalem",
+      },
+      end: {
+        dateTime: eventDetails.startTime,
+        timeZone: "Asia/Jerusalem",
+      },
+      attendees: [{ email: eventDetails.email }],
+      reminders: {
+        useDefault: false,
+        overrides: [
+          { method: "email", minutes: 24 * 60 },
+          { method: "popup", minutes: 10 },
+        ],
+      },
+    };
+    const request = gapi.client.calendar.events.update({
+      calendarId: "primary",
+      eventId: googleId,
+      resource: event,
+    });
+    request.execute((event: any) => {
+      console.log("event updated: ", event);
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "המשימה עודכנה",
         html: `
         לצפיה בלוח המשימות
     <a href="${event.htmlLink}" target="_blank" autofocus>לחץ כאן</a> `,
