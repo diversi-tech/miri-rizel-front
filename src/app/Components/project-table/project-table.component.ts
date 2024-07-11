@@ -9,6 +9,10 @@ import { EditProjectComponent } from '../edit-project/edit-project.component';
 import { GenericBourdComponent } from '../generic-bourd/generic-bourd.component';
 import { StatusCodeProject } from '@app/Model/StatusCodeProject';
 import { TaskService } from '@app/Services/task.service';
+import { Task } from '@app/Model/Task';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Priority } from '@app/Model/Priority';
+import { TaskBoardComponent } from '../task-board/task-board.component';
 @Component({
   selector: 'app-project-table',
   templateUrl: './project-table.component.html',
@@ -16,15 +20,29 @@ import { TaskService } from '@app/Services/task.service';
 })
 export class ProjectTableComponent {
   projects: Project[] = [];
+  tasks: any[] = [];
+  priorities: Priority[] = [];
+  errorMessage: string = "";
   customers: Customer[] = [];
   statuses: StatusCodeProject[] = [];
   loading: boolean = true;
   @ViewChild(GenericBourdComponent) genericBourd!: GenericBourdComponent;
   @ViewChild('popupContainer', { read: ViewContainerRef }) popupContainer!: ViewContainerRef;
-  constructor(private ProjectService: ProjectService, private resolver: ComponentFactoryResolver, private taskService: TaskService, private CustomerService: CustomersService) { }
+  constructor(private ProjectService: ProjectService, private active: ActivatedRoute, private resolver: ComponentFactoryResolver, private router: Router, private taskService: TaskService, private CustomerService: CustomersService) { }
 
   ngOnInit() {
     console.log("projectComponent");
+    this.taskService.getAll().subscribe(
+      (data) => {
+        this.tasks = data
+        console.log(this.tasks);
+      })
+    this.taskService.getAllPriorities().subscribe(
+      (data) => {
+        this.priorities = data
+      }
+    )
+
     this.ProjectService.getAll().subscribe(
       (p: Array<Project>) => {
         this.projects = p;
@@ -47,56 +65,71 @@ export class ProjectTableComponent {
 
   }
   componentType!: Type<any>;
-  onEditProject(p: Project) {
-    this.componentType = EditProjectComponent;
-    this.popUpAddOrEdit("edit project");
-    console.log('Edit task:', p);
-  }
-  // getCustomer(id:number){
-  //   debugger
-  //     this.costomerService.getById(id).subscribe(
-  //       (p: Customer2) => {
-  //         this.customers = p;
-  //         console.log(this.customers)
-  //         console.log(this.costomerService);
-  //         this.loading = false;
-  //       },
-  //       (error) => {
-  //         console.error('Error fetching customer:', error);
-  //         this.loading = false; // לוודא שהטעינה מפסיקה גם במקרה של שגיאה
-  //       }
-  //     );
-  // }
+ 
   onDeleteProject(p: Project) {
-    this.ProjectService.deleteProject(p.projectId)
-    console.log('Delete task:', p);
+    this.ProjectService.deleteProject(p.projectId).subscribe(
+      (data: any) => {
+        if (data == true) {
+          Swal.fire({
+            text: "The project was successfully deleted",
+            icon: "success",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#3085D6",
+            confirmButtonText: "Close"
+          }).then((result) => {
+            this.ProjectService.getAll().subscribe((data) => {
+              this.projects = data
+            })
+          });
+        }
+      },
+      (error: any) => {
+        console.error('Error fetching projects:', error);
+      }
+    );
   }
+
 
   filterData(objToFilter: any) {
-    let projectFilter: Project[] = this.projects.filter(u => u.status == objToFilter)
-    let loading: boolean = true
-    let col$types = { 'lastName': 'text', 'firstName': 'text' }
-    let positionD: [] = []
-    let objData = [this.customers]
-    let objFields = ['firstName']
-    this.genericBourd.PopTable(projectFilter, loading, col$types, objData, objFields, positionD);
+    let taskFilter: Task[] = this.tasks.filter(u => u.project.projectId == objToFilter.projectId)
+    console.log(taskFilter)
+    if (taskFilter.length != 0) {
+      let loading: boolean = true
+      let col$types = { 'title': 'text', 'status': 'position', 'priority': 'position', 'dueDate': 'date', 'createdDate': 'date' }
+      let positionD = [this.statuses]
+      let objData = [this.projects]
+      let objFields = ['name']
+      this.genericBourd.PopTable(taskFilter, loading, col$types, objData, objFields, positionD);
+    }
+    
   }
-  // filterData(objToFilter: any) {
-  //   let userFilter: User[] = this.users.filter(u => u.lastName == objToFilter.assignedTo.lastName)
-  //   let loading:boolean = true
-  //   let col$types = { 'lastName': 'text', 'firstName': 'text' }
-  //   let positionD:[] = []
-  //   let objData = [this.users, this.projects]
-  //   let objFields = ['email','name']
-  //   this.genericBourd.PopTable(userFilter, loading, col$types,objData,objFields,positionD);
-  // }
-
+ 
   addProject() {
     this.componentType = AddProjectComponent;
     this.popUpAddOrEdit("Add project");
   }
-
-  popUpAddOrEdit(title: string) {
+  fetchTasks(projectId: string): void {
+    if (projectId) {
+      this.ProjectService.getTaskByProject(projectId).subscribe(
+        (data) => {
+          this.tasks = data;
+          this.errorMessage = '';
+        },
+        (error) => {
+          this.errorMessage = 'Error fetching tasks. Please try again.';
+          this.tasks = [];
+        }
+      );
+    } else {
+      this.errorMessage = 'Please enter a valid project code.';
+    }
+  }
+  onEditProject(p: Project) {
+    this.componentType = EditProjectComponent;
+    this.popUpAddOrEdit("Edit Lead",p.projectId);
+  }
+  popUpAddOrEdit(title: string,l?:Number) {
     Swal.fire({
       title: title,
       html: '<div id="popupContainer"></div>',
@@ -108,9 +141,18 @@ export class ProjectTableComponent {
           const factory = this.resolver.resolveComponentFactory(this.componentType);
           const componentRef = this.popupContainer.createComponent(factory);
           container.appendChild(componentRef.location.nativeElement);
+          this.refreshData();
         }
       },
     });
+  }
+  refreshData() {
+    this.ProjectService.getAll().subscribe(
+      (project: any) => {
+        this.projects = project;
+        this.loading = false;
+        console.log("refreshData: ", this.projects);
+      })
   }
 }
 

@@ -1,1 +1,29 @@
-<p>edit-project works!</p>
+<div class="add-container">
+    <form [formGroup]="ProjectForm" >
+      <label>שם פרויקט</label>
+      <input  type="text" id="Name" formControlName="Name" />
+      <label>תאור</label>
+      <input  type="text" id="description" formControlName="description" />
+    <label>תחילת פרויקט</label>
+    <input  type="date" id="strartDate" formControlName="strartDate" />
+      <label>סיום פרויקט</label>
+      <input  type="date" id="endDate" formControlName="endDate" />
+    <label>createdDate </label>
+    <input  type="date" id="createdDate" formControlName="createdDate"/>
+      <label>סטאטוס </label>
+      <p-dropdown formControlName="status" [options]="statuses" optionLabel="description" placeholder="בחר סטטוס" />
+    <!-- <mat-form-field class="form-field" appearance="fill"> -->
+      <label>סוג לקוח </label>
+    <p-dropdown  formControlName="customer"formControlName="customerId" [options]="custom" optionLabel="firstName" placeholder="בחר לקוח" />
+      <br><br/>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="ProjectForm.invalid"
+      onclick="submit()"
+    >
+      סיום
+    </button>
+  </form>
+</div>
