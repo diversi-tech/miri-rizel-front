@@ -15,24 +15,29 @@ export class DocumentComponent implements OnInit {
   submitted: boolean = false;
   private originalParent: HTMLElement | null = null;
   trueTitle: boolean = false;
+  nameCustomer!:string;
   date!: Date;
   constructor(
     private documentService: DocumentService,
     private formBuilder: FormBuilder,
     private vlidatorsService: ValidatorsService
-  ) { }
+  ) { 
+
+  }
 
   ngOnInit(): void {
     this.documentForm = this.formBuilder.group({
       documentId: [0],
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      filePath: ['', [Validators.required]],
+      filePath: ['', [Validators.required,Validators.minLength(8)]],
       relatedTo: ['', [Validators.required]],
       relatedId: [0, [Validators.required]],
       createdDate: ['', [Validators.required]],
 
     });
+    this.openEditDocumentPopup();
+
   }
 
   get formControls() { return this.documentForm.controls; }
@@ -42,7 +47,9 @@ export class DocumentComponent implements OnInit {
       return this.vlidatorsService.name(control.value) ? null : { invalidName: 'השם לא תקין' };
     };
   }
-
+setName(name:string){
+this.nameCustomer=name;
+}
   openEditDocumentPopup() {
     const formElement = document.getElementById("addDocument");
 
@@ -80,7 +87,7 @@ export class DocumentComponent implements OnInit {
         formData.append('file', this.file, title);
 
       }
-      this.documentService.upFile(formData).subscribe(res => {
+      this.documentService.upFile(formData,this.nameCustomer).subscribe(res => {
         this.documentForm.patchValue({
           filePath: res
 
@@ -90,16 +97,17 @@ export class DocumentComponent implements OnInit {
   }
 
   addDocumentSubmit(): void {
-    console.log("mkmkl");
-
     this.submitted = true;
     this.documentForm.patchValue({
       createdDate: new Date()
     });
     if(this.documentForm.value.description.invalid)
      return;
-    if(this.documentForm.value.filePath.invalid)
+    if(this.documentForm.value.filePath.length<8)
        return;
+    if(this.documentForm.value.title.invalid)
+      return;
+console.log(this.documentForm.value.filePath);
 
     this.documentService.addDocument(this.documentForm.value).subscribe(res=>{
       alert('הקובץ הועלאה בהצלחה')
