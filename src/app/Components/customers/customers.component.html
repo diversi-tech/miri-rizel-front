@@ -3,9 +3,9 @@
     [positionData]="[status]" 
     (edit)="editCustomer($event)" 
     (delete)="deleteCustomer($event)"
-    (showAddComponent)="addCustomer()">
+    (showAddComponent)="addCustomer()"
+    (addDocument)="addDocument($event)">
 </app-generic-bourd>
-<button (click)="addDocument()">להוספת מסמך</button>
 
 <form class="editCustomer"  id="editCustomer" [formGroup]="customerForm" (ngSubmit)="editCustomerSubmit()">
     <div class="form-group">
@@ -155,3 +155,5 @@
     </div>
     <button type="submit" class="btn btn-primary">לאישור</button>
 </form> 
+
+<div #popupContainer></div>
