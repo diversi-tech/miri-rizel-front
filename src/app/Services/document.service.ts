@@ -16,7 +16,7 @@ export class DocumentService {
   }
   addDocument(document: Document):Observable<boolean> {
     console.log(document);
-    
+
     return this.http.post<boolean>(`${this.baseUrl}/Document`, document);
   }
   getFolders(): Observable<any> {

@@ -52,7 +52,6 @@ this.nameCustomer=name;
 }
   openEditDocumentPopup() {
     const formElement = document.getElementById("addDocument");
-
     if (formElement) {
       this.originalParent = formElement.parentElement;
 
@@ -85,9 +84,8 @@ this.nameCustomer=name;
       const title = this.documentForm.controls['title'].value;
       const formData = new FormData(); {
         formData.append('file', this.file, title);
-
       }
-      this.documentService.upFile(formData,this.nameCustomer).subscribe(res => {
+      this.documentService.upFile(formData,this.nameCustomer).subscribe(res => {        
         this.documentForm.patchValue({
           filePath: res
 
@@ -108,9 +106,9 @@ this.nameCustomer=name;
     if(this.documentForm.value.title.invalid)
       return;
 console.log(this.documentForm.value.filePath);
-
     this.documentService.addDocument(this.documentForm.value).subscribe(res=>{
       alert('הקובץ הועלאה בהצלחה')
+      Swal.close();
     })
 
     
