@@ -12,9 +12,10 @@ import { DialogComponent } from '../dialog/dialog.component';
 import { Password } from 'primeng/password';
 
 @Component({
-  selector: 'app-google',
-  templateUrl: './google.component.html',
-  styleUrls: ['./google.component.css']
+    selector: 'app-google',
+    templateUrl: './google.component.html',
+    styleUrls: ['./google.component.css'],
+    standalone: true
 })
 
 @Injectable()

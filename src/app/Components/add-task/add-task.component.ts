@@ -1,4 +1,4 @@
-import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl, ValidationErrors, ValidatorFn, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Component, ComponentFactoryResolver, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Project } from 'src/app/Model/Project';
@@ -12,17 +12,35 @@ import { DialogComponent } from '../dialog/dialog.component';
 import { StatusCodeProject } from 'src/app/Model/StatusCodeProject';
 import { Priority } from 'src/app/Model/Priority';
 import Swal from 'sweetalert2';
-import { Location } from '@angular/common';
+import { Location, NgIf } from '@angular/common';
 import { GoogleAuthService } from '@app/Services/google-auth.service';
+import { SharedModule } from 'primeng/api';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { DropdownModule } from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 interface AutoCompleteCompleteEvent {
   originalEvent: Event;
   query: string;
 }
 @Component({
-  selector: 'app-add-task',
-  templateUrl: './add-task.component.html',
-  styleUrls: ['./add-task.component.css'],
+    selector: 'app-add-task',
+    templateUrl: './add-task.component.html',
+    styleUrls: ['./add-task.component.css'],
+    standalone: true,
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        NgIf,
+        CalendarModule,
+        DropdownModule,
+        AutoCompleteModule,
+        SharedModule,
+    ],
 })
 export class AddTaskComponent implements OnInit {
 

@@ -10,9 +10,11 @@ import { AddProjectComponent } from '../add-project/add-project.component';
 import { EditProjectComponent } from '../edit-project/edit-project.component';
 import { GenericBourdComponent } from '../generic-bourd/generic-bourd.component';
 @Component({
-  selector: 'app-project-table',
-  templateUrl: './project-table.component.html',
-  styleUrls: ['./project-table.component.css']
+    selector: 'app-project-table',
+    templateUrl: './project-table.component.html',
+    styleUrls: ['./project-table.component.css'],
+    standalone: true,
+    imports: [GenericBourdComponent]
 })
 export class ProjectTableComponent {
   projects: Project[] = [];

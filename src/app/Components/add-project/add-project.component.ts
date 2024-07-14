@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Customer2 } from '@app/Model/Customer2';
@@ -9,12 +9,18 @@ import { ProjectService } from '@app/Services/project.service';
 import { TaskService } from '@app/Services/task.service';
 import { Project } from 'src/app/Model/Project';
 import { DialogComponent } from '../dialog/dialog.component';
+import { DropdownModule } from 'primeng/dropdown';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { NgIf } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
 
 
 @Component({
-  selector: 'app-add-project',
-  templateUrl: './add-project.component.html',
-  styleUrls: ['./add-project.component.css']
+    selector: 'app-add-project',
+    templateUrl: './add-project.component.html',
+    styleUrls: ['./add-project.component.css'],
+    standalone: true,
+    imports: [FormsModule, ReactiveFormsModule, MatInputModule, NgIf, MatFormFieldModule, DropdownModule]
 })
 export class AddProjectComponent implements OnInit {
 

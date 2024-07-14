@@ -1,6 +1,15 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
-import { Table } from 'primeng/table';
+import { Table, TableModule } from 'primeng/table';
 import Swal from 'sweetalert2';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { TagModule } from 'primeng/tag';
+import { FormsModule } from '@angular/forms';
+import { DropdownModule } from 'primeng/dropdown';
+import { NgFor, NgIf, DatePipe } from '@angular/common';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { SharedModule } from 'primeng/api';
+import { ToolbarModule } from 'primeng/toolbar';
 
 interface Column {
   field: string;
@@ -14,9 +23,24 @@ interface position {
 }
 
 @Component({
-  selector: 'app-generic-bourd',
-  templateUrl: './generic-bourd.component.html',
-  styleUrls: ['./generic-bourd.component.css'],
+    selector: 'app-generic-bourd',
+    templateUrl: './generic-bourd.component.html',
+    styleUrls: ['./generic-bourd.component.css'],
+    standalone: true,
+    imports: [
+        ToolbarModule,
+        SharedModule,
+        ButtonModule,
+        TableModule,
+        InputTextModule,
+        NgFor,
+        NgIf,
+        DropdownModule,
+        FormsModule,
+        TagModule,
+        MultiSelectModule,
+        DatePipe,
+    ],
 })
 export class GenericBourdComponent implements OnInit, OnChanges {
   @Input() data: any[] = [];

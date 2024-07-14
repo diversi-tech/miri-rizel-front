@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormsModule } from '@angular/forms';
 import { User } from 'src/app/Model/User';
 import { EditUserService } from '../../Services/edit-user.service';
+import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-edit-user',
-  templateUrl: './edit-user.component.html',
-  styleUrls: ['./edit-user.component.css']
+    selector: 'app-edit-user',
+    templateUrl: './edit-user.component.html',
+    styleUrls: ['./edit-user.component.css'],
+    standalone: true,
+    imports: [NgIf, FormsModule]
 })
 export class EditUserComponent {
   user: User = {userId:0, firstName: "", lastName: "", password: "", role: 0, email: "", createdDate: new Date }

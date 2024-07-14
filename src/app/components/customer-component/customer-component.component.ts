@@ -4,9 +4,10 @@ import { Country, Customer, Representative } from 'src/app/Model/Customer';
 import { GenericBourdComponent } from '../generic-bourd/generic-bourd.component';
 
 @Component({
-  selector: 'app-customer-component',
-  templateUrl: './customer-component.component.html',
-  //styleUrls: ['./customer-component.component.css']
+    selector: 'app-customer-component',
+    templateUrl: './customer-component.component.html',
+    standalone: true,
+    imports: [GenericBourdComponent],
 })
 export class CustomerComponentComponent {
   
