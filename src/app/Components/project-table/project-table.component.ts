@@ -66,32 +66,36 @@ export class ProjectTableComponent {
   }
   componentType!: Type<any>;
  
+  // onDeleteProject(p: Project) {
+  //   this.ProjectService.deleteProject(p.projectId).subscribe(
+  //     (data: any) => {
+  //       if (data == true) {
+  //         Swal.fire({
+  //           text: "The task was successfully deleted",
+  //           icon: "success",
+  //           showCancelButton: false,
+  //           showCloseButton: true,
+  //           confirmButtonColor: "#3085D6",
+  //           confirmButtonText: "Close"
+  //         }).then((result) => {
+  //           this.ProjectService.getAll().subscribe((data) => {
+  //             this.projects = data
+  //           })
+  //         });
+  //       }
+  //     },
+  //     (error: any) => {
+  //       console.error('Error fetching users:', error);
+  //     }
+  //   );
+  // }
   onDeleteProject(p: Project) {
-    this.ProjectService.deleteProject(p.projectId).subscribe(
-      (data: any) => {
-        if (data == true) {
-          Swal.fire({
-            text: "The task was successfully deleted",
-            icon: "success",
-            showCancelButton: false,
-            showCloseButton: true,
-            confirmButtonColor: "#3085D6",
-            confirmButtonText: "Close"
-          }).then((result) => {
-            this.ProjectService.getAll().subscribe((data) => {
-              this.projects = data
-            })
-          });
-        }
-      },
-      (error: any) => {
-        console.error('Error fetching users:', error);
-      }
-    );
-  }
-
+    this.ProjectService.deleteProject(p.projectId).subscribe((res:any)=>{this.loadP();
+});
+}
 
   loadP(): void {
+    debugger
     this.ProjectService.getAll().subscribe(res => {
       this.projects = res;
       this.loading = false;
