@@ -96,7 +96,7 @@ export class ProjectTableComponent {
     console.log(taskFilter)
     if (taskFilter.length != 0) {
       let loading: boolean = true
-      let col$types = { 'title': 'text', 'status': 'position', 'priority': 'position', 'dueDate': 'date', 'createdDate': 'date' }
+      let col$types = { 'title': 'text','dueDate': 'date', 'createdDate': 'date' }
       let positionD = [this.statuses]
       let objData = [this.projects]
       let objFields = ['name']
@@ -127,9 +127,9 @@ export class ProjectTableComponent {
   }
   onEditProject(p: Project) {
     this.componentType = EditProjectComponent;
-    this.popUpAddOrEdit("Edit Lead",p.projectId);
+    this.popUpAddOrEdit("Edit project");
   }
-  popUpAddOrEdit(title: string,l?:Number) {
+  popUpAddOrEdit(title: string) {
     Swal.fire({
       title: title,
       html: '<div id="popupContainer"></div>',
