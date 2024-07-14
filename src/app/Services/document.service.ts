@@ -7,16 +7,25 @@ import { environment } from 'src/enviroments/environment';
   providedIn: 'root'
 })
 export class DocumentService {
-  private apiUrl = `${environment.apiUrl}api/FileUpload/`
+  private baseUrl = 'https://localhost:7141/api';
 
   constructor(private http: HttpClient) { }
-  upFile(file: FormData): Observable<string> {
-    return this.http.post<string>(`${this.apiUrl}/upload`, file);
+  upFile(file: FormData,name:string): Observable<string> {
+    console.log(name);
+    
+    return this.http.post<string>(`${this.baseUrl}/FileUpload/upload?nameFolder=${name}`, file);
   }
-  addDocument(document: FormData):Observable<boolean> {
-    return this.http.post<boolean>(`${this.apiUrl}/upload`, document);
+  addDocument(document: Document):Observable<boolean> {
+    console.log(document);
+
+    return this.http.post<boolean>(`${this.baseUrl}/Document`, document);
   }
-  getFiles(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/list`);
+  getFolders(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/FileUpload/Folders`);
   }
+  getFilesInFolder(folderId:string): Observable<any[]> {
+
+    return this.http.get<any[]>(`${this.baseUrl}/FileUpload/folders/${folderId}/files`);
+  }
+
 }

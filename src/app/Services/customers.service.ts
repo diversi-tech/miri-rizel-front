@@ -17,21 +17,19 @@ export class CustomersService {
     return this.http.get<Customer[]>(`${this.apiUrl}`);
   }
   GetCustomerById(customerId:number): Observable<Customer> {
-    return this.http.get<Customer>(`${this.apiUrl}getCustomerById/?custometId=${customerId}` );
-  }
+    return this.http.get<Customer>(`${this.apiUrl}GetById?custometId=${customerId}` );
+}
   AddNewCustomer(newCustomer:any):Observable<Customer>{
     return this.http.post<Customer>(`${this.apiUrl}addNewCustomer/`,newCustomer);
   } 
   EditCustomer(editCustomer:Customer):Observable<boolean>{
-   
-  
     editCustomer.status=editCustomer.status as StatusCodeUser;    
-    return this.http.put<boolean>(`${this.apiUrl}editCustomer/`,editCustomer);
+    return this.http.put<boolean>(`${this.apiUrl}Customer/`,editCustomer);
   } 
   
   DeleteCustomer(customerId:number):Observable<boolean>{
     
-    return this.http.delete<boolean>(`${this.apiUrl}DeleteCustomer?customerId=${customerId}` );
+    return this.http.delete<boolean>(`${this.apiUrl}Customer?customerId=${customerId}`);
   } 
   GetAllStatusUser():Observable<StatusCodeUser[]>{
     return this.http.get<StatusCodeUser[]>(`${this.apiUrl}GetAllStatus`);

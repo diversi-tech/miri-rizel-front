@@ -14,24 +14,30 @@ export class DocumentComponent implements OnInit {
   documentForm!: FormGroup;
   submitted: boolean = false;
   private originalParent: HTMLElement | null = null;
+  trueTitle: boolean = false;
+  nameCustomer!:string;
   date!: Date;
   constructor(
     private documentService: DocumentService,
     private formBuilder: FormBuilder,
     private vlidatorsService: ValidatorsService
-  ) { }
+  ) { 
+
+  }
 
   ngOnInit(): void {
     this.documentForm = this.formBuilder.group({
       documentId: [0],
-      title: ['', [Validators.required, this.customNameValidator()]],
+      title: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      filePath: ['', [Validators.required]],
+      filePath: ['', [Validators.required,Validators.minLength(8)]],
       relatedTo: ['', [Validators.required]],
-      relatedId: ['', [Validators.required]],
+      relatedId: [0, [Validators.required]],
       createdDate: ['', [Validators.required]],
 
     });
+    this.openEditDocumentPopup();
+
   }
 
   get formControls() { return this.documentForm.controls; }
@@ -41,10 +47,11 @@ export class DocumentComponent implements OnInit {
       return this.vlidatorsService.name(control.value) ? null : { invalidName: 'השם לא תקין' };
     };
   }
-
+setName(name:string){
+this.nameCustomer=name;
+}
   openEditDocumentPopup() {
     const formElement = document.getElementById("addDocument");
-
     if (formElement) {
       this.originalParent = formElement.parentElement;
 
@@ -74,11 +81,11 @@ export class DocumentComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length) {
       this.file = input.files[0];
+      const title = this.documentForm.controls['title'].value;
       const formData = new FormData(); {
-        formData.append('file',this.file,this.file.name);
-
+        formData.append('file', this.file, title);
       }
-      this.documentService.upFile(formData).subscribe(res => {
+      this.documentService.upFile(formData,this.nameCustomer).subscribe(res => {        
         this.documentForm.patchValue({
           filePath: res
 
@@ -87,21 +94,27 @@ export class DocumentComponent implements OnInit {
     };
   }
 
-
   addDocumentSubmit(): void {
     this.submitted = true;
-if(this.documentForm.invalid)
-  return;
     this.documentForm.patchValue({
-      createdDate: this.date
+      createdDate: new Date()
+    });
+    if(this.documentForm.value.description.invalid)
+     return;
+    if(this.documentForm.value.filePath.length<8)
+       return;
+    if(this.documentForm.value.title.invalid)
+      return;
+console.log(this.documentForm.value.filePath);
+    this.documentService.addDocument(this.documentForm.value).subscribe(res=>{
+      alert('הקובץ הועלאה בהצלחה')
+      Swal.close();
     })
-    console.log(this.documentForm.value);
-alert('הקובץ הועלאה בהצלחה')
-    // this.documentService.addDocument(this.documentForm.value).subscribe(response => {
-    //   console.log('File uploaded successfully', response);
-    // }, error => {
-    //   console.error('File upload failed', error);
-    // });
-  }
 
+    
+
+  }
+  changeTitle() {
+    this.trueTitle = true;
+  }
 }

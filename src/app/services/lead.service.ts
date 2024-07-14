@@ -8,14 +8,12 @@ import { environment } from 'src/enviroments/environment';
   providedIn: 'root',
 })
 export class LeadService {
-
   private apiUrl = `${environment.apiUrl}Lead/`
-
   constructor(private http: HttpClient) { }
 
   GetLeadById(id: Number): Observable<Lead> {
     const url = `${this.apiUrl}GetById?id=${id}`;
-    return this.http.get<Lead>(url); // Specify the type of data as Lead
+    return this.http.get<Lead>(url); 
   }
 
   addLead(lead: Lead): Observable<Lead> {

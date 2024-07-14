@@ -75,6 +75,10 @@
                         [severity]="getSeverity(rowData[col.field].description)"></p-tag>
                     <button pButton type="button" class="p-button-secondary" icon="pi pi-pencil"
                         *ngIf="getTypeOfCol(col, rowIndex) == 'edit'" (click)="onEdit(rowData)"></button>
+                        <div *ngIf="addDocument.observers.length > 0">
+                    <button pButton type="button" class="p-button-danger"   icon="pi pi-file"
+                    *ngIf="getTypeOfCol(col, rowIndex) == 'document'" (click)="document(rowData)"></button>
+                </div>
                     <button pButton type="button" class="p-button-danger" icon="pi pi-trash"
                         *ngIf="getTypeOfCol(col, rowIndex) == 'delete'" (click)="onDelete(rowData)"></button>
                     <button pButton type="button" class="p-button-Help" icon="pi pi-angle-down"
@@ -105,6 +109,11 @@
                                 [value]="getPosition(rowData[col.field], i)"
                                 [severity]="getSeverity(rowData[col.field].description)"></p-tag>
                             <div class="button-group">
+
+                                <button pButton type="button" class="p-button-secondary" icon="pi pi-pencil" *ngIf="getTypeOfCol(col, rowIndex) == 'edit'" (click)="onEdit(rowData)"></button>
+                                <button pButton type="button" class="p-button-danger" icon="pi pi-trash" *ngIf="getTypeOfCol(col, rowIndex) == 'delete'" (click)="onDelete(rowData)"></button>
+                                <button pButton type="button" class="p-button" icon="pi pi-pencil" *ngIf="getTypeOfCol(col, rowIndex) == 'document'" (click)="document(rowData)"></button>
+                                <button pButton type="button" class="p-button-help" icon="pi pi-angle-down" *ngIf="getTypeOfCol(col, rowIndex) == 'popTable'" (click)="getDataForPopTable(rowData)"></button>
                                 <button pButton type="button" class="p-button-secondary" icon="pi pi-pencil"
                                     *ngIf="getTypeOfCol(col, rowIndex) == 'edit'" (click)="onEdit(rowData)"></button>
                                 <button pButton type="button" class="p-button-danger" icon="pi pi-trash"
@@ -113,6 +122,7 @@
                                 <button pButton type="button" class="p-button-help" icon="pi pi-angle-down"
                                     *ngIf="getTypeOfCol(col, rowIndex) == 'popTable'"
                                     (click)="getDataForPopTable(rowData)"></button>
+
                             </div>
                         </div>
                     </div>

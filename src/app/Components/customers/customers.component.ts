@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, EventEmitter, OnInit, Output, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { StatusCodeUser } from '@app/Model/StatusCodeUser';
 import { Customer } from 'src/app/Model/Customer';
 import { CustomersService } from 'src/app/Services/customers.service';
 import { ValidatorsService } from 'src/app/Services/validators.service';
+import { DocumentComponent } from '../documens/document/document.component';
 
 @Component({
   selector: 'app-customers',
@@ -26,8 +27,11 @@ export class CustomersComponent implements OnInit {
   status: any;
   private originalParent: HTMLElement | null = null;
   newCustomer!: Customer;
+  @Output()
+  addDocumentCustomer = new EventEmitter<string>();
 
-  constructor(private formBuilder: FormBuilder, private customerService: CustomersService, private validatorsService: ValidatorsService) { }
+  constructor(private formBuilder: FormBuilder, private customerService: CustomersService, private validatorsService: ValidatorsService,private resolver: ComponentFactoryResolver) { }
+  @ViewChild('popupContainer', { read: ViewContainerRef }) popupContainer!: ViewContainerRef;
 
   ngOnInit(): void {
     this.customerForm = this.formBuilder.group({
@@ -41,7 +45,7 @@ export class CustomersComponent implements OnInit {
       status: ['', [Validators.required]],
       createdDate: ['', [Validators.required]],
     });
-
+alert('fv')
     this.loadCustomers();
     this.loadStatusUsers();
   }
@@ -112,7 +116,6 @@ export class CustomersComponent implements OnInit {
   editCustomer(customer: Customer) {
     this.customerService.GetCustomerById(customer.customerId).subscribe(res1 => {
       this.customerForm.setValue(res1);
-      console.log("ssss");
       this.openEditCustomerPopup("עריכת משתמש", "editCustomer");
     });
   }
@@ -124,7 +127,6 @@ export class CustomersComponent implements OnInit {
     }
     this.customerForm.value.status = this.selectedStatus;
     this.customerService.EditCustomer(this.customerForm.value).subscribe(() => {
-      console.log("f,l,lgggg");
       Swal.close();
       this.loadCustomers();
       this.customerForm.reset();
@@ -133,5 +135,58 @@ export class CustomersComponent implements OnInit {
     });
 
 
+}
+
+  deleteCustomer(customer: Customer) {
+    this.customerService.DeleteCustomer(customer.customerId).subscribe(() => {
+      this.loadCustomers();
+    });
+  }
+  selectItem(event: any) {
+    this.status = event.target.value;
+    this.selectedStatus = this.statusCodeUser.find(s => s.id == this.status) as StatusCodeUser;
+  }
+
+  customNameValidator(): (control: FormControl) => ValidationErrors | null {
+    return (control: FormControl): ValidationErrors | null => {
+      return this.validatorsService.name(control.value) ? null : { invalidName: true };
+    };
+  }
+  customPhoneValidator(): (control: FormControl) => ValidationErrors | null {
+    return (control: FormControl): ValidationErrors | null => {
+      return this.validatorsService.phone(control.value) ? null : { invalidPhone: true };
+    };
+  }
+
+  customFutureDateValidator(): (control: FormControl) => ValidationErrors | null {
+    return (control: FormControl): ValidationErrors | null => {
+      return this.validatorsService.futureDate()(control.value) ? null : { invalidDate: true };
+    };
+  }
+  componentType!: Type<any>;
+  popUpAdd(title: string,nameCustomer:string) {
+  this.componentType=DocumentComponent;
+
+    Swal.fire({
+      title: title,
+      html: '<div id="popupContainer"></div>',
+      showConfirmButton: false,
+      didOpen: () => {
+        const container = document.getElementById('popupContainer');
+        if (container) {
+          console.log(this.componentType);
+          if (this.componentType && this.resolver){
+              const factory = this.resolver.resolveComponentFactory(this.componentType);
+          const componentRef = this.popupContainer.createComponent(factory);          
+          container.appendChild(componentRef.location.nativeElement);
+          componentRef.instance.setName(nameCustomer)
+        }
+        }}
+    });
+  }
+
+addDocument(customer:Customer){
+  
+ this.popUpAdd("הוספת מסמך",customer.firstName);
 }
 }

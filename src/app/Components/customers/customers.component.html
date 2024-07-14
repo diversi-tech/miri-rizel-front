@@ -2,9 +2,12 @@
     [col$types]="{'firstName':'text','lastName':'text','email':'text','phone':'text','businessName':'text','source':'text','status':'position','createdDate':'date'}"
     [positionData]="[status]" 
     (edit)="editCustomer($event)" 
-  
-    (showAddComponent)="addCustomer()">
+    (showAddComponent)="addCustomer()"
+    (delete)="deleteCustomer($event)"
+    (showAddComponent)="addCustomer()"
+    (addDocument)="addDocument($event)">
 </app-generic-bourd>
+
 <form class="editCustomer"  id="editCustomer" [formGroup]="customerForm" (ngSubmit)="editCustomerSubmit()">
     <div class="form-group">
         <div class="form-group">
@@ -153,3 +156,5 @@
     </div>
     <button type="submit" class="btn btn-primary">לאישור</button>
 </form> 
+
+<div #popupContainer></div>

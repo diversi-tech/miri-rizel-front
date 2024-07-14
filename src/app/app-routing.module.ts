@@ -24,7 +24,7 @@ import { CustomerProfileComponent } from './Components/customer-profile/customer
 import { ListDocumentComponent } from './Components/documens/list-document/list-document.component';
 import { AuthGuard } from './Guard/auth.guard';
 const routes: Routes = [
-  { path: 'customer', component: CustomersComponent, canActivate: [AuthGuard], data: { roles: [3, 2, 1] } },
+  // { path: 'customer', component: CustomersComponent, canActivate: [AuthGuard], data: { roles: [3, 2, 1] } },
   { path: 'worker', component: WorkerComponentComponent, canActivate: [AuthGuard], data: { roles: [2, 1] } },
   { path: 'admin', component: AdminComponentComponent, canActivate: [AuthGuard], data: { roles: [1] } },
   { path: 'customer', component: CustomersComponent},
@@ -42,13 +42,16 @@ const routes: Routes = [
   { path: 'signUp', component: SignUpComponent },
   { path: 'home/:role', component: HomePageComponent },
   { path: 'customer-profile', component: CustomerProfileComponent },
-
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'add-task', component: AddTaskComponent },
   { path: 'add-task/:id', component: AddTaskComponent },
   { path: 'addLead', component: AddLeadComponent },
   { path: 'editLead', component: EditLeadComponent },
-  { path: 'document', component: DocumentComponent },
+  // { path: '', redirectTo: '/add-task', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  {path: 'addLead', component: AddLeadComponent},
+  {path: 'editLead', component: EditLeadComponent},
+  {path: 'documents', component: ListDocumentComponent},
 
   {
     path: 'leads',
