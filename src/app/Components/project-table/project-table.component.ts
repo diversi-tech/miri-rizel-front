@@ -71,7 +71,7 @@ export class ProjectTableComponent {
       (data: any) => {
         if (data == true) {
           Swal.fire({
-            text: "The project was successfully deleted",
+            text: "The task was successfully deleted",
             icon: "success",
             showCancelButton: false,
             showCloseButton: true,
@@ -85,18 +85,25 @@ export class ProjectTableComponent {
         }
       },
       (error: any) => {
-        console.error('Error fetching projects:', error);
+        console.error('Error fetching users:', error);
       }
     );
   }
 
+
+  loadP(): void {
+    this.ProjectService.getAll().subscribe(res => {
+      this.projects = res;
+      this.loading = false;
+    });
+  }
 
   filterData(objToFilter: any) {
     let taskFilter: Task[] = this.tasks.filter(u => u.project.projectId == objToFilter.projectId)
     console.log(taskFilter)
     if (taskFilter.length != 0) {
       let loading: boolean = true
-      let col$types = { 'title': 'text','dueDate': 'date', 'createdDate': 'date' }
+      let col$types = { 'title': 'text',  'dueDate': 'date', 'createdDate': 'date' }
       let positionD = [this.statuses]
       let objData = [this.projects]
       let objFields = ['name']
@@ -108,6 +115,7 @@ export class ProjectTableComponent {
   addProject() {
     this.componentType = AddProjectComponent;
     this.popUpAddOrEdit("Add project");
+     this.refreshData();
   }
   fetchTasks(projectId: string): void {
     if (projectId) {
@@ -136,11 +144,12 @@ export class ProjectTableComponent {
       showConfirmButton: false,
       didOpen: () => {
         const container = document.getElementById('popupContainer');
+        debugger
         if (container) {
           const factory = this.resolver.resolveComponentFactory(this.componentType);
           const componentRef = this.popupContainer.createComponent(factory);
           container.appendChild(componentRef.location.nativeElement);
-          this.refreshData();
+         
         }
       },
     });

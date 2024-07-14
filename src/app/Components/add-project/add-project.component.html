@@ -41,7 +41,7 @@
     <mat-error *ngIf="status!.invalid && (status!.touched || status!.dirty)">שדה חובה </mat-error>
   </div>
   <div class="card flex justify-content-center">
-    <p-dropdown formControlName="customer" formControlName="customerId" [options]="custom" optionLabel="firstName"
+    <p-dropdown formControlName="customer" formControlName="customer" [options]="custom" optionLabel="firstName"
       placeholder="בחר לקוח" />
     <!-- <mat-error *ngIf="status!.invalid && (status!.touched || status!.dirty)">שדה חובה </mat-error> -->
   </div>

@@ -62,7 +62,7 @@ export class AddProjectComponent implements OnInit {
       startDate: ['',[ Validators.required,this.futureDateValidator.bind(this)]],
       endDate: ['',[ Validators.required,this.futureDateValidator.bind(this)]],
       status: '',
-      customerId: ['', Validators.required],
+      customer: ['', Validators.required],
      createdDate:['', [Validators.required,this.futureDateValidator.bind(this)]]
     });
   
@@ -97,6 +97,7 @@ export class AddProjectComponent implements OnInit {
   get startDate() { return this.projectForm.get('startDate') }
   get endDate() { return this.projectForm.get('endDate') }
   get status() { return this.projectForm.get('status') }
+  get cucustomer(){ return this.projectForm.get('customer')}
   get createdDate(){ return this.projectForm.get('createdDate')}
   futureDateValidator(control: AbstractControl): ValidationErrors | null {
     const selectedDate = new Date(control.value);

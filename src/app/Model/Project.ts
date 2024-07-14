@@ -8,6 +8,6 @@ export interface Project {
   startDate?: Date;
   endDate?: Date;
   status?: string;
-  customer_id: Customer;
+  customer: Customer;
   createdDate?: Date;
 }

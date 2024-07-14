@@ -29,5 +29,8 @@ export class ProjectService {
 update(project:Project){
   return this.http.put("https://localhost:7141/Tasks/UpdateTask",project);
 }
+getProjectById(id:number): Observable<any> {
+  return this.http.get(`https://localhost:7141/projects/GetProjectById?id=${id}`);
+}
 }
 
