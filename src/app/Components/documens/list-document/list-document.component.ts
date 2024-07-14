@@ -2,11 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { DocumentService } from '@app/Services/document.service';
 import { ValidatorsService } from '@app/Services/validators.service';
 import Swal from 'sweetalert2';
+import { FormsModule } from '@angular/forms';
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-list-document',
-  templateUrl: './list-document.component.html',
-  styleUrls: ['./list-document.component.css']
+    selector: 'app-list-document',
+    templateUrl: './list-document.component.html',
+    styleUrls: ['./list-document.component.css'],
+    standalone: true,
+    imports: [NgIf, FormsModule, NgFor]
 })
 export class ListDocumentComponent implements OnInit {
   folders: any[] = []; // שינוי מ-files ל-folders

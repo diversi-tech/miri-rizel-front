@@ -2,11 +2,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/Model/User';
+import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-home-page',
-  templateUrl: './home-page.component.html',
-  styleUrls: ['./home-page.component.css']
+    selector: 'app-home-page',
+    templateUrl: './home-page.component.html',
+    styleUrls: ['./home-page.component.css'],
+    standalone: true,
+    imports: [NgIf]
 })
 export class HomePageComponent implements OnInit {
   isAdmin: boolean = false;

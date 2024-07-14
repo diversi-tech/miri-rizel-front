@@ -1,11 +1,23 @@
 import { Component, QueryList, ViewChildren } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { ResetPasswordService } from 'src/app/Services/reset-password.service';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
-  selector: 'app-auth-code-dialog',
-  templateUrl: './auth-code-dialog.component.html',
-  styleUrls: ['./auth-code-dialog.component.css'],
+    selector: 'app-auth-code-dialog',
+    templateUrl: './auth-code-dialog.component.html',
+    styleUrls: ['./auth-code-dialog.component.css'],
+    standalone: true,
+    imports: [
+        MatDialogModule,
+        MatInputModule,
+        FormsModule,
+        MatButtonModule,
+        TranslateModule,
+    ],
 })
 export class AuthCodeDialogComponent {
   code: string[] = ['', '', '', '', ''];

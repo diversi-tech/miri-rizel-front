@@ -8,8 +8,8 @@ describe('ExportToSheetComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ExportToSheetComponent]
-    });
+    imports: [ExportToSheetComponent]
+});
     fixture = TestBed.createComponent(ExportToSheetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

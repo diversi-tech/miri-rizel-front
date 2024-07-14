@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DocumentService } from '@app/Services/document.service';
 import { ValidatorsService } from '@app/Services/validators.service';
 import Swal from 'sweetalert2';
+import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-document',
-  templateUrl: './document.component.html',
-  styleUrls: ['./document.component.css']
+    selector: 'app-document',
+    templateUrl: './document.component.html',
+    styleUrls: ['./document.component.css'],
+    standalone: true,
+    imports: [FormsModule, ReactiveFormsModule, NgIf]
 })
 export class DocumentComponent implements OnInit {
   file!: File;

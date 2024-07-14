@@ -11,9 +11,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddLeadComponent } from '../add-lead/add-lead.component';
 
 @Component({
-  selector: 'app-list-leads',
-  templateUrl: './list-leads.component.html',
-  styleUrls: ['./list-leads.component.css']
+    selector: 'app-list-leads',
+    templateUrl: './list-leads.component.html',
+    styleUrls: ['./list-leads.component.css'],
+    standalone: true,
+    imports: [GenericBourdComponent]
 })
 export class ListLeadsComponent {
 

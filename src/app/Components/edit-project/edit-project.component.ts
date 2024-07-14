@@ -1,5 +1,5 @@
 import { Component, Output ,EventEmitter} from '@angular/core';
-import { FormBuilder,FormControl,FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Project } from 'src/app/Model/Project';
 import {ProjectService}from 'src/app/Services/project.service'
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,10 +13,14 @@ import { Data } from '@angular/router';
 import { Customer } from '@app/Model/Customer';
 import { CustomersService } from '@app/Services/customers.service';
 import { TaskService } from '@app/Services/task.service';
+import { DropdownModule } from 'primeng/dropdown';
+import { NgIf } from '@angular/common';
 @Component({
-  selector: 'app-edit-project',
-  templateUrl: './edit-project.component.html',
-  styleUrls: ['./edit-project.component.css']
+    selector: 'app-edit-project',
+    templateUrl: './edit-project.component.html',
+    styleUrls: ['./edit-project.component.css'],
+    standalone: true,
+    imports: [NgIf, FormsModule, ReactiveFormsModule, DropdownModule, MatButtonModule]
 })
 export class EditProjectComponent {
   @Output() dataRefreshed: EventEmitter<void> = new EventEmitter<void>();

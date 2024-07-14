@@ -8,8 +8,8 @@ describe('ProjectTableComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ProjectTableComponent]
-    });
+    imports: [ProjectTableComponent]
+});
     fixture = TestBed.createComponent(ProjectTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
