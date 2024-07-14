@@ -31,6 +31,7 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   @Output() edit = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
   @Output() dataUpdated = new EventEmitter<any>();
+  @Output() addDocument = new EventEmitter<any>();
   @Output() showAddComponent = new EventEmitter<any>();
   @ViewChild('popupContainer', { read: ViewContainerRef }) popupContainer!: ViewContainerRef;
   @ViewChild('dt') dt!: Table;
@@ -60,7 +61,9 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   onEdit(rowData: any) {
     this.edit.emit(rowData);
   }
-
+document(rowData: any){
+  this.addDocument.emit(rowData);
+}
   onDelete(rowData: any) {
 
     Swal.fire({
@@ -113,6 +116,12 @@ export class GenericBourdComponent implements OnInit, OnChanges {
       header: '',
       sortable: false,
       filterType: 'delete'
+    });
+    this.columns.push({
+      field: 'document',
+      header: '',
+      sortable: false,
+      filterType: 'document'
     });
     if (this.globalFilterFields.length == 0 || !this.globalFilterFields) {
       this.columns.forEach(c => this.globalFilterFields.push(c.field))
