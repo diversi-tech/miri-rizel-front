@@ -21,6 +21,7 @@ export class AddProjectComponent implements OnInit {
   statuses: StatusCodeProject[] = [];
   date: Date = new Date();
   projectForm: FormGroup = new FormGroup({});
+  titlePage: string = "AddProjectTitle"
   custom: Customer[] = [];
   constructor(
     private fb: FormBuilder,

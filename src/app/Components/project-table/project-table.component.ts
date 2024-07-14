@@ -139,7 +139,6 @@ export class ProjectTableComponent {
   }
   popUpAddOrEdit(title: string) {
     Swal.fire({
-      title: title,
       html: '<div id="popupContainer"></div>',
       showConfirmButton: false,
       didOpen: () => {

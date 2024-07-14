@@ -40,7 +40,7 @@
     "menu":"Menu",
     "Any":"Any",
     "logIn":"Log In",
-    "signUp":"Register",
+    "signUp":"Sign up",
     "RequiredField":"Required field",
     "EmailInputLabel":"Enter email",
     "PasswordInputLabel":"Enter password",
@@ -83,5 +83,13 @@
     "VerifyAccountLabel":"Enter the verification code sent to you by email",
     "AddTaskToGoogle":"Would you like to add the task to google calendar?",
     "TaskNotAddToGoogle":"The task has not been added to Google Calendar",
-    "GoogleTaskSuccess":"The task has been added"
+    "GoogleTaskSuccess":"The task has been added",
+    "AddProjectTitle":"add a project",
+    "startDateInputLabel":"Enter start Date ",
+    "endDateInputLabel":"Enter end Date",
+    "castomerInputSelect":"Select castomer",
+    "AddLeadTitle":"Add Lead",
+    "OrContinueWith":"Or continue with"
+
+
 }
