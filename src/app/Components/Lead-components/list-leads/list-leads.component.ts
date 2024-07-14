@@ -9,6 +9,7 @@ import { EditLeadComponent } from '../edit-lead/edit-lead.component';
 import { DialogComponent } from '@app/Components/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AddLeadComponent } from '../add-lead/add-lead.component';
+import { ChatComponent } from '@app/Components/chat/chat.component';
 
 @Component({
   selector: 'app-list-leads',
@@ -37,7 +38,7 @@ export class ListLeadsComponent {
   }
 
   onEditLead(Lead: Lead) {
-    this.componentType = EditLeadComponent;
+    this.componentType = ChatComponent;
     this.popUpAddOrEdit("Edit Lead", Lead.leadId);
   }
 

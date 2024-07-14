@@ -29,6 +29,7 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   @Input() col$types: any = {};
   @Input() popTable!: boolean;
   @Output() edit = new EventEmitter<any>();
+  @Output() propil = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
   @Output() dataUpdated = new EventEmitter<any>();
   @Output() showAddComponent = new EventEmitter<any>();
@@ -59,6 +60,10 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   }
   onEdit(rowData: any) {
     this.edit.emit(rowData);
+  }
+
+  onPropil(rowData: any) {
+    this.propil.emit(rowData);
   }
 
   onDelete(rowData: any) {
@@ -104,13 +109,19 @@ export class GenericBourdComponent implements OnInit, OnChanges {
       });
     this.columns.push({
       field: 'edit',
-      header: '',
+      header: 'Edit',
       sortable: false,
       filterType: 'edit'
     });
     this.columns.push({
+      field: 'propil',
+      header: 'Propil',
+      sortable: false,
+      filterType: 'propil'
+    });
+    this.columns.push({
       field: 'delete',
-      header: '',
+      header: 'Delete',
       sortable: false,
       filterType: 'delete'
     });
@@ -235,7 +246,6 @@ export class GenericBourdComponent implements OnInit, OnChanges {
     });
   }
   openAddComponent() {
-    debugger
     this.showAddComponent.emit();
   };
 }

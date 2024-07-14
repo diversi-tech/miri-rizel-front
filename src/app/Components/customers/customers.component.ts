@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { StatusCodeUser } from '@app/Model/StatusCodeUser';
 import { Customer } from 'src/app/Model/Customers';
 import { CustomersService } from 'src/app/Services/customers.service';
 import { ValidatorsService } from 'src/app/Services/validators.service';
+import { Router } from '@angular/router';
+import { ChatComponent } from '../chat/chat.component';
+import { Lead } from '@app/Model/Lead';
 
 @Component({
   selector: 'app-customers',
@@ -26,8 +29,9 @@ export class CustomersComponent implements OnInit {
   status: any;
   private originalParent: HTMLElement | null = null;
   newCustomer!: Customer;
+  @ViewChild('popupContainer', { read: ViewContainerRef }) popupContainer!: ViewContainerRef;
 
-  constructor(private formBuilder: FormBuilder, private customerService: CustomersService, private validatorsService: ValidatorsService) { }
+  constructor(private resolver: ComponentFactoryResolver,private router: Router,private formBuilder: FormBuilder, private customerService: CustomersService, private validatorsService: ValidatorsService) { }
 
   ngOnInit(): void {
     this.customerForm = this.formBuilder.group({
@@ -89,7 +93,6 @@ export class CustomersComponent implements OnInit {
     }
   }
   addCustomer() {
-    console.log("sd");
     this.openEditCustomerPopup("הוספת לקוח", "addCustomer");
   }
   addCustomerSubmit() {
@@ -160,4 +163,47 @@ export class CustomersComponent implements OnInit {
     };
   }
 
+  propil(customer: Customer) {
+    this.componentType = ChatComponent;
+    this.popUpAddOrEdit(`Communication ${customer.firstName}`, customer);
+  }
+  popupOpen = false;
+  componentType!: Type<any>;
+
+  popUpAddOrEdit(title: string, l: Customer) {
+    // this.flag = false;
+    this.popupOpen = true; // Set popupOpen to true when the pop-up is opened
+    Swal.fire({
+        title: title,
+        html: '<div id="popupContainer"></div>',
+        showConfirmButton: false,
+        didOpen: () => {
+            const container = document.getElementById('popupContainer');
+            if (container) {
+                const factory = this.resolver.resolveComponentFactory(this.componentType);
+                const componentRef = this.popupContainer.createComponent(factory);
+                if (l != null && l != undefined)
+                    componentRef.instance.setData(l);
+                container.appendChild(componentRef.location.nativeElement);
+            }
+        },
+        didClose: () => {
+            this.popupOpen = false; // Set popupOpen to false when the pop-up is closed
+        }
+    });
+    this.logNumbersWhilePopupOpen();
+  }
+  
+  logNumbersWhilePopupOpen() {
+    let counter = 0;
+    const interval = setInterval(() => {
+        if (this.popupOpen) {
+            counter++;
+        } else {
+            clearInterval(interval); // Stop logging numbers when the pop-up is closed
+            // this.custService.GetCustomerById(this.cus.customerId).subscribe(res=>{this.cus=res,this.flag=true})
+        }
+    }, 1000); // Log every second
+  }
+  
 }

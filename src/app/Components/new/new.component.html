@@ -1,0 +1,8 @@
+<div class="new-message-form-container" [formGroup]="newMessageForm">
+    <h2>Related Id</h2>
+    <input type="number" formControlName="relatedId" placeholder="to..." class="message-input">
+    <h2>New Message</h2>
+    <input type="text" formControlName="details" placeholder="Type your message..." class="message-input">
+    <button type="submit" class="send-button" (click)="sendMessage()">Send</button>
+</div>
+  

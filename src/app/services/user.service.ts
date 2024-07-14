@@ -12,7 +12,7 @@ export class UserService {
   private apiUrl = 'https://localhost:7141/User';
 
   getAll(): Observable<any> {
-    return this.http.get(`${this.apiUrl}`);
+    return this.http.get(`${this.apiUrl}/ReadAll`);
  
   }
 

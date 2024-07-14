@@ -7,12 +7,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class LeadService {
-  private apiUrl = 'https://localhost:7141/Lead/ReadAll';
+  private apiUrl = 'https://localhost:7141/Lead';
 
   constructor(private http: HttpClient) { }
 
   GetLeadById(id: Number): Observable<Lead> {
-    const url = `https://localhost:7141/Lead/GetById?id=${id}`;
+    const url = `${this.apiUrl}/GetById?id=${id}`;
     return this.http.get<Lead>(url); // Specify the type of data as Lead
   }
 

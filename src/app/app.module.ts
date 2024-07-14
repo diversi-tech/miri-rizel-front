@@ -142,6 +142,10 @@ import { EditProjectComponent } from './Components/edit-project/edit-project.com
 
 import { DocumentComponent } from './Components/documens/document/document.component';
 import { ListDocumentComponent } from './Components/documens/list-document/list-document.component';
+import { ChatComponent } from '../app/Components/chat/chat.component';
+import { PropilComponent } from './Components/propil/propil.component';
+import { PropilListComponent } from './Components/propil-list/propil-list.component';
+import { NewComponent } from './Components/new/new.component';
 
 @NgModule({
   declarations: [
@@ -173,6 +177,10 @@ import { ListDocumentComponent } from './Components/documens/list-document/list-
     // DocumentComponent,
     DocumentComponent,
     ListDocumentComponent,
+    ChatComponent,
+    PropilComponent,
+    PropilListComponent,
+    NewComponent,
   ],
    
     

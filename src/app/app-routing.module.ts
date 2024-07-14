@@ -22,6 +22,8 @@ import { EditLeadComponent } from './Components/Lead-components/edit-lead/edit-l
 import { DocumentComponent } from './Components/documens/document/document.component';
 import { TaskBoardComponent } from './Components/task-board/task-board.component';
 import { ListDocumentComponent } from './Components/documens/list-document/list-document.component';
+import { PropilComponent } from './Components/propil/propil.component';
+import { PropilListComponent } from './Components/propil-list/propil-list.component';
 const routes: Routes = [
   { path: 'worker', component: WorkerComponentComponent },
   { path: 'admin', component: AdminComponentComponent },
@@ -32,13 +34,12 @@ const routes: Routes = [
   { path: 'add', component: AddUserComponent },
   { path: 'sign-up', component: SignUpComponent },
   { path: 'task-board', component: TaskBoardComponent },
-  { path: 'add-task', component: AddTaskComponent },
   { path: 'addProject', component: AddProjectComponent },
   { path: 'add-task/:id', component: AddTaskComponent },
   { path: 'projectTable', component: ProjectTableComponent },
   { path: 'signUp', component:SignUpComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  // { path: 'document', component: DocumentComponent },
+  { path: 'document', component: DocumentComponent },
   // { path: 'task-board', component: TaskBoardComponent },
   { path: 'add-task', component: AddTaskComponent },
   { path: 'add-task/:id', component: AddTaskComponent },
@@ -46,21 +47,21 @@ const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   {path: 'addLead', component: AddLeadComponent},
   {path: 'editLead', component: EditLeadComponent},
-  {path: 'document', component: DocumentComponent},
-  // {path: 'documents', component: ListDocumentComponent},
+  {path: 'leads', component: ListLeadsComponent},
+  {path: 'propil', component: PropilListComponent},
 
   {
     path: 'leads',
     component: ListLeadsComponent,
     children: [{ path: '', component: LeadComponent }],
   },
-  // { path: 'leads', component: ListLeadsComponent },
+  { path: 'leads', component: ListLeadsComponent },
     // { path: 'leads', component: ListLeadsComponent },
 
   { path: 'task', component: TaskBoardComponent },
   // { path: '', redirectTo: '/task', pathMatch: 'full' },
   { path: '', component: LoginComponent },
-  // { path: 'task', component: TaskBoardComponent },
+  { path: 'task', component: TaskBoardComponent },
   // { path: '', redirectTo: '/task', pathMatch: 'full' },
   { path: '', component: LoginComponent },
   { path: 'task', component: TaskBoardComponent },

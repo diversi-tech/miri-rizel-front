@@ -10,27 +10,28 @@ import { StatusCodeUser } from '@app/Model/StatusCodeUser';
 export class CustomersService {
 
   constructor(private http:HttpClient) { }
+
+   apiUrl="https://localhost:7141/Customer"
+
   GetAllCustomers(): Observable<Customer[]> {
-    return this.http.get<Customer[]>("https://localhost:7141/Customer");
+    return this.http.get<Customer[]>(`${this.apiUrl}`);
   }
-  GetCustomerById(customerId:number): Observable<Customer> {
-    return this.http.get<Customer>(`https://localhost:7141/Customer/getCustomerById/?custometId=${customerId}` );
+  GetCustomerById(customerId:Number): Observable<Customer> {
+    return this.http.get<Customer>(`${this.apiUrl}/GetById?custometId=${customerId}`);
   }
   AddNewCustomer(newCustomer:any):Observable<Customer>{
-    return this.http.post<Customer>(`https://localhost:7141/Customer/addNewCustomer/`,newCustomer);
+    return this.http.post<Customer>(`${this.apiUrl}`,newCustomer);
   } 
   EditCustomer(editCustomer:Customer):Observable<boolean>{
-   
-  
-    editCustomer.status=editCustomer.status as StatusCodeUser;    
-    return this.http.put<boolean>(`https://localhost:7141/Customer/editCustomer/`,editCustomer);
+    editCustomer.status=editCustomer.status as StatusCodeUser; 
+    return this.http.put<boolean>(`${this.apiUrl}`,editCustomer);
   } 
   
   DeleteCustomer(customerId:number):Observable<boolean>{
     
-    return this.http.delete<boolean>(`https://localhost:7141/Customer/DeleteCustomer?customerId=${customerId}` );
+    return this.http.delete<boolean>(`${this.apiUrl}?customerId=${customerId}` );
   } 
   GetAllStatusUser():Observable<StatusCodeUser[]>{
-    return this.http.get<StatusCodeUser[]>("https://localhost:7141/Customer/GetAllStatus");
+    return this.http.get<StatusCodeUser[]>(`${this.apiUrl}/GetAllStatus`);
   }
 }

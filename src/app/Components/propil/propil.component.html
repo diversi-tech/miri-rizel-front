@@ -1,0 +1,28 @@
+<div class="mini-chat-container">
+    <div class="chat-message">
+      <div class="message-header">
+        <span class="message-date">{{ communication.date | date: 'short' }}</span>
+      </div>
+      <div class="message-body">
+        <h3>{{ communication.details }}</h3>
+        <h3>costomerId : {{ communication.relatedId }}</h3>
+      </div>
+    </div>
+  
+    <div class="responses">
+      <div *ngFor="let response of responses" class="response-message">
+        <div class="message-header">
+          <span class="message-date">{{ response.date | date: 'short' }}</span>
+        </div>
+        <div class="message-body">
+          <p>{{ response.details }}</p>
+        </div>
+      </div>
+    </div>
+  
+    <div class="response-input-container" [formGroup]="responseForm">
+      <input type="text" formControlName="details" placeholder="Type your response..." class="response-input">
+      <button type="submit" class="send-button" (click)="sendResponse()">Send</button>
+    </div>
+  </div>
+  

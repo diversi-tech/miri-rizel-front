@@ -9,6 +9,7 @@ export interface Representative {
 }
 
 export interface Customer {
+    [x: string]: any;
     id?: number;
     firstName?: string;
     country?: Country;

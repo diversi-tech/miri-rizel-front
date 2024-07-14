@@ -1,7 +1,8 @@
 <app-generic-bourd [data]="customers" [loading]="loading"
     [col$types]="{'firstName':'text','lastName':'text','email':'text','phone':'text','businessName':'text','source':'text','status':'position','createdDate':'date'}"
     [positionData]="[status]" 
-    (edit)="editCustomer($event)" 
+    (edit)="editCustomer($event)"
+    (propil)="propil($event)"  
     (delete)="deleteCustomer($event)"
     (showAddComponent)="addCustomer()">
 </app-generic-bourd>
@@ -153,3 +154,4 @@
     </div>
     <button type="submit" class="btn btn-primary">לאישור</button>
 </form> 
+<div #popupContainer></div>

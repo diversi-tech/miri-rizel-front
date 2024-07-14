@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Customer } from '@app/Model/Customers';
 import { Project } from '@app/Model/Project';
 import { Observable } from 'rxjs';
 
@@ -21,5 +22,9 @@ export class ProjectService {
    }
    deleteProject(id: Number): Observable<any> {
     return this.http.delete(`${this.apiUrl}?id=${id}`);
+  }
+
+  getByIdOfCustomer(id:Number): Observable<Customer[]> {
+    return this.http.get<Customer[]>(`${this.apiUrl}/GetById?id=${id}`);
   }
 }

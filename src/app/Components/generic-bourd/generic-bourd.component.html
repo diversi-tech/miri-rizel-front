@@ -71,6 +71,8 @@
                         [severity]="getSeverity(rowData[col.field].description)"></p-tag>
                     <button pButton type="button" class="p-button-secondary" icon="pi pi-pencil"
                         *ngIf="getTypeOfCol(col, rowIndex) == 'edit'" (click)="onEdit(rowData)"></button>
+                        <button pButton type="button" class="p-button-info" icon="pi pi-external-link" 
+                *ngIf="getTypeOfCol(col,rowIndex)=='propil'"(click)="onPropil(rowData)"></button>
                     <button pButton type="button" class="p-button-danger" icon="pi pi-trash"
                         *ngIf="getTypeOfCol(col, rowIndex) == 'delete'" (click)="onDelete(rowData)"></button>
                     <button pButton type="button" class="p-button-Help" icon="pi pi-angle-down"
