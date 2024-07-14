@@ -1,16 +1,20 @@
 import { Component, ComponentFactoryResolver, EventEmitter, OnInit, Output, Type, ViewChild, ViewContainerRef } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { StatusCodeUser } from '@app/Model/StatusCodeUser';
 import { Customer } from 'src/app/Model/Customer';
 import { CustomersService } from 'src/app/Services/customers.service';
 import { ValidatorsService } from 'src/app/Services/validators.service';
 import { DocumentComponent } from '../documens/document/document.component';
+import { NgIf, NgFor } from '@angular/common';
+import { GenericBourdComponent } from '../generic-bourd/generic-bourd.component';
 
 @Component({
-  selector: 'app-customers',
-  templateUrl: './customers.component.html',
-  styleUrls: ['./customers.component.css']
+    selector: 'app-customers',
+    templateUrl: './customers.component.html',
+    styleUrls: ['./customers.component.css'],
+    standalone: true,
+    imports: [GenericBourdComponent, FormsModule, ReactiveFormsModule, NgIf, NgFor]
 })
 export class CustomersComponent implements OnInit {
   editCustomerFlag: boolean = false;

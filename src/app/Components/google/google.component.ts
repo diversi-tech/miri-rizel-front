@@ -9,11 +9,14 @@ declare global {
 }
 import { UserService } from '@app/Services/user.service';
 import { DialogComponent } from '../dialog/dialog.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-google',
-  templateUrl: './google.component.html',
-  styleUrls: ['./google.component.css']
+    selector: 'app-google',
+    templateUrl: './google.component.html',
+    styleUrls: ['./google.component.css'],
+    standalone: true,
+    imports: [TranslateModule]
 })
 
 @Injectable()

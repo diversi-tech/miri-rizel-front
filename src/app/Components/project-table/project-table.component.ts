@@ -14,9 +14,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Priority } from '@app/Model/Priority';
 import { TaskBoardComponent } from '../task-board/task-board.component';
 @Component({
-  selector: 'app-project-table',
-  templateUrl: './project-table.component.html',
-  styleUrls: ['./project-table.component.css']
+    selector: 'app-project-table',
+    templateUrl: './project-table.component.html',
+    styleUrls: ['./project-table.component.css'],
+    standalone: true,
+    imports: [GenericBourdComponent]
 })
 export class ProjectTableComponent {
   projects: Project[] = [];

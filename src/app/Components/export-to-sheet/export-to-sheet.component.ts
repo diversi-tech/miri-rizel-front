@@ -1,11 +1,16 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { SheetsApiService } from '@app/Services/sheets-api.service';
 import Swal from 'sweetalert2';
+import { MatButtonModule } from '@angular/material/button';
+import { NgIf, NgFor } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-export-to-sheet',
-  templateUrl: './export-to-sheet.component.html',
-  styleUrls: ['./export-to-sheet.component.css']
+    selector: 'app-export-to-sheet',
+    templateUrl: './export-to-sheet.component.html',
+    styleUrls: ['./export-to-sheet.component.css'],
+    standalone: true,
+    imports: [FormsModule, NgIf, NgFor, MatButtonModule]
 })
 export class ExportToSheetComponent {
   formValues: any = {
