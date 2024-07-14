@@ -13,4 +13,5 @@ export interface Task {
   assignedTo?: User
   project?: Project;
   createdDate?: Date;
+  googleId?: string;
 }

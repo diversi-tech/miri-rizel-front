@@ -2,7 +2,7 @@ import { Component, ComponentFactoryResolver, EventEmitter, OnInit, Output, Type
 import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { StatusCodeUser } from '@app/Model/StatusCodeUser';
-import { Customer } from 'src/app/Model/Customers';
+import { Customer } from 'src/app/Model/Customer';
 import { CustomersService } from 'src/app/Services/customers.service';
 import { ValidatorsService } from 'src/app/Services/validators.service';
 import { DocumentComponent } from '../documens/document/document.component';
@@ -49,7 +49,7 @@ export class CustomersComponent implements OnInit {
       status: ['', [Validators.required]],
       createdDate: ['', [Validators.required]],
     });
-
+alert('fv')
     this.loadCustomers();
     this.loadStatusUsers();
   }
@@ -137,7 +137,9 @@ export class CustomersComponent implements OnInit {
       this.submitted = false;
 
     });
-  }
+
+
+}
 
   deleteCustomer(customer: Customer) {
     this.customerService.DeleteCustomer(customer.customerId).subscribe(() => {

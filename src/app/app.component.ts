@@ -9,5 +9,6 @@ import { RouterOutlet } from '@angular/router';
     imports: [RouterOutlet]
 })
 export class AppComponent {
+  value:any
   title = 'copyRight';
 }

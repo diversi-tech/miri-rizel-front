@@ -3,12 +3,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Task } from '../Model/Task';
 import {  catchError, of, switchMap, throwError } from 'rxjs';
+import { environment } from 'src/enviroments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskService {
-  private apiUrl = 'https://localhost:7141/task/';
+  
+  private apiUrl = `${environment.apiUrl}task/`
 
   constructor(private http: HttpClient) { }
 
@@ -23,6 +25,10 @@ export class TaskService {
 
   updateTask(task: Task): Observable<any> {
     return this.http.put<boolean>(`${this.apiUrl}`, task)
+  }
+
+  updateGoogleId(taskId: number,googleId:string): Observable<any> {
+    return this.http.put<boolean>(`${this.apiUrl}googleCalendar`, {taskId,googleId})
   }
 
   getAllStatus(): Observable<any> {
