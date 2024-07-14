@@ -20,6 +20,7 @@ export class AddProjectComponent implements OnInit {
 
   statuses: StatusCodeProject[] = [];
   projectForm: FormGroup = new FormGroup({});
+  titlePage: string = "AddProjectTitle"
   custom: Customer[] = [];
   constructor(
     private fb: FormBuilder,
