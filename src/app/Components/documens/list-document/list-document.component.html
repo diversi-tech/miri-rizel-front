@@ -1,14 +1,23 @@
-<div class="file-list">
-  <h3 class="document-file">רשימת קבצים בדרייב</h3>
-  <div class="file-grid">
-    <div *ngFor="let file of files" class="file-item">
-      <img 
-        [src]="file.thumbnailLink || 'assets/default-thumbnail.png'" 
-        alt="{{ file.name }}" 
-        class="thumbnail"
-        (click)="openImagePopup(file.thumbnailLink || 'assets/default-thumbnail.png', file.webViewLink)"
+<div class="folder-list">
+  <h3 class="document-folder">רשימת תיקיות בדרייב</h3>
+
+  <!-- שדה סינון תיקיות עם אייקון חיפוש -->
+  <div class="folder-filter">
+    <div class="input-wrapper">
+      <i *ngIf="!searchQuery" class="pi pi-search search-icon"></i>
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        (ngModelChange)="filterFolders()"
+        placeholder="           ...חפש תקייה לפי שם"
       />
-      <div>{{ file.name }}</div>
+    </div>
+  </div>
+  
+  <div class="folder-grid">
+    <div *ngFor="let folder of filteredFolders" class="folder-item" (click)="viewFolderContents(folder.id)">
+      <i class="pi pi-folder folder-icon"></i>
+      <div class="folder-name">{{ folder.name }}</div>
     </div>
   </div>
 </div>
