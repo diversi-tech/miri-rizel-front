@@ -7,6 +7,7 @@
         <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="spreadSheetsFromTableData(this.data)" class="p-button-success mr-2" [pTooltip]="'XslToolLip' | translate" tooltipPosition="bottom" id="spreadSheetBtn"></button>
     </ng-template>
 </p-toolbar>
+<div class="container">
 
 <p-table #dt [value]="data" [loading]="loading" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10, 25, 50]"
     [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
@@ -127,3 +128,4 @@
     </ng-template>
 </p-table>
 <div #popupContainer></div>
+</div>

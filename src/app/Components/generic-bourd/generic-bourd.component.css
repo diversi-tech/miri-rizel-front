@@ -1,3 +1,8 @@
+.container{
+    margin: 30px;
+    border: 1px solid rgba(208, 204, 204, 0.875);
+    border-radius: 5px;
+}
 button {
     background-color: #51f9a3; /* Darker mint green */
     border: none;
@@ -117,4 +122,7 @@ p-table tbody tr:hover {
     background-color: #696969; /* Blue */
     border: none;
     color: #fff;
+}
+p-toolbar{
+background-color: #ffffff;
 }
