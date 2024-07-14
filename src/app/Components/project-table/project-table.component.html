@@ -1,10 +1,9 @@
-<p>project-table works!</p>
 <app-generic-bourd 
 [data]="projects" 
 [loading]="loading"
-[globalFilterFields]="['name','createdDate', 'status']"
-[col$types]="{'name':'text','description':'text','status':'position','startDate':'date','endDate':'date','customerId':'obj','createdDate':'date'}"
-[positionData]="['status']"
+[globalFilterFields]="['name','createdDate', 'status.description','description']"
+[col$types]="{'name':'text','description':'text','status':'position','startDate':'date','endDate':'date','customer':'obj','createdDate':'date'}"
+[positionData]="[statuses]"
 [objData]="[customers]"
 [objFields]="['firstName']"
 [popTable]="true"
