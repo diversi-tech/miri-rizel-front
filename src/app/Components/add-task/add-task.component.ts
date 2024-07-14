@@ -12,6 +12,7 @@ import { Priority } from 'src/app/Model/Priority';
 import Swal from 'sweetalert2';
 import { Location } from '@angular/common';
 import { GoogleAuthService } from '@app/Services/google-auth.service';
+import { TranslateService } from '@ngx-translate/core';
 interface AutoCompleteCompleteEvent {
   originalEvent: Event;
   query: string;
@@ -29,12 +30,12 @@ export class AddTaskComponent implements OnInit {
       this.data = data;
       this.isEdit = true;
       this.loadTask(data);
-      this.titlePage = "עריכת משימה"
+      this.titlePage = "EditTaskTitle"
     }
   }
   taskForm: FormGroup = new FormGroup({});
   newTask: Task = {};
-  titlePage: string = "הוספת משימה"
+  titlePage: string = "AddTaskTitle"
   isEdit: boolean = false;
   users: User[] = [];
   projects: Project[] = [];
@@ -52,11 +53,14 @@ export class AddTaskComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private location: Location,
-    private GoogleAuthService: GoogleAuthService
+    private GoogleAuthService: GoogleAuthService,
+    private translate: TranslateService
   ) { }
   ngOnInit(): void {
     this.taskForm = this.fb.group({
       taskId: [''],
+      createdDate: [''],
+      googleId: [''],
       title: ['', Validators.required],
       description: [''],
       status: ['', Validators.required],
@@ -104,7 +108,7 @@ export class AddTaskComponent implements OnInit {
       if (taskId) {
         this.isEdit = true;
         this.loadTask(taskId);
-        this.titlePage = "עריכת משימה"
+        this.titlePage = "EditTaskTitle"
       }
     });
   }
@@ -136,6 +140,8 @@ export class AddTaskComponent implements OnInit {
       (task: any) => {
         this.taskForm.patchValue({
           taskId: task.taskId,
+          googleId: task.googleId,
+          createdDate: task.createdDate,
           title: task.title,
           description: task.description,
           status: task.status,
@@ -155,7 +161,7 @@ export class AddTaskComponent implements OnInit {
     return user ? `${user.firstName} ${user.lastName}` : '';
   }
   filterUserAuto(event: AutoCompleteCompleteEvent) {
-    this.userExistError=false
+    this.userExistError = false
     let filtered: any[] = [];
     let query = event.query;
     for (let i = 0; i < (this.users as any[]).length; i++) {
@@ -168,14 +174,14 @@ export class AddTaskComponent implements OnInit {
     this.filteredUsers = filtered;
   }
   onUserSelected(event: any): void {
-    this.userExistError=false
+    this.userExistError = false
     const selectedUser = event.value;
     this.taskForm.patchValue({
       assignedTo: selectedUser
     });
   }
   filterProjectAuto(event: AutoCompleteCompleteEvent) {
-    this.projectExistError=false
+    this.projectExistError = false
     let filtered: any[] = [];
     let query = event.query;
     for (let i = 0; i < (this.projects as any[]).length; i++) {
@@ -187,7 +193,7 @@ export class AddTaskComponent implements OnInit {
     this.filteredProjects = filtered;
   }
   onProjectSelected(event: any): void {
-    this.projectExistError=false;
+    this.projectExistError = false;
     const selectedProject = event.value;
     this.taskForm.patchValue({
       project: selectedProject
@@ -216,32 +222,36 @@ export class AddTaskComponent implements OnInit {
             if (response) {
               this.dataRefreshed.emit();
               Swal.close()
-              Swal.fire({
-                title: "!המשימה נוספה בהצלחה",
-                text: " האם תרצה להוסיף את המשימה ל-Google Tasks?",
-                showDenyButton: true,
-                showCancelButton: true,
-                confirmButtonText: "שמור",
-                denyButtonText: `אל תשמור`
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  this.scheduleMeeting()
-                } else if (result.isDenied) {
-                  Swal.fire("Google Tasks המשימה לא נוספה ל", "", "info");
-                }
-              });
-              this.location.go(this.location.path());
-              this.router.navigate(['/task-board']);
+              this.translate.get(['add', 'DontAdd', 'TaskAddSuccess', 'AddTaskToGoogle', 'TaskNotAddToGoogle']).subscribe(translations => {
+                Swal.fire({
+                  title: translations['TaskAddSuccess'],
+                  text: translations['AddTaskToGoogle'],
+                  showDenyButton: true,
+                  showCancelButton: true,
+                  confirmButtonText: translations['add'],
+                  denyButtonText: translations['DontAdd']
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    this.scheduleMeeting(response.taskId)
+                  } else if (result.isDenied) {
+                    Swal.fire(translations['TaskNotAddToGoogle'], "", "info");
+                  }
+                });
+                this.location.go(this.location.path());
+                this.router.navigate(['/task-board']);
+              })
             }
           },
           (error) => {
-            Swal.fire({
-              text: "התרחשה בעיה מהצד שלנו",
-              icon: "error",
-              showCancelButton: false,
-              showCloseButton: true,
-              confirmButtonColor: "#d33",
-              confirmButtonText: "סגור"
+            this.translate.get(['Close', 'ProblemMessage']).subscribe(translations => {
+              Swal.fire({
+                text: translations['ProblemMessage'],
+                icon: "error",
+                showCancelButton: false,
+                showCloseButton: true,
+                confirmButtonColor: "#d33",
+                confirmButtonText: translations['Close']
+              })
             })
           }
         );
@@ -251,32 +261,38 @@ export class AddTaskComponent implements OnInit {
           (response) => {
             this.dataRefreshed.emit();
             Swal.close()
-            Swal.fire({
-              text: "המשימה עודכנה בהצלחה",
-              icon: "success",
-              showCancelButton: false,
-              showCloseButton: true,
-              confirmButtonColor: "#3085D6",
-              confirmButtonText: "Close"
-            }).then((res) => {
-              this.location.go(this.location.path());
-            });
+            this.translate.get(['Close', 'TaskUpdateSuccess']).subscribe(translations => {
+              Swal.fire({
+                text: translations['TaskUpdateSuccess'],
+                icon: "success",
+                showCancelButton: false,
+                showCloseButton: true,
+                confirmButtonColor: "#3085D6",
+                confirmButtonText: translations['Close']
+              }).then((res) => {
+                if (this.taskForm.value.googleId)
+                  this.scheduleMeeting(this.taskForm.value.googleId)
+                this.location.go(this.location.path());
+              });
+            })
           },
           (error) => {
-            Swal.fire({
-              text: "התרחשה בעיה מהצד שלנו",
-              icon: "error",
-              showCancelButton: false,
-              showCloseButton: true,
-              confirmButtonColor: "#d33",
-              confirmButtonText: "סגור"
+            this.translate.get(['Close', 'ProblemMessage']).subscribe(translations => {
+              Swal.fire({
+                text: translations['ProblemMessage'],
+                icon: "error",
+                showCancelButton: false,
+                showCloseButton: true,
+                confirmButtonColor: "#d33",
+                confirmButtonText: translations['Close']
+              })
             })
           }
         );
       }
     }
   }
-  scheduleMeeting() {
+  scheduleMeeting(data: any) {
     let appointmentTime = new Date(this.taskForm.value.dueDate);
     const startTime = appointmentTime.toISOString().slice(0, 18) + '-07:00';
     const eventDetails = {
@@ -286,6 +302,11 @@ export class AddTaskComponent implements OnInit {
       description: this.taskForm.value.description
     };
     console.info(eventDetails);
-    this.GoogleAuthService.createGoogleEvent(eventDetails)
+    if (this.isEdit)
+      // שליחת הקוד אירוע
+      this.GoogleAuthService.updateGoogleEvent(eventDetails, data)
+    else
+      // שליחת הקוד משימה
+      this.GoogleAuthService.createGoogleEvent(eventDetails, data)
   }
 }

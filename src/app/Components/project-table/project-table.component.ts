@@ -136,7 +136,6 @@ export class ProjectTableComponent {
       showConfirmButton: false,
       didOpen: () => {
         const container = document.getElementById('popupContainer');
-        debugger
         if (container) {
           const factory = this.resolver.resolveComponentFactory(this.componentType);
           const componentRef = this.popupContainer.createComponent(factory);

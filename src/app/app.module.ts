@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -13,12 +13,8 @@ import { DialogComponent } from './Components/dialog/dialog.component';
 import { AuthCodeDialogComponent } from './Components/auth-code-dialog/auth-code-dialog.component';
 import { LoginComponent } from './Components/login/login.component';
 import { EditUserComponent } from './Components/edit-user/edit-user.component';
-import { NgxGoogleSignInModule } from 'ngx-google-sign-in';
 import { GoogleComponent } from './Components/google/google.component';
-import {
-  SocialLoginModule,
-  SocialAuthServiceConfig,
-} from '@abacritt/angularx-social-login';
+import { SocialLoginModule,SocialAuthServiceConfig,} from '@abacritt/angularx-social-login';
 import { SignUpComponent } from './Components/sign-up/sign-up.component';
 import { LeadComponent } from './Components/Lead-components/lead/lead.component';
 import { ListLeadsComponent } from './Components/Lead-components/list-leads/list-leads.component';
@@ -128,7 +124,6 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { CustomersComponent } from './Components/customers/customers.component';
 import { FormCustomerComponent } from './Components/form-customer/form-customer.component';
 import { ButtonModule } from 'primeng/button';
-import { Component } from '@angular/core';
 import { CalendarModule } from 'primeng/calendar';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
@@ -136,13 +131,22 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ProjectTableComponent } from './Components/project-table/project-table.component';
 import { AddProjectComponent } from './Components/add-project/add-project.component';
 import { EditProjectComponent } from './Components/edit-project/edit-project.component';
-
-
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DocumentComponent } from './Components/documens/document/document.component';
 import { ListDocumentComponent } from './Components/documens/list-document/list-document.component';
 import { HomePageComponent } from './Components/home-page/home-page.component';
 import { CustomerProfileComponent } from './Components/customer-profile/customer-profile.component';
+import { ExportToSheetComponent } from './Components/export-to-sheet/export-to-sheet.component';
+
+
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { NavComponent } from './Components/nav/nav.component';
+
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -169,13 +173,22 @@ import { CustomerProfileComponent } from './Components/customer-profile/customer
     EditLeadComponent,
     EditLeadComponent,
     FormCustomerComponent,
-    // DocumentComponent,
     DocumentComponent,
     ListDocumentComponent,
     HomePageComponent,
     CustomerProfileComponent,
+    ExportToSheetComponent,
+    NavComponent,
   ],
   imports: [
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
+    TranslateModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -198,6 +211,7 @@ import { CustomerProfileComponent } from './Components/customer-profile/customer
     InputTextModule,
     ButtonModule,
     ToastModule,
+    MatProgressSpinnerModule,
     ProgressBarModule,
     TagModule,
     AvatarModule,
@@ -357,7 +371,7 @@ import { CustomerProfileComponent } from './Components/customer-profile/customer
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-             " 592574124687-bvpc5dmgfms66j1q6725fi5gevmsmtmf.apps.googleusercontent.com"
+              " 592574124687-bvpc5dmgfms66j1q6725fi5gevmsmtmf.apps.googleusercontent.com"
             )
           },
         ],
