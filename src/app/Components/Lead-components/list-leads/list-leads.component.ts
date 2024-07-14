@@ -59,6 +59,9 @@ export class ListLeadsComponent {
       didOpen: () => {
         const container = document.getElementById('popupContainer');
         if (container) {
+          if(container==undefined)
+            console.log(",l;,");
+            
           const factory = this.resolver.resolveComponentFactory(this.componentType);
           const componentRef = this.popupContainer.createComponent(factory);
           if(l!=null && l!=undefined)         
