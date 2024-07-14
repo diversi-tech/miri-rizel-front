@@ -150,6 +150,4 @@ export class TaskBoardComponent implements OnInit {
       }
     );
   }
-
-  
 }
