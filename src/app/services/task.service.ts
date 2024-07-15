@@ -2,21 +2,31 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Task } from '../Model/Task';
-import {  catchError, of, switchMap, throwError } from 'rxjs';
+import { catchError, of, switchMap, throwError } from 'rxjs';
 import { environment } from 'src/enviroments/environment';
+import { Project } from '@app/Model/Project';
 
 @Injectable({
   providedIn: 'root',
 })
+
 export class TaskService {
-  
+
   private apiUrl = `${environment.apiUrl}task/`
 
   constructor(private http: HttpClient) { }
 
   addTask(task: Task): Observable<any> {
-    task.taskId = undefined
-    return this.http.post<any>(this.apiUrl, task);
+    const taskToSend: Task = {
+      ...task,
+      taskId: undefined,
+      project: {
+        ...task.project,
+        projectId: task.project?.projectId!,
+        customer: undefined
+      }
+    }
+    return this.http.post<any>(`${this.apiUrl}`, taskToSend);
   }
 
   getTaskById(id: number): Observable<any> {
@@ -27,15 +37,15 @@ export class TaskService {
     return this.http.put<boolean>(`${this.apiUrl}`, task)
   }
 
-  updateGoogleId(taskId: number,googleId:string): Observable<any> {
-    return this.http.put<boolean>(`${this.apiUrl}googleCalendar`, {taskId,googleId})
+  updateGoogleId(taskId: number, googleId: string): Observable<any> {
+    return this.http.put<boolean>(`${this.apiUrl}googleCalendar`, { taskId, googleId })
   }
 
   getAllStatus(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}readAllStatus`)
   }
 
-  deleteTask(id:number):Observable<any>{
+  deleteTask(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}?id=${id}`);
   }
 
@@ -46,7 +56,8 @@ export class TaskService {
   editUserPost(task: Task) {
     this.http.put(`${this.apiUrl}`, task);
   }
-  getAll():Observable<Array<Task>> {
+
+  getAll(): Observable<Array<Task>> {
     return this.http.get<Array<Task>>(`${this.apiUrl}`).pipe(
       switchMap((response: Array<Task>) => {
         return of(response);
@@ -55,5 +66,5 @@ export class TaskService {
         return throwError(error);
       })
     );
-  } 
+  }
 }

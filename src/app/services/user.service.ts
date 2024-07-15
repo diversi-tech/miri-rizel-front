@@ -13,7 +13,7 @@ export class UserService {
   private apiUrl = `${environment.apiUrl}user/`
 
   getAll(): Observable<any> {
-    return this.http.get(`${this.apiUrl}`);
+    return this.http.get(`${this.apiUrl}readAll`);
 
   }
 

@@ -10,5 +10,4 @@ export interface Customer {
     source: string,
     status: StatusCodeUser,
     createdDate?: Date,
-    // projects: Project[],
 }
