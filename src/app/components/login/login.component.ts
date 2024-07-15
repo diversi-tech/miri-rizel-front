@@ -17,22 +17,22 @@ import { NgIf } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.css'],
-    standalone: true,
-    imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        NgIf,
-        MatButtonModule,
-        MatIconModule,
-        MatProgressSpinnerModule,
-        GoogleComponent,
-        TranslateModule,
-    ],
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
+  standalone: true,
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    NgIf,
+    MatButtonModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    GoogleComponent,
+    TranslateModule,
+  ],
 })
 export class LoginComponent implements OnInit {
   ngOnInit(): void {
@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private active: ActivatedRoute,
-    private translate:TranslateService
+    private translate: TranslateService
   ) { }
 
   hide = signal(true);
@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit {
   logInForm: FormGroup = new FormGroup({});
   get email() { return this.logInForm.controls['email'] }
   get pass() { return this.logInForm.controls['password'] }
-  userData: String="logIn"
+  userData: String = "logIn"
 
   onSubmit() {
     if (this.logInForm.invalid) {
@@ -85,14 +85,14 @@ export class LoginComponent implements OnInit {
         //       this.router.navigate(['/customer'], { relativeTo: this.active });
         //     }
         //   },
-          // error => {
-          //   this.dialog.open(DialogComponent, {
-          //     data: {
-          //       title: 'שגיאה',
-          //       context: 'ארעה תקלה במהלך ההתחברות, נסה שנית',
-          //       buttonText: 'סגור',
-          //     },
-          //   })};
+        // error => {
+        //   this.dialog.open(DialogComponent, {
+        //     data: {
+        //       title: 'שגיאה',
+        //       context: 'ארעה תקלה במהלך ההתחברות, נסה שנית',
+        //       buttonText: 'סגור',
+        //     },
+        //   })};
       }
     );
   }
@@ -104,35 +104,36 @@ export class LoginComponent implements OnInit {
         (response) => {
           this.router.navigate(['/ResetPassword']);
           this.resetPasswordService.setServerPassword(response);
+          this.isLoading = false
         },
         (err) => {
           this.isLoading = false
-            if (err.status == 400) {
-              this.translate.get(['Close', 'EmailNotFound']).subscribe(translations => {
-                Swal.fire({
-                  text: translations['EmailNotFound'],
-                  icon: "error",
-                  showCancelButton: false,
-                  showCloseButton: true,
-                  confirmButtonColor: "#d33",
-                  confirmButtonText: translations['Close']
-                })
+          if (err.status == 400) {
+            this.translate.get(['Close', 'EmailNotFound']).subscribe(translations => {
+              Swal.fire({
+                text: translations['EmailNotFound'],
+                icon: "error",
+                showCancelButton: false,
+                showCloseButton: true,
+                confirmButtonColor: "#d33",
+                confirmButtonText: translations['Close']
               })
-            } else {
-              this.translate.get(['Close', 'ProblemSendingEmail']).subscribe(translations => {
-                Swal.fire({
-                  text: translations['ProblemSendingEmail'],
-                  icon: "error",
-                  showCancelButton: false,
-                  showCloseButton: true,
-                  confirmButtonColor: "#d33",
-                  confirmButtonText: translations['Close']
-                }).then((res) => {
-                  this.isLoading = false
-                });
-              })
-            }
+            })
+          } else {
+            this.translate.get(['Close', 'ProblemSendingEmail']).subscribe(translations => {
+              Swal.fire({
+                text: translations['ProblemSendingEmail'],
+                icon: "error",
+                showCancelButton: false,
+                showCloseButton: true,
+                confirmButtonColor: "#d33",
+                confirmButtonText: translations['Close']
+              }).then((res) => {
+                this.isLoading = false
+              });
+            })
           }
+        }
       );
     } else {
       this.isLoading = false;
@@ -148,7 +149,7 @@ export class LoginComponent implements OnInit {
       })
     }
   }
-  
+
   signUp() {
     this.router.navigate(['../signUp']);
   }
