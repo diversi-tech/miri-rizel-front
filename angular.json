@@ -65,10 +65,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "copyRight:build:production"
+              "buildTarget": "copyRight:build:production"
             },
             "development": {
-              "browserTarget": "copyRight:build:development"
+              "buildTarget": "copyRight:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -76,7 +76,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "copyRight:build"
+            "buildTarget": "copyRight:build"
           }
         },
         "test": {
