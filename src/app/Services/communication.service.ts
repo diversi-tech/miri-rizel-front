@@ -22,4 +22,9 @@ export class CommunicationService {
     return this.http.get<Communication[]>(`${this.apiUrl}`);
   } 
 
+  deleteCommunication(communicationId:number):Observable<boolean>{
+    return this.http.delete<boolean>(`${this.apiUrl}?id=${communicationId}` );
+  } 
+  
+
 }

@@ -65,3 +65,18 @@
 .send-button:hover {
   background-color: #45a049;
 }
+
+.delete-icon {
+  float: right;  /* Position to the right */
+  cursor: pointer;  /* Change cursor on hover */
+  text-decoration: none;
+  /* Style for visited link */
+  &.visited {
+      text-decoration: none; /* Remove underline */
+  }
+
+  /* Style for normal link */
+  &.unvisited {
+      text-decoration: none; /* Remove underline */
+  }
+}

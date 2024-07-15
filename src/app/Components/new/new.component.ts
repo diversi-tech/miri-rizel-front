@@ -41,7 +41,6 @@ export class NewComponent {
     this.newMessageForm.value.type = this.newMessageForm.value.type;
     this.newMessageForm.value.communicationId = 0;
     this.newMessageForm.value.relatedId = this.newMessageForm.value.relatedId;
-    console.log(this.newMessageForm.value);
     this.communicationService.AddNewCommunication(this.newMessageForm.value).subscribe((response: Communication) => {
       this.messageSent.emit(response);
       this.newMessageForm.reset();

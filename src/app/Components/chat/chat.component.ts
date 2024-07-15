@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Communication } from '@app/Model/Communication';
 import { Customer } from '@app/Model/Customers';
 import { CommunicationService } from '@app/Services/communication.service';
-import { UserService } from '@app/Services/user.service';
 import Swal from 'sweetalert2';
 import { RelatedToProject } from '@app/Model/RelatedToCode';
 import { Lead } from '@app/Model/Lead';
@@ -38,7 +37,7 @@ export class ChatComponent implements OnInit {
       details: [''],
       communicationId: [0],
       type: [''],
-      date: [],
+      date: [new Date()],
       relatedId: [null],
     });
   }
