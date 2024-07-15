@@ -3,22 +3,22 @@ import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 // import { ButtonModule } from 'primeng/button';
 import { Table } from 'primeng/table';
-import { TaskService } from 'src/app/Services/task.service';
+import { TaskService } from 'src/app/services/task.service';
 import { Task } from 'src/app/Model/Task';
-import { UserService } from 'src/app/Services/user.service';
+import { UserService } from 'src/app/services/user.service';
 // import { ProgressBarModule } from 'primeng/progressbar';
 // import { ToastModule } from 'primeng/toast';
 import { ComponentFactoryResolver, ViewContainerRef, Component, OnInit, Type, ViewChild } from '@angular/core';
 import { Project } from 'src/app/Model/Project';
-import { GenericBourdComponent } from '../generic-bourd/generic-bourd.component';
-import { AddTaskComponent } from '../add-task/add-task.component';
+import { GenericBourdComponent } from 'src/app/components/generic-bourd/generic-bourd.component';
+import { AddTaskComponent } from 'src/app/components/add-task/add-task.component';
 import Swal from 'sweetalert2';
-import { DialogComponent } from '../dialog/dialog.component';
+import { DialogComponent } from 'src/app/components/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Location } from '@angular/common';
 import { StatusCodeProject } from '@app/Model/StatusCodeProject';
 import { Priority } from '@app/Model/Priority';
-import { ProjectService } from '@app/Services/project.service';
+import { ProjectService } from '@app/services/project.service';
 
 
 @Component({

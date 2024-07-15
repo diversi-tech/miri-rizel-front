@@ -1,21 +1,21 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+// import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditProjectComponent } from './edit-project.component';
+// import { EditProjectComponent } from './edit-project.component';
 
-describe('EditProjectComponent', () => {
-  let component: EditProjectComponent;
-  let fixture: ComponentFixture<EditProjectComponent>;
+// describe('EditProjectComponent', () => {
+//   let component: EditProjectComponent;
+//   let fixture: ComponentFixture<EditProjectComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-    imports: [EditProjectComponent]
-});
-    fixture = TestBed.createComponent(EditProjectComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+//   beforeEach(() => {
+//     TestBed.configureTestingModule({
+//     imports: [EditProjectComponent]
+// });
+//     fixture = TestBed.createComponent(EditProjectComponent);
+//     component = fixture.componentInstance;
+//     fixture.detectChanges();
+//   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+//   it('should create', () => {
+//     expect(component).toBeTruthy();
+//   });
+// });

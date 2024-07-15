@@ -2,13 +2,13 @@ import { Component, ComponentFactoryResolver, Type, ViewChild, ViewContainerRef,
 import { Router } from '@angular/router';
 import { Project } from 'src/app/Model/Project';
 import { Lead } from 'src/app/Model/Lead';
-import { GenericBourdComponent } from '../../generic-bourd/generic-bourd.component';
-import { LeadService } from 'src/app/Services/lead.service';
+import { GenericBourdComponent } from 'src/app/components/generic-bourd/generic-bourd.component';
+import { LeadService } from 'src/app/services/lead.service';
 import Swal from 'sweetalert2';
-import { EditLeadComponent } from '../edit-lead/edit-lead.component';
-import { DialogComponent } from '@app/Components/dialog/dialog.component';
+import { EditLeadComponent } from 'src/app/components/Lead-components/edit-lead/edit-lead.component';
+import { DialogComponent } from 'src/app/components/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { AddLeadComponent } from '../add-lead/add-lead.component';
+import { AddLeadComponent } from 'src/app/components/Lead-components/add-lead/add-lead.component';
 
 @Component({
     selector: 'app-list-leads',

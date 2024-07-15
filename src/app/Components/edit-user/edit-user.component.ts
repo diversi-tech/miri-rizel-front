@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormsModule } from '@angular/forms';
 import { User } from 'src/app/Model/User';
-import { EditUserService } from '../../Services/edit-user.service';
+import { EditUserService } from '../../services/edit-user.service';
 import { NgIf } from '@angular/common';
 
 @Component({
