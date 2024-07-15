@@ -36,6 +36,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 })
 export class LoginComponent implements OnInit {
   ngOnInit(): void {
+    console.log();
+    
     this.logInForm = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [
