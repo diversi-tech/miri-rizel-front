@@ -1,19 +1,18 @@
-<!-- <div class="chat-list-container">
-    <div *ngFor="let communication of communications">
-      <app-propil [communication]="communication"></app-propil>
-    </div>
-  </div>
-   -->
-
-   <div class="chat-page-container">
+<div class="chat-page-container">
     <div class="new-message-container">
       <app-new (messageSent)="addNewMessage($event)"></app-new>
     </div>
   
     <div class="chat-list-container">
-      <div *ngFor="let communication of communications">
+      <div *ngFor="let communication of communicationsFilter">
         <app-propil [communication]="communication"></app-propil>
       </div>
     </div>
-  </div>
+</div>
+
+<div class="new-message-container">
+  <button type="submit" class="send-button" (click)="applyFilter('Lead')">Filter by Lead</button><br><br>
+  <button type="submit" class="send-button" (click)="applyFilter('Customer')">Filter by Customer</button><br><br>
+  <button type="submit" class="send-button" (click)="applyFilter('')">Show All Messages</button>
+</div>
   

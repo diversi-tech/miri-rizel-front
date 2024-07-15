@@ -5,7 +5,8 @@
       </div>
       <div class="message-body">
         <h3>{{ communication.details }}</h3>
-        <h3>costomerId : {{ communication.relatedId }}</h3>
+        <h3 *ngIf="communication.relatedTo?.id==1">costomerId : {{ communication.relatedId }}</h3>
+        <h3 *ngIf="communication.relatedTo?.id==2">LeadId : {{ communication.relatedId }}</h3>
       </div>
     </div>
   
@@ -20,9 +21,10 @@
       </div>
     </div>
   
-    <div class="response-input-container" [formGroup]="responseForm">
+    <!-- <div class="response-input-container" [formGroup]="responseForm">
       <input type="text" formControlName="details" placeholder="Type your response..." class="response-input">
       <button type="submit" class="send-button" (click)="sendResponse()">Send</button>
-    </div>
+    </div> -->
   </div>
   
+ 

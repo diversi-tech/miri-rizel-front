@@ -49,7 +49,6 @@ export class PropilComponent implements OnInit {
   }
 
   fetchResponses(): void {
-    // Call a service to fetch responses for this communication
     this.communicationService.readAll().subscribe(res => {
       this.responses = res.filter(comm => comm.relatedId === this.communication.communicationId);
     });

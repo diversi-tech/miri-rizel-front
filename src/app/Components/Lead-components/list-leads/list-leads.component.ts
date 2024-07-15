@@ -80,5 +80,48 @@ export class ListLeadsComponent {
         console.log("refreshData: ", this.Leads);
       })
   }
+
+  propil(l: Lead) {
+    this.componentType = ChatComponent;
+    this.popUpPropil(`Communication ${l.firstName}`, l, "Lead" , l.leadId);
+  }
+
+  popupOpen = false;
+
+  popUpPropil(title: string, l: Lead , s:String, id:Number) {
+    // this.flag = false;
+    this.popupOpen = true; // Set popupOpen to true when the pop-up is opened
+    Swal.fire({
+        title: title,
+        html: '<div id="popupContainer"></div>',
+        showConfirmButton: false,
+        didOpen: () => {
+            const container = document.getElementById('popupContainer');
+            if (container) {
+                const factory = this.resolver.resolveComponentFactory(this.componentType);
+                const componentRef = this.popupContainer.createComponent(factory);
+                if (l != null && l != undefined)
+                    componentRef.instance.setData(l,s,id);
+                container.appendChild(componentRef.location.nativeElement);
+            }
+        },
+        didClose: () => {
+            this.popupOpen = false; // Set popupOpen to false when the pop-up is closed
+        }
+    });
+    this.logNumbersWhilePopupOpen();
+  }
+  
+  logNumbersWhilePopupOpen() {
+    let counter = 0;
+    const interval = setInterval(() => {
+        if (this.popupOpen) {
+            counter++;
+        } else {
+            clearInterval(interval); // Stop logging numbers when the pop-up is closed
+            // this.custService.GetCustomerById(this.cus.customerId).subscribe(res=>{this.cus=res,this.flag=true})
+        }
+    }, 1000); // Log every second
+  }
 }
 
