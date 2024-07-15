@@ -43,6 +43,8 @@ export class AddTaskComponent implements OnInit {
   @Output() dataRefreshed: EventEmitter<void> = new EventEmitter<void>();
   data: any;
   setData(data: any) {
+    console.log();
+    
     if (data) {
       this.data = data;
       this.isEdit = true;
