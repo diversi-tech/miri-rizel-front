@@ -8,7 +8,7 @@ import { CustomersService } from '@app/Services/customers.service';
 import { ProjectService } from '@app/Services/project.service';
 import { TaskService } from '@app/Services/task.service';
 import { Project } from 'src/app/Model/Project';
-import { DialogComponent } from '../dialog/dialog.component';
+import { DialogComponent } from 'src/app/Components/dialog/dialog.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgIf } from '@angular/common';

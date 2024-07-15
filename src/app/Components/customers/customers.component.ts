@@ -5,9 +5,9 @@ import { StatusCodeUser } from '@app/Model/StatusCodeUser';
 import { Customer } from 'src/app/Model/Customer';
 import { CustomersService } from 'src/app/Services/customers.service';
 import { ValidatorsService } from 'src/app/Services/validators.service';
-import { DocumentComponent } from '../documens/document/document.component';
+import { DocumentComponent } from 'src/app/Components/documens/document/document.component';
 import { NgIf, NgFor } from '@angular/common';
-import { GenericBourdComponent } from '../generic-bourd/generic-bourd.component';
+import { GenericBourdComponent } from 'src/app/Components/generic-bourd/generic-bourd.component';
 
 @Component({
     selector: 'app-customers',

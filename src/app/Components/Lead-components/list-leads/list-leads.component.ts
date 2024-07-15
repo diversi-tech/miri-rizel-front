@@ -5,7 +5,7 @@ import { Lead } from 'src/app/Model/Lead';
 import { GenericBourdComponent } from '../../generic-bourd/generic-bourd.component';
 import { LeadService } from 'src/app/Services/lead.service';
 import Swal from 'sweetalert2';
-import { EditLeadComponent } from '../edit-lead/edit-lead.component';
+import { EditLeadComponent } from 'src/app/Components/Lead-components/edit-lead/edit-lead.component';
 import { DialogComponent } from '@app/Components/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AddLeadComponent } from '../add-lead/add-lead.component';
