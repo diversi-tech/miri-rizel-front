@@ -49,7 +49,6 @@ export class CustomersComponent implements OnInit {
       status: ['', [Validators.required]],
       createdDate: ['', [Validators.required]],
     });
-alert('fv')
     this.loadCustomers();
     this.loadStatusUsers();
   }
