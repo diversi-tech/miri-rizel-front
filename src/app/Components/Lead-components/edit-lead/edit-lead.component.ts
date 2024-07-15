@@ -1,6 +1,6 @@
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LeadService } from '@app/Services/lead.service';
+import { LeadService } from '@app/services/lead.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Lead } from '@app/Model/Lead';
 import Swal from 'sweetalert2';

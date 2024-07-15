@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DocumentService } from '@app/Services/document.service';
-import { ValidatorsService } from '@app/Services/validators.service';
+import { DocumentService } from '@app/services/document.service';
+import { ValidatorsService } from '@app/services/validators.service';
 import Swal from 'sweetalert2';
 import { FormsModule } from '@angular/forms';
 import { NgIf, NgFor } from '@angular/common';

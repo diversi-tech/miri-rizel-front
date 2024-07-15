@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserService } from '@app/Services/user.service';
-import { GoogleComponent } from '../google/google.component';
+import { UserService } from '@app/services/user.service';
+import { GoogleComponent } from 'src/app/components/google/google.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgIf } from '@angular/common';

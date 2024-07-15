@@ -1,7 +1,7 @@
 import { Component, Output ,EventEmitter} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Project } from 'src/app/Model/Project';
-import {ProjectService}from 'src/app/Services/project.service'
+import {ProjectService}from 'src/app/services/project.service'
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,8 +11,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { StatusCodeProject } from '@app/Model/StatusCodeProject';
 import { Data } from '@angular/router';
 import { Customer } from '@app/Model/Customer';
-import { CustomersService } from '@app/Services/customers.service';
-import { TaskService } from '@app/Services/task.service';
+import { CustomersService } from '@app/services/customers.service';
+import { TaskService } from '@app/services/task.service';
 import { DropdownModule } from 'primeng/dropdown';
 import { NgIf } from '@angular/common';
 @Component({

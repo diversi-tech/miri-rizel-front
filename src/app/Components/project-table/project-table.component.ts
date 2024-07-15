@@ -1,18 +1,18 @@
-import { CustomersService } from '@app/Services/customers.service';
+import { CustomersService } from '@app/services/customers.service';
 import { Component, ComponentFactoryResolver, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { Customer } from '@app/Model/Customer';
-import { ProjectService } from '@app/Services/project.service';
+import { ProjectService } from '@app/services/project.service';
 import { Project } from 'src/app/Model/Project';
 import Swal from 'sweetalert2';
-import { AddProjectComponent } from '../add-project/add-project.component';
-import { EditProjectComponent } from '../edit-project/edit-project.component';
-import { GenericBourdComponent } from '../generic-bourd/generic-bourd.component';
+import { AddProjectComponent } from 'src/app/components/add-project/add-project.component';
+import { EditProjectComponent } from 'src/app/components/edit-project/edit-project.component';
+import { GenericBourdComponent } from 'src/app/components/generic-bourd/generic-bourd.component';
 import { StatusCodeProject } from '@app/Model/StatusCodeProject';
-import { TaskService } from '@app/Services/task.service';
+import { TaskService } from '@app/services/task.service';
 import { Task } from '@app/Model/Task';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Priority } from '@app/Model/Priority';
-import { TaskBoardComponent } from '../task-board/task-board.component';
+// import { TaskBoardComponent } from '../task-board/task-board.component';
 @Component({
     selector: 'app-project-table',
     templateUrl: './project-table.component.html',
