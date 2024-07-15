@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StatusCodeUser } from '@app/Model/StatusCodeUser';
-import { CustomersService } from 'src/app/services/customers.service';
+import { CustomersService } from '@app/Services/customers.service';
 import Swal from 'sweetalert2';
 import { NgIf, NgFor } from '@angular/common';
 

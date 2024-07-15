@@ -1,21 +1,21 @@
-// import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-// import { ProjectTableComponent } from './project-table.component';
+import { ProjectTableComponent } from './project-table.component';
 
-// describe('ProjectTableComponent', () => {
-//   let component: ProjectTableComponent;
-//   let fixture: ComponentFixture<ProjectTableComponent>;
+describe('ProjectTableComponent', () => {
+  let component: ProjectTableComponent;
+  let fixture: ComponentFixture<ProjectTableComponent>;
 
-//   beforeEach(() => {
-//     TestBed.configureTestingModule({
-//     imports: [ProjectTableComponent]
-// });
-//     fixture = TestBed.createComponent(ProjectTableComponent);
-//     component = fixture.componentInstance;
-//     fixture.detectChanges();
-//   });
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+    imports: [ProjectTableComponent]
+});
+    fixture = TestBed.createComponent(ProjectTableComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-//   it('should create', () => {
-//     expect(component).toBeTruthy();
-//   });
-// });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

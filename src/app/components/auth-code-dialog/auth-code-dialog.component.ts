@@ -1,6 +1,6 @@
 import { Component, QueryList, ViewChildren } from '@angular/core';
 import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
-import { ResetPasswordService } from 'src/app/services/reset-password.service';
+import { ResetPasswordService } from 'src/app/Services/reset-password.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';

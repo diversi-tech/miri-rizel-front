@@ -3,11 +3,11 @@ import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators, Form
 import Swal from 'sweetalert2';
 import { StatusCodeUser } from '@app/Model/StatusCodeUser';
 import { Customer } from 'src/app/Model/Customer';
-import { CustomersService } from 'src/app/services/customers.service';
-import { ValidatorsService } from 'src/app/services/validators.service';
-import { DocumentComponent } from 'src/app/components/documens/document/document.component';
+import { CustomersService } from 'src/app/Services/customers.service';
+import { ValidatorsService } from 'src/app/Services/validators.service';
+import { DocumentComponent } from 'src/app/Components/documens/document/document.component';
 import { NgIf, NgFor } from '@angular/common';
-import { GenericBourdComponent } from 'src/app/components/generic-bourd/generic-bourd.component';
+import { GenericBourdComponent } from 'src/app/Components/generic-bourd/generic-bourd.component';
 
 @Component({
     selector: 'app-customers',

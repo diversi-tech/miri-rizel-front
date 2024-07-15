@@ -1,11 +1,11 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/Services/user.service';
 import { MatDialog } from '@angular/material/dialog';
-// import { DialogComponent } from '../dialog/dialog.component';
+import { DialogComponent } from '../dialog/dialog.component';
 import Swal from 'sweetalert2';
-import { ResetPasswordService } from 'src/app/services/reset-password.service';
+import { ResetPasswordService } from '@app/Services/reset-password.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';

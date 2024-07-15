@@ -7,10 +7,9 @@ declare global {
     google: any;
   }
 }
-import { UserService } from '@app/services/user.service';
-import { DialogComponent } from 'src/app/components/dialog/dialog.component';
+import { UserService } from '@app/Services/user.service';
+import { DialogComponent } from 'src/app/Components/dialog/dialog.component';
 import { TranslateModule } from '@ngx-translate/core';
-
 @Component({
     selector: 'app-google',
     templateUrl: './google.component.html',

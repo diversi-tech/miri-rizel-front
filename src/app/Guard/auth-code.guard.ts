@@ -13,7 +13,7 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { AuthCodeDialogComponent } from '../components/auth-code-dialog/auth-code-dialog.component';
+import { AuthCodeDialogComponent } from '../Components/auth-code-dialog/auth-code-dialog.component';
 @Injectable({
   providedIn: 'root',
 })
