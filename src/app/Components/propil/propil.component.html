@@ -32,8 +32,10 @@
     </div>
     <div class="message-body">
       <h3>{{ communication.details }}</h3>
-      <h3 *ngIf="communication.relatedTo?.id==1">costomerId : {{ communication.relatedId }}</h3>
-      <h3 *ngIf="communication.relatedTo?.id==2">LeadId : {{ communication.relatedId }}</h3>
+      <!-- <h3 *ngIf="communication.relatedTo?.id==1">costomerId : {{ communication.relatedId }}</h3>
+      <h3 *ngIf="communication.relatedTo?.id==2">LeadId : {{ communication.relatedId }}</h3> -->
+      <h3 *ngIf="communication.relatedTo?.id==1">costomer : {{ communication.name }}</h3>
+      <h3 *ngIf="communication.relatedTo?.id==2">Lead : {{ communication.name }}</h3>
     </div>
   </div>
 

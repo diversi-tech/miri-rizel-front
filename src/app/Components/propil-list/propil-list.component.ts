@@ -38,9 +38,6 @@
 //       this.communicationsFilter = [...this.communications];
 //     }
 //   }
-
-
-  
 // }
 
 import { Component, OnInit } from '@angular/core';

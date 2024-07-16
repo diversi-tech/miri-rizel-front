@@ -7,4 +7,5 @@ export interface Communication {
     details?: string;
     relatedTo?: RelatedToProject;
     relatedId?: Number;
+    name?: string;
 }

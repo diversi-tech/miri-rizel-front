@@ -20,6 +20,7 @@ export class ChatComponent implements OnInit {
   chat!: FormGroup;
   string!: string;
   id2!: Number
+  firstName!:string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -39,6 +40,7 @@ export class ChatComponent implements OnInit {
       type: [''],
       date: [new Date()],
       relatedId: [null],
+      name: ['']
     });
   }
 
@@ -46,6 +48,7 @@ export class ChatComponent implements OnInit {
   setData(any: Lead | Customer, s: string, id: Number): void {
     this.data = any;
     this.string = s;
+    this.firstName=this.data.firstName;
     if (s == "Lead") {
       this.communicationService.readAll().subscribe(res => {
         this.communications = res.filter(comm => comm.relatedId === id && comm.relatedTo?.id==2);
@@ -76,9 +79,10 @@ export class ChatComponent implements OnInit {
       this.r = { id: 1, description: "Customer" };
     this.chat.patchValue({ relatedId: this.id2 });
     this.chat.value.relatedTo = this.r;
-    this.chat.value.date = new Date();
+    this.chat.value.date = new Date(new Date().getTime() - (new Date().getTimezoneOffset()) * 60000);
     this.chat.value.type = ""
-    this.chat.value.communicationId = 0; 
+    this.chat.value.communicationId = 0;   
+    this.chat.value.name = this.firstName;    
     this.communicationService.AddNewCommunication(this.chat.value).subscribe(() => {
       this.flag = false;
       this.fetchChatMessages();
@@ -88,6 +92,8 @@ export class ChatComponent implements OnInit {
 
   fetchChatMessages(): void {
     this.communicationService.readAll().subscribe(res => {
+      console.log(res);
+      
       this.communications = res.filter(comm => comm.relatedTo?.description === this.string && comm.relatedId === this.id2);
       this.flag = true;
     });

@@ -6,8 +6,10 @@
         <option value="Customer">Customer</option>
     </select>
 
-    <h2>Related Id</h2>
+    <h2 *ngIf="namesl.length > 0">Select</h2>
+    <h2 *ngIf="namesc.length > 0">Select</h2>
     <select *ngIf="namesl.length > 0" formControlName="relatedId" class="message-input">
+        
         <ng-container *ngFor="let name of namesl">
             <option [ngValue]="name.leadId">{{ name.firstName }} {{ name.lastName }}</option>
         </ng-container>
@@ -29,6 +31,7 @@
 
 <br><br><br>
 <button type="submit" class="send-button" (click)="showaddtaskf()">Task</button>
-<div *ngIf="showaddtask" class="new-task-form-container">
-    <app-add-task></app-add-task>
-</div>
+<!-- <div *ngIf="showaddtask" class="new-task-form-container"> -->
+    <!-- <app-add-task></app-add-task> -->
+<!-- </div> -->
+<div #popupContainer></div>

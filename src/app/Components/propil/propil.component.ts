@@ -52,6 +52,7 @@ export class PropilComponent implements OnInit {
 
   fetchResponses(): void {
     this.communicationService.readAll().subscribe(res => {
+      console.log(res);
       this.responses = res.filter(comm => comm.relatedId === this.communication.communicationId);
     });
   }
@@ -63,6 +64,7 @@ export class PropilComponent implements OnInit {
       type: [''],
       date: [new Date()],
       relatedId: [this.communication.communicationId],
+      name: []
     });
   }
 
