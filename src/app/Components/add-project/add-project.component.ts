@@ -13,6 +13,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgIf } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -70,7 +71,7 @@ export class AddProjectComponent implements OnInit {
       endDate: ['',[ Validators.required,this.futureDateValidator.bind(this)]],
       status: '',
       customer: ['', Validators.required],
-     createdDate:['', [Validators.required,this.futureDateValidator.bind(this)]]
+     createdDate:[new Date()]
     });
   
   }
@@ -82,7 +83,8 @@ export class AddProjectComponent implements OnInit {
       this.projectService.addProject(newProject)
         .subscribe(
           (response) => {
-            if (response.isCompletedSuccessfully) {
+            console.log(response);
+            if (response) {
               this.dialog.open(DialogComponent, {
                 data: {
                   title: 'המשימה נוספה בהצלחה',
@@ -90,7 +92,7 @@ export class AddProjectComponent implements OnInit {
                   buttonText: 'סגור',
                 },
               });
-              this.router.navigate(['/projectTable']);
+              Swal.close();
             }
           },
           (error) => {
@@ -105,7 +107,7 @@ export class AddProjectComponent implements OnInit {
   get endDate() { return this.projectForm.get('endDate') }
   get status() { return this.projectForm.get('status') }
   get cucustomer(){ return this.projectForm.get('customer')}
-  get createdDate(){ return this.projectForm.get('createdDate')}
+  // get createdDate(){ return this.projectForm.get('createdDate')}
   futureDateValidator(control: AbstractControl): ValidationErrors | null {
     const selectedDate = new Date(control.value);
     const today = new Date();
