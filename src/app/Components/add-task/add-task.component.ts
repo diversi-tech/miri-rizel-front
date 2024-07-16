@@ -157,7 +157,7 @@ export class AddTaskComponent implements OnInit {
   loadTask(taskId: number): void {
     this.taskService.getTaskById(taskId).subscribe(
       (task: any) => {
-        this.taskForm.patchValue({
+          this.taskForm.patchValue({
           taskId: task.taskId,
           googleId: task.googleId,
           createdDate: task.createdDate,
