@@ -35,6 +35,7 @@ export class CustomersComponent implements OnInit {
   status: any;
   private originalParent: HTMLElement | null = null;
   newCustomer!: Customer;
+  nameForm:string="";
   @Output()
   addDocumentCustomer = new EventEmitter<string>();
 
@@ -78,10 +79,10 @@ export class CustomersComponent implements OnInit {
 
   openEditCustomerPopup(title: string, formId: string) {
     const formElement = document.getElementById(formId);
+    this.nameForm=title
     if (formElement) {
       this.originalParent = formElement.parentElement;
       Swal.fire({
-        title: title,
         html: `<div id="popupContainer"></div>`,
         showConfirmButton: false,
         didOpen: () => {

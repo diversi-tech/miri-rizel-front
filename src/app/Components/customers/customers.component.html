@@ -6,9 +6,10 @@
 </app-generic-bourd>
 
 <form class="editCustomer" id="editCustomer" [formGroup]="customerForm" (ngSubmit)="editCustomerSubmit()">
+    <h1>{{nameForm}}</h1>
     <div class="line"></div>
     <label for="firstName">שם פרטי</label>
-    <input type="text" pInputText formControlName="firstName"  class="input-field" />
+    <input type="text" pInputText formControlName="firstName" class="input-field" />
     <div class="error-message" *ngIf="submitted1 && customerForm.controls['firstName'].errors">
         <span *ngIf="customerForm.controls['firstName'].errors['required']">שדה חובה </span>
         <span *ngIf="customerForm.controls['firstName'].errors['firstName']">שם פרטי לא תקין</span>
@@ -55,8 +56,8 @@
     </div>
     <div class="form-group">
         <label for="status">סטטוס</label>
-        <p-dropdown id="status" formControlName="status"  [options]="statusCodeUser" optionLabel="description"
-            [placeholder]="'בחר סטטוס'" class="select-field" ></p-dropdown>
+        <p-dropdown id="status" formControlName="status" [options]="statusCodeUser" optionLabel="description"
+            [placeholder]="'בחר סטטוס'" class="select-field"></p-dropdown>
         <div class="error-message" *ngIf="submitted && customerForm.controls['status'].errors">
             <span *ngIf="customerForm.controls['status'].errors['required']">שדה חובה</span>
             <span *ngIf="customerForm.controls['status'].errors['status']">סטטוס לא תקין</span>
@@ -76,6 +77,7 @@
 </form>
 
 <form class="addCustomer" id="addCustomer" [formGroup]="customerForm" (ngSubmit)="addCustomerSubmit()">
+    <h1>{{nameForm}}</h1>
     <div class="line"></div>
     <label for="firstName">שם פרטי</label>
     <input type="text" formControlName="firstName" pInputText class="input-field" />
@@ -126,7 +128,7 @@
     <div class="form-group">
         <label for="status">סטטוס</label>
         <p-dropdown id="status" formControlName="status" [options]="statusCodeUser" optionLabel="description"
-            [placeholder]="'בחר סטטוס'" class="select-field" ></p-dropdown>
+            [placeholder]="'בחר סטטוס'" class="select-field"></p-dropdown>
         <div class="error-message" *ngIf="submitted && customerForm.controls['status'].errors">
             <span *ngIf="customerForm.controls['status'].errors['required']">שדה חובה</span>
             <span *ngIf="customerForm.controls['status'].errors['status']">סטטוס לא תקין</span>
