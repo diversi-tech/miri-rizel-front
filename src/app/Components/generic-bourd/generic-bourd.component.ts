@@ -14,7 +14,7 @@ import { SheetsApiService } from '@app/Services/sheets-api.service';
 import { Table, TableModule } from 'primeng/table';
 import Swal from 'sweetalert2';
 import { ExportToSheetComponent } from '../export-to-sheet/export-to-sheet.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { TagModule } from 'primeng/tag';
 import { FormsModule } from '@angular/forms';
@@ -78,7 +78,8 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   @ViewChild('dt') dt!: Table;
   constructor(
     private resolver: ComponentFactoryResolver,
-    private sheetsAPI: SheetsApiService
+    private sheetsAPI: SheetsApiService,
+    private translateService: TranslateService
   ) {}
 
   columns: Column[] = [];
@@ -374,6 +375,8 @@ document(rowData: any){
   async exportToSpreadSheet(eventData: any): Promise<void> {
     console.log('Submitted values:', eventData);
     const arrayOfArraysData = this.objectsToArrayOfArrays(this.data);
+    const titles: string[]=await this.translateTitles(arrayOfArraysData[0]);
+    arrayOfArraysData[0]=titles;
     if (eventData.selectedOption === 'newDoc') {
       if (eventData.fileName != null)
         this.sheetsAPI.ExportDataToNewSheet(
@@ -440,5 +443,14 @@ document(rowData: any){
 
     console.log('result: ', result);
     return result;
+  }
+
+  translateTitles(titles: string[]) :Promise<string[]>{
+    //return titles.forEach(title=> this.translateService.get(title).subscribe(translation=> title= translation));
+    const translationPromises = titles.map(title => 
+      this.translateService.get(title).toPromise()
+    );
+
+    return Promise.all(translationPromises);
   }
 }
