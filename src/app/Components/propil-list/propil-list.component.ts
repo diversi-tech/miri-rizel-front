@@ -40,14 +40,19 @@
 //   }
 // }
 
+import { NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Communication } from '@app/Model/Communication';
 import { CommunicationService } from '@app/Services/communication.service';
+import { NewComponent } from '../new/new.component';
+import { PropilComponent } from '../propil/propil.component';
 
 @Component({
   selector: 'app-propil-list',
   templateUrl: './propil-list.component.html',
-  styleUrls: ['./propil-list.component.css']
+  styleUrls: ['./propil-list.component.css'],
+  standalone: true,
+  imports: [NgFor,NewComponent,PropilComponent]
 })
 export class PropilListComponent implements OnInit {
   communications: Communication[] = [];

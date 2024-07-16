@@ -1,7 +1,7 @@
 import { Component, ComponentFactoryResolver, EventEmitter, Output, Type, ViewChild, ViewContainerRef } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Communication } from '@app/Model/Communication';
-import { Customer } from '@app/Model/Customers';
+import { Customer } from '@app/Model/Customer';
 import { Lead } from '@app/Model/Lead';
 import { RelatedToProject } from '@app/Model/RelatedToCode';
 import { CommunicationService } from '@app/Services/communication.service';
@@ -9,11 +9,14 @@ import { CustomersService } from '@app/Services/customers.service';
 import { LeadService } from '@app/Services/lead.service';
 import { AddTaskComponent } from '../add-task/add-task.component';
 import Swal from 'sweetalert2';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-new',
   templateUrl: './new.component.html',
-  styleUrls: ['./new.component.css']
+  styleUrls: ['./new.component.css'],
+  standalone: true,
+  imports: [ FormsModule,CommonModule,ReactiveFormsModule]
 })
 export class NewComponent {
   @Output() messageSent = new EventEmitter<Communication>();

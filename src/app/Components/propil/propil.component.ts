@@ -27,11 +27,14 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommunicationService } from '@app/Services/communication.service';
 import { Communication } from '@app/Model/Communication';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { CommonModule, DatePipe, NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-propil',
   templateUrl: './propil.component.html',
-  styleUrls: ['./propil.component.css']
+  styleUrls: ['./propil.component.css'],
+  standalone: true,
+  imports: [NgIf,NgFor,CommonModule, DatePipe]
 })
 export class PropilComponent implements OnInit {
   @Input() communication!: Communication;

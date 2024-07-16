@@ -1,16 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Communication } from '@app/Model/Communication';
-import { Customer } from '@app/Model/Customers';
+import { Customer } from '@app/Model/Customer';
 import { CommunicationService } from '@app/Services/communication.service';
 import Swal from 'sweetalert2';
 import { RelatedToProject } from '@app/Model/RelatedToCode';
 import { Lead } from '@app/Model/Lead';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.css']
+  styleUrls: ['./chat.component.css'],
+  standalone: true,
+  imports: [NgIf,NgFor,CommonModule, ReactiveFormsModule]
 })
 export class ChatComponent implements OnInit {
 

@@ -1,5 +1,5 @@
 import { Component, ComponentFactoryResolver, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { StatusCodeUser } from '@app/Model/StatusCodeUser';
 import { Customer } from 'src/app/Model/Customer';
@@ -8,13 +8,20 @@ import { ValidatorsService } from 'src/app/Services/validators.service';
 import { Router } from '@angular/router';
 import { ChatComponent } from '../chat/chat.component';
 import { Lead } from '@app/Model/Lead';
+import { GenericBourdComponent } from '../generic-bourd/generic-bourd.component';
+import { DropdownModule } from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
+import { InputTextModule } from 'primeng/inputtext';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-customers',
   templateUrl: './customers.component.html',
   styleUrls: ['./customers.component.css'],
   standalone: true,
-  imports: [GenericBourdComponent, FormsModule, DropdownModule, CalendarModule, ReactiveFormsModule, InputTextModule, NgIf, NgFor, TranslateModule]
+  imports: [ CommonModule,GenericBourdComponent,FormsModule, DropdownModule, CalendarModule, ReactiveFormsModule, InputTextModule, NgIf, NgFor, 
+    
+  ]
 })
 export class CustomersComponent implements OnInit {
   editCustomerFlag: boolean = false;
@@ -32,6 +39,7 @@ export class CustomersComponent implements OnInit {
   private originalParent: HTMLElement | null = null;
   newCustomer!: Customer;
   @ViewChild('popupContainer', { read: ViewContainerRef }) popupContainer!: ViewContainerRef;
+  nameForm!: string;
 
   constructor(private resolver: ComponentFactoryResolver, private router: Router, private formBuilder: FormBuilder, private customerService: CustomersService, private validatorsService: ValidatorsService) { }
 
