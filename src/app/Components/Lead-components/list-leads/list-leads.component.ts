@@ -2,19 +2,22 @@ import { Component, ComponentFactoryResolver, Type, ViewChild, ViewContainerRef,
 import { Router } from '@angular/router';
 import { Project } from 'src/app/Model/Project';
 import { Lead } from 'src/app/Model/Lead';
-import { GenericBourdComponent } from '../../generic-bourd/generic-bourd.component';
+import { GenericBourdComponent } from 'src/app/Components/generic-bourd/generic-bourd.component';
 import { LeadService } from 'src/app/Services/lead.service';
 import Swal from 'sweetalert2';
-import { EditLeadComponent } from '../edit-lead/edit-lead.component';
+import { EditLeadComponent } from 'src/app/Components/Lead-components/edit-lead/edit-lead.component';
 import { DialogComponent } from '@app/Components/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AddLeadComponent } from '../add-lead/add-lead.component';
 import { ChatComponent } from '@app/Components/chat/chat.component';
+import { AddLeadComponent } from 'src/app/Components/Lead-components/add-lead/add-lead.component';
 
 @Component({
-  selector: 'app-list-leads',
-  templateUrl: './list-leads.component.html',
-  styleUrls: ['./list-leads.component.css']
+    selector: 'app-list-leads',
+    templateUrl: './list-leads.component.html',
+    styleUrls: ['./list-leads.component.css'],
+    standalone: true,
+    imports: [GenericBourdComponent]
 })
 export class ListLeadsComponent {
 
@@ -60,6 +63,9 @@ export class ListLeadsComponent {
       didOpen: () => {
         const container = document.getElementById('popupContainer');
         if (container) {
+          if(container==undefined)
+            console.log(",l;,");
+            
           const factory = this.resolver.resolveComponentFactory(this.componentType);
           const componentRef = this.popupContainer.createComponent(factory);
           if(l!=null && l!=undefined)         

@@ -1,19 +1,27 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Lead } from 'src/app/Model/Lead';
-import { LeadService } from '../../../Services/lead.service';
+import { LeadService } from 'src/app/Services/lead.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { MatButtonModule } from '@angular/material/button';
+import { NgIf } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
-  selector: 'app-add-lead',
-  templateUrl: './add-lead.component.html',
-  styleUrls: ['./add-lead.component.css'],
+    selector: 'app-add-lead',
+    templateUrl: './add-lead.component.html',
+    styleUrls: ['./add-lead.component.css'],
+    standalone: true,
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        NgIf,
+        MatButtonModule,
+    ],
 })
 export class AddLeadComponent {
   

@@ -2,7 +2,7 @@ import { Component, ComponentFactoryResolver, OnInit, Type, ViewChild, ViewConta
 import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { StatusCodeUser } from '@app/Model/StatusCodeUser';
-import { Customer } from 'src/app/Model/Customers';
+import { Customer } from 'src/app/Model/Customer';
 import { CustomersService } from 'src/app/Services/customers.service';
 import { ValidatorsService } from 'src/app/Services/validators.service';
 import { Router } from '@angular/router';
@@ -12,7 +12,9 @@ import { Lead } from '@app/Model/Lead';
 @Component({
   selector: 'app-customers',
   templateUrl: './customers.component.html',
-  styleUrls: ['./customers.component.css']
+  styleUrls: ['./customers.component.css'],
+  standalone: true,
+  imports: [GenericBourdComponent, FormsModule, DropdownModule, CalendarModule, ReactiveFormsModule, InputTextModule, NgIf, NgFor, TranslateModule]
 })
 export class CustomersComponent implements OnInit {
   editCustomerFlag: boolean = false;
@@ -67,12 +69,13 @@ export class CustomersComponent implements OnInit {
   }
 
   get formControls() { return this.customerForm.controls; }
+
   openEditCustomerPopup(title: string, formId: string) {
     const formElement = document.getElementById(formId);
+    this.nameForm=title
     if (formElement) {
       this.originalParent = formElement.parentElement;
       Swal.fire({
-        title: title,
         html: `<div id="popupContainer"></div>`,
         showConfirmButton: false,
         didOpen: () => {
@@ -92,9 +95,11 @@ export class CustomersComponent implements OnInit {
       });
     }
   }
+
   addCustomer() {
     this.openEditCustomerPopup("הוספת לקוח", "addCustomer");
   }
+
   addCustomerSubmit() {
     this.submitted1 = true;
     if (this.customerForm.invalid) {
@@ -104,35 +109,39 @@ export class CustomersComponent implements OnInit {
     this.newCustomer.status = this.selectedStatus;
     console.log(this.newCustomer);
     this.newCustomer.customerId = 0;
+    this.newCustomer.customerId = 0;
     this.customerService.AddNewCustomer(this.newCustomer).subscribe(() => {
       this.loadCustomers();
       this.customerForm.reset();
       this.submitted1 = false;
 
+
       Swal.close();
     });
   }
+
   editCustomer(customer: Customer) {
-    this.customerService.GetCustomerById(customer.customerId).subscribe(res1 => {
+    this.customerService.GetCustomerById(customer.customerId).subscribe((res1: any) => {
+      if (res1.createdDate)
+        res1.createdDate = new Date(res1.createdDate);
+      const status = res1.status as StatusCodeUser
+      res1.status = status
       this.customerForm.setValue(res1);
-      console.log("ssss");
       this.openEditCustomerPopup("עריכת משתמש", "editCustomer");
     });
   }
-  editCustomerSubmit(): void {
 
+  editCustomerSubmit(): void {
     this.submitted = true;
     if (this.customerForm.invalid) {
       return;
     }
     this.customerForm.value.status = this.selectedStatus;
     this.customerService.EditCustomer(this.customerForm.value).subscribe(() => {
-      console.log("f,l,lgggg");
       Swal.close();
       this.loadCustomers();
       this.customerForm.reset();
       this.submitted = false;
-
     });
   }
 
@@ -141,6 +150,7 @@ export class CustomersComponent implements OnInit {
       this.loadCustomers();
     });
   }
+
   selectItem(event: any) {
     this.status = event.target.value;
     this.selectedStatus = this.statusCodeUser.find(s => s.id == this.status) as StatusCodeUser;
@@ -151,6 +161,7 @@ export class CustomersComponent implements OnInit {
       return this.validatorsService.name(control.value) ? null : { invalidName: true };
     };
   }
+
   customPhoneValidator(): (control: FormControl) => ValidationErrors | null {
     return (control: FormControl): ValidationErrors | null => {
       return this.validatorsService.phone(control.value) ? null : { invalidPhone: true };

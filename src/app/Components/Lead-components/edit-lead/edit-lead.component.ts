@@ -1,14 +1,18 @@
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LeadService } from '@app/Services/lead.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Lead } from '@app/Model/Lead';
 import Swal from 'sweetalert2';
+import { MatButtonModule } from '@angular/material/button';
+import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-edit-lead',
-  templateUrl: './edit-lead.component.html',
-  styleUrls: ['./edit-lead.component.css']
+    selector: 'app-edit-lead',
+    templateUrl: './edit-lead.component.html',
+    styleUrls: ['./edit-lead.component.css'],
+    standalone: true,
+    imports: [NgIf, FormsModule, ReactiveFormsModule, MatButtonModule]
 })
 export class EditLeadComponent {
   @Output() dataRefreshed: EventEmitter<void> = new EventEmitter<void>();
@@ -32,7 +36,7 @@ export class EditLeadComponent {
   extractDate(dateTime: string): string {
     const date = new Date(dateTime);
     const year = date.getFullYear();
-    const month = ('0' + (date.getMonth() + 1)).slice(-2); // Months are zero-based
+    const month = ('0' + (date.getMonth() + 1)).slice(-2); 
     const day = ('0' + date.getDate()).slice(-2);
     return `${year}-${month}-${day}`;
   }

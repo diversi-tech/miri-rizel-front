@@ -1,76 +1,81 @@
 <div class="add-task-form">
   <form (ngSubmit)="onSubmit()" [formGroup]="taskForm">
-    <h1>{{this.titlePage}}</h1>
+    <h1>{{this.titlePage |translate}}</h1>
 
-    <mat-form-field>
-      <mat-label>הכנס כותרת</mat-label>
-      <input class="input-style" matInput formControlName="title" required />
-      <mat-error *ngIf="title!.invalid && (title!.touched || title!.dirty)">שדה חובה </mat-error>
-    </mat-form-field>
+    <div class="line"></div>
 
-    <mat-form-field>
-      <mat-label>הכנס תיאור</mat-label>
-      <textarea matInput formControlName="description"></textarea>
-    </mat-form-field>
-
+    <label for="title">{{'TitleInputLabel'|translate}}</label>
     <div class="card flex justify-content-center">
-      <label for="date">הכנס תאריך יעד</label>
-      <br>
-      <p-calendar id="date" formControlName="dueDate" placeholder="mm/dd/yyyy" />
-      <mat-error *ngIf="dueDate!.invalid && (dueDate!.touched || dueDate!.dirty)">
-        <ng-container *ngIf="dueDate!.errors?.['required']; else notFutureDate">
-          שדה חובה
-        </ng-container>
+      <input type="text" id="title" pInputText class="input-field" formControlName="title" />
+      <div class="error-message" *ngIf="title!.invalid && (title!.touched || title!.dirty)">
+        <span *ngIf="title!.errors?.['required']">{{'RequiredField'|translate}}</span>
+      </div>
+    </div>
+
+    <label for="description">{{'DescriptionInputLabel'|translate}}</label>
+    <div class="card flex justify-content-center">
+      <input type="text" pInputText id="description" class="input-field" formControlName="description" />
+      <div class="error-message" *ngIf="description!.invalid && (description!.touched || description!.dirty)">
+        <span *ngIf="description!.errors?.['required']">{{'RequiredField'|translate}}</span>
+      </div>
+    </div>
+
+    <label for="date">{{'DueDateInputLabel'|translate}}</label>
+    <div class="card">
+      <p-calendar id="date" formControlName="dueDate" placeholder="mm/dd/yyyy" class="input-field"></p-calendar>
+      <div class="error-message" *ngIf="dueDate!.invalid && (dueDate!.touched || dueDate!.dirty)">
+        <span *ngIf="dueDate!.errors?.['required']; else notFutureDate">{{'RequiredField'|translate}}</span>
         <ng-template #notFutureDate>
-          <ng-container *ngIf="dueDate!.errors?.['notFutureDate']">
-            התאריך חייב להיות עתידי
-          </ng-container>
+          <span *ngIf="dueDate!.errors?.['notFutureDate']">{{'DueDateError'|translate}}</span>
         </ng-template>
-      </mat-error>
+      </div>
     </div>
 
-    <br>
-    <div class="card flex justify-content-center">
+    <div class="card">
       <p-dropdown formControlName="priority" [options]="priorities" optionLabel="description"
-        placeholder="בחר עדיפות" />
-      <mat-error *ngIf="priority!.invalid && (priority!.touched || priority!.dirty)">שדה חובה </mat-error>
-      <mat-error *ngIf="priority!.invalid && (priority!.touched || priority!.dirty)">שדה חובה </mat-error>
+        [placeholder]="'PriorityInputSelect'|translate" class="select-field"></p-dropdown>
+      <div class="error-message" *ngIf="priority!.invalid && (priority!.touched || priority!.dirty)">
+        <span>{{'RequiredField'|translate}}</span>
+      </div>
     </div>
-    <br>
-    <div class="card flex justify-content-center">
-      <p-dropdown formControlName="status" [options]="statuses" optionLabel="description" placeholder="בחר סטטוס" />
-      <mat-error *ngIf="status!.invalid && (status!.touched || status!.dirty)">שדה חובה </mat-error>
+
+    <div class="card">
+      <p-dropdown formControlName="status" [options]="statuses" optionLabel="description"
+        [placeholder]="'StatusInputSelect'|translate" class="select-field"></p-dropdown>
+      <div class="error-message" *ngIf="status!.invalid && (status!.touched || status!.dirty)">
+        <span>{{'RequiredField'|translate}}</span>
+      </div>
     </div>
-    <br>
-    <label for="assignedTo">בחר לקוח</label>
-    <div id="assignedTo" class="card flex justify-content-center">
+
+    <label for="assignedTo">{{'UserInputSelect'|translate}}</label>
+    <div id="assignedTo" class="card">
       <p-autoComplete [dropdown]="true" [suggestions]="filteredUsers" (completeMethod)="filterUserAuto($event)"
-        field="firstName" (onSelect)="onUserSelected($event)" formControlName="assignedTo">
+        field="firstName" (onSelect)="onUserSelected($event)" formControlName="assignedTo" class="select-field">
         <ng-template let-user pTemplate="item">
           {{ displayFn(user) }}
         </ng-template>
       </p-autoComplete>
-      <mat-error *ngIf="assignedTo!.invalid && (assignedTo!.touched || assignedTo!.dirty)">
-        <ng-container *ngIf="assignedTo!.errors?.['required']">
-          שדה חובה
-        </ng-container>
-      </mat-error>
+      <div class="error-message" *ngIf="assignedTo!.invalid && (assignedTo!.touched || assignedTo!.dirty)">
+        <span *ngIf="assignedTo!.errors?.['required']">{{'RequiredField'|translate}}</span>
+      </div>
+      <p class="error-message" *ngIf="!assignedTo!.errors?.['required'] && userExistError">
+        {{'ExistWorkerError'|translate}}
+      </p>
     </div>
-    <br>
-    <label for="project">בחר פרויקט</label>
-    <div id="project" class="card flex justify-content-center">
+
+    <label for="project">{{'ProjectInputSelect'|translate}}</label>
+    <div id="project" class="card">
       <p-autoComplete [dropdown]="true" [suggestions]="filteredProjects" (completeMethod)="filterProjectAuto($event)"
-        field="name" (onSelect)="onProjectSelected($event)" formControlName="project">
-      </p-autoComplete>
-      <mat-error *ngIf="project!.invalid && (project!.touched || project!.dirty)">
-        <ng-container *ngIf="project!.errors?.['required']">
-          שדה חובה
-        </ng-container>
-      </mat-error>
+        field="name" (onSelect)="onProjectSelected($event)" formControlName="project"
+        class="select-field"></p-autoComplete>
+      <div class="error-message" *ngIf="project!.invalid && (project!.touched || project!.dirty)">
+        <span *ngIf="project!.errors?.['required']">{{'RequiredField'|translate}}</span>
+      </div>
+      <p class="error-message" *ngIf="!project!.errors?.['required'] && projectExistError">
+        {{'ExistProjectError'|translate}}
+      </p>
     </div>
-    <br>
-    <button type="submit" class="submit-button">
-      שמירת משימה
-    </button>
+
+    <button type="submit" class="submit-button">{{'SaveTask'|translate}}</button>
   </form>
 </div>

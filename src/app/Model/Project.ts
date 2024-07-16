@@ -1,14 +1,14 @@
 import { Customer } from './Customer';
-import { Customer2 } from './Customer2';
+import { StatusCodeProject } from './StatusCodeProject';
 import { User } from './User';
 
 export interface Project {
   projectId: number;
-  name: string;
+  name?: string;
   description?: string;
   startDate?: Date;
   endDate?: Date;
-  status?: string;
-  customer_id: Customer2;
+  status?: StatusCodeProject;
+  customer?: Customer;
   createdDate?: Date;
 }

@@ -1,13 +1,16 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StatusCodeUser } from '@app/Model/StatusCodeUser';
 import { CustomersService } from '@app/Services/customers.service';
 import Swal from 'sweetalert2';
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-form-customer',
-  templateUrl: './form-customer.component.html',
-  styleUrls: ['./form-customer.component.css']
+    selector: 'app-form-customer',
+    templateUrl: './form-customer.component.html',
+    styleUrls: ['./form-customer.component.css'],
+    standalone: true,
+    imports: [FormsModule, ReactiveFormsModule, NgIf, NgFor]
 })
 export class FormCustomerComponent {
  

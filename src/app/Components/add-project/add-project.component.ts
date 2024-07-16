@@ -1,32 +1,39 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Customer2 } from '@app/Model/Customer2';
+import { Customer } from '@app/Model/Customer';
 import { StatusCodeProject } from '@app/Model/StatusCodeProject';
 import { CustomersService } from '@app/Services/customers.service';
 import { ProjectService } from '@app/Services/project.service';
 import { TaskService } from '@app/Services/task.service';
 import { Project } from 'src/app/Model/Project';
-import { DialogComponent } from '../dialog/dialog.component';
+import { DialogComponent } from 'src/app/Components/dialog/dialog.component';
+import { DropdownModule } from 'primeng/dropdown';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { NgIf } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
 
 
 @Component({
-  selector: 'app-add-project',
-  templateUrl: './add-project.component.html',
-  styleUrls: ['./add-project.component.css']
+    selector: 'app-add-project',
+    templateUrl: './add-project.component.html',
+    styleUrls: ['./add-project.component.css'],
+    standalone: true,
+    imports: [FormsModule, ReactiveFormsModule, MatInputModule, NgIf, MatFormFieldModule, DropdownModule]
 })
 export class AddProjectComponent implements OnInit {
 
   statuses: StatusCodeProject[] = [];
+  date: Date = new Date();
   projectForm: FormGroup = new FormGroup({});
-  custom: Customer2[] = [];
+  titlePage: string = "AddProjectTitle"
+  custom: Customer[] = [];
   constructor(
     private fb: FormBuilder,
     private projectService: ProjectService,
     private statusService: TaskService,
     private customerService: CustomersService,
-    private route: ActivatedRoute,
     private dialog: MatDialog,
     private router: Router
   ) {
@@ -35,6 +42,7 @@ export class AddProjectComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.date=new Date()
     this.createForm();
     this.statusService.getAllStatus().subscribe(
       (data: any) => {
@@ -59,14 +67,17 @@ export class AddProjectComponent implements OnInit {
       name: ['', Validators.required],
       description:  ['', Validators.required],
       startDate: ['',[ Validators.required,this.futureDateValidator.bind(this)]],
-      endDate: ['',[ Validators.required,this.futureDateValidator.bind(this),  this.dateValidator.bind(this) ]],
+      endDate: ['',[ Validators.required,this.futureDateValidator.bind(this)]],
       status: '',
-      customerId: ['', Validators.required]
+      customer: ['', Validators.required],
+     createdDate:['', [Validators.required,this.futureDateValidator.bind(this)]]
     });
+  
   }
 
   onSubmit() {
     if (this.projectForm.valid) {
+
       const newProject: Project = this.projectForm.value;
       this.projectService.addProject(newProject)
         .subscribe(
@@ -93,6 +104,8 @@ export class AddProjectComponent implements OnInit {
   get startDate() { return this.projectForm.get('startDate') }
   get endDate() { return this.projectForm.get('endDate') }
   get status() { return this.projectForm.get('status') }
+  get cucustomer(){ return this.projectForm.get('customer')}
+  get createdDate(){ return this.projectForm.get('createdDate')}
   futureDateValidator(control: AbstractControl): ValidationErrors | null {
     const selectedDate = new Date(control.value);
     const today = new Date();
@@ -100,14 +113,14 @@ export class AddProjectComponent implements OnInit {
     return selectedDate > today ? null : { notFutureDate: true };
   }
 
-  dateValidator(group: FormGroup) {
-    const startDate = group.get('startDate')?.value;
-    const endDate = group.get('endDate')?.value;
+  // dateValidator(group: FormGroup) {
+  //   const startDate = group.get('startDate')?.value;
+  //   const endDate = group.get('endDate')?.value;
 
-    if (startDate && endDate && new Date(startDate) >= new Date(endDate)) {
-      return { invalidDates: true };
-    }
+  //   if (startDate && endDate && new Date(startDate) >= new Date(endDate)) {
+  //     return { invalidDates: true };
+  //   }
 
-    return null;
-  }
+  //   return null;
+  // }
 }

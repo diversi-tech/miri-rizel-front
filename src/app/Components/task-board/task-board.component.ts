@@ -1,7 +1,6 @@
 import { User } from 'src/app/Model/User';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
-import { Customer, Representative } from 'src/app/Model/Customer';
 // import { ButtonModule } from 'primeng/button';
 import { Table } from 'primeng/table';
 import { TaskService } from 'src/app/Services/task.service';
@@ -11,10 +10,10 @@ import { UserService } from 'src/app/Services/user.service';
 // import { ToastModule } from 'primeng/toast';
 import { ComponentFactoryResolver, ViewContainerRef, Component, OnInit, Type, ViewChild } from '@angular/core';
 import { Project } from 'src/app/Model/Project';
-import { GenericBourdComponent } from '../generic-bourd/generic-bourd.component';
-import { AddTaskComponent } from '../add-task/add-task.component';
+import { GenericBourdComponent } from 'src/app/Components/generic-bourd/generic-bourd.component';
+import { AddTaskComponent } from 'src/app/Components/add-task/add-task.component';
 import Swal from 'sweetalert2';
-import { DialogComponent } from '../dialog/dialog.component';
+import { DialogComponent } from 'src/app/Components/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Location } from '@angular/common';
 import { StatusCodeProject } from '@app/Model/StatusCodeProject';
@@ -23,11 +22,11 @@ import { ProjectService } from '@app/Services/project.service';
 
 
 @Component({
-  selector: 'app-task-board',
-  templateUrl: './task-board.component.html',
-  styleUrls: ['./task-board.component.css'],
-  // imports: [ProgressBarModule,ToastModule]
-
+    selector: 'app-task-board',
+    templateUrl: './task-board.component.html',
+    styleUrls: ['./task-board.component.css'],
+    standalone: true,
+    imports: [GenericBourdComponent],
 })
 
 export class TaskBoardComponent implements OnInit {
@@ -35,10 +34,8 @@ export class TaskBoardComponent implements OnInit {
   users: User[] = [];
   statuses: StatusCodeProject[] = [];
 
-  // 
   priorities: Priority[] = [];
   projects: Project[] = [];
-  // 
 
   loading: boolean = true;
   @ViewChild(GenericBourdComponent) genericBourd!: GenericBourdComponent;
@@ -134,12 +131,14 @@ export class TaskBoardComponent implements OnInit {
     this.taskService.deleteTask(task.taskId!).subscribe(
       (data: any) => {
         if (data == true) {
-          this.dialog.open(DialogComponent, {
-            data: {
-              title: 'המשימה נמחקה בהצלחה',
-              buttonText: 'סגור',
-            },
-          }).afterClosed().subscribe(() => {
+          Swal.fire({
+            text: "The task was successfully deleted",
+            icon: "success",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#3085D6",
+            confirmButtonText: "Close"
+          }).then((result) => {
             this.taskService.getAll().subscribe((data) => {
               this.tasks = data
             })
@@ -150,16 +149,5 @@ export class TaskBoardComponent implements OnInit {
         console.error('Error fetching users:', error);
       }
     );
-  }
-
-  filterData(objToFilter: any) {
-    let userFilter: User[] = this.users.filter(u => u.lastName == objToFilter.assignedTo.lastName)
-    let loading: boolean = true
-    let col$types = { 'lastName': 'text', 'firstName': 'text' }
-    let positionData = [this.priorities, this.priorities]
-    let objData = [this.users, this.projects]
-    let objFields = ['email', 'name']
-    let positionFields = ['description', 'description']
-    this.genericBourd.PopTable(userFilter, loading, col$types, objData, objFields, positionData);
   }
 }
