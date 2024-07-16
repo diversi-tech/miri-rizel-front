@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { WorkerComponentComponent } from './Components/worker-component/worker-component.component';
-import { AdminComponentComponent } from './Components/admin-component/admin-component.component';
+// import { AdminComponentComponent } from './Components/admin-component/admin-component.component';
 import { CustomersComponent } from './Components/customers/customers.component';
 import { HomeComponent } from './Components/home/home.component';
 import { ResetPasswordComponent } from './Components/reset-password/reset-password.component';
@@ -23,13 +23,14 @@ import { HomePageComponent } from './Components/home-page/home-page.component';
 import { CustomerProfileComponent } from './Components/customer-profile/customer-profile.component';
 import { ListDocumentComponent } from './Components/documens/list-document/list-document.component';
 import { AuthGuard } from './Guard/auth.guard';
+import { AdminComponent } from './Components/admin/admin.component';
 const routes: Routes = [
-  // { path: 'customer', component: CustomersComponent, canActivate: [AuthGuard], data: { roles: [3, 2, 1] } },
+  { path: 'customer', component: CustomersComponent, canActivate: [AuthGuard], data: { roles: [3, 2, 1] } },
   { path: 'worker', component: WorkerComponentComponent, canActivate: [AuthGuard], data: { roles: [2, 1] } },
-  { path: 'admin', component: AdminComponentComponent, canActivate: [AuthGuard], data: { roles: [1] } },
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: { roles: [1] } },
   { path: 'customer', component: CustomersComponent},
   { path: 'worker', component: WorkerComponentComponent },
-  { path: 'admin', component: AdminComponentComponent},
+  { path: 'admin', component: AdminComponent},
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
   { path: 'edit', component: EditUserComponent },

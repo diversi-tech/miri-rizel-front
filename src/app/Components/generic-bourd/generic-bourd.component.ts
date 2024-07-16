@@ -197,7 +197,7 @@ document(rowData: any){
         return 'info';
 
       default:
-        return 'null';
+        return undefined;
     }
   }
 
