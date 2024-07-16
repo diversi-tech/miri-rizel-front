@@ -16,8 +16,10 @@ export class CustomersService {
   GetAllCustomers(): Observable<Customer[]> {
     return this.http.get<Customer[]>(`${this.apiUrl}`);
   }
-  GetCustomerById(customerId:number): Observable<Customer> {
-    return this.http.get<Customer>(`${this.apiUrl}GetById?custometId=${customerId}` );
+  GetCustomerById(customerId:number): Observable<any> {
+    console.log(this.http.get<any>(`${this.apiUrl}GetById?custometId=${customerId}` ));
+    
+    return this.http.get<any>(`${this.apiUrl}GetById?custometId=${customerId}` );
 }
   AddNewCustomer(newCustomer:any):Observable<Customer>{
     return this.http.post<Customer>(`${this.apiUrl}`,newCustomer);
