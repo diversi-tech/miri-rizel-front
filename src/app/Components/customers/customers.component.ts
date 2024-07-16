@@ -181,11 +181,9 @@ export class CustomersComponent implements OnInit {
 
   componentType!: Type<any>;
 
-  popUpAdd(title: string, nameCustomer: string) {
+  popUpAdd(nameCustomer: string) {
     this.componentType = DocumentComponent;
-
     Swal.fire({
-      title: title,
       html: '<div id="popupContainer"></div>',
       showConfirmButton: false,
       didOpen: () => {
@@ -204,6 +202,6 @@ export class CustomersComponent implements OnInit {
   }
 
   addDocument(customer: Customer) {
-    this.popUpAdd("הוספת מסמך", customer.firstName);
+    this.popUpAdd( customer.firstName);
   }
 }
