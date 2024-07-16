@@ -58,13 +58,15 @@ export class AddLeadComponent {
    submitForm = () => {
     let formData = this.userForm.value;
     this.leadSrv.addLead(formData).subscribe((lead) => {
-      alert('הליד נוסף בהצלחה' + lead);
-      this.userForm.reset();
+      //alert('הליד נוסף בהצלחה' + lead);
+      Swal.fire({title: "הליד נוסף בהצלחה", icon: "success"}).then(()=>
+        {this.userForm.reset();
       Object.keys(this.userForm.controls).forEach((key) => {
         this.userForm.controls[key].markAsUntouched();
       });
        this.dataRefreshed.emit();
-      Swal.close();
+      Swal.close();});
+      
     });
         
   };
