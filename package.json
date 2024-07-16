@@ -28,6 +28,7 @@
     "firebase": "^10.1.0",
     "gapi-client": "^0.0.3",
     "gapi-script": "^1.2.0",
+    "moment-timezone": "^0.5.45",
     "ngx-google-sign-in": "^1.0.4",
     "primeicons": "^7.0.0",
     "primeng": "^17.18.4",
