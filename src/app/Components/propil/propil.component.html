@@ -1,0 +1,54 @@
+<!-- <div class="mini-chat-container">
+    <div class="chat-message">
+      <div class="message-header">
+        <span class="message-date">{{ communication.date | date: 'short' }}</span>
+      </div>
+      <div class="message-body">
+        <h3>{{ communication.details }}</h3>
+        <h3 *ngIf="communication.relatedTo?.id==1">costomerId : {{ communication.relatedId }}</h3>
+        <h3 *ngIf="communication.relatedTo?.id==2">LeadId : {{ communication.relatedId }}</h3>
+      </div>
+    </div>
+  
+    <div class="responses">
+      <div *ngFor="let response of responses" class="response-message">
+        <div class="message-header">
+          <span class="message-date">{{ response.date | date: 'short' }}</span>
+        </div>
+        <div class="message-body">
+          <p>{{ response.details }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  -->
+
+<div class="mini-chat-container">
+  <div class="chat-message">
+    <div class="message-header">
+      <span class="message-date">{{ communication.date | date: 'short' }}</span>
+      <a href="javascript:void(0)" class="delete-icon" (click)="deleteMessage(communication)">🗑️</a>
+    </div>
+    <div class="message-body">
+      <h3>{{ communication.details }}</h3>
+      <!-- <h3 *ngIf="communication.relatedTo?.id==1">costomerId : {{ communication.relatedId }}</h3>
+      <h3 *ngIf="communication.relatedTo?.id==2">LeadId : {{ communication.relatedId }}</h3> -->
+      <h3 *ngIf="communication.relatedTo?.id==1">costomer : {{ communication.name }}</h3>
+      <h3 *ngIf="communication.relatedTo?.id==2">Lead : {{ communication.name }}</h3>
+    </div>
+  </div>
+
+  <div class="responses">
+    <div *ngFor="let response of responses" class="response-message">
+      <div class="message-header">
+        <span class="message-date">{{ response.date | date: 'short' }}</span>
+        <a href="javascript:void(0)" class="delete-icon" (click)="deleteMessage(response)">🗑️</a> Delete link
+      </div>
+      <div class="message-body">
+        <p>{{ response.details }}</p>
+      </div>
+    </div>
+  </div>
+
+</div>

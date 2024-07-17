@@ -1,7 +1,11 @@
 <form class="addDocument" id="addDocument" [formGroup]="documentForm" (ngSubmit)="addDocumentSubmit()">
   <div class="form-group">
+    <h1>הוספת מסמך</h1>
+
+    <div class="line"></div>
+
     <label for="title">כותרת</label>
-    <input type="text" formControlName="title" required placeholder="כותרת" (change)="changeTitle()"/>
+    <input type="text" formControlName="title" pInputText  required (change)="changeTitle()"/>
     <div *ngIf="submitted && documentForm.controls['title'].errors">
       <span *ngIf="documentForm.controls['title'].errors['required']">שדה חובה</span>
       <span *ngIf="documentForm.controls['title'].errors['invalidName']">כותרת קצרה</span>
@@ -10,7 +14,7 @@
 
   <div class="form-group">
     <label for="description">תאור המסמך</label>
-    <input type="text" formControlName="description" required placeholder="תאור המסמך" />
+    <input type="text" pInputText formControlName="description" required  />
     <div *ngIf="submitted && documentForm.controls['description'].errors">
       <span *ngIf="documentForm.controls['description'].errors['required']">שדה חובה</span>
     </div>
@@ -18,7 +22,7 @@
 <br>
   <div class="form-group" *ngIf="trueTitle">
     <label for="file">לבחירת מסמך</label>
-    <input class="document" type="file" (change)="onFileChange($event)" formControlName="filePath" required    
+    <input class="document" pInputText  type="file" (change)="onFileChange($event)" formControlName="filePath" required    
       accept=".pdf,.png,.jpg,.jpeg,.txt,.doc,.docx,.xls,.xlsx,.ppt,.pptx"
       />
     <div *ngIf="submitted && documentForm.controls['filePath'].errors">

@@ -1,24 +1,27 @@
-import { Component, ComponentFactoryResolver, EventEmitter, OnInit, Output, Type, ViewChild, ViewContainerRef } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Component, ComponentFactoryResolver, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { StatusCodeUser } from '@app/Model/StatusCodeUser';
 import { Customer } from 'src/app/Model/Customer';
 import { CustomersService } from 'src/app/Services/customers.service';
 import { ValidatorsService } from 'src/app/Services/validators.service';
-import { DocumentComponent } from '../documens/document/document.component';
-import { NgIf, NgFor } from '@angular/common';
+import { Router } from '@angular/router';
+import { ChatComponent } from '../chat/chat.component';
+import { Lead } from '@app/Model/Lead';
 import { GenericBourdComponent } from '../generic-bourd/generic-bourd.component';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { InputTextModule } from 'primeng/inputtext';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-customers',
   templateUrl: './customers.component.html',
   styleUrls: ['./customers.component.css'],
   standalone: true,
-  imports: [GenericBourdComponent, FormsModule, DropdownModule, CalendarModule, ReactiveFormsModule, InputTextModule, NgIf, NgFor, TranslateModule]
+  imports: [ CommonModule,GenericBourdComponent,FormsModule, DropdownModule, CalendarModule, ReactiveFormsModule, InputTextModule, NgIf, NgFor, 
+    
+  ]
 })
 export class CustomersComponent implements OnInit {
   editCustomerFlag: boolean = false;
@@ -35,12 +38,10 @@ export class CustomersComponent implements OnInit {
   status: any;
   private originalParent: HTMLElement | null = null;
   newCustomer!: Customer;
-  nameForm:string="";
-  @Output()
-  addDocumentCustomer = new EventEmitter<string>();
-
-  constructor(private formBuilder: FormBuilder, private customerService: CustomersService, private validatorsService: ValidatorsService, private resolver: ComponentFactoryResolver, private translate: TranslateService) { }
   @ViewChild('popupContainer', { read: ViewContainerRef }) popupContainer!: ViewContainerRef;
+  nameForm!: string;
+
+  constructor(private resolver: ComponentFactoryResolver, private router: Router, private formBuilder: FormBuilder, private customerService: CustomersService, private validatorsService: ValidatorsService) { }
 
   ngOnInit(): void {
     this.customerForm = this.formBuilder.group({
@@ -116,10 +117,12 @@ export class CustomersComponent implements OnInit {
     this.newCustomer.status = this.selectedStatus;
     console.log(this.newCustomer);
     this.newCustomer.customerId = 0;
+    this.newCustomer.customerId = 0;
     this.customerService.AddNewCustomer(this.newCustomer).subscribe(() => {
       this.loadCustomers();
       this.customerForm.reset();
       this.submitted1 = false;
+
 
       Swal.close();
     });
@@ -179,11 +182,16 @@ export class CustomersComponent implements OnInit {
     };
   }
 
+  propil(customer: Customer) {
+    this.componentType = ChatComponent;
+    this.popUpAddOrEdit(`Communication ${customer.firstName}`, customer, "customer", customer.customerId);
+  }
+  popupOpen = false;
   componentType!: Type<any>;
 
-  popUpAdd(title: string, nameCustomer: string) {
-    this.componentType = DocumentComponent;
-
+  popUpAddOrEdit(title: string, l: Customer, s: String, id: Number) {
+    // this.flag = false;
+    this.popupOpen = true; // Set popupOpen to true when the pop-up is opened
     Swal.fire({
       title: title,
       html: '<div id="popupContainer"></div>',
@@ -191,19 +199,30 @@ export class CustomersComponent implements OnInit {
       didOpen: () => {
         const container = document.getElementById('popupContainer');
         if (container) {
-          console.log(this.componentType);
-          if (this.componentType && this.resolver) {
-            const factory = this.resolver.resolveComponentFactory(this.componentType);
-            const componentRef = this.popupContainer.createComponent(factory);
-            container.appendChild(componentRef.location.nativeElement);
-            componentRef.instance.setName(nameCustomer);
-          }
+          const factory = this.resolver.resolveComponentFactory(this.componentType);
+          const componentRef = this.popupContainer.createComponent(factory);
+          if (l != null && l != undefined)
+            componentRef.instance.setData(l, s, id);
+          container.appendChild(componentRef.location.nativeElement);
         }
+      },
+      didClose: () => {
+        this.popupOpen = false; // Set popupOpen to false when the pop-up is closed
       }
     });
+    this.logNumbersWhilePopupOpen();
   }
 
-  addDocument(customer: Customer) {
-    this.popUpAdd("הוספת מסמך", customer.firstName);
+  logNumbersWhilePopupOpen() {
+    let counter = 0;
+    const interval = setInterval(() => {
+      if (this.popupOpen) {
+        counter++;
+      } else {
+        clearInterval(interval); // Stop logging numbers when the pop-up is closed
+        // this.custService.GetCustomerById(this.cus.customerId).subscribe(res=>{this.cus=res,this.flag=true})
+      }
+    }, 1000); // Log every second
   }
+
 }

@@ -45,7 +45,7 @@
       placeholder="בחר לקוח" />
     <!-- <mat-error *ngIf="status!.invalid && (status!.touched || status!.dirty)">שדה חובה </mat-error> -->
   </div>
-  <div class="form-group">
+  <!-- <div class="form-group">
     <label for="createdDate">CreatedDate</label>
     <input type="date" formControlName="createdDate" required placeholder="CreatedDate" />
     <mat-error *ngIf="createdDate!.invalid && (createdDate!.touched || createdDate!.dirty)">
@@ -59,7 +59,7 @@
       </ng-template>
     </mat-error>
   
-  </div>
+  </div> -->
 
   <button type="submit" [disabled]="!projectForm.valid"><label *ngIf="!projectForm.valid">your details isnt
       correct</label><label *ngIf="projectForm.valid">create project</label></button>
