@@ -9,6 +9,7 @@ import { EditLeadComponent } from 'src/app/Components/Lead-components/edit-lead/
 import { DialogComponent } from '@app/Components/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AddLeadComponent } from 'src/app/Components/Lead-components/add-lead/add-lead.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-list-leads',
@@ -25,7 +26,7 @@ export class ListLeadsComponent {
   componentType!: Type<any>;
   @ViewChild(GenericBourdComponent) genericBourd!: GenericBourdComponent;
   @ViewChild('popupContainer', { read: ViewContainerRef }) popupContainer!: ViewContainerRef;
-  constructor(private dialog:MatDialog ,private leadService: LeadService, private router: Router, private resolver: ComponentFactoryResolver) { }
+  constructor(private dialog:MatDialog ,private leadService: LeadService, private router: Router, private resolver: ComponentFactoryResolver, private translate: TranslateService) { }
 
   ngOnInit() {
     this.loadLeads();
@@ -40,7 +41,7 @@ export class ListLeadsComponent {
 
   onEditLead(Lead: Lead) {
     this.componentType = EditLeadComponent;
-    this.popUpAddOrEdit("Edit Lead", Lead.leadId);
+    this.popUpAddOrEdit(Lead.leadId);
   }
 
   onDeleteLead(lead: Lead) {
@@ -50,12 +51,13 @@ export class ListLeadsComponent {
  
   addLead(){
     this.componentType = AddLeadComponent;
-    this.popUpAddOrEdit("Add Lead");
+    let title: string="";
+   //this.translate.get("AddLead").subscribe(tranlation=> title=tranlation);
+    this.popUpAddOrEdit();
   } 
 
-  popUpAddOrEdit(title: string, l?:Number) {
+  popUpAddOrEdit(l?:Number) {
     Swal.fire({
-      title: title,
       html: '<div id="popupContainer"></div>',
       showConfirmButton: false,
       didOpen: () => {
