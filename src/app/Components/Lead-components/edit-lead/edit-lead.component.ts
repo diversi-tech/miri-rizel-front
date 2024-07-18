@@ -6,13 +6,26 @@ import { Lead } from '@app/Model/Lead';
 import Swal from 'sweetalert2';
 import { MatButtonModule } from '@angular/material/button';
 import { NgIf } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { InputTextModule } from 'primeng/inputtext';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { SharedModule } from 'primeng/api';
+
 
 @Component({
-    selector: 'app-edit-lead',
-    templateUrl: './edit-lead.component.html',
-    styleUrls: ['./edit-lead.component.css'],
-    standalone: true,
-    imports: [NgIf, FormsModule, ReactiveFormsModule, MatButtonModule]
+  selector: 'app-edit-lead',
+  templateUrl: './edit-lead.component.html',
+  styleUrls: ['./edit-lead.component.css'],
+  standalone: true,
+  imports: [InputTextModule, TranslateModule, NgIf, FormsModule, ReactiveFormsModule, MatButtonModule,
+    CalendarModule,
+    DropdownModule,
+    AutoCompleteModule,
+    SharedModule,
+    TranslateModule,
+  ]
 })
 export class EditLeadComponent {
   @Output() dataRefreshed: EventEmitter<void> = new EventEmitter<void>();
@@ -36,7 +49,7 @@ export class EditLeadComponent {
   extractDate(dateTime: string): string {
     const date = new Date(dateTime);
     const year = date.getFullYear();
-    const month = ('0' + (date.getMonth() + 1)).slice(-2); 
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
     const day = ('0' + date.getDate()).slice(-2);
     return `${year}-${month}-${day}`;
   }
@@ -66,7 +79,7 @@ export class EditLeadComponent {
     };
   }
 
-  get formControls() { return this.editForm.controls;}
+  get formControls() { return this.editForm.controls; }
 
   async toEnter() {
     this.submitted = true;

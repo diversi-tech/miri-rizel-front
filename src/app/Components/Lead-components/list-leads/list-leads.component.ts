@@ -40,7 +40,7 @@ export class ListLeadsComponent {
   }
 
   onEditLead(Lead: Lead) {
-    this.componentType = ChatComponent;
+    this.componentType = EditLeadComponent;
     this.popUpAddOrEdit("Edit Lead", Lead.leadId);
   }
 
@@ -56,7 +56,7 @@ export class ListLeadsComponent {
 
   popUpAddOrEdit(title: string, l?:Number) {
     Swal.fire({
-      title: title,
+      // title: title,
       html: '<div id="popupContainer"></div>',
       showConfirmButton: false,
       didOpen: () => {
@@ -64,7 +64,6 @@ export class ListLeadsComponent {
         if (container) {
           if(container==undefined)
             console.log(",l;,");
-            
           const factory = this.resolver.resolveComponentFactory(this.componentType);
           const componentRef = this.popupContainer.createComponent(factory);
           if(l!=null && l!=undefined)         
