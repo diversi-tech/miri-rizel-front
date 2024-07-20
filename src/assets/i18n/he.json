@@ -89,5 +89,16 @@
   "endDateInputLabel":"הכנס תאריך סיום",
   "castomerInputSelect":"בחר לקוח",
   "AddLeadTitle":"הוספת ליד",
-  "OrContinueWith":"או המשך עם"
+  "OrContinueWith":"או המשך עם",
+  "NameInput":"הכנס שם פרויקט",
+    "DescriptionInput":"תיאור",
+    "EndDateInput":"תאריך סיום",
+    "StartDateInput":"תאריך התחלה",
+    "StatusInput":" סטטוס",
+    "CustomerInput":"שם לקוח",
+    "CreateProject":"הוסף",
+    "YourDeatailsWorng":"הפרטים שלך שגויים",
+    "seccesaddProject":"הפרויקט נוסף בהצלחה",
+    "close":"סגור",
+    "notasks":"אין משימות"
 }

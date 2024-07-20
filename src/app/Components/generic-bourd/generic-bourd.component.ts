@@ -9,6 +9,7 @@ import {
   ViewChild,
   ComponentFactoryResolver,
   ViewContainerRef,
+  ComponentRef,
 } from '@angular/core';
 import { SheetsApiService } from '@app/Services/sheets-api.service';
 import { Table, TableModule } from 'primeng/table';
@@ -38,26 +39,26 @@ interface position {
 }
 
 @Component({
-    selector: 'app-generic-bourd',
-    templateUrl: './generic-bourd.component.html',
-    styleUrls: ['./generic-bourd.component.css'],
-    standalone: true,
-    imports: [
-        ToolbarModule,
-        SharedModule,
-        ButtonModule,
-        TooltipModule,
-        TableModule,
-        InputTextModule,
-        NgFor,
-        NgIf,
-        DropdownModule,
-        FormsModule,
-        TagModule,
-        MultiSelectModule,
-        TranslateModule,
-        DatePipe,
-    ],
+  selector: 'app-generic-bourd',
+  templateUrl: './generic-bourd.component.html',
+  styleUrls: ['./generic-bourd.component.css'],
+  standalone: true,
+  imports: [
+    ToolbarModule,
+    SharedModule,
+    ButtonModule,
+    TooltipModule,
+    TableModule,
+    InputTextModule,
+    NgFor,
+    NgIf,
+    DropdownModule,
+    FormsModule,
+    TagModule,
+    MultiSelectModule,
+    TranslateModule,
+    DatePipe,
+  ],
 })
 export class GenericBourdComponent implements OnInit, OnChanges {
   @Input() data: any[] = [];
@@ -68,6 +69,7 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   @Input() objFields: string[] = [];
   @Input() col$types: any = {};
   @Input() popTable!: boolean;
+  @Input() hideEditButton: boolean = false;
   @Output() edit = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
   @Output() dataUpdated = new EventEmitter<any>();
@@ -80,7 +82,7 @@ export class GenericBourdComponent implements OnInit, OnChanges {
     private resolver: ComponentFactoryResolver,
     private sheetsAPI: SheetsApiService,
     private translateService: TranslateService
-  ) {}
+  ) { }
 
   columns: Column[] = [];
   isListView: boolean = true;
@@ -109,9 +111,9 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   onEdit(rowData: any) {
     this.edit.emit(rowData);
   }
-document(rowData: any){
-  this.addDocument.emit(rowData);
-}
+  document(rowData: any) {
+    this.addDocument.emit(rowData);
+  }
   onDelete(rowData: any) {
     Swal.fire({
       title: 'Are you sure?',
@@ -257,7 +259,10 @@ document(rowData: any){
     col$types: any,
     Data1?: any,
     objFields?: string[],
-    Data2?: any[]
+    Data2?: any[],
+    customWidth?: string,
+    deleteCallBack?: (rowdata: any) => void,
+    edit?: boolean,
   ) {
     Swal.fire({
       title: 'Details',
@@ -290,7 +295,20 @@ document(rowData: any){
           }
           container.appendChild(componentRef.location.nativeElement);
           componentRef.instance.loading = false;
+          if (edit)  componentRef.instance.hideEditButton = edit 
+          // 
+          if (deleteCallBack)
+            componentRef.instance.onDelete = deleteCallBack
+          // 
         }
+        if (customWidth) {
+          const popup = Swal.getPopup();
+          if (popup) {
+            popup.style.width = customWidth; // קביעת רוחב מותאם אישית
+          }
+        }
+       
+
       },
     });
   }
@@ -298,7 +316,7 @@ document(rowData: any){
     debugger;
     this.showAddComponent.emit();
   }
-  d(b: any) {}
+  d(b: any) { }
 
   //גוגל שיטס
   async spreadSheetsFromTableData<T extends {}>(data: T[]) {
@@ -370,13 +388,13 @@ document(rowData: any){
       //   return formValues;
       // }
     })
-  }      
+  }
   //קבלת מידע הטופס ופניה לפונקציה המתאימה
   async exportToSpreadSheet(eventData: any): Promise<void> {
     console.log('Submitted values:', eventData);
     const arrayOfArraysData = this.objectsToArrayOfArrays(this.data);
-    const titles: string[]=await this.translateTitles(arrayOfArraysData[0]);
-    arrayOfArraysData[0]=titles;
+    const titles: string[] = await this.translateTitles(arrayOfArraysData[0]);
+    arrayOfArraysData[0] = titles;
     if (eventData.selectedOption === 'newDoc') {
       if (eventData.fileName != null)
         this.sheetsAPI.ExportDataToNewSheet(
@@ -431,8 +449,8 @@ document(rowData: any){
             ? key.filterType == 'obj'
               ? String(value[this.getobjFields(numColumn, 'obj')])
               : key.filterType == 'position'
-              ? String(value[this.getobjFields(numColumn, 'position')])
-              : String(value)
+                ? String(value[this.getobjFields(numColumn, 'position')])
+                : String(value)
             : '';
         numColumn++;
         return p;
@@ -445,9 +463,9 @@ document(rowData: any){
     return result;
   }
 
-  translateTitles(titles: string[]) :Promise<string[]>{
+  translateTitles(titles: string[]): Promise<string[]> {
     //return titles.forEach(title=> this.translateService.get(title).subscribe(translation=> title= translation));
-    const translationPromises = titles.map(title => 
+    const translationPromises = titles.map(title =>
       this.translateService.get(title).toPromise()
     );
 

@@ -89,7 +89,16 @@
     "endDateInputLabel":"Enter end Date",
     "castomerInputSelect":"Select castomer",
     "AddLeadTitle":"Add Lead",
-    "OrContinueWith":"Or continue with"
-
-
+    "OrContinueWith":"Or continue with",
+    "NameInput":"Insert project name",
+    "DescriptionInput":" Description",
+    "EndDateInput":" EndDate",
+    "StartDateInput":" StartDate",
+    "StatusInput":" Status",
+    "CustomerInput":"Customer Name",
+    "CreateProject":"Create",
+   "YourDeatailsWorng":"Your details are worng",
+   "seccesaddProject":"The Project added seccesfully",
+   "close":"close",
+   "notasks":"it isnt tasks"
 }
