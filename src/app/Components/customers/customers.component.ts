@@ -181,7 +181,7 @@ export class CustomersComponent implements OnInit {
 
   componentType!: Type<any>;
 
-  popUpAdd(nameCustomer: string) {
+  popUpAddDocument(nameCustomer: string) {
     this.componentType = DocumentComponent;
     Swal.fire({
       html: '<div id="popupContainer"></div>',
@@ -202,6 +202,6 @@ export class CustomersComponent implements OnInit {
   }
 
   addDocument(customer: Customer) {
-    this.popUpAdd( customer.firstName);
+    this.popUpAddDocument( customer.firstName);
   }
 }
