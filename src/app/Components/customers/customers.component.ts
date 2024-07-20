@@ -13,6 +13,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
+import { DocumentComponent } from '../documens/document/document.component';
 
 @Component({
   selector: 'app-customers',
@@ -193,8 +194,6 @@ export class CustomersComponent implements OnInit {
   popUpAddOrEdit(title: string, l: Customer, s: String, id: Number) {
     // this.flag = false;
     this.popupOpen = true; // Set popupOpen to true when the pop-up is opened
-  popUpAddDocument(nameCustomer: string) {
-    this.componentType = DocumentComponent;
     Swal.fire({
       title: title,
       html: '<div id="popupContainer"></div>',
@@ -222,12 +221,18 @@ export class CustomersComponent implements OnInit {
       if (this.popupOpen) {
         counter++;
       } else {
-        clearInterval(interval); // Stop logging numbers when the pop-up is closed
-        // this.custService.GetCustomerById(this.cus.customerId).subscribe(res=>{this.cus=res,this.flag=true})
+        clearInterval(interval); 
       }
-    }, 1000); // Log every second
+    }, 1000); 
   }
-
+  popUpAddDocument(nameCustomer: string) {
+    this.componentType = DocumentComponent;
+    Swal.fire({
+      html: '<div id="popupContainer"></div>',
+      showConfirmButton: false,
+      didOpen: () => {
+        const container = document.getElementById('popupContainer');
+        if (container) {
           console.log(this.componentType);
           if (this.componentType && this.resolver) {
             const factory = this.resolver.resolveComponentFactory(this.componentType);
@@ -243,4 +248,5 @@ export class CustomersComponent implements OnInit {
   addDocument(customer: Customer) {
     this.popUpAddDocument( customer.firstName);
   }
+
 }
