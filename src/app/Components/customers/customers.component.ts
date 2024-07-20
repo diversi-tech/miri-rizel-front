@@ -14,13 +14,14 @@ import { CalendarModule } from 'primeng/calendar';
 import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { DocumentComponent } from '../documens/document/document.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-customers',
   templateUrl: './customers.component.html',
   styleUrls: ['./customers.component.css'],
   standalone: true,
-  imports: [ CommonModule,GenericBourdComponent,FormsModule, DropdownModule, CalendarModule, ReactiveFormsModule, InputTextModule, NgIf, NgFor, 
+  imports: [ CommonModule,GenericBourdComponent,FormsModule, DropdownModule, CalendarModule, ReactiveFormsModule, InputTextModule, NgIf, NgFor,TranslateModule
     
   ]
 })
@@ -40,7 +41,7 @@ export class CustomersComponent implements OnInit {
   private originalParent: HTMLElement | null = null;
   newCustomer!: Customer;
   @ViewChild('popupContainer', { read: ViewContainerRef }) popupContainer!: ViewContainerRef;
-  nameForm!: string;
+  titlePage!: string;
 
   constructor(private resolver: ComponentFactoryResolver, private router: Router, private formBuilder: FormBuilder, private customerService: CustomersService, private validatorsService: ValidatorsService) { }
 
@@ -81,7 +82,7 @@ export class CustomersComponent implements OnInit {
 
   openEditCustomerPopup(title: string, formId: string) {
     const formElement = document.getElementById(formId);
-    this.nameForm=title
+    this.titlePage=title
     if (formElement) {
       this.originalParent = formElement.parentElement;
       Swal.fire({
@@ -106,7 +107,7 @@ export class CustomersComponent implements OnInit {
   }
 
   addCustomer() {
-    this.openEditCustomerPopup("הוספת לקוח", "addCustomer");
+    this.openEditCustomerPopup("AddCustomerTitle", "addCustomer");
   }
 
   addCustomerSubmit() {
@@ -136,7 +137,7 @@ export class CustomersComponent implements OnInit {
       const status = res1.status as StatusCodeUser
       res1.status = status
       this.customerForm.setValue(res1);
-      this.openEditCustomerPopup("עריכת משתמש", "editCustomer");
+      this.openEditCustomerPopup("EditCustomerTitle", "editCustomer");
     });
   }
 
