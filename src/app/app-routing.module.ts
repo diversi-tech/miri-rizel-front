@@ -25,9 +25,9 @@ import { ListDocumentComponent } from './Components/documens/list-document/list-
 import { AuthGuard } from './Guard/auth.guard';
 import { AdminComponent } from './Components/admin/admin.component';
 const routes: Routes = [
-  { path: 'customer', component: CustomersComponent, canActivate: [AuthGuard], data: { roles: [3, 2, 1] } },
-  { path: 'worker', component: WorkerComponentComponent, canActivate: [AuthGuard], data: { roles: [2, 1] } },
-  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: { roles: [1] } },
+  // { path: 'customer', component: CustomersComponent, canActivate: [AuthGuard], data: { roles: [3, 2, 1] } },
+  // { path: 'worker', component: WorkerComponentComponent, canActivate: [AuthGuard], data: { roles: [2, 1] } },
+  // { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: { roles: [1] } },
   { path: 'customer', component: CustomersComponent},
   { path: 'worker', component: WorkerComponentComponent },
   { path: 'admin', component: AdminComponent},

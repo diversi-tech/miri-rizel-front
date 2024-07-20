@@ -3,11 +3,11 @@ import { User } from './User';
 
 export interface Project {
   projectId: number;
-  name: string;
+  name?: string;
   description?: string;
   startDate?: Date;
   endDate?: Date;
   status?: string;
-  customer: Customer;
+  customer?: Customer;
   createdDate?: Date;
 }

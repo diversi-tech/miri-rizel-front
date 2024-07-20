@@ -24,12 +24,12 @@ export class CustomersService {
   } 
   EditCustomer(editCustomer:Customer):Observable<boolean>{
     editCustomer.status=editCustomer.status as StatusCodeUser;    
-    return this.http.put<boolean>(`${this.apiUrl}Customer/`,editCustomer);
+    return this.http.put<boolean>(`${this.apiUrl}`,editCustomer);
   } 
   
   DeleteCustomer(customerId:number):Observable<boolean>{
     
-    return this.http.delete<boolean>(`${this.apiUrl}Customer?customerId=${customerId}`);
+    return this.http.delete<boolean>(`${this.apiUrl}?customerId=${customerId}`);
   } 
   GetAllStatusUser():Observable<StatusCodeUser[]>{
     return this.http.get<StatusCodeUser[]>(`${this.apiUrl}GetAllStatus`);

@@ -23,28 +23,28 @@ interface AutoCompleteCompleteEvent {
   query: string;
 }
 @Component({
-    selector: 'app-add-task',
-    templateUrl: './add-task.component.html',
-    styleUrls: ['./add-task.component.css'],
-    standalone: true,
-    imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        InputTextModule,
-        NgIf,
-        CalendarModule,
-        DropdownModule,
-        AutoCompleteModule,
-        SharedModule,
-        TranslateModule,
-    ],
+  selector: 'app-add-task',
+  templateUrl: './add-task.component.html',
+  styleUrls: ['./add-task.component.css'],
+  standalone: true,
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    InputTextModule,
+    NgIf,
+    CalendarModule,
+    DropdownModule,
+    AutoCompleteModule,
+    SharedModule,
+    TranslateModule,
+  ],
 })
 export class AddTaskComponent implements OnInit {
   @Output() dataRefreshed: EventEmitter<void> = new EventEmitter<void>();
   data: any;
   setData(data: any) {
     console.log();
-    
+
     if (data) {
       this.data = data;
       this.isEdit = true;
@@ -138,7 +138,10 @@ export class AddTaskComponent implements OnInit {
   get dueDate() { return this.taskForm.get('dueDate') }
   get assignedTo() { return this.taskForm.get('assignedTo') }
   get project() { return this.taskForm.get('project') }
+
   futureDateValidator(control: AbstractControl): ValidationErrors | null {
+    if (this.isEdit)
+      return null;
     const selectedDate = new Date(control.value);
     const today = new Date();
     // today.setHours(0, 0, 0, 0);

@@ -66,13 +66,14 @@ export class LoginComponent implements OnInit {
   userData: String = "logIn"
 
   onSubmit() {
+    debugger
     if (this.logInForm.invalid) {
       return;
     }
     const email = this.email.value;
     const password = this.pass.value;
     this.userService.login(email, password).subscribe(
-      (user: User) => {
+      (user: any) => {
         this.router.navigate(['/home', user.role])
         //     console.log("user");
         //     if (user.role == 1) {
