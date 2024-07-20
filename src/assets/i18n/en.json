@@ -101,8 +101,9 @@
     "notes": "notes",
     "AddLead": "Add lead",
     "addLeadSuccess": "The lead was successfully added!",
-    "validPhone": "Invalid phone number"
-
-
+    "validPhone": "Invalid phone number",
+    "descriptionDocument": "Desctiption a document ",
+    "chooseDocument": "Choose a document",
+  "AddDocument": "Add document"
 
 }
