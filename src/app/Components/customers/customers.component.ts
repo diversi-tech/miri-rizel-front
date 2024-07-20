@@ -1,20 +1,29 @@
-import { Component, ComponentFactoryResolver, EventEmitter, OnInit, Output, Type, ViewChild, ViewContainerRef } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Component, ComponentFactoryResolver, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { StatusCodeUser } from '@app/Model/StatusCodeUser';
 import { Customer } from 'src/app/Model/Customer';
 import { CustomersService } from 'src/app/Services/customers.service';
 import { ValidatorsService } from 'src/app/Services/validators.service';
-import { DocumentComponent } from 'src/app/Components/documens/document/document.component';
-import { NgIf, NgFor } from '@angular/common';
-import { GenericBourdComponent } from 'src/app/Components/generic-bourd/generic-bourd.component';
+import { Router } from '@angular/router';
+import { ChatComponent } from '../chat/chat.component';
+import { Lead } from '@app/Model/Lead';
+import { GenericBourdComponent } from '../generic-bourd/generic-bourd.component';
+import { DropdownModule } from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
+import { InputTextModule } from 'primeng/inputtext';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
+import { DocumentComponent } from '../documens/document/document.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'app-customers',
-    templateUrl: './customers.component.html',
-    styleUrls: ['./customers.component.css'],
-    standalone: true,
-    imports: [GenericBourdComponent, FormsModule, ReactiveFormsModule, NgIf, NgFor]
+  selector: 'app-customers',
+  templateUrl: './customers.component.html',
+  styleUrls: ['./customers.component.css'],
+  standalone: true,
+  imports: [ CommonModule,GenericBourdComponent,FormsModule, DropdownModule, CalendarModule, ReactiveFormsModule, InputTextModule, NgIf, NgFor,TranslateModule
+    
+  ]
 })
 export class CustomersComponent implements OnInit {
   editCustomerFlag: boolean = false;
@@ -31,11 +40,10 @@ export class CustomersComponent implements OnInit {
   status: any;
   private originalParent: HTMLElement | null = null;
   newCustomer!: Customer;
-  @Output()
-  addDocumentCustomer = new EventEmitter<string>();
-
-  constructor(private formBuilder: FormBuilder, private customerService: CustomersService, private validatorsService: ValidatorsService,private resolver: ComponentFactoryResolver) { }
   @ViewChild('popupContainer', { read: ViewContainerRef }) popupContainer!: ViewContainerRef;
+  titlePage!: string;
+
+  constructor(private resolver: ComponentFactoryResolver, private router: Router, private formBuilder: FormBuilder, private customerService: CustomersService, private validatorsService: ValidatorsService) { }
 
   ngOnInit(): void {
     this.customerForm = this.formBuilder.group({
@@ -49,6 +57,7 @@ export class CustomersComponent implements OnInit {
       status: ['', [Validators.required]],
       createdDate: ['', [Validators.required]],
     });
+
     this.loadCustomers();
     this.loadStatusUsers();
   }
@@ -70,12 +79,13 @@ export class CustomersComponent implements OnInit {
   }
 
   get formControls() { return this.customerForm.controls; }
+
   openEditCustomerPopup(title: string, formId: string) {
     const formElement = document.getElementById(formId);
+    this.titlePage=title
     if (formElement) {
       this.originalParent = formElement.parentElement;
       Swal.fire({
-        title: title,
         html: `<div id="popupContainer"></div>`,
         showConfirmButton: false,
         didOpen: () => {
@@ -95,10 +105,11 @@ export class CustomersComponent implements OnInit {
       });
     }
   }
+
   addCustomer() {
-    console.log("sd");
-    this.openEditCustomerPopup("הוספת לקוח", "addCustomer");
+    this.openEditCustomerPopup("AddCustomerTitle", "addCustomer");
   }
+
   addCustomerSubmit() {
     this.submitted1 = true;
     if (this.customerForm.invalid) {
@@ -107,44 +118,50 @@ export class CustomersComponent implements OnInit {
     this.newCustomer = this.customerForm.value;
     this.newCustomer.status = this.selectedStatus;
     console.log(this.newCustomer);
-    this.newCustomer.customerId=0;
+    this.newCustomer.customerId = 0;
+    this.newCustomer.customerId = 0;
     this.customerService.AddNewCustomer(this.newCustomer).subscribe(() => {
       this.loadCustomers();
       this.customerForm.reset();
       this.submitted1 = false;
-      
+
+
       Swal.close();
     });
   }
+
   editCustomer(customer: Customer) {
-    this.customerService.GetCustomerById(customer.customerId).subscribe(res1 => {
+    this.customerService.GetCustomerById(customer.customerId).subscribe((res1: any) => {
+      if (res1.createdDate)
+        res1.createdDate = new Date(res1.createdDate);
+      const status = res1.status as StatusCodeUser
+      res1.status = status
       this.customerForm.setValue(res1);
-      this.openEditCustomerPopup("עריכת משתמש", "editCustomer");
+      this.openEditCustomerPopup("EditCustomerTitle", "editCustomer");
     });
   }
-  editCustomerSubmit(): void {
 
+  editCustomerSubmit(): void {
     this.submitted = true;
     if (this.customerForm.invalid) {
       return;
     }
-    this.customerForm.value.status = this.selectedStatus;
+    console.log(this.customerForm.value.status);
+    
     this.customerService.EditCustomer(this.customerForm.value).subscribe(() => {
       Swal.close();
       this.loadCustomers();
       this.customerForm.reset();
       this.submitted = false;
-
     });
-
-
-}
+  }
 
   deleteCustomer(customer: Customer) {
     this.customerService.DeleteCustomer(customer.customerId).subscribe(() => {
       this.loadCustomers();
     });
   }
+
   selectItem(event: any) {
     this.status = event.target.value;
     this.selectedStatus = this.statusCodeUser.find(s => s.id == this.status) as StatusCodeUser;
@@ -155,6 +172,7 @@ export class CustomersComponent implements OnInit {
       return this.validatorsService.name(control.value) ? null : { invalidName: true };
     };
   }
+
   customPhoneValidator(): (control: FormControl) => ValidationErrors | null {
     return (control: FormControl): ValidationErrors | null => {
       return this.validatorsService.phone(control.value) ? null : { invalidPhone: true };
@@ -166,10 +184,17 @@ export class CustomersComponent implements OnInit {
       return this.validatorsService.futureDate()(control.value) ? null : { invalidDate: true };
     };
   }
-  componentType!: Type<any>;
-  popUpAdd(title: string,nameCustomer:string) {
-  this.componentType=DocumentComponent;
 
+  propil(customer: Customer) {
+    this.componentType = ChatComponent;
+    this.popUpAddOrEdit(`Communication ${customer.firstName}`, customer, "customer", customer.customerId);
+  }
+  popupOpen = false;
+  componentType!: Type<any>;
+
+  popUpAddOrEdit(title: string, l: Customer, s: String, id: Number) {
+    // this.flag = false;
+    this.popupOpen = true; // Set popupOpen to true when the pop-up is opened
     Swal.fire({
       title: title,
       html: '<div id="popupContainer"></div>',
@@ -177,19 +202,52 @@ export class CustomersComponent implements OnInit {
       didOpen: () => {
         const container = document.getElementById('popupContainer');
         if (container) {
-          console.log(this.componentType);
-          if (this.componentType && this.resolver){
-              const factory = this.resolver.resolveComponentFactory(this.componentType);
-          const componentRef = this.popupContainer.createComponent(factory);          
+          const factory = this.resolver.resolveComponentFactory(this.componentType);
+          const componentRef = this.popupContainer.createComponent(factory);
+          if (l != null && l != undefined)
+            componentRef.instance.setData(l, s, id);
           container.appendChild(componentRef.location.nativeElement);
-          componentRef.instance.setName(nameCustomer)
         }
-        }}
+      },
+      didClose: () => {
+        this.popupOpen = false; // Set popupOpen to false when the pop-up is closed
+      }
+    });
+    this.logNumbersWhilePopupOpen();
+  }
+
+  logNumbersWhilePopupOpen() {
+    let counter = 0;
+    const interval = setInterval(() => {
+      if (this.popupOpen) {
+        counter++;
+      } else {
+        clearInterval(interval); 
+      }
+    }, 1000); 
+  }
+  popUpAddDocument(nameCustomer: string) {
+    this.componentType = DocumentComponent;
+    Swal.fire({
+      html: '<div id="popupContainer"></div>',
+      showConfirmButton: false,
+      didOpen: () => {
+        const container = document.getElementById('popupContainer');
+        if (container) {
+          console.log(this.componentType);
+          if (this.componentType && this.resolver) {
+            const factory = this.resolver.resolveComponentFactory(this.componentType);
+            const componentRef = this.popupContainer.createComponent(factory);
+            container.appendChild(componentRef.location.nativeElement);
+            componentRef.instance.setName(nameCustomer);
+          }
+        }
+      }
     });
   }
 
-addDocument(customer:Customer){
-  
- this.popUpAdd("הוספת מסמך",customer.firstName);
-}
+  addDocument(customer: Customer) {
+    this.popUpAddDocument( customer.firstName);
+  }
+
 }

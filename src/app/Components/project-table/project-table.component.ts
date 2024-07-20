@@ -1,5 +1,5 @@
 import { CustomersService } from '@app/Services/customers.service';
-import { Component, ComponentFactoryResolver, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, Component, ComponentFactoryResolver, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { Customer } from '@app/Model/Customer';
 import { ProjectService } from 'src/app/Services/project.service';
 import { Project } from 'src/app/Model/Project';
@@ -10,9 +10,10 @@ import { GenericBourdComponent } from 'src/app/Components/generic-bourd/generic-
 import { StatusCodeProject } from '@app/Model/StatusCodeProject';
 import { TaskService } from 'src/app/Services/task.service';
 import { Task } from '@app/Model/Task';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute ,Router} from '@angular/router';
 import { Priority } from '@app/Model/Priority';
 import { TaskBoardComponent } from '../task-board/task-board.component';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
     selector: 'app-project-table',
     templateUrl: './project-table.component.html',
@@ -20,7 +21,7 @@ import { TaskBoardComponent } from '../task-board/task-board.component';
     standalone: true,
     imports: [GenericBourdComponent]
 })
-export class ProjectTableComponent {
+export class ProjectTableComponent implements OnInit {
   projects: Project[] = [];
   tasks: any[] = [];
   priorities: Priority[] = [];
@@ -30,98 +31,123 @@ export class ProjectTableComponent {
   loading: boolean = true;
   @ViewChild(GenericBourdComponent) genericBourd!: GenericBourdComponent;
   @ViewChild('popupContainer', { read: ViewContainerRef }) popupContainer!: ViewContainerRef;
-  constructor(private ProjectService: ProjectService, private active: ActivatedRoute, private resolver: ComponentFactoryResolver, private router: Router, private taskService: TaskService, private CustomerService: CustomersService) { }
-
+  constructor(
+    private translate: TranslateService,
+    private cdr: ChangeDetectorRef,
+    private ProjectService: ProjectService,
+    private active: ActivatedRoute,
+    private resolver: ComponentFactoryResolver,
+    private router: Router,
+    private taskService: TaskService,
+    private CustomerService: CustomersService
+  ) { }
   ngOnInit() {
     console.log("projectComponent");
     this.taskService.getAll().subscribe(
       (data) => {
         this.tasks = data
-        console.log(this.tasks);
-      })
-    this.taskService.getAllPriorities().subscribe(
-      (data) => {
-        this.priorities = data
+        console.log("tasks=", this.tasks);
       }
-    )
-
+    );
     this.ProjectService.getAll().subscribe(
       (p: Array<Project>) => {
         this.projects = p;
-        console.log(this.projects);
-        this.loading = false;
+        console.log("project=", this.projects);
         this.taskService.getAllStatus().subscribe(
           (data) => {
             this.statuses = data
-          })
+          }
+        );
         this.CustomerService.GetAllCustomers().subscribe(
           (data) => {
             this.customers = data
-          })
+          }
+        );
+        this.taskService.getAllPriorities().subscribe(
+          (data) => {
+            this.priorities = data
+          }
+        );
+        this.loading = false;
       },
       (error) => {
         console.error('Error fetching project:', error);
+        this.translate.get(['Close', 'unAuthorize']).subscribe(translations => {
+          Swal.fire({
+            text: translations['unAuthorize'],
+            icon: "error",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#d33",
+            confirmButtonText: translations['Close']
+          });
+        });
+        this.router.navigate(['../home']);
         this.loading = true;
       }
     );
-
   }
   componentType!: Type<any>;
- 
-  // onDeleteProject(p: Project) {
-  //   this.ProjectService.deleteProject(p.projectId).subscribe(
-  //     (data: any) => {
-  //       if (data == true) {
-  //         Swal.fire({
-  //           text: "The task was successfully deleted",
-  //           icon: "success",
-  //           showCancelButton: false,
-  //           showCloseButton: true,
-  //           confirmButtonColor: "#3085D6",
-  //           confirmButtonText: "Close"
-  //         }).then((result) => {
-  //           this.ProjectService.getAll().subscribe((data) => {
-  //             this.projects = data
-  //           })
-  //         });
-  //       }
-  //     },
-  //     (error: any) => {
-  //       console.error('Error fetching users:', error);
-  //     }
-  //   );
-  // }
+  
   onDeleteProject(p: Project) {
-    this.ProjectService.deleteProject(p.projectId).subscribe((res:any)=>{this.loadP();
-});
-}
+    this.ProjectService.deleteProject(p.projectId).subscribe(
+      (res: any) => {
 
+        // Remove the project from the local list after successful deletion
+        this.loadP()
+        Swal.fire({
+          text: 'Project deleted successfully',
+          icon: "success",
+          showCancelButton: false,
+          showCloseButton: true,
+          confirmButtonColor: "#3085D6",
+          confirmButtonText: 'OK'
+        });
+      },
+      (error) => {
+        Swal.fire({
+          text: 'Error deleting project. Please try again.',
+          icon: "error",
+          showCancelButton: false,
+          showCloseButton: true,
+          confirmButtonColor: "#d33",
+          confirmButtonText: 'Close'
+        });
+      }
+    );
+    Swal.close();
+  }
   loadP(): void {
-    debugger
     this.ProjectService.getAll().subscribe(res => {
       this.projects = res;
       this.loading = false;
     });
   }
-
   filterData(objToFilter: any) {
-    let taskFilter: Task[] = this.tasks.filter(u => u.project.projectId == objToFilter.projectId)
-    console.log(taskFilter)
+    let taskFilter: Task[] = this.tasks.filter(u => u.project.projectId == objToFilter.projectId);
+    console.log(taskFilter);
     if (taskFilter.length != 0) {
-      let loading: boolean = true
-      let col$types = { 'title': 'text',  'dueDate': 'date', 'createdDate': 'date' }
-      let positionD = [this.statuses]
-      let objData = [this.projects]
-      let objFields = ['name']
+      let loading: boolean = true;
+      let col$types = { 'title': 'text', 'dueDate': 'date', 'createdDate': 'date' };
+      let positionD = [this.statuses];
+      let objData = [this.projects];
+      let objFields = ['name'];
       this.genericBourd.PopTable(taskFilter, loading, col$types, objData, objFields, positionD);
+    } else {
+      this.translate.get(['Close', 'no tasks']).subscribe(translations => {
+        Swal.fire({
+          text: translations['no tasks'],
+          showCancelButton: false,
+          showCloseButton: true,
+          confirmButtonColor: "#d33",
+          confirmButtonText: translations['Close']
+        });
+      });
     }
-    
   }
- 
   addProject() {
     this.componentType = AddProjectComponent;
     this.popUpAddOrEdit("Add project");
-     this.refreshData();
   }
   fetchTasks(projectId: string): void {
     if (projectId) {
@@ -149,13 +175,13 @@ export class ProjectTableComponent {
       showConfirmButton: false,
       didOpen: () => {
         const container = document.getElementById('popupContainer');
-        debugger
         if (container) {
           const factory = this.resolver.resolveComponentFactory(this.componentType);
           const componentRef = this.popupContainer.createComponent(factory);
           container.appendChild(componentRef.location.nativeElement);
-         
         }
+        
+        this.loadP()
       },
     });
   }
@@ -165,8 +191,7 @@ export class ProjectTableComponent {
         this.projects = project;
         this.loading = false;
         console.log("refreshData: ", this.projects);
-      })
+      }
+    );
   }
 }
-
-

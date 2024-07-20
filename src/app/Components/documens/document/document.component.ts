@@ -4,13 +4,15 @@ import { DocumentService } from '@app/Services/document.service';
 import { ValidatorsService } from '@app/Services/validators.service';
 import Swal from 'sweetalert2';
 import { NgIf } from '@angular/common';
+import { InputTextModule } from 'primeng/inputtext';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-document',
     templateUrl: './document.component.html',
     styleUrls: ['./document.component.css'],
     standalone: true,
-    imports: [FormsModule, ReactiveFormsModule, NgIf]
+    imports: [FormsModule, ReactiveFormsModule,NgIf,InputTextModule,TranslateModule]
 })
 export class DocumentComponent implements OnInit {
   file!: File;
@@ -59,7 +61,6 @@ this.nameCustomer=name;
       this.originalParent = formElement.parentElement;
 
       Swal.fire({
-        title: "הוספת מסמך",
         html: `<div id="popupContainer"></div>`,
         showConfirmButton: false,
         didOpen: () => {

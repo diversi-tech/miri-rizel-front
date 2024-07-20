@@ -1,4 +1,5 @@
 import { Customer } from './Customer';
+import { StatusCodeProject } from './StatusCodeProject';
 import { User } from './User';
 
 export interface Project {
@@ -7,7 +8,7 @@ export interface Project {
   description?: string;
   startDate?: Date;
   endDate?: Date;
-  status?: string;
+  status?: StatusCodeProject;
   customer?: Customer;
   createdDate?: Date;
 }

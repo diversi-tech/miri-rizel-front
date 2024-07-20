@@ -13,10 +13,10 @@ import { NgIf, NgFor } from '@angular/common';
     imports: [NgIf, FormsModule, NgFor]
 })
 export class ListDocumentComponent implements OnInit {
-  folders: any[] = []; // שינוי מ-files ל-folders
-  filteredFolders: any[] = [];  // תיקיות לאחר סינון
-  files: any[] = [];    // מסמכים מה-API
-  searchQuery: string = '';  // מילות הסינון של המשתמש
+  folders: any[] = []; 
+  filteredFolders: any[] = [];
+    files: any[] = [];   
+  searchQuery: string = ''; 
   currentFolderId: string = ''; 
   constructor(
     private documentService: DocumentService,
@@ -24,22 +24,22 @@ export class ListDocumentComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.loadFolders(); // שינוי מה-loadFiles ל-loadFolders
+    this.loadFolders();
   }
 
   loadFolders(): void {
     this.documentService.getFolders().subscribe(folders => {
-      console.log(folders); // בדיקת הנתונים המתקבלים מהשרת
-      // מסננים רק את התקיות ומעדכנים את המערך folders
-      // this.folders = folders.filter(folder => folder.mimeType === 'application/vnd.google-apps.folder');
+      console.log(folders);
       this.folders=folders
       this.filteredFolders = folders;
-      console.log(this.folders); // בדיקת התקיות בלבד
+      console.log(this.folders)
     });
   }
 
   viewFolderContents(folderId: string): void {
     this.documentService.getFilesInFolder(folderId).subscribe(files => {
+      if(files.length>0){
+
       Swal.fire({
         title: 'תוכן התקיה',
         html: `<div class="file-grid">${files.map(file => `
@@ -52,7 +52,12 @@ export class ListDocumentComponent implements OnInit {
         `).join('')}</div>`,
         showCloseButton: true,
         showConfirmButton: false,
-      });
+      });}
+     else
+     {
+      Swal.fire({
+        title: 'אין מסמכים זמינים ללקוח זה'})
+     } 
     });
   }
   
