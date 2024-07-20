@@ -35,6 +35,11 @@ export class UserService {
     return this.http.get<User>(`${this.apiUrl}Login?email=${email}&password=${password}`).pipe(
       tap((user) => {
         localStorage.setItem('user', JSON.stringify(user));
+      }),
+      tap((token) => {
+        localStorage.setItem('token', JSON.stringify(token));
+
+       console.log(token)
       })
     );
   }
@@ -43,10 +48,13 @@ export class UserService {
     return this.http.get<User>(`${this.apiUrl}LoginGoogle?email=${email}&name=${name}`).pipe(
       tap((user) => {
         localStorage.setItem('user', JSON.stringify(user));
+      }),
+      tap((token) => {
+        localStorage.setItem('token', JSON.stringify(token));
+       console.log(token)
       })
     );
   }
-
   getUserMail(): string | null {
     const userJson = localStorage.getItem('user');
     if (userJson) {

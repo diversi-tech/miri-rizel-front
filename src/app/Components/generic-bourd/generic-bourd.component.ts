@@ -14,7 +14,7 @@ import { SheetsApiService } from '@app/Services/sheets-api.service';
 import { Table, TableModule } from 'primeng/table';
 import Swal from 'sweetalert2';
 import { ExportToSheetComponent } from '../export-to-sheet/export-to-sheet.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { TagModule } from 'primeng/tag';
 import { FormsModule } from '@angular/forms';
@@ -69,6 +69,7 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   @Input() col$types: any = {};
   @Input() popTable!: boolean;
   @Output() edit = new EventEmitter<any>();
+  @Output() propil = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
   @Output() dataUpdated = new EventEmitter<any>();
   @Output() addDocument = new EventEmitter<any>();
@@ -78,7 +79,8 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   @ViewChild('dt') dt!: Table;
   constructor(
     private resolver: ComponentFactoryResolver,
-    private sheetsAPI: SheetsApiService
+    private sheetsAPI: SheetsApiService,
+    private translateService: TranslateService
   ) {}
 
   columns: Column[] = [];
@@ -111,6 +113,11 @@ export class GenericBourdComponent implements OnInit, OnChanges {
 document(rowData: any){
   this.addDocument.emit(rowData);
 }
+
+  onPropil(rowData: any) {
+    this.propil.emit(rowData);
+  }
+
   onDelete(rowData: any) {
     Swal.fire({
       title: 'Are you sure?',
@@ -152,13 +159,19 @@ document(rowData: any){
       });
     this.columns.push({
       field: 'edit',
-      header: '',
+      header: 'Edit',
       sortable: false,
       filterType: 'edit',
     });
     this.columns.push({
+      field: 'propil',
+      header: 'Propil',
+      sortable: false,
+      filterType: 'propil'
+    });
+    this.columns.push({
       field: 'delete',
-      header: '',
+      header: 'Delete',
       sortable: false,
       filterType: 'delete',
     });
@@ -374,6 +387,8 @@ document(rowData: any){
   async exportToSpreadSheet(eventData: any): Promise<void> {
     console.log('Submitted values:', eventData);
     const arrayOfArraysData = this.objectsToArrayOfArrays(this.data);
+    const titles: string[]=await this.translateTitles(arrayOfArraysData[0]);
+    arrayOfArraysData[0]=titles;
     if (eventData.selectedOption === 'newDoc') {
       if (eventData.fileName != null)
         this.sheetsAPI.ExportDataToNewSheet(
@@ -440,5 +455,14 @@ document(rowData: any){
 
     console.log('result: ', result);
     return result;
+  }
+
+  translateTitles(titles: string[]) :Promise<string[]>{
+    //return titles.forEach(title=> this.translateService.get(title).subscribe(translation=> title= translation));
+    const translationPromises = titles.map(title => 
+      this.translateService.get(title).toPromise()
+    );
+
+    return Promise.all(translationPromises);
   }
 }

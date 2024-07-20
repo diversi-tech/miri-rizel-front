@@ -1,0 +1,37 @@
+<h1>Add Communication</h1>
+<div class="new-message-form-container" [formGroup]="newMessageForm">
+    <h2>Related To</h2>
+    <select formControlName="relatedTo" class="message-input" (change)="fetchNames($event)">
+        <option value="Lead">Lead</option>
+        <option value="Customer">Customer</option>
+    </select>
+
+    <h2 *ngIf="namesl.length > 0">Select</h2>
+    <h2 *ngIf="namesc.length > 0">Select</h2>
+    <select *ngIf="namesl.length > 0" formControlName="relatedId" class="message-input">
+        
+        <ng-container *ngFor="let name of namesl">
+            <option [ngValue]="name.leadId">{{ name.firstName }} {{ name.lastName }}</option>
+        </ng-container>
+    </select>
+
+    <select *ngIf="namesc.length > 0" formControlName="relatedId" class="message-input">
+        <ng-container *ngFor="let name of namesc">
+            <option [ngValue]="name.customerId">{{ name.firstName }} {{ name.lastName }}</option>
+        </ng-container>
+    </select>
+
+    <h2>Type</h2>
+    <input type="text" formControlName="type" placeholder="Type your message..." class="message-input">
+
+    <h2>New Message</h2>
+    <input type="text" formControlName="details" placeholder=" your message..." class="message-input">
+    <button type="submit" class="send-button" (click)="sendMessage()">Send</button>
+</div>
+
+<br><br><br>
+<button type="submit" class="send-button" (click)="showaddtaskf()">Task</button>
+<!-- <div *ngIf="showaddtask" class="new-task-form-container"> -->
+    <!-- <app-add-task></app-add-task> -->
+<!-- </div> -->
+<div #popupContainer></div>

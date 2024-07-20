@@ -46,6 +46,9 @@ export class TaskService {
   editUserPost(task: Task) {
     this.http.put(`${this.apiUrl}`, task);
   }
+  getTaskByIdProject(id: number): Observable<Task[]> {
+    return this.http.get<Task[]>(`${this.apiUrl}GetByIdProject?id=${id}`);
+  }
   getAll():Observable<Array<Task>> {
     return this.http.get<Array<Task>>(`${this.apiUrl}`).pipe(
       switchMap((response: Array<Task>) => {

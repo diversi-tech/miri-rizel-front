@@ -16,7 +16,7 @@ export class CustomersService {
   GetAllCustomers(): Observable<Customer[]> {
     return this.http.get<Customer[]>(`${this.apiUrl}`);
   }
-  GetCustomerById(customerId:number): Observable<any> {
+  GetCustomerById(customerId:Number): Observable<any> {
     console.log(this.http.get<any>(`${this.apiUrl}GetById?custometId=${customerId}` ));
     
     return this.http.get<any>(`${this.apiUrl}GetById?custometId=${customerId}` );
@@ -29,7 +29,7 @@ export class CustomersService {
     return this.http.put<boolean>(`${this.apiUrl}`,editCustomer);
   } 
   
-  DeleteCustomer(customerId:number):Observable<boolean>{
+  DeleteCustomer(customerId:Number):Observable<boolean>{
     
     return this.http.delete<boolean>(`${this.apiUrl}?customerId=${customerId}`);
   } 
