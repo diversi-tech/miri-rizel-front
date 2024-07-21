@@ -31,6 +31,8 @@
   .w3-logo-container {
     display: flex;
     align-items: center;
+    
   }
-  
-  
+.w3-top{
+  border-bottom: 1px solid rgba(227, 227, 227, 0.659);
+}

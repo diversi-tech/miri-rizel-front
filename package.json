@@ -11,6 +11,7 @@
   "private": true,
   "dependencies": {
     "@abacritt/angularx-social-login": "^1.2.0",
+    "@angular-builders/custom-webpack": "^18.0.0",
     "@angular/animations": "^18.1.0",
     "@angular/cdk": "^18.1.0",
     "@angular/common": "^18.1.0",
@@ -23,12 +24,15 @@
     "@angular/router": "^18.1.0",
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
+    "apexcharts": "^3.50.0",
     "chart.js": "^4.4.3",
     "environment": "^1.1.0",
     "firebase": "^10.1.0",
     "gapi-client": "^0.0.3",
     "gapi-script": "^1.2.0",
+    "luxon": "^3.4.4",
     "moment-timezone": "^0.5.45",
+    "ng-apexcharts": "^1.11.0",
     "ngx-google-sign-in": "^1.0.4",
     "primeicons": "^7.0.0",
     "primeng": "^17.18.4",
@@ -46,12 +50,14 @@
     "@types/gapi.auth2": "^0.0.60",
     "@types/gapi.client.calendar": "^3.0.12",
     "@types/jasmine": "~4.3.0",
+    "@types/luxon": "^3.4.2",
     "jasmine-core": "~4.6.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "tailwindcss": "^3.4.6",
     "typescript": "~5.4.5"
   }
 }
