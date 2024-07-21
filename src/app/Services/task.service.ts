@@ -21,8 +21,16 @@ export class TaskService {
   });
 
   addTask(task: Task): Observable<any> {
-    task.taskId = undefined
-    return this.http.post<any>(this.apiUrl, task, {headers: this.headers});
+    const taskToSend: Task = {
+      ...task,
+      taskId: undefined,
+      project: {
+        ...task.project,
+        projectId: task.project?.projectId!,
+        customer: undefined
+      }
+    }
+    return this.http.post<any>(`${this.apiUrl}`, taskToSend, {headers: this.headers});
   }
 
   getTaskById(id: number): Observable<any> {

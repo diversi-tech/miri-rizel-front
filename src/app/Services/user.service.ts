@@ -20,7 +20,7 @@ export class UserService {
 
 
   getAll(): Observable<any> {
-    return this.http.get(`${this.apiUrl}`,  {headers: this.headers});
+    return this.http.get(`${this.apiUrl}readAll`,  {headers: this.headers});
 
   }
 
@@ -34,6 +34,7 @@ export class UserService {
   editUser(email: any): Observable<any> {
     return this.http.get(`${this.apiUrl}?email=${email}`);
   }
+  
   editUserPost(user: User) {
     this.http.put(`${this.apiUrl}`, user, {headers: this.headers});
   }

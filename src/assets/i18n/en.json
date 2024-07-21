@@ -11,6 +11,7 @@
     "status":"Status",
     "project":"Project",
     "title":"Title",
+    "date": "Date",
     "description":"Description",
     "phone":"Phone",
     "email":"Email",
@@ -78,6 +79,8 @@
     "SaveTask":"Saving a task",
     "AddTaskTitle":"Add a task",
     "EditTaskTitle":"Edit a task",
+    "EditCustomerTitle":"Edit a customer",
+    "AddCustomerTitle":"Add a customer",
     "NoRecordsFound":"No records found",
     "VerifyAccountTitle":"Verify your account",
     "VerifyAccountLabel":"Enter the verification code sent to you by email",
@@ -98,8 +101,9 @@
     "notes": "notes",
     "AddLead": "Add lead",
     "addLeadSuccess": "The lead was successfully added!",
-    "validPhone": "Invalid phone number"
-
-
+    "validPhone": "Invalid phone number",
+    "descriptionDocument": "Desctiption a document ",
+    "chooseDocument": "Choose a document",
+  "AddDocument": "Add document"
 
 }
