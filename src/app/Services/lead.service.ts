@@ -17,7 +17,7 @@ export class LeadService {
 
 
   GetLeadById(id: Number): Observable<Lead> {
-    const url = `${this.apiUrl}GetById?id=${id}`;
+    const url = `${this.apiUrl}/GetById?id=${id}`;
     return this.http.get<Lead>(url, {headers: this.headers}); 
   }
 
