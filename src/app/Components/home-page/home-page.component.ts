@@ -243,31 +243,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
       });
     }
   }
-  // routing(list: any) {    
-  //   this.loading = false;
-  //   let taskFilter: Task[] = list
-  //   console.log(taskFilter);
-  //   if (taskFilter.length != 0) {
-  //     let loading: boolean = true;
-  //     let col$types = { 'title': 'text' };
-  //     let positionD = [this.statuses];
-  //     let objData = [this.projects];
-  //     let objFields = ['name'];
-  //     console.log("taskFilter, loading, col$types, objData, objFields, positionD");
-  //     console.log(taskFilter, loading, col$types, objData, objFields, positionD);
-      
-  //     this.genericBourd.PopTable(taskFilter, loading, col$types, objData, objFields, positionD);
-  //   } else {
-  //     // this.translate.get(['Close', 'no tasks']).subscribe(translations => {
-  //       Swal.fire({
-  //         text: 'no tasks',
-  //         showCancelButton: false,
-  //         showCloseButton: true,
-  //         confirmButtonColor: "#d33",
-  //         confirmButtonText: 'Close'
-  //       });
-  //     };
-  //   }
+ 
     
   addLead() {
     this.componentType = AddLeadComponent;
