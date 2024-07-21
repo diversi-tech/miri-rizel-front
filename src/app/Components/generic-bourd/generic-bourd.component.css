@@ -46,6 +46,17 @@ button:hover {
     background-color:rgb(229, 226, 226); 
 }
 
+/* הכפתור של הפרופיל */
+.p-button-info {
+    background-color:transparent; 
+    border: none;
+    color: #0c0101;
+}
+
+.p-button-info:hover {
+    background-color:rgb(229, 226, 226); 
+}
+
 /* הכפתור של הפרטים */
 .p-button-Help {
     background-color:transparent; 
