@@ -151,7 +151,7 @@ export class ProjectTableComponent implements OnInit {
   }
   addProject() {
     this.componentType = AddProjectComponent;
-    this.popUpAddOrEdit("Add project");
+    this.popUpAddOrEdit("Add project", null);
   }
   fetchTasks(projectId: string): void {
     if (projectId) {
@@ -171,10 +171,12 @@ export class ProjectTableComponent implements OnInit {
   }
   onEditProject(p: Project) {
     this.componentType = EditProjectComponent;
-    this.popUpAddOrEdit("Edit project");
+    this.popUpAddOrEdit("edit project", p.projectId);
+    console.log('Edit p:', p);
   }
-  popUpAddOrEdit(title: string) {
+  popUpAddOrEdit(title: string, l: Number | null) {
     Swal.fire({
+
       html: '<div id="popupContainer"></div>',
       showConfirmButton: false,
       didOpen: () => {
@@ -182,7 +184,17 @@ export class ProjectTableComponent implements OnInit {
         if (container) {
           const factory = this.resolver.resolveComponentFactory(this.componentType);
           const componentRef = this.popupContainer.createComponent(factory);
+          debugger
+          if (l != null && l!=undefined) {
+            componentRef.instance.setData(l);
+            // componentRef.instance.dataRefreshed.subscribe(() => {
+            //   this.refreshData();
+            // })
+          }
           container.appendChild(componentRef.location.nativeElement);
+          componentRef.instance.dataRefreshed.subscribe(() => {
+            this.refreshData();
+          })
         }
       },
     });
@@ -191,12 +203,11 @@ export class ProjectTableComponent implements OnInit {
   }
   refreshData() {
     this.ProjectService.getAll().subscribe(
-      (project: any) => {
-        this.projects = project;
+      (p: Array<Project>) => {
+        this.projects = p;
+        console.log(this.projects);
         this.loading = false;
-        console.log("refreshData: ", this.projects);
-      }
-    );
+      })
   }
   onDeleteTask(task: Task) {
     debugger

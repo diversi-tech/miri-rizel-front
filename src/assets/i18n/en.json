@@ -11,6 +11,7 @@
     "status":"Status",
     "project":"Project",
     "title":"Title",
+    "date": "Date",
     "description":"Description",
     "phone":"Phone",
     "email":"Email",
@@ -78,6 +79,8 @@
     "SaveTask":"Saving a task",
     "AddTaskTitle":"Add a task",
     "EditTaskTitle":"Edit a task",
+    "EditCustomerTitle":"Edit a customer",
+    "AddCustomerTitle":"Add a customer",
     "NoRecordsFound":"No records found",
     "VerifyAccountTitle":"Verify your account",
     "VerifyAccountLabel":"Enter the verification code sent to you by email",
@@ -100,5 +103,18 @@
    "YourDeatailsWorng":"Your details are worng",
    "seccesaddProject":"The Project added seccesfully",
    "close":"close",
-   "notasks":"it isnt tasks"
+   "notasks":"it isnt tasks",
+    "firstNameLabel": "Enter first name",
+    "mustContainMintwoCharacters": "must contain at least two characters",
+    "lastNameLabel": "Enter last name",
+    "phoneNumberMust9Characters": "Phone number must contain at least 9 characters",
+    "phoneNumberContainMax12Characters": "A phone number contains a maximum of 12 characters",
+    "notes": "notes",
+    "AddLead": "Add lead",
+    "addLeadSuccess": "The lead was successfully added!",
+    "validPhone": "Invalid phone number",
+    "descriptionDocument": "Desctiption a document ",
+    "chooseDocument": "Choose a document",
+  "AddDocument": "Add document"
+
 }

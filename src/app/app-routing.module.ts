@@ -24,6 +24,8 @@ import { CustomerProfileComponent } from './Components/customer-profile/customer
 import { ListDocumentComponent } from './Components/documens/list-document/list-document.component';
 import { AuthGuard } from './Guard/auth.guard';
 import { AdminComponent } from './Components/admin/admin.component';
+import { PropilComponent } from './Components/propil/propil.component';
+import { PropilListComponent } from './Components/propil-list/propil-list.component';
 const routes: Routes = [
   // { path: 'customer', component: CustomersComponent, canActivate: [AuthGuard], data: { roles: [3, 2, 1] } },
   { path: 'worker', component: WorkerComponentComponent, canActivate: [AuthGuard], data: { roles: [2, 1] } },
@@ -36,6 +38,7 @@ const routes: Routes = [
   { path: 'edit', component: EditUserComponent },
   { path: 'add', component: AddUserComponent },
   { path: 'sign-up', component: SignUpComponent },
+  { path: 'task-board', component: TaskBoardComponent },
   { path: 'addProject', component: AddProjectComponent },
   { path: 'add-task/:id', component: AddTaskComponent },
   { path: 'project', component: ProjectTableComponent },
@@ -44,6 +47,8 @@ const routes: Routes = [
   { path: 'home/:role', component: HomePageComponent },
   { path: 'customer-profile', component: CustomerProfileComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'document', component: DocumentComponent },
+  // { path: 'task-board', component: TaskBoardComponent },
   { path: 'add-task', component: AddTaskComponent },
   { path: 'add-task/:id', component: AddTaskComponent },
   { path: 'addLead', component: AddLeadComponent },
@@ -53,14 +58,25 @@ const routes: Routes = [
   {path: 'addLead', component: AddLeadComponent},
   {path: 'editLead', component: EditLeadComponent},
   {path: 'documents', component: ListDocumentComponent},
+  {path: 'leads', component: ListLeadsComponent},
+  {path: 'propil', component: PropilListComponent},
 
   {
     path: 'leads',
     component: ListLeadsComponent,
     children: [{ path: '', component: LeadComponent }],
   },
+  { path: 'leads', component: ListLeadsComponent },
+    // { path: 'leads', component: ListLeadsComponent },
 
   { path: 'task', component: TaskBoardComponent },
+  // { path: '', redirectTo: '/task', pathMatch: 'full' },
+  { path: '', component: LoginComponent },
+  { path: 'task', component: TaskBoardComponent },
+  // { path: '', redirectTo: '/task', pathMatch: 'full' },
+  { path: '', component: LoginComponent },
+  { path: 'task', component: TaskBoardComponent },
+  { path: '', redirectTo: '/task', pathMatch: 'full' },
   {
     path: 'ResetPassword',
     component: ResetPasswordComponent,

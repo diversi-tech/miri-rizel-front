@@ -2,13 +2,15 @@ import { Component, ComponentFactoryResolver, Type, ViewChild, ViewContainerRef,
 import { Router } from '@angular/router';
 import { Project } from 'src/app/Model/Project';
 import { Lead } from 'src/app/Model/Lead';
-import { GenericBourdComponent } from 'src/app/Components/generic-bourd/generic-bourd.component';
+import { GenericBourdComponent } from '../../generic-bourd/generic-bourd.component';
 import { LeadService } from 'src/app/Services/lead.service';
 import Swal from 'sweetalert2';
 import { EditLeadComponent } from 'src/app/Components/Lead-components/edit-lead/edit-lead.component';
 import { DialogComponent } from '@app/Components/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ChatComponent } from '@app/Components/chat/chat.component';
 import { AddLeadComponent } from 'src/app/Components/Lead-components/add-lead/add-lead.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-list-leads',
@@ -25,7 +27,7 @@ export class ListLeadsComponent {
   componentType!: Type<any>;
   @ViewChild(GenericBourdComponent) genericBourd!: GenericBourdComponent;
   @ViewChild('popupContainer', { read: ViewContainerRef }) popupContainer!: ViewContainerRef;
-  constructor(private dialog:MatDialog ,private leadService: LeadService, private router: Router, private resolver: ComponentFactoryResolver) { }
+  constructor(private dialog:MatDialog ,private leadService: LeadService, private router: Router, private resolver: ComponentFactoryResolver, private translate: TranslateService) { }
 
   ngOnInit() {
     this.loadLeads();
@@ -40,7 +42,7 @@ export class ListLeadsComponent {
 
   onEditLead(Lead: Lead) {
     this.componentType = EditLeadComponent;
-    this.popUpAddOrEdit("Edit Lead", Lead.leadId);
+    this.popUpAddOrEdit(Lead.leadId);
   }
 
   onDeleteLead(lead: Lead) {
@@ -50,12 +52,13 @@ export class ListLeadsComponent {
  
   addLead(){
     this.componentType = AddLeadComponent;
-    this.popUpAddOrEdit("Add Lead");
+    let title: string="";
+   //this.translate.get("AddLead").subscribe(tranlation=> title=tranlation);
+    this.popUpAddOrEdit();
   } 
 
-  popUpAddOrEdit(title: string, l?:Number) {
+  popUpAddOrEdit(l?:Number) {
     Swal.fire({
-      title: title,
       html: '<div id="popupContainer"></div>',
       showConfirmButton: false,
       didOpen: () => {
@@ -83,6 +86,49 @@ export class ListLeadsComponent {
         this.loading= false;
         console.log("refreshData: ", this.Leads);
       })
+  }
+
+  propil(l: Lead) {
+    this.componentType = ChatComponent;
+    this.popUpPropil(`Communication ${l.firstName}`, l, "Lead" , l.leadId);
+  }
+
+  popupOpen = false;
+
+  popUpPropil(title: string, l: Lead , s:String, id:Number) {
+    // this.flag = false;
+    this.popupOpen = true; // Set popupOpen to true when the pop-up is opened
+    Swal.fire({
+        title: title,
+        html: '<div id="popupContainer"></div>',
+        showConfirmButton: false,
+        didOpen: () => {
+            const container = document.getElementById('popupContainer');
+            if (container) {
+                const factory = this.resolver.resolveComponentFactory(this.componentType);
+                const componentRef = this.popupContainer.createComponent(factory);
+                if (l != null && l != undefined)
+                    componentRef.instance.setData(l,s,id);
+                container.appendChild(componentRef.location.nativeElement);
+            }
+        },
+        didClose: () => {
+            this.popupOpen = false; // Set popupOpen to false when the pop-up is closed
+        }
+    });
+    this.logNumbersWhilePopupOpen();
+  }
+  
+  logNumbersWhilePopupOpen() {
+    let counter = 0;
+    const interval = setInterval(() => {
+        if (this.popupOpen) {
+            counter++;
+        } else {
+            clearInterval(interval); // Stop logging numbers when the pop-up is closed
+            // this.custService.GetCustomerById(this.cus.customerId).subscribe(res=>{this.cus=res,this.flag=true})
+        }
+    }, 1000); // Log every second
   }
 }
 
