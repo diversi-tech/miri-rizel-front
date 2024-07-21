@@ -8,7 +8,7 @@ import { environment } from 'src/enviroments/environment';
   providedIn: 'root',
 })
 export class LeadService {
-  private apiUrl = `${environment.apiUrl}Lead/`
+  private apiUrl = `${environment.apiUrl}Lead`
   constructor(private http: HttpClient) { }
   getToken() {
     return localStorage.getItem('token');
