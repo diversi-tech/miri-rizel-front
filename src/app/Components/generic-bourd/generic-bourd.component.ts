@@ -9,7 +9,6 @@ import {
   ViewChild,
   ComponentFactoryResolver,
   ViewContainerRef,
-  ComponentRef,
 } from '@angular/core';
 import { SheetsApiService } from '@app/Services/sheets-api.service';
 import { Table, TableModule } from 'primeng/table';
@@ -26,6 +25,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { ButtonModule } from 'primeng/button';
 import { SharedModule } from 'primeng/api';
 import { ToolbarModule } from 'primeng/toolbar';
+import { LanguageService } from '@app/Services/language.service';
 
 interface Column {
   field: string;
@@ -39,26 +39,26 @@ interface position {
 }
 
 @Component({
-  selector: 'app-generic-bourd',
-  templateUrl: './generic-bourd.component.html',
-  styleUrls: ['./generic-bourd.component.css'],
-  standalone: true,
-  imports: [
-    ToolbarModule,
-    SharedModule,
-    ButtonModule,
-    TooltipModule,
-    TableModule,
-    InputTextModule,
-    NgFor,
-    NgIf,
-    DropdownModule,
-    FormsModule,
-    TagModule,
-    MultiSelectModule,
-    TranslateModule,
-    DatePipe,
-  ],
+    selector: 'app-generic-bourd',
+    templateUrl: './generic-bourd.component.html',
+    styleUrls: ['./generic-bourd.component.css'],
+    standalone: true,
+    imports: [
+        ToolbarModule,
+        SharedModule,
+        ButtonModule,
+        TooltipModule,
+        TableModule,
+        InputTextModule,
+        NgFor,
+        NgIf,
+        DropdownModule,
+        FormsModule,
+        TagModule,
+        MultiSelectModule,
+        TranslateModule,
+        DatePipe,
+    ],
 })
 export class GenericBourdComponent implements OnInit, OnChanges {
   @Input() data: any[] = [];
@@ -70,6 +70,7 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   @Input() col$types: any = {};
   @Input() popTable!: boolean;
   @Input() hideEditButton: boolean = false;
+
   @Output() edit = new EventEmitter<any>();
   @Output() propil = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
@@ -82,12 +83,15 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   constructor(
     private resolver: ComponentFactoryResolver,
     private sheetsAPI: SheetsApiService,
-    private translateService: TranslateService
-  ) { }
+    private translateService: TranslateService,
+    private languageService: LanguageService
+  ) {}
 
   columns: Column[] = [];
   isListView: boolean = true;
   layout: string = 'list';
+  textDirection = 'rtl'; // ברירת מחדל עברית
+
   ngOnInit() {
     if (
       this.data === undefined ||
@@ -96,6 +100,11 @@ export class GenericBourdComponent implements OnInit, OnChanges {
       throw new Error('The data input is required and must be provided.');
     }
     this.generateColumns();
+    //שינוי הצדדים לימין ושמאל בהתאם לבחירת השפה
+     // האזנה לשינויים בשפה
+     this.languageService.language$.subscribe(lang => {
+      this.textDirection = lang === 'he' ? 'rtl' : 'ltr';
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -161,21 +170,21 @@ document(rowData: any){
       });
     this.columns.push({
       field: 'edit',
-      header: 'Edit',
+      header: '',
       sortable: false,
       filterType: 'edit',
     });
     this.columns.push({
-      field: 'propil',
-      header: 'Propil',
-      sortable: false,
-      filterType: 'propil'
-    });
-    this.columns.push({
       field: 'delete',
-      header: 'Delete',
+      header: '',
       sortable: false,
       filterType: 'delete',
+    });
+    this.columns.push({
+      field: 'propil',
+      header: '',
+      sortable: false,
+      filterType: 'propil'
     });
     this.columns.push({
       field: 'document',
@@ -325,9 +334,10 @@ document(rowData: any){
     });
   }
   openAddComponent() {
+    //debugger;
     this.showAddComponent.emit();
   }
-  d(b: any) { }
+  d(b: any) {}
 
   //גוגל שיטס
   async spreadSheetsFromTableData<T extends {}>(data: T[]) {
@@ -399,13 +409,13 @@ document(rowData: any){
       //   return formValues;
       // }
     })
-  }
+  }      
   //קבלת מידע הטופס ופניה לפונקציה המתאימה
   async exportToSpreadSheet(eventData: any): Promise<void> {
     console.log('Submitted values:', eventData);
     const arrayOfArraysData = this.objectsToArrayOfArrays(this.data);
-    const titles: string[] = await this.translateTitles(arrayOfArraysData[0]);
-    arrayOfArraysData[0] = titles;
+    const titles: string[]=await this.translateTitles(arrayOfArraysData[0]);
+    arrayOfArraysData[0]=titles;
     if (eventData.selectedOption === 'newDoc') {
       if (eventData.fileName != null)
         this.sheetsAPI.ExportDataToNewSheet(
@@ -460,8 +470,8 @@ document(rowData: any){
             ? key.filterType == 'obj'
               ? String(value[this.getobjFields(numColumn, 'obj')])
               : key.filterType == 'position'
-                ? String(value[this.getobjFields(numColumn, 'position')])
-                : String(value)
+              ? String(value[this.getobjFields(numColumn, 'position')])
+              : String(value)
             : '';
         numColumn++;
         return p;
@@ -474,12 +484,18 @@ document(rowData: any){
     return result;
   }
 
-  translateTitles(titles: string[]): Promise<string[]> {
+  translateTitles(titles: string[]) :Promise<string[]>{
     //return titles.forEach(title=> this.translateService.get(title).subscribe(translation=> title= translation));
-    const translationPromises = titles.map(title =>
+    const translationPromises = titles.map(title => 
       this.translateService.get(title).toPromise()
     );
 
     return Promise.all(translationPromises);
   }
+
+  // dir: string="";
+  // changeLanguage(lang: string){
+  //   if(lang=='en') this.dir= 'ltr';
+  //   else this.dir= 'rtl';
+  // }
 }
