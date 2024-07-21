@@ -173,16 +173,16 @@ document(rowData: any){
       filterType: 'edit',
     });
     this.columns.push({
-      field: 'propil',
-      header: '',
-      sortable: false,
-      filterType: 'propil'
-    });
-    this.columns.push({
       field: 'delete',
       header: '',
       sortable: false,
       filterType: 'delete',
+    });
+    this.columns.push({
+      field: 'propil',
+      header: '',
+      sortable: false,
+      filterType: 'propil'
     });
     this.columns.push({
       field: 'document',
