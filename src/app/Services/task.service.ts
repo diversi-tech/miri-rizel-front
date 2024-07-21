@@ -15,8 +15,16 @@ export class TaskService {
   constructor(private http: HttpClient) { }
 
   addTask(task: Task): Observable<any> {
-    task.taskId = undefined
-    return this.http.post<any>(this.apiUrl, task);
+    const taskToSend: Task = {
+      ...task,
+      taskId: undefined,
+      project: {
+        ...task.project,
+        projectId: task.project?.projectId!,
+        customer: undefined
+      }
+    }
+    return this.http.post<any>(`${this.apiUrl}`, taskToSend);
   }
 
   getTaskById(id: number): Observable<any> {
