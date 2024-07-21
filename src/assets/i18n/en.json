@@ -160,7 +160,7 @@
     "validPhone": "Invalid phone number",
     "descriptionDocument": "Desctiption a document ",
     "chooseDocument": "Choose a document",
-  "AddDocument": "Add document"
+  "AddDocument": "Add document",
 
     "InvalidEmail": "Email is not valid",
     "ProblemSendingEmail": "An error occurred while sending the email, try again",
