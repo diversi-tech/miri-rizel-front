@@ -46,9 +46,15 @@ export class GoogleComponent {
       var email = decodedToken.email;
       var userName = decodedToken.name;
       this.login.getByMail(email).subscribe(res => {
+        console.log("res");
+        
+        console.log(res);
+        
         if (this.userData == "logIn" && res != null) {
           this.login.loginGoogle(email, userName).subscribe(
-            (user: User) => {
+            (response: any) => {
+              console.log(response);
+              const user = response.user;
               if (user.role == 1) {
                 this.router.navigate(['/admin']);
               }
@@ -84,6 +90,13 @@ export class GoogleComponent {
           this.addUser.firstName = userName;
           this.addUser.role = 2;
           this.login.addUser(this.addUser).subscribe(() => {
+            this.dialog.open(DialogComponent, {
+              data: {
+                title: 'הצלחה',
+                context: 'נרשמתה במערכת בהצלחה',
+                buttonText: 'סגור',
+              },
+            });
             this.router.navigate(['/worker']);
           }
           );
@@ -97,6 +110,15 @@ export class GoogleComponent {
             },
           });
         }
+      },
+      error => {
+        this.dialog.open(DialogComponent, {
+          data: {
+            title: 'שגיאה',
+            context: 'המייל לא קיים במערכת עבור ל-SIGNUP',
+            buttonText: 'סגור',
+          },
+        });
       })
     }
   }

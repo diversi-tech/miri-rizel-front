@@ -25,6 +25,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { ButtonModule } from 'primeng/button';
 import { SharedModule } from 'primeng/api';
 import { ToolbarModule } from 'primeng/toolbar';
+import { LanguageService } from '@app/Services/language.service';
 
 interface Column {
   field: string;
@@ -81,12 +82,15 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   constructor(
     private resolver: ComponentFactoryResolver,
     private sheetsAPI: SheetsApiService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private languageService: LanguageService
   ) {}
 
   columns: Column[] = [];
   isListView: boolean = true;
   layout: string = 'list';
+  textDirection = 'rtl'; // ברירת מחדל עברית
+
   ngOnInit() {
     if (
       this.data === undefined ||
@@ -95,6 +99,11 @@ export class GenericBourdComponent implements OnInit, OnChanges {
       throw new Error('The data input is required and must be provided.');
     }
     this.generateColumns();
+    //שינוי הצדדים לימין ושמאל בהתאם לבחירת השפה
+     // האזנה לשינויים בשפה
+     this.languageService.language$.subscribe(lang => {
+      this.textDirection = lang === 'he' ? 'rtl' : 'ltr';
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -160,21 +169,21 @@ document(rowData: any){
       });
     this.columns.push({
       field: 'edit',
-      header: 'Edit',
+      header: '',
       sortable: false,
       filterType: 'edit',
     });
     this.columns.push({
-      field: 'propil',
-      header: 'Propil',
-      sortable: false,
-      filterType: 'propil'
-    });
-    this.columns.push({
       field: 'delete',
-      header: 'Delete',
+      header: '',
       sortable: false,
       filterType: 'delete',
+    });
+    this.columns.push({
+      field: 'propil',
+      header: '',
+      sortable: false,
+      filterType: 'propil'
     });
     this.columns.push({
       field: 'document',
@@ -322,7 +331,7 @@ document(rowData: any){
     });
   }
   openAddComponent() {
-    debugger;
+    //debugger;
     this.showAddComponent.emit();
   }
   d(b: any) {}
@@ -480,4 +489,10 @@ document(rowData: any){
 
     return Promise.all(translationPromises);
   }
+
+  // dir: string="";
+  // changeLanguage(lang: string){
+  //   if(lang=='en') this.dir= 'ltr';
+  //   else this.dir= 'rtl';
+  // }
 }
