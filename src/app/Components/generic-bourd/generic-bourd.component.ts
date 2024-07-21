@@ -168,19 +168,19 @@ document(rowData: any){
       });
     this.columns.push({
       field: 'edit',
-      header: 'Edit',
+      header: '',
       sortable: false,
       filterType: 'edit',
     });
     this.columns.push({
       field: 'propil',
-      header: 'Propil',
+      header: '',
       sortable: false,
       filterType: 'propil'
     });
     this.columns.push({
       field: 'delete',
-      header: 'Delete',
+      header: '',
       sortable: false,
       filterType: 'delete',
     });
