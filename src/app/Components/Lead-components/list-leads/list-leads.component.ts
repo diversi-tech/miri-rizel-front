@@ -34,7 +34,8 @@ export class ListLeadsComponent {
   }
 
   loadLeads(): void {
-    this.leadService.getAllLeads().subscribe(res => {
+    this.leadService.getAllLeads()
+    .subscribe(res => {
       this.Leads = res;
       this.loading = false;
     });
@@ -80,7 +81,8 @@ export class ListLeadsComponent {
   }
 
   refreshData() {
-    this.leadService.getAllLeads().subscribe(
+    this.leadService.getAllLeads()
+    .subscribe(
       (Leads: Array<Lead>) => {
         this.Leads = Leads;
         this.loading= false;
