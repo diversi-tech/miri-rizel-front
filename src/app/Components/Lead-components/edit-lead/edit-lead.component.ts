@@ -6,6 +6,7 @@ import { Lead } from '@app/Model/Lead';
 import Swal from 'sweetalert2';
 import { MatButtonModule } from '@angular/material/button';
 import { NgIf } from '@angular/common';
+import { LanguageService } from '@app/Services/language.service';
 
 @Component({
     selector: 'app-edit-lead',
@@ -14,11 +15,24 @@ import { NgIf } from '@angular/common';
     standalone: true,
     imports: [NgIf, FormsModule, ReactiveFormsModule, MatButtonModule]
 })
-export class EditLeadComponent {
+export class EditLeadComponent implements OnInit {
   @Output() dataRefreshed: EventEmitter<void> = new EventEmitter<void>();
-
-  constructor(private formBuilder: FormBuilder, private lead: LeadService, private router: Router, private active: ActivatedRoute) { }
-
+  styles = {
+    'text-align': 'right', // ברירת מחדל עברית
+    'direction': 'rtl'     // ברירת מחדל עברית
+  };
+  constructor(private formBuilder: FormBuilder, private lead: LeadService, private router: Router, private active: ActivatedRoute, private languageService: LanguageService) { }
+  ngOnInit(): void {
+    this.languageService.language$.subscribe(lang => {
+      if (lang === 'he') {
+        this.styles['text-align'] = 'right';
+        this.styles['direction'] = 'rtl';
+      } else {
+        this.styles['text-align'] = 'left';
+        this.styles['direction'] = 'ltr';
+      }
+    })
+  }
   fullForm() {
     this.editForm = this.formBuilder.group({
       email: [this.LeadToKnowInput.email, [Validators.required, Validators.email]],

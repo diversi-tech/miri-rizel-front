@@ -97,7 +97,8 @@ export class NewComponent {
   fetchNames(event: Event): void {
     const selectedOption = (event.target as HTMLSelectElement).value;
     if (selectedOption === 'Lead') {
-      this.leadservice.getAllLeads().subscribe((names: Lead[]) => {
+      this.leadservice.getAllLeads()
+      .subscribe((names: Lead[]) => {
         this.namesl = names;
         this.namesc = []
       });

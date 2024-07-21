@@ -25,6 +25,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { ButtonModule } from 'primeng/button';
 import { SharedModule } from 'primeng/api';
 import { ToolbarModule } from 'primeng/toolbar';
+import { LanguageService } from '@app/Services/language.service';
 
 interface Column {
   field: string;
@@ -80,12 +81,15 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   constructor(
     private resolver: ComponentFactoryResolver,
     private sheetsAPI: SheetsApiService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private languageService: LanguageService
   ) {}
 
   columns: Column[] = [];
   isListView: boolean = true;
   layout: string = 'list';
+  textDirection = 'rtl'; // ברירת מחדל עברית
+
   ngOnInit() {
     if (
       this.data === undefined ||
@@ -94,6 +98,11 @@ export class GenericBourdComponent implements OnInit, OnChanges {
       throw new Error('The data input is required and must be provided.');
     }
     this.generateColumns();
+    //שינוי הצדדים לימין ושמאל בהתאם לבחירת השפה
+     // האזנה לשינויים בשפה
+     this.languageService.language$.subscribe(lang => {
+      this.textDirection = lang === 'he' ? 'rtl' : 'ltr';
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -307,7 +316,7 @@ document(rowData: any){
     });
   }
   openAddComponent() {
-    debugger;
+    //debugger;
     this.showAddComponent.emit();
   }
   d(b: any) {}
@@ -387,8 +396,8 @@ document(rowData: any){
   async exportToSpreadSheet(eventData: any): Promise<void> {
     console.log('Submitted values:', eventData);
     const arrayOfArraysData = this.objectsToArrayOfArrays(this.data);
-    // const titles: string[]=await this.translateTitles(arrayOfArraysData[0]);
-    // arrayOfArraysData[0]=titles;
+    const titles: string[]=await this.translateTitles(arrayOfArraysData[0]);
+    arrayOfArraysData[0]=titles;
     if (eventData.selectedOption === 'newDoc') {
       if (eventData.fileName != null)
         this.sheetsAPI.ExportDataToNewSheet(
@@ -457,12 +466,18 @@ document(rowData: any){
     return result;
   }
 
-  // translateTitles(titles: string[]) :Promise<string[]>{
-  //   //return titles.forEach(title=> this.translateService.get(title).subscribe(translation=> title= translation));
-  //   const translationPromises = titles.map(title => 
-  //     this.translateService.get(title).toPromise()
-  //   );
+  translateTitles(titles: string[]) :Promise<string[]>{
+    //return titles.forEach(title=> this.translateService.get(title).subscribe(translation=> title= translation));
+    const translationPromises = titles.map(title => 
+      this.translateService.get(title).toPromise()
+    );
 
-  //   return Promise.all(translationPromises);
+    return Promise.all(translationPromises);
+  }
+
+  // dir: string="";
+  // changeLanguage(lang: string){
+  //   if(lang=='en') this.dir= 'ltr';
+  //   else this.dir= 'rtl';
   // }
 }

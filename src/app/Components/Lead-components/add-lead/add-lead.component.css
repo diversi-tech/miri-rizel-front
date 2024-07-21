@@ -3,7 +3,7 @@
   max-width: 600px;
   margin: auto;
   padding: 15px;
-  text-align: right;
+  /* text-align: right; */
 }
 
 .line {
@@ -14,7 +14,6 @@
   margin-bottom: 10px;
 }
 
-
 #h1 {
   color: #000000;
   text-align: center;
@@ -23,11 +22,12 @@
 .card label {
   font-weight: bold;
   color: #ffffff;
-  text-align: right;
+   /* text-align: right;  */
 }
 
 .card {
-  margin: 7px;
+  margin-top: 7px;
+  margin-bottom: 7px;
   width: 100%;
 }
 
