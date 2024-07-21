@@ -28,8 +28,8 @@ import { PropilComponent } from './Components/propil/propil.component';
 import { PropilListComponent } from './Components/propil-list/propil-list.component';
 const routes: Routes = [
   // { path: 'customer', component: CustomersComponent, canActivate: [AuthGuard], data: { roles: [3, 2, 1] } },
-  // { path: 'worker', component: WorkerComponentComponent, canActivate: [AuthGuard], data: { roles: [2, 1] } },
-  // { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: { roles: [1] } },
+  { path: 'worker', component: WorkerComponentComponent, canActivate: [AuthGuard], data: { roles: [2, 1] } },
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: { roles: [1] } },
   { path: 'customer', component: CustomersComponent},
   { path: 'worker', component: WorkerComponentComponent },
   { path: 'admin', component: AdminComponent },
