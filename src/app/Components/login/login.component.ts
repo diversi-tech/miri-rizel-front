@@ -67,6 +67,7 @@ export class LoginComponent implements OnInit {
 
   passwordCheck: boolean = false;
   onSubmit() {
+    debugger
     if (this.logInForm.invalid) {
       return;
     }

@@ -1,3 +1,4 @@
+<div *ngIf="flag" class="edit-container" [style]="this.styles">
 <div *ngIf="flag" class="edit-task-form">
     <form [formGroup]="editForm" (ngSubmit)="toEnter()">
         <h1>{{"edit Lead" | translate}}</h1>

@@ -18,33 +18,38 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { InputTextModule } from 'primeng/inputtext';
+import { LanguageService } from '@app/Services/language.service';
 interface AutoCompleteCompleteEvent {
   originalEvent: Event;
   query: string;
 }
 @Component({
-    selector: 'app-add-task',
-    templateUrl: './add-task.component.html',
-    styleUrls: ['./add-task.component.css'],
-    standalone: true,
-    imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        InputTextModule,
-        NgIf,
-        CalendarModule,
-        DropdownModule,
-        AutoCompleteModule,
-        SharedModule,
-        TranslateModule,
-    ],
+  selector: 'app-add-task',
+  templateUrl: './add-task.component.html',
+  styleUrls: ['./add-task.component.css'],
+  standalone: true,
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    InputTextModule,
+    NgIf,
+    CalendarModule,
+    DropdownModule,
+    AutoCompleteModule,
+    SharedModule,
+    TranslateModule,
+  ],
 })
 export class AddTaskComponent implements OnInit {
   @Output() dataRefreshed: EventEmitter<void> = new EventEmitter<void>();
   data: any;
+  styles = {
+    'text-align': 'right', // ברירת מחדל עברית
+    'direction': 'rtl'     // ברירת מחדל עברית
+  };
   setData(data: any) {
     console.log();
-    
+
     if (data) {
       this.data = data;
       this.isEdit = true;
@@ -73,7 +78,8 @@ export class AddTaskComponent implements OnInit {
     private router: Router,
     private location: Location,
     private GoogleAuthService: GoogleAuthService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private languageService: LanguageService
   ) { }
   ngOnInit(): void {
     this.taskForm = this.fb.group({
@@ -130,6 +136,18 @@ export class AddTaskComponent implements OnInit {
         this.titlePage = "EditTaskTitle"
       }
     });
+
+    
+    this.languageService.language$.subscribe(lang => {
+      if (lang === 'he') {
+        this.styles['text-align'] = 'right';
+        this.styles['direction'] = 'rtl';
+      } else {
+        this.styles['text-align'] = 'left';
+        this.styles['direction'] = 'ltr';
+      }
+      })
+  
   }
   get title() { return this.taskForm.get('title') }
   get priority() { return this.taskForm.get('priority') }
@@ -138,7 +156,10 @@ export class AddTaskComponent implements OnInit {
   get dueDate() { return this.taskForm.get('dueDate') }
   get assignedTo() { return this.taskForm.get('assignedTo') }
   get project() { return this.taskForm.get('project') }
+
   futureDateValidator(control: AbstractControl): ValidationErrors | null {
+    if (this.isEdit)
+      return null;
     const selectedDate = new Date(control.value);
     const today = new Date();
     // today.setHours(0, 0, 0, 0);
