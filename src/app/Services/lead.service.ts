@@ -8,11 +8,11 @@ import { environment } from 'src/enviroments/environment';
   providedIn: 'root',
 })
 export class LeadService {
-  private apiUrl = `${environment.apiUrl}Lead/`
+  private apiUrl = `${environment.apiUrl}Lead`
   constructor(private http: HttpClient) { }
 
   GetLeadById(id: Number): Observable<Lead> {
-    const url = `${this.apiUrl}GetById?id=${id}`;
+    const url = `${this.apiUrl}/GetById?id=${id}`;
     return this.http.get<Lead>(url); 
   }
 
@@ -26,7 +26,9 @@ export class LeadService {
 
   editLead(lead: Lead,id:Number): Observable<Lead>  {
     lead.leadId = id;
-    console.log(lead);
+    console.log("lead");
+
+    console.log(lead.lastContactedDate);
     return this.http.put<Lead>(`${this.apiUrl}`, lead);
   }
 

@@ -84,6 +84,8 @@ export class EditLeadComponent {
   async toEnter() {
     this.submitted = true;
     if (this.editForm.invalid) { return; }
+    console.log(this.editForm.value);
+    
     this.lead.editLead(this.editForm.value, this.data).subscribe()
     await this.delay(50);
     Object.keys(this.editForm.controls).forEach((key) => {

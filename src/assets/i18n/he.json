@@ -123,6 +123,7 @@
   "notes is required.":"שדה חובה",
   "Invalid notes format.":"לא בפורמט המתאים",
   "edit Lead": "עריכת ליד",
-  "notes": "פתקים"
+  "notes": "פתקים",
+  "Passwords Error": "סיסמא שגויה"
 
 }

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, of, switchMap, tap, throwError } from 'rxjs';
 import { User } from '../Model/User';
 import { environment } from 'src/enviroments/environment';
+import * as CryptoJS from 'crypto-js';
 
 @Injectable({
   providedIn: 'root',
@@ -33,18 +34,28 @@ export class UserService {
 
   login(email: string, password: string): Observable<User> {
     return this.http.get<User>(`${this.apiUrl}Login?email=${email}&password=${password}`).pipe(
-      tap((user) => {
-        localStorage.setItem('user', JSON.stringify(user));
-      })
+      tap((response: any) => {
+        const user = response.user;
+        const encryptedRole = CryptoJS.AES.encrypt(user.role.toString(), 'encryptionKey').toString();
+        localStorage.setItem(user.email, encryptedRole);
+    })
     );
   }
 
   loginGoogle(email: string, name: string): Observable<User> {
     return this.http.get<User>(`${this.apiUrl}LoginGoogle?email=${email}&name=${name}`).pipe(
-      tap((user) => {
-        localStorage.setItem('user', JSON.stringify(user));
+      tap((response: any) => {
+        const user = response.user;
+        const encryptedRole = CryptoJS.AES.encrypt(user.role.toString(), 'encryptionKey').toString();
+        localStorage.setItem(user.email, encryptedRole);
+        // console.log(this.decryptRole(encryptedRole));
       })
     );
+  }
+
+  decryptRole(encryptedRole: string): string {
+    const decryptedBytes = CryptoJS.AES.decrypt(encryptedRole, 'encryptionKey');
+    return decryptedBytes.toString(CryptoJS.enc.Utf8);
   }
 
   getUserMail(): string | null {
@@ -61,7 +72,7 @@ export class UserService {
   }
 
   getByMail(mail: string): Observable<User> {
-    console.log(mail);    
+    console.log(mail);
     return this.http.get<User>(`${this.apiUrl}GetByEmail?email=${mail}`);
   }
 
