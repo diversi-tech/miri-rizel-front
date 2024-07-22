@@ -11,4 +11,5 @@ export interface Project {
   status?: StatusCodeProject;
   customer?: Customer;
   createdDate?: Date;
+  isActive?:boolean;
 }

@@ -90,6 +90,7 @@ export class EditProjectComponent {
     // console.log(`this.stattus" ${this.statuses[this.status].description} `);
     // this.customerName = this.custom[this.customerId].firstName != null ? this.custom[this.customerId].firstName : 0;
     this.status = this.project.status!;
+    this.project.isActive=true,
     this.customer = this.project.customer!
     this.ProjectForm = this.formBuilder.group({
       projectId: [null, Validators.required],
@@ -99,12 +100,14 @@ export class EditProjectComponent {
       endDate: [this.extractDate(String(this.project.endDate)), Validators.required],
       status: [this.project.status, Validators.required],
       createdDate: [this.extractDate(String(this.project.createdDate)), Validators.required],
-      customerId: [this.project.customer, Validators.required],
+      customer: [this.project.customer, Validators.required],
+      isActive:[this.project.isActive]
     });
     console.log(this.project);
     this.flag = true;
   }
   async toEnter() {
+    
     this.server.update(this.ProjectForm.value, this.data).subscribe(() => Swal.close())
     await this.delay(50);
     Object.keys(this.ProjectForm.controls).forEach((key) => {

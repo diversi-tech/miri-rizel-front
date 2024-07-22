@@ -40,7 +40,7 @@ update(project:Project,id:number): Observable<Project>{
   return this.http.put<Project>(`${this.apiUrl}`, project);
 }
 getProjectById(id:number): Observable<any> {
-  return this.http.get(`https://localhost:7141/projects/GetProjectById?id=${id}`, { headers: this.headers });
+  return this.http.get(`https://localhost:7141/projects/getById?id=${id}`, { headers: this.headers });
 }
 
 // getToken(): string | null {
