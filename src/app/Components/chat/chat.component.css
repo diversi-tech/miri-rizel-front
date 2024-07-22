@@ -65,7 +65,7 @@
 
 .send-button {
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #5CFFAC;
   border: none;
   color: white;
   border-radius: 4px;
@@ -73,7 +73,7 @@
 }
 
 .send-button:hover {
-  background-color: #0056b3;
+  background-color: #5CFFAC;
 }
 
 .chat-input-container {
@@ -86,3 +86,62 @@
 .chat-input-container input {
   flex: 1;
 }
+
+.chat-message {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.message-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.message-body {
+  display: flex;
+  flex-direction: column;
+  margin-top: 5px;
+}
+
+.message-details {
+  margin-bottom: 5px;
+}
+
+.message-date {
+  font-size: 0.8em;
+  color: #999;
+  align-self: flex-end;
+}
+
+.chat-input-container {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+.message-input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.send-button {
+  padding: 10px 20px;
+  background-color: #5CFFAC;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.send-button:hover {
+  background-color: #5CFFAC;
+}
+
+

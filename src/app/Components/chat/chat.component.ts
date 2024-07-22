@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Communication } from '@app/Model/Communication';
 import { Customer } from '@app/Model/Customer';
@@ -104,5 +104,12 @@ export class ChatComponent implements OnInit {
 
   close(): void {
     Swal.close();
+  }
+
+  @HostListener('document:keypress', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      this.sendMessage();
+    }
   }
 }

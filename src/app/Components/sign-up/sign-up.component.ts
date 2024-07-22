@@ -14,6 +14,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { SharedModule } from 'primeng/api';
 import { InputTextModule } from 'primeng/inputtext';
+import { EmailService } from '@app/Services/sendEmailSignUp';
 
 @Component({
     selector: 'app-sign-up',
@@ -37,7 +38,7 @@ export class SignUpComponent {
     password2: '',
   };
 
-  constructor(private dialog: MatDialog,private router: Router,private formBuilder: FormBuilder, private userService: UserService) { }
+  constructor(private emailService: EmailService,private dialog: MatDialog,private router: Router,private formBuilder: FormBuilder, private userService: UserService) { }
 
   ngOnInit() {
     this.fullForm(); // Call the function to initialize the form
@@ -80,8 +81,11 @@ export class SignUpComponent {
     this.userService.addUser(this.signUpForm.value).subscribe(
       () => {
         console.log("User added");
-        this.router.navigate(['../worker']);
-      },
+        this.emailService.sendEmailSignUp(this.signUpForm.value).subscribe(
+          () => {
+            this.router.navigate(['../worker']);
+          },
+    )},
       (error) => {
         this.dialog.open(DialogComponent, {
               data: {
