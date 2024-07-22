@@ -16,23 +16,28 @@ export class DocumentService {
   getToken() {
     return localStorage.getItem('token');
   }
-  upFile(file: FormData,name:string): Observable<string> {
+  upFile(file: FormData, name: string): Observable<string> {
     console.log(name);
-    
-    return this.http.post<string>(`${this.baseUrl}/FileUpload/upload?nameFolder=${name}`, file, {headers: this.headers});
+
+    return this.http.post<string>(`${this.baseUrl}/FileUpload/upload?nameFolder=${name}`, file, { headers: this.headers });
   }
-  addDocument(document: Document):Observable<boolean> {
+  addDocument(document: Document): Observable<boolean> {
     console.log(document);
 
-    return this.http.post<boolean>(`${this.baseUrl}/Document`, document, {headers: this.headers});
+    return this.http.post<boolean>(`${this.baseUrl}/Document`, document, { headers: this.headers });
   }
   getFolders(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/FileUpload/Folders`, {headers: this.headers});
+    return this.http.get<any>(`${this.baseUrl}/FileUpload/Folders`, { headers: this.headers });
   }
-  getFilesInFolder(folderId:string): Observable<any[]> {
+  getFilesInFolder(folderId: string): Observable<any[]> {
 
-    return this.http.get<any[]>(`${this.baseUrl}/FileUpload/folders/${folderId}/files`, {headers: this.headers});
+    return this.http.get<any[]>(`${this.baseUrl}/FileUpload/folders/${folderId}/files`, { headers: this.headers });
   }
 
-
+  sendEmail(nameCustomer: string): Observable<any> {
+  
+    
+    return this.http.post<any>(`${this.baseUrl}/Email/send`, {nameCustomer});
+  }
+  
 }
