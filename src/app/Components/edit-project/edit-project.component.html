@@ -1,5 +1,6 @@
-<div class="add-container">
-  <form *ngIf="this.flag" [formGroup]="ProjectForm"  (ngSubmit)="submit()" >
+<div *ngIf="flag" class="add-container">
+  <form  [formGroup]="ProjectForm"  (ngSubmit)="toEnter()" >
+<!-- <div > -->
     <label>שם פרויקט</label>
     <input  type="text" id="Name" formControlName="name" />
     <label>תאור</label>
@@ -8,22 +9,15 @@
   <input  type="date" id="strartDate" formControlName="startDate" />
     <label>סיום פרויקט</label>
     <input  type="date" id="endDate" formControlName="endDate" />
-  <label>createdDate </label>
+  <label>תאריך יצירת הפרויקט </label>
   <input  type="date" id="createdDate" formControlName="createdDate" />
     <label>סטאטוס </label>
-    <p-dropdown formControlName="status" [options]="statuses" optionLabel="description" [placeholder]="this.statuses[this.status].description" />
+    <p-dropdown formControlName="status" [options]="statuses" optionLabel="description" [placeholder]="this.status.description" />
+    <!-- <p-dropdown formControlName="status" [options]="statuses" optionLabel="description" placeholder="בחר סטטוס" /> -->
     <label>סוג לקוח </label>
-  <p-dropdown  formControlName="customerId" [options]="custom" optionLabel="firstName" [placeholder]="this.custom[this.customerId].firstName" />
+    <p-dropdown formControlName="customerId" [options]="custom" optionLabel="firstName"   [placeholder]="customer.firstName"/>
     <br><br/>
-    <button mat-raised-button type="submit">send</button>
-  <!-- <button
-    mat-raised-button
-    color="primary"
-    type="submit"
-    [disabled]="ProjectForm.invalid"
-    onclick="submit()"
-  >
-    סיום
-  </button> -->
+    <button class="submit-button" mat-raised-button type="submit">send</button>
+  <!-- </div> -->
 </form>
 </div>

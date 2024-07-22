@@ -6,13 +6,24 @@ import { GoogleComponent } from '../google/google.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgIf } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { DropdownModule } from 'primeng/dropdown';
+import { DialogComponent } from '../dialog/dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { CalendarModule } from 'primeng/calendar';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { SharedModule } from 'primeng/api';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
     selector: 'app-sign-up',
     templateUrl: './sign-up.component.html',
     styleUrls: ['./sign-up.component.css'],
     standalone: true,
-    imports: [FormsModule, ReactiveFormsModule, NgIf, MatFormFieldModule, MatButtonModule, GoogleComponent]
+    imports: [ CalendarModule,InputTextModule, TranslateModule, NgIf, FormsModule, ReactiveFormsModule, MatButtonModule,
+      DropdownModule,
+      AutoCompleteModule,
+      SharedModule, MatFormFieldModule, GoogleComponent]
 })
 export class SignUpComponent {
 
@@ -26,7 +37,7 @@ export class SignUpComponent {
     password2: '',
   };
 
-  constructor(private router: Router,private formBuilder: FormBuilder, private userService: UserService) { }
+  constructor(private dialog: MatDialog,private router: Router,private formBuilder: FormBuilder, private userService: UserService) { }
 
   ngOnInit() {
     this.fullForm(); // Call the function to initialize the form
@@ -72,10 +83,17 @@ export class SignUpComponent {
         this.router.navigate(['../worker']);
       },
       (error) => {
-        console.log(error);
-      }
+        this.dialog.open(DialogComponent, {
+              data: {
+                title: 'שגיאה',
+                context: 'כתובת מייל כבר קיימת',
+                buttonText: 'סגור',
+              },
+            })}
     );
   }
+
+
 }
 
 

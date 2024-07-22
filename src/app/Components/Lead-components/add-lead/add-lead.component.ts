@@ -19,6 +19,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { InputTextModule } from 'primeng/inputtext';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { LanguageService } from '@app/Services/language.service';
 
 @Component({
   selector: 'app-add-lead',
@@ -36,15 +37,21 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
     TranslateModule,
   ],
 })
-export class AddLeadComponent {
+export class AddLeadComponent implements OnInit{
   @Output() dataRefreshed: EventEmitter<void> = new EventEmitter<void>();
   userForm: FormGroup;
   titlePage: string;
+  styles = {
+    'text-align': 'right', // ברירת מחדל עברית
+    'direction': 'rtl'     // ברירת מחדל עברית
+  };
   constructor(
     private formBuilder: FormBuilder,
     private leadSrv: LeadService,
     private router: Router,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private languageService: LanguageService
+
   ) {
     // בניית הטופס בעזרת FormBuilder
     this.userForm = this.formBuilder.group({
@@ -67,10 +74,19 @@ export class AddLeadComponent {
       notes: [''],
     });
     this.titlePage = 'AddLead';
-    // const dir = lang === 'he' ? 'rtl' : 'ltr';
-    // document.documentElement.dir = dir;
   }
-
+  ngOnInit() {
+    // האזנה לשינויים בשפה
+    this.languageService.language$.subscribe(lang => {
+      if (lang === 'he') {
+        this.styles['text-align'] = 'right';
+        this.styles['direction'] = 'rtl';
+      } else {
+        this.styles['text-align'] = 'left';
+        this.styles['direction'] = 'ltr';
+      }
+    });
+  }
   submitForm = () => {
     let formData = this.userForm.value;
     this.leadSrv.addLead(formData).subscribe((lead) => {
@@ -94,7 +110,7 @@ export class AddLeadComponent {
   // Validator מותאם אישית לטלפון
   phoneValidator(control: AbstractControl): ValidationErrors | null {
     const phoneRegex =
-     /^(\d{10}|\d{3}-\d{3}-\d{4}|\d{2}-\d{7}|\d{2}-\d{3}-\d{4}|\d{2}-\d{6,7})$/; // ביטוי רגולרי שמאפשר רק מספרים ומקף
+      /^(\d{10}|\d{3}-\d{3}-\d{4}|\d{2}-\d{7}|\d{2}-\d{3}-\d{4}|\d{2}-\d{6,7})$/; // ביטוי רגולרי שמאפשר רק מספרים ומקף
     const valid = phoneRegex.test(control.value);
     return valid ? null : { invalidPhone: true };
   }

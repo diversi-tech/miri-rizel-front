@@ -8,11 +8,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'app-document',
-    templateUrl: './document.component.html',
-    styleUrls: ['./document.component.css'],
-    standalone: true,
-    imports: [FormsModule, ReactiveFormsModule,NgIf,InputTextModule,TranslateModule]
+  selector: 'app-document',
+  templateUrl: './document.component.html',
+  styleUrls: ['./document.component.css'],
+  standalone: true,
+  imports: [FormsModule, ReactiveFormsModule, NgIf, InputTextModule, TranslateModule]
 })
 export class DocumentComponent implements OnInit {
   file!: File;
@@ -20,13 +20,13 @@ export class DocumentComponent implements OnInit {
   submitted: boolean = false;
   private originalParent: HTMLElement | null = null;
   trueTitle: boolean = false;
-  nameCustomer!:string;
+  nameCustomer!: string;
   date!: Date;
   constructor(
     private documentService: DocumentService,
     private formBuilder: FormBuilder,
     private vlidatorsService: ValidatorsService
-  ) { 
+  ) {
 
   }
 
@@ -35,7 +35,7 @@ export class DocumentComponent implements OnInit {
       documentId: [0],
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      filePath: ['', [Validators.required,Validators.minLength(8)]],
+      filePath: ['', [Validators.required, Validators.minLength(8)]],
       relatedTo: ['', [Validators.required]],
       relatedId: [0, [Validators.required]],
       createdDate: ['', [Validators.required]],
@@ -52,9 +52,9 @@ export class DocumentComponent implements OnInit {
       return this.vlidatorsService.name(control.value) ? null : { invalidName: 'השם לא תקין' };
     };
   }
-setName(name:string){
-this.nameCustomer=name;
-}
+  setName(name: string) {
+    this.nameCustomer = name;
+  }
   openEditDocumentPopup() {
     const formElement = document.getElementById("addDocument");
     if (formElement) {
@@ -89,7 +89,7 @@ this.nameCustomer=name;
       const formData = new FormData(); {
         formData.append('file', this.file, title);
       }
-      this.documentService.upFile(formData,this.nameCustomer).subscribe(res => {        
+      this.documentService.upFile(formData, this.nameCustomer).subscribe(res => {
         this.documentForm.patchValue({
           filePath: res
 
@@ -103,20 +103,18 @@ this.nameCustomer=name;
     this.documentForm.patchValue({
       createdDate: new Date()
     });
-    if(this.documentForm.value.description.invalid)
-     return;
-    if(this.documentForm.value.filePath.length<8)
-       return;
-    if(this.documentForm.value.title.invalid)
+    if (this.documentForm.value.description.invalid)
       return;
-console.log(this.documentForm.value.filePath);
-    this.documentService.addDocument(this.documentForm.value).subscribe(res=>{
+    if (this.documentForm.value.filePath.length < 8)
+      return;
+    if (this.documentForm.value.title.invalid)
+      return;
+    console.log(this.documentForm.value.filePath);
+    this.documentService.addDocument(this.documentForm.value).subscribe(res => {
       alert('הקובץ הועלאה בהצלחה')
+      this.documentService.sendEmail(this.nameCustomer).subscribe();
       Swal.close();
     })
-
-    
-
   }
   changeTitle() {
     this.trueTitle = true;

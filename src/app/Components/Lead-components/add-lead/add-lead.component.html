@@ -1,6 +1,6 @@
-<div class="add-lead-form">
+<div class="add-lead-form" [style]="this.styles">
   <!-- <h2>הוספת ליד</h2> -->
-  <form [formGroup]="userForm" (ngSubmit)="submitForm()">
+  <form [formGroup]="userForm" (ngSubmit)="submitForm()" >
     <h1 id="h1" >{{this.titlePage |translate}}</h1>
     <div class="line"></div>
 

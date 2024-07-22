@@ -70,6 +70,7 @@ export class LoginComponent implements OnInit {
   get pass() { return this.logInForm.controls['password'] }
   userData: String = "logIn"
 
+  passwordCheck: boolean = false;
   onSubmit() {
     debugger
     if (this.logInForm.invalid) {
@@ -79,7 +80,7 @@ export class LoginComponent implements OnInit {
     const password = this.pass.value;
     this.userService.login(email, password).subscribe(
       (user: any) => {
-        this.router.navigate(['/home', user.role])
+        this.router.navigate(['/home', user.user.role])
         //     console.log("user");
         //     if (user.role == 1) {
         //       this.router.navigate(['/admin'], { relativeTo: this.active });
@@ -91,14 +92,23 @@ export class LoginComponent implements OnInit {
         //       this.router.navigate(['/customer'], { relativeTo: this.active });
         //     }
         //   },
-        // error => {
-        //   this.dialog.open(DialogComponent, {
-        //     data: {
-        //       title: 'שגיאה',
-        //       context: 'ארעה תקלה במהלך ההתחברות, נסה שנית',
-        //       buttonText: 'סגור',
-        //     },
-        //   })};
+      },
+      (error) => {
+        // Check if errorMessage contains the specific string
+        if (error.status==500) {
+          Swal.fire({
+            text: "Email not found",
+            icon: "error",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#d33",
+            confirmButtonText: "Close"
+          }).then((res) => {
+            this.isLoading = false
+          });
+        } else {
+          this.passwordCheck = true;
+        }
       }
     );
   }

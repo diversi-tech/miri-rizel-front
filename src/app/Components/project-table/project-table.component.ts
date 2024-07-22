@@ -1,5 +1,5 @@
 import { CustomersService } from '@app/Services/customers.service';
-import { ChangeDetectorRef, Component, ComponentFactoryResolver, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, Component, ComponentFactoryResolver, EventEmitter, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { Customer } from '@app/Model/Customer';
 import { ProjectService } from 'src/app/Services/project.service';
 import { Project } from 'src/app/Model/Project';
@@ -10,16 +10,16 @@ import { GenericBourdComponent } from 'src/app/Components/generic-bourd/generic-
 import { StatusCodeProject } from '@app/Model/StatusCodeProject';
 import { TaskService } from 'src/app/Services/task.service';
 import { Task } from '@app/Model/Task';
-import { ActivatedRoute ,Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Priority } from '@app/Model/Priority';
 import { TaskBoardComponent } from '../task-board/task-board.component';
 import { TranslateService } from '@ngx-translate/core';
 @Component({
-    selector: 'app-project-table',
-    templateUrl: './project-table.component.html',
-    styleUrls: ['./project-table.component.css'],
-    standalone: true,
-    imports: [GenericBourdComponent]
+  selector: 'app-project-table',
+  templateUrl: './project-table.component.html',
+  styleUrls: ['./project-table.component.css'],
+  standalone: true,
+  imports: [GenericBourdComponent]
 })
 export class ProjectTableComponent implements OnInit {
   projects: Project[] = [];
@@ -88,7 +88,7 @@ export class ProjectTableComponent implements OnInit {
     );
   }
   componentType!: Type<any>;
-  
+
   onDeleteProject(p: Project) {
     this.ProjectService.deleteProject(p.projectId).subscribe(
       (res: any) => {
@@ -132,22 +132,26 @@ export class ProjectTableComponent implements OnInit {
       let positionD = [this.statuses];
       let objData = [this.projects];
       let objFields = ['name'];
-      this.genericBourd.PopTable(taskFilter, loading, col$types, objData, objFields, positionD);
+      const deletecallback = (row: any) => {
+        this.onDeleteTask(row)
+      }
+      this.genericBourd.PopTable(taskFilter, loading, col$types, objData, objFields, positionD, '800px', deletecallback, true);
+
     } else {
-      this.translate.get(['Close', 'no tasks']).subscribe(translations => {
+      this.translate.get(['close', 'notasks']).subscribe(translations => {
         Swal.fire({
-          text: translations['no tasks'],
+          text: translations['notasks'],
           showCancelButton: false,
           showCloseButton: true,
           confirmButtonColor: "#d33",
-          confirmButtonText: translations['Close']
+          confirmButtonText: translations['close']
         });
       });
     }
   }
   addProject() {
     this.componentType = AddProjectComponent;
-    this.popUpAddOrEdit("Add project");
+    this.popUpAddOrEdit("Add project", null);
   }
   fetchTasks(projectId: string): void {
     if (projectId) {
@@ -167,10 +171,12 @@ export class ProjectTableComponent implements OnInit {
   }
   onEditProject(p: Project) {
     this.componentType = EditProjectComponent;
-    this.popUpAddOrEdit("Edit project");
+    this.popUpAddOrEdit("edit project", p.projectId);
+    console.log('Edit p:', p);
   }
-  popUpAddOrEdit(title: string) {
+  popUpAddOrEdit(title: string, l: Number | null) {
     Swal.fire({
+
       html: '<div id="popupContainer"></div>',
       showConfirmButton: false,
       didOpen: () => {
@@ -178,20 +184,54 @@ export class ProjectTableComponent implements OnInit {
         if (container) {
           const factory = this.resolver.resolveComponentFactory(this.componentType);
           const componentRef = this.popupContainer.createComponent(factory);
+          debugger
+          if (l != null && l!=undefined) {
+            componentRef.instance.setData(l);
+            // componentRef.instance.dataRefreshed.subscribe(() => {
+            //   this.refreshData();
+            // })
+          }
           container.appendChild(componentRef.location.nativeElement);
+          componentRef.instance.dataRefreshed.subscribe(() => {
+            this.refreshData();
+          })
         }
-        
-        this.loadP()
       },
     });
+
+
   }
   refreshData() {
     this.ProjectService.getAll().subscribe(
-      (project: any) => {
-        this.projects = project;
+      (p: Array<Project>) => {
+        this.projects = p;
+        console.log(this.projects);
         this.loading = false;
-        console.log("refreshData: ", this.projects);
+      })
+  }
+  onDeleteTask(task: Task) {
+    debugger
+    this.taskService.deleteTask(task.taskId!).subscribe(
+      (data: any) => {
+        if (data == true) {
+          Swal.fire({
+            text: "The task was successfully deleted",
+            icon: "success",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#3085D6",
+            confirmButtonText: "close"
+          }).then((result) => {
+            this.taskService.getAll().subscribe((data) => {
+              this.tasks = data
+            })
+          });
+        }
+      },
+      (error: any) => {
+        console.error('Error fetching Tasks:', error);
       }
     );
   }
+
 }

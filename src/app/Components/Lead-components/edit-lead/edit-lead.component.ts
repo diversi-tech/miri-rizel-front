@@ -6,19 +6,46 @@ import { Lead } from '@app/Model/Lead';
 import Swal from 'sweetalert2';
 import { MatButtonModule } from '@angular/material/button';
 import { NgIf } from '@angular/common';
+import { LanguageService } from '@app/Services/language.service';
+import { TranslateModule } from '@ngx-translate/core';
+import { InputTextModule } from 'primeng/inputtext';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { SharedModule } from 'primeng/api';
+
 
 @Component({
-    selector: 'app-edit-lead',
-    templateUrl: './edit-lead.component.html',
-    styleUrls: ['./edit-lead.component.css'],
-    standalone: true,
-    imports: [NgIf, FormsModule, ReactiveFormsModule, MatButtonModule]
+  selector: 'app-edit-lead',
+  templateUrl: './edit-lead.component.html',
+  styleUrls: ['./edit-lead.component.css'],
+  standalone: true,
+  imports: [InputTextModule, TranslateModule, NgIf, FormsModule, ReactiveFormsModule, MatButtonModule,
+    CalendarModule,
+    DropdownModule,
+    AutoCompleteModule,
+    SharedModule,
+    TranslateModule,
+  ]
 })
-export class EditLeadComponent {
+export class EditLeadComponent implements OnInit {
   @Output() dataRefreshed: EventEmitter<void> = new EventEmitter<void>();
-
-  constructor(private formBuilder: FormBuilder, private lead: LeadService, private router: Router, private active: ActivatedRoute) { }
-
+  styles = {
+    'text-align': 'right', // ברירת מחדל עברית
+    'direction': 'rtl'     // ברירת מחדל עברית
+  };
+  constructor(private formBuilder: FormBuilder, private lead: LeadService, private router: Router, private active: ActivatedRoute, private languageService: LanguageService) { }
+  ngOnInit(): void {
+    this.languageService.language$.subscribe(lang => {
+      if (lang === 'he') {
+        this.styles['text-align'] = 'right';
+        this.styles['direction'] = 'rtl';
+      } else {
+        this.styles['text-align'] = 'left';
+        this.styles['direction'] = 'ltr';
+      }
+    })
+  }
   fullForm() {
     this.editForm = this.formBuilder.group({
       email: [this.LeadToKnowInput.email, [Validators.required, Validators.email]],
@@ -36,7 +63,7 @@ export class EditLeadComponent {
   extractDate(dateTime: string): string {
     const date = new Date(dateTime);
     const year = date.getFullYear();
-    const month = ('0' + (date.getMonth() + 1)).slice(-2); 
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
     const day = ('0' + date.getDate()).slice(-2);
     return `${year}-${month}-${day}`;
   }
@@ -66,11 +93,13 @@ export class EditLeadComponent {
     };
   }
 
-  get formControls() { return this.editForm.controls;}
+  get formControls() { return this.editForm.controls; }
 
   async toEnter() {
     this.submitted = true;
     if (this.editForm.invalid) { return; }
+    console.log(this.editForm.value);
+    
     this.lead.editLead(this.editForm.value, this.data).subscribe()
     await this.delay(50);
     Object.keys(this.editForm.controls).forEach((key) => {

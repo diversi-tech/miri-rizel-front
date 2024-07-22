@@ -1,4 +1,4 @@
-<div class="add-task-form">
+<div class="add-task-form" [style]="this.styles" >
   <form (ngSubmit)="onSubmit()" [formGroup]="taskForm">
     <h1>{{this.titlePage |translate}}</h1>
 
@@ -11,6 +11,8 @@
         <span *ngIf="title!.errors?.['required']">{{'RequiredField'|translate}}</span>
       </div>
     </div>
+
+
 
     <label for="description">{{'DescriptionInputLabel'|translate}}</label>
     <div class="card flex justify-content-center">

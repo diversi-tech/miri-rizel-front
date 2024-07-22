@@ -51,7 +51,7 @@ export class ChatComponent implements OnInit {
   setData(any: Lead | Customer, s: string, id: Number): void {
     this.data = any;
     this.string = s;
-    this.firstName=this.data.firstName;
+    this.firstName=this.data.firstName!;
     if (s == "Lead") {
       this.communicationService.readAll().subscribe(res => {
         this.communications = res.filter(comm => comm.relatedId === id && comm.relatedTo?.id==2);
