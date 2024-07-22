@@ -12,9 +12,11 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
   private apiUrl = `${environment.apiUrl}user/`;
+
   getToken() {
     return localStorage.getItem('token');
   }
+
   private headers = new HttpHeaders({
     Authorization: `Bearer ${this.getToken()}`,
   });
@@ -29,7 +31,7 @@ export class UserService {
     const url = `${this.apiUrl}`;
     userDetails.role = 2;
     console.log(userDetails);
-    return this.http.post(url, userDetails);
+    return this.http.post(url, userDetails)
   }
 //אין פונקציה כזו בקונטרלר!!
   editUser(email: any): Observable<any> {
@@ -61,10 +63,10 @@ export class UserService {
         };
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('token', token);
-        console.log(token);
         // const user2 = response.user;
         const encryptedRole = CryptoJS.AES.encrypt(user.role.toString(), 'encryptionKey').toString();
         localStorage.setItem(user.email, encryptedRole);
+        localStorage.setItem('authData', encryptedRole);
     })
     );
   }
@@ -90,14 +92,14 @@ export class UserService {
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('token', token);
         console.log(token);
+        const encryptedRole = CryptoJS.AES.encrypt(user.role.toString(), 'encryptionKey').toString();
+        localStorage.setItem(user.email, encryptedRole);
+        localStorage.setItem('authData', encryptedRole);
        })
     );
   }
 
-  decryptRole(encryptedRole: string): string {
-    const decryptedBytes = CryptoJS.AES.decrypt(encryptedRole, 'encryptionKey');
-    return decryptedBytes.toString(CryptoJS.enc.Utf8);
-  }
+  
 
   getUserMail(): string | null {
     const userJson = localStorage.getItem('user');
@@ -115,14 +117,13 @@ export class UserService {
   getByMail(mail: string): Observable<User> {
     console.log(mail);    
     return this.http.get<User>(`${this.apiUrl}GetByEmail?email=${mail}`, {headers: this.headers});
-    console.log(mail);
-    return this.http.get<User>(`${this.apiUrl}GetByEmail?email=${mail}`);
+    // console.log(mail);
+    // return this.http.get<User>(`${this.apiUrl}GetByEmail?email=${mail}`);
   }
-//אין לה הרשאה בסרבר, למה?
+//-אין לה הרשאה בסרבר, למה?
   savePassword(email: string, password: string): Observable<any> {
     return this.http.put<boolean>(`${this.apiUrl}`, { email, password });
   }
-
 }
 
 
