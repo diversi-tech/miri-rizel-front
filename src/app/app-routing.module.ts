@@ -34,7 +34,6 @@ const routes: Routes = [
   { path: 'worker', component: WorkerComponentComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'login', component: LoginComponent },
-  // { path: 'home', component: HomeComponent },
   { path: 'edit', component: EditUserComponent },
   { path: 'add', component: AddUserComponent },
   { path: 'sign-up', component: SignUpComponent },

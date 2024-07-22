@@ -243,8 +243,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
       });
     }
   }
-
-
   addLead() {
     this.componentType = AddLeadComponent;
     this.popUpAddOrEdit("Add Lead");
