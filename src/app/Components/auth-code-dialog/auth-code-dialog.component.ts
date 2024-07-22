@@ -5,19 +5,21 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { InputOtpModule } from 'primeng/inputotp';
 
 @Component({
-    selector: 'app-auth-code-dialog',
-    templateUrl: './auth-code-dialog.component.html',
-    styleUrls: ['./auth-code-dialog.component.css'],
-    standalone: true,
-    imports: [
-        MatDialogModule,
-        MatInputModule,
-        FormsModule,
-        MatButtonModule,
-        TranslateModule,
-    ],
+  selector: 'app-auth-code-dialog',
+  templateUrl: './auth-code-dialog.component.html',
+  styleUrls: ['./auth-code-dialog.component.css'],
+  standalone: true,
+  imports: [
+    MatDialogModule,
+    MatInputModule,
+    FormsModule,
+    MatButtonModule,
+    TranslateModule,
+    InputOtpModule
+  ]
 })
 export class AuthCodeDialogComponent {
   code: string[] = ['', '', '', '', ''];
@@ -26,7 +28,7 @@ export class AuthCodeDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<AuthCodeDialogComponent>,
     private codeService: ResetPasswordService
-  ) {}
+  ) { }
 
   onNoClick(): void {
     this.dialogRef.close(false);

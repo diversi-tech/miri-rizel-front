@@ -16,6 +16,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { NgIf } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { NgxSpinnerService } from "ngx-spinner";
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -32,6 +35,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatProgressSpinnerModule,
     GoogleComponent,
     TranslateModule,
+    NgxSpinnerModule
   ],
 })
 export class LoginComponent implements OnInit {
@@ -49,7 +53,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private active: ActivatedRoute,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private spinner: NgxSpinnerService
   ) { }
 
   hide = signal(true);
@@ -99,16 +104,19 @@ export class LoginComponent implements OnInit {
   }
   resetPassword() {
     if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email.value)) {
-      this.isLoading = true
+      // this.isLoading = true
+      this.spinner.show()
       this.resetPasswordService.setUserEmail(this.email.value)
       this.resetPasswordService.resetPassword(this.email.value).subscribe(
         (response) => {
           this.router.navigate(['/ResetPassword']);
           this.resetPasswordService.setServerPassword(response);
-          this.isLoading = false
+          // this.isLoading = false
+          this.spinner.hide()
         },
         (err) => {
-          this.isLoading = false
+          // this.isLoading = false
+          this.spinner.hide()
           if (err.status == 400) {
             this.translate.get(['Close', 'EmailNotFound']).subscribe(translations => {
               Swal.fire({
@@ -130,14 +138,16 @@ export class LoginComponent implements OnInit {
                 confirmButtonColor: "#d33",
                 confirmButtonText: translations['Close']
               }).then((res) => {
-                this.isLoading = false
+                // this.isLoading = false
+                this.spinner.hide()
               });
             })
           }
         }
       );
     } else {
-      this.isLoading = false;
+      // this.isLoading = false;
+      this.spinner.hide()
       this.translate.get(['Close', 'InvalidEmail']).subscribe(translations => {
         Swal.fire({
           text: translations['InvalidEmail'],

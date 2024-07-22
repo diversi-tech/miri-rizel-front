@@ -387,8 +387,8 @@ document(rowData: any){
   async exportToSpreadSheet(eventData: any): Promise<void> {
     console.log('Submitted values:', eventData);
     const arrayOfArraysData = this.objectsToArrayOfArrays(this.data);
-    // const titles: string[]=await this.translateTitles(arrayOfArraysData[0]);
-    // arrayOfArraysData[0]=titles;
+    const titles: string[]=await this.translateTitles(arrayOfArraysData[0]);
+    arrayOfArraysData[0]=titles;
     if (eventData.selectedOption === 'newDoc') {
       if (eventData.fileName != null)
         this.sheetsAPI.ExportDataToNewSheet(
@@ -457,12 +457,12 @@ document(rowData: any){
     return result;
   }
 
-  // translateTitles(titles: string[]) :Promise<string[]>{
-  //   //return titles.forEach(title=> this.translateService.get(title).subscribe(translation=> title= translation));
-  //   const translationPromises = titles.map(title => 
-  //     this.translateService.get(title).toPromise()
-  //   );
+  translateTitles(titles: string[]) :Promise<string[]>{
+    //return titles.forEach(title=> this.translateService.get(title).subscribe(translation=> title= translation));
+    const translationPromises = titles.map(title => 
+      this.translateService.get(title).toPromise()
+    );
 
-  //   return Promise.all(translationPromises);
-  // }
+    return Promise.all(translationPromises);
+  }
 }

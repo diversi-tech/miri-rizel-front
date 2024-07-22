@@ -1,4 +1,10 @@
-<app-nav ></app-nav>
-<div class="content-offset" >
-  <router-outlet ></router-outlet>
+<app-nav></app-nav>
+<div class="content-offset">
+  <!-- <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#fff" type="ball-scale-multiple" [fullScreen]="true">
+    <img style="width: 100px" src="../assets/images/anim.gif"/>
+  </ngx-spinner> -->
+  <ngx-spinner [fullScreen]="true" >
+    <img style="width: 100px" src="../assets/three-dots.svg" />
+  </ngx-spinner>
+  <router-outlet></router-outlet>
 </div>
