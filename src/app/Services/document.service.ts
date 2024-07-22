@@ -37,7 +37,7 @@ export class DocumentService {
   sendEmail(nameCustomer: string): Observable<any> {
   
     
-    return this.http.post<any>(`${this.baseUrl}/Email/send`, {nameCustomer});
+    return this.http.post<any>(`${this.baseUrl}/Document/send`, {nameCustomer});
   }
   
 }
