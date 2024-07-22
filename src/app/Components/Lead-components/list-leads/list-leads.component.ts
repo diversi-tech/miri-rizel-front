@@ -34,7 +34,8 @@ export class ListLeadsComponent {
   }
 
   loadLeads(): void {
-    this.leadService.getAllLeads().subscribe(res => {
+    this.leadService.getAllLeads()
+    .subscribe(res => {
       this.Leads = res;
       this.loading = false;
     });
@@ -66,7 +67,6 @@ export class ListLeadsComponent {
         if (container) {
           if(container==undefined)
             console.log(",l;,");
-            
           const factory = this.resolver.resolveComponentFactory(this.componentType);
           const componentRef = this.popupContainer.createComponent(factory);
           if(l!=null && l!=undefined)         
@@ -80,7 +80,8 @@ export class ListLeadsComponent {
   }
 
   refreshData() {
-    this.leadService.getAllLeads().subscribe(
+    this.leadService.getAllLeads()
+    .subscribe(
       (Leads: Array<Lead>) => {
         this.Leads = Leads;
         this.loading= false;
