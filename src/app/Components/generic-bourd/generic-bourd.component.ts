@@ -70,6 +70,7 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   @Input() col$types: any = {};
   @Input() popTable!: boolean;
   @Input() hideEditButton: boolean = false;
+
   @Output() edit = new EventEmitter<any>();
   @Output() propil = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
@@ -315,11 +316,11 @@ document(rowData: any){
           }
           container.appendChild(componentRef.location.nativeElement);
           componentRef.instance.loading = false;
-          if (edit)  componentRef.instance.hideEditButton = edit
-          //
+          if (edit)  componentRef.instance.hideEditButton = edit 
+          // 
           if (deleteCallBack)
             componentRef.instance.onDelete = deleteCallBack
-          //
+          // 
         }
         if (customWidth) {
           const popup = Swal.getPopup();
@@ -327,6 +328,8 @@ document(rowData: any){
             popup.style.width = customWidth; // קביעת רוחב מותאם אישית
           }
         }
+       
+
       },
     });
   }

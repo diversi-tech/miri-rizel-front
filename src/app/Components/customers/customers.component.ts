@@ -247,7 +247,7 @@ export class CustomersComponent implements OnInit {
   }
 
   addDocument(customer: Customer) {
-    this.popUpAddDocument( customer.firstName);
+    this.popUpAddDocument(customer.firstName!);
   }
 
 }
