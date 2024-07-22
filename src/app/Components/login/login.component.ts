@@ -16,12 +16,16 @@ import { MatButtonModule } from '@angular/material/button';
 import { NgIf } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { NgxSpinnerService } from "ngx-spinner";
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   standalone: true,
   imports: [
+    NgxSpinnerModule,
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
@@ -44,6 +48,7 @@ export class LoginComponent implements OnInit {
     });
   }
   constructor(
+    private spinner: NgxSpinnerService,
     private resetPasswordService: ResetPasswordService,
     private dialog: MatDialog,
     private router: Router,
@@ -53,8 +58,6 @@ export class LoginComponent implements OnInit {
   ) { }
 
   hide = signal(true);
-
-  isLoading: boolean = false
 
   clickEvent(event: MouseEvent) {
     this.hide.set(!this.hide());
@@ -67,15 +70,17 @@ export class LoginComponent implements OnInit {
 
   passwordCheck: boolean = false;
   onSubmit() {
-    debugger
     if (this.logInForm.invalid) {
       return;
     }
+    this.spinner.show()
     const email = this.email.value;
     const password = this.pass.value;
     this.userService.login(email, password).subscribe(
       (user: any) => {
-        this.router.navigate(['/home', user.user.role])
+        this.spinner.hide()
+        // this.router.navigate(['/home', user.user.role])
+        this.router.navigate(['/home'])
         //     console.log("user");
         //     if (user.role == 1) {
         //       this.router.navigate(['/admin'], { relativeTo: this.active });
@@ -90,7 +95,7 @@ export class LoginComponent implements OnInit {
       },
       (error) => {
         // Check if errorMessage contains the specific string
-        if (error.status==500) {
+        if (error.status == 500) {
           Swal.fire({
             text: "Email not found",
             icon: "error",
@@ -99,9 +104,10 @@ export class LoginComponent implements OnInit {
             confirmButtonColor: "#d33",
             confirmButtonText: "Close"
           }).then((res) => {
-            this.isLoading = false
+            this.spinner.hide()
           });
         } else {
+          this.spinner.hide()
           this.passwordCheck = true;
         }
       }
@@ -109,16 +115,16 @@ export class LoginComponent implements OnInit {
   }
   resetPassword() {
     if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email.value)) {
-      this.isLoading = true
+      this.spinner.show()
       this.resetPasswordService.setUserEmail(this.email.value)
       this.resetPasswordService.resetPassword(this.email.value).subscribe(
         (response) => {
           this.router.navigate(['/ResetPassword']);
           this.resetPasswordService.setServerPassword(response);
-          this.isLoading = false
+          this.spinner.hide()
         },
         (err) => {
-          this.isLoading = false
+          this.spinner.hide()
           if (err.status == 400) {
             this.translate.get(['Close', 'EmailNotFound']).subscribe(translations => {
               Swal.fire({
@@ -140,14 +146,14 @@ export class LoginComponent implements OnInit {
                 confirmButtonColor: "#d33",
                 confirmButtonText: translations['Close']
               }).then((res) => {
-                this.isLoading = false
+                this.spinner.hide()
               });
             })
           }
         }
       );
     } else {
-      this.isLoading = false;
+      this.spinner.hide()
       this.translate.get(['Close', 'InvalidEmail']).subscribe(translations => {
         Swal.fire({
           text: translations['InvalidEmail'],
