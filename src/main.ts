@@ -113,7 +113,6 @@ import { HttpClient, withInterceptorsFromDi, provideHttpClient } from '@angular/
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from '@abacritt/angularx-social-login';
 import { provideClientHydration, BrowserModule, bootstrapApplication } from '@angular/platform-browser';
-
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 

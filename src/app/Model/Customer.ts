@@ -8,6 +8,6 @@ export interface Customer {
     email?: string,
     businessName?: string,
     source?: string,
-    status?: StatusCodeUser,
+    status: StatusCodeUser,
     createdDate?: Date,
 }
