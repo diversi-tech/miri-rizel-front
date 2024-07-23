@@ -188,8 +188,9 @@ p-table tbody tr:hover {
 
 .p-selectable-row td {
     text-align: center;
-    padding: 0; /* הסרת רווחים בתוך התאים */
+    padding: 0px; /* הסרת רווחים בתוך התאים */
 }
+
 
 .p-selectable-row td button {
     margin: 10px; /* הסרת מרווחים בין הכפתורים */
