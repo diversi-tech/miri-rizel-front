@@ -195,5 +195,10 @@
     "edit Lead": "Edit Lead",
     "notes": "notes",
     "InvalidEmailFormat":"Error email",
-    "Passwords Error": "Error Password"
+    "Passwords Error": "Error Password",
+    "role": "role",
+    "Admin": "Admin",
+    "Customer": "Customer",
+    "User": "User",
+    "EditUser":"Edit User"
 }

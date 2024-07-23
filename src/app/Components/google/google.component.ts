@@ -38,7 +38,7 @@ export class GoogleComponent {
 
   @Input() userData!: String;
 
-  addUser: User = { firstName: "", lastName: "", email: "", password: "", role: 2 };
+  addUser: User = { firstName: "", lastName: "", email: "", password: "", role: {id:0, description:""} };
   handleCredentialResponse(response: any): void {
     if (response.credential) {
       var idToken = response.credential;
@@ -88,7 +88,7 @@ export class GoogleComponent {
         if (this.userData == "signUp" && res == null) {
           this.addUser.email = email;
           this.addUser.firstName = userName;
-          this.addUser.role = 2;
+          this.addUser.role = {id: 1, description: "Customer"};
           this.login.addUser(this.addUser).subscribe(() => {
             this.dialog.open(DialogComponent, {
               data: {

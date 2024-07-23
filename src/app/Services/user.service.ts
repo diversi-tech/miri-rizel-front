@@ -4,6 +4,7 @@ import { Observable, catchError, of, switchMap, tap, throwError } from 'rxjs';
 import { User } from '../Model/User';
 import { environment } from 'src/enviroments/environment';
 import * as CryptoJS from 'crypto-js';
+import { RoleCodeUser } from '@app/Model/RoleCodeUser';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ import * as CryptoJS from 'crypto-js';
 export class UserService {
 
   constructor(private http: HttpClient) { }
-  private apiUrl = `${environment.apiUrl}user/`;
+  private apiUrl = `${environment.apiUrl}User/`;
   getToken() {
     return localStorage.getItem('token');
   }
@@ -19,10 +20,8 @@ export class UserService {
     Authorization: `Bearer ${this.getToken()}`,
   });
 
-
   getAll(): Observable<any> {
-    return this.http.get(`${this.apiUrl}readAll`,  {headers: this.headers});
-
+    return this.http.get(`${this.apiUrl}`,  {headers: this.headers});
   }
 
   addUser(userDetails: any): Observable<any> {
@@ -118,9 +117,23 @@ export class UserService {
     console.log(mail);
     return this.http.get<User>(`${this.apiUrl}GetByEmail?email=${mail}`);
   }
+  updateUser(user: User): Observable<any> {
+    console.log("update user: ", user);
+    
+    return this.http.put<boolean>(`${this.apiUrl}`,user,{headers: this.headers} );
+  }
 //אין לה הרשאה בסרבר, למה?
   savePassword(email: string, password: string): Observable<any> {
-    return this.http.put<boolean>(`${this.apiUrl}`, { email, password });
+    return this.http.put<boolean>(`${this.apiUrl}Password`, { email, password });
   }
+
+  getUserById(id: Number){
+    return this.http.get<User>(`${this.apiUrl}GetById?id=${id}`, {headers: this.headers})
+  }
+
+  getAllRoles(): Observable<any>{
+    return this.http.get<any>(`${this.apiUrl}roles`, {headers: this.headers});
+  }
+
 
 }
