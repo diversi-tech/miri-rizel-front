@@ -8,14 +8,26 @@ import { CommunicationService } from '@app/Services/communication.service';
 import { CustomersService } from '@app/Services/customers.service';
 import { LeadService } from '@app/Services/lead.service';
 import Swal from 'sweetalert2';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
+import { InputTextModule } from 'primeng/inputtext';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { SharedModule } from 'primeng/api';
 
 @Component({
   selector: 'app-new',
   templateUrl: './new.component.html',
   styleUrls: ['./new.component.css'],
   standalone: true,
-  imports: [ FormsModule,CommonModule,ReactiveFormsModule]
+  imports: [InputTextModule, TranslateModule, NgIf, FormsModule, ReactiveFormsModule, MatButtonModule,
+    CalendarModule,
+    DropdownModule,
+    AutoCompleteModule,
+    SharedModule,
+    TranslateModule, FormsModule,CommonModule,ReactiveFormsModule]
 })
 export class NewComponent {
   @Output() dataRefreshed: EventEmitter<void> = new EventEmitter<void>();

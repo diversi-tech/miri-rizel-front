@@ -4,13 +4,8 @@
     gap: 20px;
   }
   
-  .new-message-container {
-    width: 300px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  #filters {
+    margin-right: 100px;
   }
   
   .chat-list-container {
@@ -34,10 +29,7 @@
   .text-base-color{
     color: #5CFFAC;
   }
-  /* #con{
-    direction: rtl;
-  } */
-  
+ 
   .custom-button {
     background-color: white !important;
     border-bottom: 2px solid transparent !important;
@@ -49,4 +41,7 @@
     border-color: #5CFFAC !important;
   }
   
+  #adds{
+    margin-left: 100px;
+  }
 

@@ -86,3 +86,15 @@
   font-size: 20px;
 }
 
+#communi{
+}
+
+.p-button-danger {
+  background-color:transparent; 
+  border: none;
+  color: #0c0101;
+}
+
+.p-button-danger:hover {
+  background-color:rgb(229, 226, 226); 
+}
