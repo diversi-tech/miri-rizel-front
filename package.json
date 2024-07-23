@@ -35,6 +35,7 @@
     "moment-timezone": "^0.5.45",
     "ng-apexcharts": "^1.11.0",
     "ngx-google-sign-in": "^1.0.4",
+    "ngx-spinner": "^17.0.0",
     "primeicons": "^7.0.0",
     "primeng": "^17.18.4",
     "quill": "^2.0.2",

@@ -2,7 +2,6 @@
 * {
     font-size: 13px;
     font-family: "Varela Round", sans-serif !important;
-    /* text-align: center; */
 }
 
 .container{
@@ -111,7 +110,7 @@ p-table tbody tr:hover {
 
 
 .list-container {
-    text-align: center;
+    /* text-align: center; */
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -187,6 +186,7 @@ p-table tbody tr:hover {
 }
 
 .p-selectable-row td {
+    border: 1px solid rgba(237, 235, 235, 0.361);
     text-align: center;
     padding: 0px; /* הסרת רווחים בתוך התאים */
 }

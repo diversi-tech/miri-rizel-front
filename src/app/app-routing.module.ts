@@ -28,10 +28,25 @@ import { PropilComponent } from './Components/propil/propil.component';
 import { PropilListComponent } from './Components/propil-list/propil-list.component';
 import { UsersComponent } from './Components/users/users.component';
 const routes: Routes = [
-  // { path: 'customer', component: CustomersComponent, canActivate: [AuthGuard], data: { roles: [3, 2, 1] } },
-  // { path: 'users', component: UsersComponent, canActivate: [AuthGuard], data: { roles: [1,2,3] } },
-  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: { roles: [1] } },
-  { path: 'customer', component: CustomersComponent},
+  // 1=customer, 2=worker, 3=admin
+  // { path: 'worker', component: WorkerComponentComponent, canActivate: [AuthGuard], data: { roles: [3] } },
+  // { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: { roles: [3] } },
+  // { path: 'customer', component: CustomersComponent, canActivate: [AuthGuard], data: { roles: [3,2] } },
+  // { path: 'edit', component: EditUserComponent ,canActivate: [AuthGuard], data: { roles: [3] }},
+  // { path: 'add', component: AddUserComponent ,canActivate: [AuthGuard], data: { roles: [3] }},
+  // { path: 'task', component: TaskBoardComponent ,canActivate: [AuthGuard], data: { roles: [3,2] }},
+  // { path: 'addProject', component: AddProjectComponent ,canActivate: [AuthGuard], data: { roles: [3] }},
+  // { path: 'add-task/:id', component: AddTaskComponent ,canActivate: [AuthGuard], data: { roles: [3] }},
+  // { path: 'project', component: ProjectTableComponent ,canActivate: [AuthGuard], data: { roles: [3] }},
+  // { path: 'projectTable', component: ProjectTableComponent ,canActivate: [AuthGuard], data: { roles: [3] }},
+  // { path: 'customer-profile', component: CustomerProfileComponent ,canActivate: [AuthGuard], data: { roles: [3] }},
+  // { path: 'add-task', component: AddTaskComponent ,canActivate: [AuthGuard], data: { roles: [3] }},
+  // { path: 'addLead', component: AddLeadComponent,canActivate: [AuthGuard], data: { roles: [3] } },
+  // { path: 'editLead', component: EditLeadComponent ,canActivate: [AuthGuard], data: { roles: [3] }},
+  // { path: 'leads', component: ListLeadsComponent ,canActivate: [AuthGuard], data: { roles: [3] }},
+  // { path: 'propil', component: PropilListComponent ,canActivate: [AuthGuard], data: { roles: [3] }},
+
+  { path: 'customer', component: CustomersComponent },
   { path: 'worker', component: WorkerComponentComponent },
   {path: 'users', component : UsersComponent},
   { path: 'admin', component: AdminComponent },
@@ -55,13 +70,11 @@ const routes: Routes = [
   { path: 'documents', component: ListDocumentComponent },
   { path: 'leads', component: ListLeadsComponent },
   { path: 'propil', component: PropilListComponent },
-
   {
     path: 'leads',
     component: ListLeadsComponent,
     children: [{ path: '', component: LeadComponent }],
   },
-  { path: 'leads', component: ListLeadsComponent },
   {
     path: 'ResetPassword',
     component: ResetPasswordComponent,

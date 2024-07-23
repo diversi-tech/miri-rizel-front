@@ -10,18 +10,19 @@ declare global {
 import { UserService } from '@app/Services/user.service';
 import { DialogComponent } from 'src/app/Components/dialog/dialog.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { EmailService } from '@app/Services/sendEmailSignUp';
 @Component({
-    selector: 'app-google',
-    templateUrl: './google.component.html',
-    styleUrls: ['./google.component.css'],
-    standalone: true,
-    imports: [TranslateModule]
+  selector: 'app-google',
+  templateUrl: './google.component.html',
+  styleUrls: ['./google.component.css'],
+  standalone: true,
+  imports: [TranslateModule]
 })
 
 @Injectable()
 export class GoogleComponent {
 
-  constructor(private dialog: MatDialog,
+  constructor(private emailService: EmailService,private dialog: MatDialog,
     private router: Router, private login: UserService) { }
 
   initGoogleOneTap(): void {
@@ -47,9 +48,9 @@ export class GoogleComponent {
       var userName = decodedToken.name;
       this.login.getByMail(email).subscribe(res => {
         console.log("res");
-        
+
         console.log(res);
-        
+
         if (this.userData == "logIn" && res != null) {
           this.login.loginGoogle(email, userName).subscribe(
             (response: any) => {
@@ -76,7 +77,7 @@ export class GoogleComponent {
             }
           );
         }
-        if(this.userData == "logIn" && res == null) {
+        if (this.userData == "logIn" && res == null) {
           this.dialog.open(DialogComponent, {
             data: {
               title: 'שגיאה',
@@ -97,11 +98,15 @@ export class GoogleComponent {
                 buttonText: 'סגור',
               },
             });
-            this.router.navigate(['/worker']);
+            this.emailService.sendEmailSignUp(this.addUser).subscribe(
+              () => {
+                this.router.navigate(['../worker']);
+              },
+            )
           }
           );
         }
-        if(this.userData == "signUp" && res != null) {
+        if (this.userData == "signUp" && res != null) {
           this.dialog.open(DialogComponent, {
             data: {
               title: 'שגיאה',
@@ -111,15 +116,15 @@ export class GoogleComponent {
           });
         }
       },
-      error => {
-        this.dialog.open(DialogComponent, {
-          data: {
-            title: 'שגיאה',
-            context: 'המייל לא קיים במערכת עבור ל-SIGNUP',
-            buttonText: 'סגור',
-          },
-        });
-      })
+        error => {
+          this.dialog.open(DialogComponent, {
+            data: {
+              title: 'שגיאה',
+              context: 'המייל לא קיים במערכת עבור ל-SIGNUP',
+              buttonText: 'סגור',
+            },
+          });
+        })
     }
   }
 
