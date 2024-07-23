@@ -50,7 +50,7 @@ export class CustomersComponent implements OnInit {
       customerId: [0],
       firstName: ['', [Validators.required, this.customNameValidator()]],
       lastName: ['', [Validators.required, this.customNameValidator()]],
-      phone: ['', [Validators.required]],
+      phone: ['', [Validators.required,this.customPhoneValidator()]],
       email: ['', [Validators.required, Validators.email]],
       businessName: ['', [Validators.required]],
       source: ['', [Validators.required]],
@@ -171,8 +171,8 @@ export class CustomersComponent implements OnInit {
     };
   }
 
-  customPhoneValidator(): (control: FormControl) => ValidationErrors | null {
-    return (control: FormControl): ValidationErrors | null => {
+  customPhoneValidator(): ValidatorFn{
+    return (control: AbstractControl): ValidationErrors | null => {
       return this.validatorsService.phone(control.value) ? null : { invalidPhone: true };
     };
   }

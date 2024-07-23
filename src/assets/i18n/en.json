@@ -208,5 +208,6 @@
   "InvalidEmailFormat": "Error email",
   "Passwords Error": "Error Password",
   "shortName": "The name must contain at least 2 letters",
-  "shortLast": "The last name must contain at least 2"
+  "shortLast": "The last name must contain at least 2",
+   "phoneValid":"The  phone must contain at least 9 providers without other characters"
 }

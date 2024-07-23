@@ -28,7 +28,7 @@
         <input type="text" id="phone" formControlName="phone" pInputText class="input-field" />
         <div class="error-message" *ngIf="submitted && customerForm.controls['phone'].errors">
             <span *ngIf="customerForm.controls['phone'].errors['required']"> {{'RequiredField'|translate}} </span>
-            <span *ngIf="customerForm.controls['phone'].errors['phone']"></span>
+            <span *ngIf="customerForm.controls['phone'].errors['invalidPhone']">{{'phoneValid'|translate}}</span>
         </div>
     </div>
     <div class="form-group">
