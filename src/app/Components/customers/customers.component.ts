@@ -1,5 +1,5 @@
 import { Component, ComponentFactoryResolver, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { StatusCodeUser } from '@app/Model/StatusCodeUser';
 import { Customer } from 'src/app/Model/Customer';
@@ -48,14 +48,14 @@ export class CustomersComponent implements OnInit {
   ngOnInit(): void {
     this.customerForm = this.formBuilder.group({
       customerId: [0],
-      firstName: ['', [Validators.required]],
-      lastName: ['', [Validators.required]],
+      firstName: ['', [Validators.required, this.customNameValidator()]],
+      lastName: ['', [Validators.required, this.customNameValidator()]],
       phone: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       businessName: ['', [Validators.required]],
       source: ['', [Validators.required]],
       status: ['', [Validators.required]],
-      createdDate: ['', [Validators.required]],
+      createdDate: ['', [Validators.required,this.futureDateValidator()]],
     });
 
     this.loadCustomers();
@@ -165,8 +165,8 @@ export class CustomersComponent implements OnInit {
     this.selectedStatus = this.statusCodeUser.find(s => s.id == this.status) as StatusCodeUser;
   }
 
-  customNameValidator(): (control: FormControl) => ValidationErrors | null {
-    return (control: FormControl): ValidationErrors | null => {
+  customNameValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
       return this.validatorsService.name(control.value) ? null : { invalidName: true };
     };
   }
@@ -177,9 +177,12 @@ export class CustomersComponent implements OnInit {
     };
   }
 
-  customFutureDateValidator(): (control: FormControl) => ValidationErrors | null {
-    return (control: FormControl): ValidationErrors | null => {
-      return this.validatorsService.futureDate()(control.value) ? null : { invalidDate: true };
+  futureDateValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const selectedDate = new Date(control.value);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return selectedDate > today ? null : { notFutureDate: true };
     };
   }
 
