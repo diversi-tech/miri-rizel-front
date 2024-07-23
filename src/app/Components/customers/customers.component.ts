@@ -146,8 +146,6 @@ export class CustomersComponent implements OnInit {
     if (this.customerForm.invalid) {
       return;
     }
-    console.log(this.customerForm.value.status);
-    
     this.customerService.EditCustomer(this.customerForm.value).subscribe(() => {
       Swal.close();
       this.loadCustomers();
