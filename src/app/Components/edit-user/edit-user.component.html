@@ -59,7 +59,7 @@
     class="select-field"
     (completeMethod)="filterProjectAuto($event)"
     [ngModelOptions]="{standalone: true}"
-    [placeholder]="(user.role?.description || '') | translate"
+    [attr.placeholder]="(user.role?.description|| '') | translate"
   >
     <ng-template let-role pTemplate="item">
       {{ role.description |translate }} <!-- הצגת המידע בצורה הנכונה -->
@@ -69,15 +69,6 @@
     </ng-template>
   </p-autoComplete>
 </div>
-
-
-    <!-- <div id="role" class="card">
-    <p-dropdown 
-    [(ngModel)]="user.role" 
-    [options]="roles"
-    optionLabel="name"
-    placeholder="Select a City"  class="select-field"/>
-    </div> -->
     
     <label for="email">{{ "Email" | translate }}</label>
     <div class="card flex justify-content-center">

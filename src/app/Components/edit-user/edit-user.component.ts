@@ -33,6 +33,7 @@ export class EditUserComponent implements OnInit {
     'text-align': 'right', // ברירת מחדל עברית
     'direction': 'rtl'     // ברירת מחדל עברית
   };
+ 
 
   constructor(private userService: UserService, private translate: TranslateService, 
     private languageService: LanguageService) {
@@ -40,7 +41,9 @@ export class EditUserComponent implements OnInit {
   }
   ngOnInit() {
     
-    this.userService.getUserById(this.userId).subscribe(user=>{ this.user=user;
+    this.userService.getUserById(this.userId).subscribe(user=>{ 
+      this.user=user;
+      
       // const myUser=JSON.parse(localStorage.getItem('user')!) as User;
       // const token= localStorage.getItem("token");
       // if(token){
