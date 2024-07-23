@@ -1,11 +1,3 @@
-/* .chat-list-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    padding: 20px;
-  }
-  
-   */
 
    .chat-page-container {
     display: flex;
@@ -38,3 +30,23 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
+
+  .text-base-color{
+    color: #5CFFAC;
+  }
+  /* #con{
+    direction: rtl;
+  } */
+  
+  .custom-button {
+    background-color: white !important;
+    border-bottom: 2px solid transparent !important;
+    margin-right: 1.5rem !important; 
+    transition: border-color 0.3s ease !important;
+  }
+  
+  .custom-button:hover {
+    border-color: #5CFFAC !important;
+  }
+  
+

@@ -1,40 +1,24 @@
-// import { Component, OnInit } from '@angular/core';
-// import { Communication } from '@app/Model/Communication';
-// import { CommunicationService } from '@app/Services/communication.service';
-
-// @Component({
-//   selector: 'app-propil',
-//   templateUrl: './propil.component.html',
-//   styleUrls: ['./propil.component.css']
-// })
-// export class PropilComponent implements OnInit {
-
-//   constructor(private communicationService: CommunicationService){}
-
-//   ngOnInit(): void {
-//     this.communicationService.readAll().subscribe(res => {
-//       this.cummunications = res;
-//     })
-//   }
-  
-//   cummunications: Communication[] = [];
-
-// }
-
-
-
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommunicationService } from '@app/Services/communication.service';
 import { Communication } from '@app/Model/Communication';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { CommonModule, DatePipe, NgFor, NgIf } from '@angular/common';
+import { CommonModule, CurrencyPipe, DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
+import { MatTableModule } from '@angular/material/table';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatRippleModule } from '@angular/material/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { GenericBourdComponent } from '../generic-bourd/generic-bourd.component';
 
 @Component({
   selector: 'app-propil',
   templateUrl: './propil.component.html',
   styleUrls: ['./propil.component.css'],
   standalone: true,
-  imports: [NgIf,NgFor,CommonModule, DatePipe]
+  imports: [NgIf,NgFor,CommonModule, DatePipe,GenericBourdComponent,MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule, MatTabsModule, MatButtonToggleModule, NgApexchartsModule, MatTableModule, NgClass, CurrencyPipe]
 })
 export class PropilComponent implements OnInit {
   @Input() communication!: Communication;

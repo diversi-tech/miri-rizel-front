@@ -1,19 +1,38 @@
-<div class="chat-page-container">
-  <div class="new-message-container">
-    <app-new (messageSent)="addNewMessage($event)"></app-new>
-  </div>
-
-  <div class="chat-list-container">
-    <!-- <div *ngFor="let communication of communicationsFilter"> -->
-    <!-- <app-propil [communication]="communication"></app-propil> -->
-    <app-propil *ngFor="let communication of communicationsFilter" [communication]="communication"
-      (deleteMessageEvent)="deleteMessage($event)"></app-propil>
-  </div>
+<br><br><br><br>
+<div class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3">
+    <button (click)="addTask()" class="custom-button" mat-flat-button>
+        <span class="pi pi-plus ml-2"></span>
+        <span class="ml-2">משימה</span>
+    </button>
+    <button (click)="addCommunication()" class="custom-button" mat-flat-button>
+        <span class="pi pi-plus ml-2"></span>
+        <span class="ml-2">הודעה</span>
+    </button>
 </div>
-<!-- </div> -->
+<br><br>
+<div class="flex-auto border-t -mt-px pt-4 sm:pt-6 bg-gray-100">
+    <div class="w-full max-w-screen-xl mx-auto ">
+        <!-- Tabs -->
+        <mat-tab-group class="sm:px-2" mat-stretch-tabs="false" [animationDuration]="'0'">
 
-<div class="new-message-container">
-  <button type="submit" class="send-button" (click)="applyFilter('Lead')">Filter by Lead</button><br><br>
-  <button type="submit" class="send-button" (click)="applyFilter('Customer')">Filter by Customer</button><br><br>
-  <button type="submit" class="send-button" (click)="applyFilter('')">Show All Messages</button>
+            <!-- Home -->
+            <mat-tab label="Communication">
+                <div class="chat-page-container">
+                    <div class="chat-list-container">
+                        <app-propil *ngFor="let communication of communicationsFilter" [communication]="communication"
+                            (deleteMessageEvent)="deleteMessage($event)"></app-propil>
+                    </div>
+                </div>
+
+                <div class="new-message-container">
+                    <button type="submit" class="send-button" (click)="applyFilter('Lead')">Filter by
+                        Lead</button><br><br>
+                    <button type="submit" class="send-button" (click)="applyFilter('Customer')">Filter by
+                        Customer</button><br><br>
+                    <button type="submit" class="send-button" (click)="applyFilter('')">Show All Messages</button>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
 </div>
+<div #popupContainer></div>

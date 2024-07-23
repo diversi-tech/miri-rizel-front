@@ -1,4 +1,5 @@
 <h1>Add Communication</h1>
+<div class="line"></div><br><br>
 <div class="new-message-form-container" [formGroup]="newMessageForm">
     <h2>Related To</h2>
     <select formControlName="relatedTo" class="message-input" (change)="fetchNames($event)">
@@ -29,9 +30,3 @@
     <button type="submit" class="send-button" (click)="sendMessage()">Send</button>
 </div>
 
-<br><br><br>
-<button type="submit" class="send-button" (click)="showaddtaskf()">Task</button>
-<!-- <div *ngIf="showaddtask" class="new-task-form-container"> -->
-    <!-- <app-add-task></app-add-task> -->
-<!-- </div> -->
-<div #popupContainer></div>
