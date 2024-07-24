@@ -117,8 +117,8 @@ export class CustomersComponent implements OnInit {
       return;
     }
     this.newCustomer = this.customerForm.value;
+    this.selectedStatus=this.customerForm.value.status as StatusCodeUser
     this.newCustomer.status = this.selectedStatus;
-    console.log(this.newCustomer);
     this.newCustomer.customerId = 0;
     this.newCustomer.customerId = 0;
     this.customerService.AddNewCustomer(this.newCustomer).subscribe(() => {
@@ -166,12 +166,6 @@ export class CustomersComponent implements OnInit {
     });
   
   }
-
-  selectItem(event: any) {
-    this.status = event.target.value;
-    this.selectedStatus = this.statusCodeUser.find(s => s.id == this.status) as StatusCodeUser;
-  }
-
   customNameValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       return this.validatorsService.name(control.value) ? null : { invalidName: true };
@@ -201,8 +195,7 @@ export class CustomersComponent implements OnInit {
   componentType!: Type<any>;
 
   popUpAddOrEdit(title: string, l: Customer, s: String, id: Number) {
-    // this.flag = false;
-    this.popupOpen = true; // Set popupOpen to true when the pop-up is opened
+    this.popupOpen = true;
     Swal.fire({
       title: title,
       html: '<div id="popupContainer"></div>',
