@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '@app/Services/user.service';
 import { GoogleComponent } from '../google/google.component';
@@ -17,28 +23,43 @@ import { InputTextModule } from 'primeng/inputtext';
 import { EmailService } from '@app/Services/sendEmailSignUp';
 
 @Component({
-    selector: 'app-sign-up',
-    templateUrl: './sign-up.component.html',
-    styleUrls: ['./sign-up.component.css'],
-    standalone: true,
-    imports: [ CalendarModule,InputTextModule, TranslateModule, NgIf, FormsModule, ReactiveFormsModule, MatButtonModule,
-      DropdownModule,
-      AutoCompleteModule,
-      SharedModule, MatFormFieldModule, GoogleComponent]
+  selector: 'app-sign-up',
+  templateUrl: './sign-up.component.html',
+  styleUrls: ['./sign-up.component.css'],
+  standalone: true,
+  imports: [
+    CalendarModule,
+    InputTextModule,
+    TranslateModule,
+    NgIf,
+    FormsModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    DropdownModule,
+    AutoCompleteModule,
+    SharedModule,
+    MatFormFieldModule,
+    GoogleComponent,
+  ],
 })
 export class SignUpComponent {
-
   signUpForm!: FormGroup;
   submitted = false;
   passwordsMatch = true;
-  userData: String="signUp"
+  userData: String = 'signUp';
 
   userDetails = {
     password: '',
     password2: '',
   };
 
-  constructor(private emailService: EmailService,private dialog: MatDialog,private router: Router,private formBuilder: FormBuilder, private userService: UserService) { }
+  constructor(
+    private emailService: EmailService,
+    private dialog: MatDialog,
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private userService: UserService
+  ) {}
 
   ngOnInit() {
     this.fullForm(); // Call the function to initialize the form
@@ -51,7 +72,7 @@ export class SignUpComponent {
       lastName: ['', [Validators.required]],
       password: ['', [Validators.required, this.passwordValidator]],
       ConfirmPassword: ['', [Validators.required]],
-      role: [{id: 1, description: "Customer"}]
+      role: [{ id: 1, description: 'Customer' }],
     });
   }
 
@@ -74,30 +95,30 @@ export class SignUpComponent {
   }
 
   async toEnter() {
-    console.log("enter");
+    console.log('enter');
     this.submitted = true;
-    if (this.signUpForm.invalid) { return; }
-    console.log("seccsus");
+    if (this.signUpForm.invalid) {
+      return;
+    }
+    console.log('seccsus');
     this.userService.addUser(this.signUpForm.value).subscribe(
       () => {
-        console.log("User added");
-        this.emailService.sendEmailSignUp(this.signUpForm.value).subscribe(
-          () => {
-            this.router.navigate(['../users']);
-          },
-    )},
+        console.log('User added');
+        this.emailService
+        .sendEmailSignUp(this.signUpForm.value)
+        .subscribe(() => {
+          this.router.navigate(['../login']);
+        });
+      },
       (error) => {
         this.dialog.open(DialogComponent, {
-              data: {
-                title: 'שגיאה',
-                context: 'כתובת מייל כבר קיימת',
-                buttonText: 'סגור',
-              },
-            })}
+          data: {
+            title: 'שגיאה',
+            context: 'כתובת מייל כבר קיימת',
+            buttonText: 'סגור',
+          },
+        });
+      }
     );
   }
-
-
 }
-
-
