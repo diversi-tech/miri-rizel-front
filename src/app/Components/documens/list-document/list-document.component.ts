@@ -43,9 +43,10 @@ export class ListDocumentComponent implements OnInit {
     this.documentService.getFilesInFolder(folderId).subscribe(files => {
       if(files.length>0){
 
+this.translate.get(['Close', 'contentFolder']).subscribe(translations => {
 
     Swal.fire({
-      title: 'תוכן התקיה',
+      title: translations['contentFolder'],
       html: `
         <style>
           .file-grid {
@@ -84,47 +85,8 @@ export class ListDocumentComponent implements OnInit {
       showCloseButton: true,
       showConfirmButton: false,
     });
-    Swal.fire({
-  title: 'תוכן התקיה',
-  html: `
-    <style>
-      .file-grid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        justify-content: center;
+  })
       }
-      .file-item {
-        width: 120px;
-        text-align: center;
-      }
-      .file-thumbnail {
-        width: 100px;
-        height: auto;
-        display: block;
-        margin: 0 auto;
-      }
-      .file-name {
-        margin-top: 5px;
-        font-size: 14px;
-        word-wrap: break-word;
-      }
-    </style>
-    <div class="file-grid">
-      ${files.map(file => `
-        <div class="file-item">
-          <a href="${file.webViewLink}" target="_blank">
-            <img src="${file.thumbnailLink}" alt="${file.name}" class="file-thumbnail" />
-            <div class="file-name">${file.name}</div>
-          </a>
-        </div>
-      `).join('')}
-    </div>
-  `,
-  showCloseButton: true,
-  showConfirmButton: false,
-});
-}
 else
 {
   this.translate.get(['Close', 'empyFolder']).subscribe(translations => {
