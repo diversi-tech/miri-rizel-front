@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormsModule } from '@angular/forms';
 import { User } from 'src/app/Model/User';
 import { EditUserService } from '../../Services/edit-user.service';
@@ -12,6 +12,7 @@ import { RoleCodeUser } from '@app/Model/RoleCodeUser';
 import { DropdownModule } from 'primeng/dropdown';
 import Swal from 'sweetalert2';
 import { LanguageService } from '@app/Services/language.service';
+import { AuthService } from '@app/Services/auth.service';
 
 @Component({
     selector: 'app-edit-user',
@@ -25,6 +26,8 @@ import { LanguageService } from '@app/Services/language.service';
 export class EditUserComponent implements OnInit {
   @Input()
   userId: Number=0;
+  @Output()
+  dataRefreshed: EventEmitter<any>= new EventEmitter<void>();
   user!: User;
   flag: Boolean = false;
   isAdmin: boolean= false;
@@ -36,8 +39,7 @@ export class EditUserComponent implements OnInit {
  
 
   constructor(private userService: UserService, private translate: TranslateService, 
-    private languageService: LanguageService) {
-
+    private languageService: LanguageService, private authService:AuthService ) {
   }
   ngOnInit() {
     
@@ -52,6 +54,11 @@ export class EditUserComponent implements OnInit {
       //     this.isAdmin=true;
       //   }
       // }
+      const role= this.authService.getRole();
+      if(role===3){
+        console.log("I am admin");
+        this.isAdmin=true;
+      }
        
       this.userService.getAllRoles().subscribe(roles=>  {
         this.roles = roles;
@@ -77,6 +84,7 @@ export class EditUserComponent implements OnInit {
     })
     })
     this.flag = false
+    this.dataRefreshed.emit();
     Swal.close();
   })
   }
