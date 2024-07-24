@@ -26,6 +26,8 @@ import { AuthGuard } from './Guard/auth.guard';
 import { AdminComponent } from './Components/admin/admin.component';
 import { PropilComponent } from './Components/propil/propil.component';
 import { PropilListComponent } from './Components/propil-list/propil-list.component';
+import { error404Component } from './Components/errors/error-404.component';
+import { UploadFilseComponent } from './Components/upload-filse/upload-filse.component';
 const routes: Routes = [
   // 1=customer, 2=worker, 3=admin
   // { path: 'worker', component: WorkerComponentComponent, canActivate: [AuthGuard], data: { roles: [3] } },
@@ -78,6 +80,8 @@ const routes: Routes = [
     component: ResetPasswordComponent,
     canActivate: [AuthCodeGuard],
   },
+  { path: '404-not-found', pathMatch: 'full',  component:error404Component },
+  { path: '**', redirectTo: '404-not-found' }
 ];
 
 @NgModule({
