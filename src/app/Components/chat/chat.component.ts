@@ -106,10 +106,10 @@ export class ChatComponent implements OnInit {
     Swal.close();
   }
 
-  @HostListener('document:keypress', ['$event'])
-  handleKeyboardEvent(event: KeyboardEvent) {
-    if (event.key === 'Enter') {
-      this.sendMessage();
-    }
-  }
+  // @HostListener('document:keypress', ['$event'])
+  // handleKeyboardEvent(event: KeyboardEvent) {
+  //   if (event.key === 'Enter') {
+  //     this.sendMessage();
+  //   }
+  // }
 }

@@ -243,5 +243,18 @@
   "EditCustomerTitle": "עריכת לקוח",
   "shortName": "השם חייב להכיל לפחות 2 אותיות",
   "shortLast": "השם חייב להכיל לפחות 2 אותיות",
-  "phoneValid":"הפלאפון חייב להכיל לפחות 9 מספקים ללא תווים אחרים"
+  "phoneValid":"הפלאפון חייב להכיל לפחות 9 מספקים ללא תווים אחרים",
+  "Add Communication": "הוספת הודעה",
+  "Related To": "למי",
+  "Select": "בעבור",
+  "Type": "נושא",
+  "New Message": "תוכן ההודעה",
+  "Lead": "ליד",
+  "Customer": "לקוח",
+  "task":"משימה",
+  "communication": "הודעה",
+  "Filter by Lead":"לידים",
+  "Filter by Customer":"לקוחות",
+  "Show All Messages":"לידים ולקוחות"
+
 }
