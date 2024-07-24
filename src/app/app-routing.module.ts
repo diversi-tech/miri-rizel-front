@@ -26,11 +26,13 @@ import { AuthGuard } from './Guard/auth.guard';
 import { AdminComponent } from './Components/admin/admin.component';
 import { PropilComponent } from './Components/propil/propil.component';
 import { PropilListComponent } from './Components/propil-list/propil-list.component';
+import { error404Component } from './Components/errors/error-404.component';
+import { UploadFilseComponent } from './Components/upload-filse/upload-filse.component';
 const routes: Routes = [
   // { path: 'customer', component: CustomersComponent, canActivate: [AuthGuard], data: { roles: [3, 2, 1] } },
-  { path: 'worker', component: WorkerComponentComponent, canActivate: [AuthGuard], data: { roles: [2, 1] } },
-  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: { roles: [1] } },
-  { path: 'customer', component: CustomersComponent},
+  // { path: 'worker', component: WorkerComponentComponent, canActivate: [AuthGuard], data: { roles: [2, 1] } },
+  // { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: { roles: [1] } },
+  { path: 'customer', component: CustomersComponent },
   { path: 'worker', component: WorkerComponentComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'login', component: LoginComponent },
@@ -53,6 +55,7 @@ const routes: Routes = [
   { path: 'documents', component: ListDocumentComponent },
   { path: 'leads', component: ListLeadsComponent },
   { path: 'propil', component: PropilListComponent },
+  { path: 'UploadFilse', component: UploadFilseComponent },
 
   {
     path: 'leads',
@@ -65,6 +68,8 @@ const routes: Routes = [
     component: ResetPasswordComponent,
     canActivate: [AuthCodeGuard],
   },
+  { path: '404-not-found', pathMatch: 'full',  component:error404Component },
+  { path: '**', redirectTo: '404-not-found' }
 ];
 
 @NgModule({

@@ -75,7 +75,7 @@ export class LoginComponent implements OnInit {
     const password = this.pass.value;
     this.userService.login(email, password).subscribe(
       (user: any) => {
-        this.router.navigate(['/home', user.user.role])
+        this.router.navigate(['/home'])
         //     console.log("user");
         //     if (user.role == 1) {
         //       this.router.navigate(['/admin'], { relativeTo: this.active });
