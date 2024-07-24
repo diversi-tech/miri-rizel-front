@@ -198,7 +198,7 @@ document(rowData: any){
     if (this.positionData.length == 0 || !this.positionData) {
       console.log(this.positionData);
     }
-  }
+   }
 
   getSeverity(status: string) {
     switch (status) {
@@ -334,7 +334,6 @@ document(rowData: any){
     });
   }
   openAddComponent() {
-    //debugger;
     this.showAddComponent.emit();
   }
   d(b: any) {}

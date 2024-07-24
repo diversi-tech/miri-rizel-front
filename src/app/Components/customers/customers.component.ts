@@ -166,6 +166,11 @@ export class CustomersComponent implements OnInit {
     });
   
   }
+  selectItem(event: any) {
+    this.status = event.target.value;
+    this.selectedStatus = this.statusCodeUser.find(s => s.id == this.status) as StatusCodeUser;
+  }
+
   customNameValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       return this.validatorsService.name(control.value) ? null : { invalidName: true };
