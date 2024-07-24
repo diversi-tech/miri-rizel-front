@@ -15,30 +15,38 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { SharedModule } from 'primeng/api';
 import { InputTextModule } from 'primeng/inputtext';
 import { EmailService } from '@app/Services/sendEmailSignUp';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import Swal from 'sweetalert2';
 
 @Component({
-    selector: 'app-sign-up',
-    templateUrl: './sign-up.component.html',
-    styleUrls: ['./sign-up.component.css'],
-    standalone: true,
-    imports: [ CalendarModule,InputTextModule, TranslateModule, NgIf, FormsModule, ReactiveFormsModule, MatButtonModule,
-      DropdownModule,
-      AutoCompleteModule,
-      SharedModule, MatFormFieldModule, GoogleComponent]
+  selector: 'app-sign-up',
+  templateUrl: './sign-up.component.html',
+  styleUrls: ['./sign-up.component.css'],
+  standalone: true,
+  imports: [NgxSpinnerModule, CalendarModule, InputTextModule, TranslateModule, NgIf, FormsModule, ReactiveFormsModule, MatButtonModule,
+    DropdownModule,
+    AutoCompleteModule,
+    SharedModule, MatFormFieldModule, GoogleComponent]
 })
 export class SignUpComponent {
 
   signUpForm!: FormGroup;
   submitted = false;
   passwordsMatch = true;
-  userData: String="signUp"
+  userData: String = "signUp"
 
   userDetails = {
     password: '',
     password2: '',
   };
 
-  constructor(private emailService: EmailService,private dialog: MatDialog,private router: Router,private formBuilder: FormBuilder, private userService: UserService) { }
+  constructor(private emailService: EmailService,
+    private dialog: MatDialog,
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private userService: UserService,
+    private spinner: NgxSpinnerService
+  ) { }
 
   ngOnInit() {
     this.fullForm(); // Call the function to initialize the form
@@ -74,26 +82,28 @@ export class SignUpComponent {
   }
 
   async toEnter() {
-    console.log("enter");
     this.submitted = true;
+    this.spinner.show();
     if (this.signUpForm.invalid) { return; }
     console.log("seccsus");
     this.userService.addUser(this.signUpForm.value).subscribe(
       () => {
+        this.spinner.hide();
         console.log("User added");
-        this.emailService.sendEmailSignUp(this.signUpForm.value).subscribe(
-          () => {
-            this.router.navigate(['../worker']);
-          },
-    )},
+        this.emailService.sendEmailSignUp(this.signUpForm.value);
+        this.router.navigate(['/worker']);
+      },
       (error) => {
-        this.dialog.open(DialogComponent, {
-              data: {
-                title: 'שגיאה',
-                context: 'כתובת מייל כבר קיימת',
-                buttonText: 'סגור',
-              },
-            })}
+        this.spinner.hide();
+        Swal.fire({
+          text: "כתובת המייל כבר קיימת במערכת",
+          icon: "error",
+          showCancelButton: false,
+          showCloseButton: true,
+          confirmButtonColor: "#d33",
+          confirmButtonText: "Close"
+        })
+      }
     );
   }
 
