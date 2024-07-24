@@ -110,9 +110,8 @@ export class DocumentComponent implements OnInit {
     if (this.documentForm.value.title.invalid)
       return;
     console.log(this.documentForm.value.filePath);
-    this.documentService.addDocument(this.documentForm.value).subscribe(res => {
+    this.documentService.addDocument(this.documentForm.value,this.nameCustomer).subscribe(res => {
       alert('הקובץ הועלאה בהצלחה')
-      this.documentService.sendEmail(this.nameCustomer).subscribe();
       Swal.close();
     })
   }
