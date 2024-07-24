@@ -28,6 +28,7 @@ import { PropilComponent } from './Components/propil/propil.component';
 import { PropilListComponent } from './Components/propil-list/propil-list.component';
 import { error404Component } from './Components/errors/error-404.component';
 import { UploadFilseComponent } from './Components/upload-filse/upload-filse.component';
+import { UsersComponent } from './Components/users/users.component';
 const routes: Routes = [
   // 1=customer, 2=worker, 3=admin
   // { path: 'worker', component: WorkerComponentComponent, canActivate: [AuthGuard], data: { roles: [3] } },
@@ -49,6 +50,7 @@ const routes: Routes = [
 
   { path: 'customer', component: CustomersComponent },
   { path: 'worker', component: WorkerComponentComponent },
+  {path: 'users', component : UsersComponent},
   { path: 'admin', component: AdminComponent },
   { path: 'login', component: LoginComponent },
   { path: 'edit', component: EditUserComponent },
@@ -81,7 +83,8 @@ const routes: Routes = [
     canActivate: [AuthCodeGuard],
   },
   { path: '404-not-found', pathMatch: 'full',  component:error404Component },
-  { path: '**', redirectTo: '404-not-found' }
+  { path: '**', redirectTo: '404-not-found' },
+  { path: 'home/:role', component: HomePageComponent }
 ];
 
 @NgModule({
