@@ -64,6 +64,7 @@ export class CustomersComponent implements OnInit {
 
   private loadCustomers(): void {
     this.customerService.GetAllCustomers().subscribe(res => {
+     res= res.filter(cutomer=>cutomer.status.id!==2)
       this.customers = res;
       this.loading = false;
     });
@@ -155,9 +156,15 @@ export class CustomersComponent implements OnInit {
   }
 
   deleteCustomer(customer: Customer) {
-    this.customerService.DeleteCustomer(customer.customerId).subscribe(() => {
+    customer.status.description='Inactive';
+    customer.status.id=2;
+  
+    
+
+    this.customerService.DeleteCustomer(customer).subscribe(() => {
       this.loadCustomers();
     });
+  
   }
 
   selectItem(event: any) {
