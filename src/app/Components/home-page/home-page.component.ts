@@ -1,6 +1,6 @@
 import { Task } from 'src/app/Model/Task';
 import { CurrencyPipe, NgClass, NgFor, NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, Type, ViewEncapsulation, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, Type, ViewEncapsulation, ComponentFactoryResolver, ViewChild, ViewContainerRef, ElementRef } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatRippleModule } from '@angular/material/core';
@@ -26,6 +26,7 @@ import { AddTaskComponent } from '../add-task/add-task.component';
 import { StatusCodeProject } from '@app/Model/StatusCodeProject';
 import { Project } from '@app/Model/Project';
 import { GenericBourdComponent } from '../generic-bourd/generic-bourd.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
@@ -33,11 +34,12 @@ import { GenericBourdComponent } from '../generic-bourd/generic-bourd.component'
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [GenericBourdComponent, MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule, MatTabsModule, MatButtonToggleModule, NgApexchartsModule, NgFor, NgIf, MatTableModule, NgClass, CurrencyPipe],
+  imports: [GenericBourdComponent, MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule, MatTabsModule, MatButtonToggleModule, NgApexchartsModule, NgFor, NgIf, MatTableModule, NgClass, CurrencyPipe,TranslateModule],
 })
 export class HomePageComponent implements OnInit, OnDestroy {
 
-  constructor(private router: Router, private _userService: UserService, private TaskService: TaskService, private _leadService: LeadService, private _customerService: CustomersService, private resolver: ComponentFactoryResolver, private ProjectService: ProjectService) { }
+  constructor(private router: Router, private _userService: UserService, private TaskService: TaskService, private _leadService: LeadService, private _customerService: CustomersService, private resolver: ComponentFactoryResolver, private ProjectService: ProjectService,private translate: TranslateService,
+  ) { }
   isAdmin: boolean = false;
   user: User | any
   users!: User[]
@@ -54,9 +56,10 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   @ViewChild('popupContainer', { read: ViewContainerRef }) popupContainer!: ViewContainerRef;
   @ViewChild(GenericBourdComponent) genericBourd!: GenericBourdComponent;
+  @ViewChild('fullScreenComponent') fullScreenComponent!: ElementRef;
 
   data: any;
-  selectedProject: string = 'ACME Corp. Backend App';
+  selectedProject: string = 'מעבר ל..';
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   activeCustomers: number = 0;
   inactiveCustomers: number = 0;
@@ -71,7 +74,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.TaskService.getAll().subscribe(
       (data: any) => {
         this.tasks = data;
-        console.log("this.tasks", this.tasks);
       },
       (error: any) => {
         console.error('Error fetching tasks:', error);
@@ -80,7 +82,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this._leadService.getAllLeads().subscribe(
       (data: Lead[]) => {
         this.leads = data;
-        console.log("this.leads", this.leads);
       },
       (error: any) => {
         console.error('Error fetching leads:', error);
@@ -99,7 +100,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this._customerService.GetAllCustomers().subscribe(
       (data: Customer[]) => {
         this.customers = data;
-        console.log("this.customers", this.customers);
         this.calculateStats();
         this.initChart();
       },
@@ -110,27 +110,31 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
     this.ProjectService.getAll().subscribe(
       (p: Array<Project>) => {
-        this.projects = p;
-        console.log("project=", this.projects);
-        this.TaskService.getAllStatus().subscribe(
-          (data) => {
-            this.statuses = data
-            console.log("this.statuses", this.statuses);
-          }
-        );
-        this.TaskService.getAllPriorities().subscribe(
-          (data) => {
-            this.priorities = data
-            console.log("this.priorities", this.priorities);
-
-          }
-        );
-        this.loading = false;
+        this.projects = p.slice(0,7);
       },
       (error) => {
-        console.error('Error fetching project:', error);
         this.loading = true;
       })
+    this.TaskService.getAllStatus().subscribe(
+      (data) => {
+        this.statuses = data
+
+      },
+      (error: any) => {
+        console.error('Error fetching customers:', error);
+      }
+    );
+
+    this.TaskService.getAllPriorities().subscribe(
+      (data) => {
+        this.priorities = data
+
+      },
+      (error: any) => {
+        console.error('Error fetching priorities:', error);
+      }
+    );
+    this.loading = false;
   }
 
   calculateStats() {
@@ -138,7 +142,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.inactiveCustomers = this.customers.filter(customer => customer.status.description === 'Inactive').length;
     this.totalLeads = this.leads.length;
     console.log(this.activeCustomers, this.inactiveCustomers,);
-
   }
 
   initChart() {
@@ -146,8 +149,8 @@ export class HomePageComponent implements OnInit, OnDestroy {
       chart: {
         fontFamily: 'inherit',
         foreColor: 'inherit',
-        height: 400, 
-        width: '100%', 
+        height: 400,
+        width: '100%',
         type: 'polarArea',
         toolbar: {
           show: false,
@@ -215,6 +218,26 @@ export class HomePageComponent implements OnInit, OnDestroy {
   }
 
 
+  openFullScreen(): void {
+    const elem = this.fullScreenComponent.nativeElement;
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.mozRequestFullScreen) { /* Firefox */
+      elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+      elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) { /* IE/Edge */
+      elem.msRequestFullscreen();
+    }
+  }
+  onToggleChange(event: any) {
+    if (event.value === 'show-all') {
+      this.router.navigate(['/project']);
+    }
+  }
+  navigateTo(path: string) {
+    this.router.navigate([path]);
+  }
   routing(list: any): void {
     this.filterData(list);
   }
@@ -224,7 +247,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     console.log(taskFilter);
     if (taskFilter.length != 0) {
       let loading: boolean = true;
-      let col$types = { 'title': 'text', 'dueDate': 'date', 'createdDate': 'date' };
+      let col$types = { 'title': 'text','description':'text','dueDate': 'date', 'createdDate': 'date' };
       let positionD = [this.statuses];
       let objData = [this.projects];
       let objFields = ['name'];
@@ -238,7 +261,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
         text: 'no tasks',
         showCancelButton: false,
         showCloseButton: true,
-        confirmButtonColor: "#d33",
+        confirmButtonColor: "#5CFFAC",
         confirmButtonText: 'Close'
       });
     }
@@ -277,10 +300,10 @@ export class HomePageComponent implements OnInit, OnDestroy {
     return this.tasks
   }
   getTodoTasks(): Task[] {
-    if(this.tasks)
-    // return this.tasks.filter(task => task.status?.description === "TO DO");
-    return this.tasks.filter(task => task.status?.description === "Not Started");
-  return []
+    if (this.tasks)
+      // return this.tasks.filter(task => task.status?.description === "TO DO");
+      return this.tasks.filter(task => task.status?.description === "Not Started");
+    return []
   }
   getTodoTasksByUser(): Task[] {
     // return this.tasks.filter(task => task.status?.description === "TO DO");
@@ -301,9 +324,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   getInProgressTasks(): Task[] {
     // return this.tasks.filter(task => task.status?.description === "In PROGRESS");
-    if(this.tasks)
-    return this.tasks.filter(task => task.status?.description === "In Progress");
-  return[]
+    if (this.tasks)
+      return this.tasks.filter(task => task.status?.description === "In Progress");
+    return []
   }
   getInProgressTasksByUser(): Task[] {
     if (this.tasks)
@@ -324,61 +347,62 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   getTasksDueToday(): Task[] {
     const today = new Date().toDateString();
-    if(this.tasks){
-    return this.tasks.filter(task => {
-      if (task.dueDate) {
-        return new Date(task.dueDate).toDateString() === today;
-      }
-      return false;
-    })}
-  return []
+    if (this.tasks) {
+      return this.tasks.filter(task => {
+        if (task.dueDate) {
+          return new Date(task.dueDate).toDateString() === today;
+        }
+        return false;
+      })
+    }
+    return []
   }
   getTasksDueTodayAndClosed(): Task[] {
     const today = new Date().toDateString();
-    if(this.tasks)
-    return this.tasks.filter(task => {
-      if (task.dueDate) {
-        // return new Date(task.dueDate).toDateString() === today&&task.status?.description=="DONE";
-        return new Date(task.dueDate).toDateString() === today && task.status?.description == "Completed";
-      }
-      return false;
-    })
+    if (this.tasks)
+      return this.tasks.filter(task => {
+        if (task.dueDate) {
+          // return new Date(task.dueDate).toDateString() === today&&task.status?.description=="DONE";
+          return new Date(task.dueDate).toDateString() === today && task.status?.description == "Completed";
+        }
+        return false;
+      })
     return []
   }
   getTasksOverdue(): Task[] {
     const now = new Date();
-    if(this.tasks)
-    return this.tasks.filter(task => {
-      if (task.dueDate) {
-        const dueDate = new Date(task.dueDate);
-        return dueDate < now && task.status?.description !== "Completed";
-        // return dueDate < now && task.status?.description !== "DONE";
-      }
-      return false;
-    });
-    return[]
+    if (this.tasks)
+      return this.tasks.filter(task => {
+        if (task.dueDate) {
+          const dueDate = new Date(task.dueDate);
+          return dueDate < now && task.status?.description !== "Completed";
+          // return dueDate < now && task.status?.description !== "DONE";
+        }
+        return false;
+      });
+    return []
   }
   getTasksOverdueFromYesterday(): Task[] {
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
     const yesterdayDateString = yesterday.toDateString();
-    if(this.tasks)
-    return this.tasks.filter(task => {
-      if (task.dueDate) {
-        return new Date(task.dueDate).toDateString() === yesterdayDateString;
-      }
-      return false;
-    });
-    return[]
+    if (this.tasks)
+      return this.tasks.filter(task => {
+        if (task.dueDate) {
+          return new Date(task.dueDate).toDateString() === yesterdayDateString;
+        }
+        return false;
+      });
+    return []
   }
 
- 
+
   ngOnDestroy(): void {
     this._unsubscribeAll.next(null);
     this._unsubscribeAll.complete();
   }
 
-  
+
   trackByFn(index: number, item: any): any {
     return item.id || index;
   }
@@ -393,8 +417,8 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   }
 
- 
+
   private _prepareChartData(): void {
- 
+
   }
 }

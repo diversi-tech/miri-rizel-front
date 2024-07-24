@@ -334,7 +334,6 @@ document(rowData: any){
     });
   }
   openAddComponent() {
-    //debugger;
     this.showAddComponent.emit();
   }
   d(b: any) {}
