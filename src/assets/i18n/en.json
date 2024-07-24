@@ -168,6 +168,10 @@
   "Show All Messages": "Show All Messages",
   "empyFolder":"There are no documents available to view for this client",
   "listFolders":"List of Folders on the drive",
-  "nameFolder":"Search folder by name"
+  "nameFolder":"Search folder by name",
+  "contentFolder":" The contents of the folder",
+  "upLoadFile":"The file was uploaded successfully"
+
+
 
 }
