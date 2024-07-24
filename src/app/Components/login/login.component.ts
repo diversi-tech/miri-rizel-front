@@ -88,6 +88,7 @@ export class LoginComponent implements OnInit {
     this.userService.login(email, password).subscribe(
       (user: any) => {
         this.router.navigate(['/home'])
+        this.spinner.hide();
         //     console.log("user");
         //     if (user.role == 1) {
         //       this.router.navigate(['/admin'], { relativeTo: this.active });
@@ -118,7 +119,9 @@ export class LoginComponent implements OnInit {
           this.passwordCheck = true;
         }
       }
-    );
+    
+    )
+    this.spinner.hide();
   }
   resetPassword() {
     if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email.value)) {

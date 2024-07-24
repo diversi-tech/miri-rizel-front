@@ -100,7 +100,10 @@ export class UserService {
   }
 
   getAll(): Observable<any> {
-    return this.http.get(`${this.apiUrl}`, { headers: this.headers });
+    const head = new HttpHeaders({
+      Authorization: `Bearer ${this.getToken()}`,
+    });
+    return this.http.get(`${this.apiUrl}`, { headers: head });
   }
 
   getUserMail(): string | null {
@@ -134,7 +137,7 @@ export class UserService {
 
   addUser(userDetails: any): Observable<any> {
     const url = `${this.apiUrl}`;
-    userDetails.role = 2;
+    userDetails.role = { id: 1, description: 'Customer' };
     console.log(userDetails);
     return this.http.post(url, userDetails);
   }
