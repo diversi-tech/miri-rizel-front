@@ -1,6 +1,13 @@
-
 import { Component, OnInit, signal } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/Model/User';
 import { ResetPasswordService } from '../../Services/reset-password.service';
@@ -42,9 +49,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.logInForm = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
-      password: new FormControl(null, [
-        Validators.required,
-      ]),
+      password: new FormControl(null, [Validators.required]),
     });
   }
   constructor(
@@ -55,7 +60,7 @@ export class LoginComponent implements OnInit {
     private userService: UserService,
     private active: ActivatedRoute,
     private translate: TranslateService
-  ) { }
+  ) {}
 
   hide = signal(true);
 
@@ -64,9 +69,13 @@ export class LoginComponent implements OnInit {
     event.stopPropagation();
   }
   logInForm: FormGroup = new FormGroup({});
-  get email() { return this.logInForm.controls['email'] }
-  get pass() { return this.logInForm.controls['password'] }
-  userData: String = "logIn"
+  get email() {
+    return this.logInForm.controls['email'];
+  }
+  get pass() {
+    return this.logInForm.controls['password'];
+  }
+  userData: String = 'logIn';
 
   passwordCheck: boolean = false;
   onSubmit() {
@@ -78,9 +87,8 @@ export class LoginComponent implements OnInit {
     const password = this.pass.value;
     this.userService.login(email, password).subscribe(
       (user: any) => {
-        this.spinner.hide()
-        // this.router.navigate(['/home', user.user.role])
         this.router.navigate(['/home'])
+        this.spinner.hide();
         //     console.log("user");
         //     if (user.role == 1) {
         //       this.router.navigate(['/admin'], { relativeTo: this.active });
@@ -97,12 +105,12 @@ export class LoginComponent implements OnInit {
         // Check if errorMessage contains the specific string
         if (error.status == 500) {
           Swal.fire({
-            text: "Email not found",
-            icon: "error",
+            text: 'Email not found',
+            icon: 'error',
             showCancelButton: false,
             showCloseButton: true,
-            confirmButtonColor: "#d33",
-            confirmButtonText: "Close"
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Close',
           }).then((res) => {
             this.spinner.hide()
           });
@@ -111,7 +119,9 @@ export class LoginComponent implements OnInit {
           this.passwordCheck = true;
         }
       }
-    );
+    
+    )
+    this.spinner.hide();
   }
   resetPassword() {
     if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email.value)) {
@@ -126,29 +136,33 @@ export class LoginComponent implements OnInit {
         (err) => {
           this.spinner.hide()
           if (err.status == 400) {
-            this.translate.get(['Close', 'EmailNotFound']).subscribe(translations => {
+            this.translate
+            .get(['Close', 'EmailNotFound'])
+            .subscribe((translations) => {
               Swal.fire({
                 text: translations['EmailNotFound'],
-                icon: "error",
+                icon: 'error',
                 showCancelButton: false,
                 showCloseButton: true,
-                confirmButtonColor: "#d33",
-                confirmButtonText: translations['Close']
-              })
-            })
+                confirmButtonColor: '#d33',
+                confirmButtonText: translations['Close'],
+              });
+            });
           } else {
-            this.translate.get(['Close', 'ProblemSendingEmail']).subscribe(translations => {
+            this.translate
+            .get(['Close', 'ProblemSendingEmail'])
+            .subscribe((translations) => {
               Swal.fire({
                 text: translations['ProblemSendingEmail'],
-                icon: "error",
+                icon: 'error',
                 showCancelButton: false,
                 showCloseButton: true,
-                confirmButtonColor: "#d33",
-                confirmButtonText: translations['Close']
+                confirmButtonColor: '#d33',
+                confirmButtonText: translations['Close'],
               }).then((res) => {
                 this.spinner.hide()
               });
-            })
+            });
           }
         }
       );
@@ -157,13 +171,13 @@ export class LoginComponent implements OnInit {
       this.translate.get(['Close', 'InvalidEmail']).subscribe(translations => {
         Swal.fire({
           text: translations['InvalidEmail'],
-          icon: "error",
+          icon: 'error',
           showCancelButton: false,
           showCloseButton: true,
-          confirmButtonColor: "#d33",
-          confirmButtonText: translations['Close']
-        })
-      })
+          confirmButtonColor: '#d33',
+          confirmButtonText: translations['Close'],
+        });
+      });
     }
   }
 

@@ -1,5 +1,5 @@
 import { Component, ComponentFactoryResolver, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { StatusCodeUser } from '@app/Model/StatusCodeUser';
 import { Customer } from 'src/app/Model/Customer';
@@ -48,14 +48,14 @@ export class CustomersComponent implements OnInit {
   ngOnInit(): void {
     this.customerForm = this.formBuilder.group({
       customerId: [0],
-      firstName: ['', [Validators.required]],
-      lastName: ['', [Validators.required]],
-      phone: ['', [Validators.required]],
+      firstName: ['', [Validators.required, this.customNameValidator()]],
+      lastName: ['', [Validators.required, this.customNameValidator()]],
+      phone: ['', [Validators.required,this.customPhoneValidator()]],
       email: ['', [Validators.required, Validators.email]],
       businessName: ['', [Validators.required]],
       source: ['', [Validators.required]],
       status: ['', [Validators.required]],
-      createdDate: ['', [Validators.required]],
+      createdDate: ['', [Validators.required,this.futureDateValidator()]],
     });
 
     this.loadCustomers();
@@ -64,6 +64,7 @@ export class CustomersComponent implements OnInit {
 
   private loadCustomers(): void {
     this.customerService.GetAllCustomers().subscribe(res => {
+     res= res.filter(cutomer=>cutomer.status.id!==2)
       this.customers = res;
       this.loading = false;
     });
@@ -116,8 +117,8 @@ export class CustomersComponent implements OnInit {
       return;
     }
     this.newCustomer = this.customerForm.value;
+    this.selectedStatus=this.customerForm.value.status as StatusCodeUser
     this.newCustomer.status = this.selectedStatus;
-    console.log(this.newCustomer);
     this.newCustomer.customerId = 0;
     this.newCustomer.customerId = 0;
     this.customerService.AddNewCustomer(this.newCustomer).subscribe(() => {
@@ -146,8 +147,6 @@ export class CustomersComponent implements OnInit {
     if (this.customerForm.invalid) {
       return;
     }
-    console.log(this.customerForm.value.status);
-    
     this.customerService.EditCustomer(this.customerForm.value).subscribe(() => {
       Swal.close();
       this.loadCustomers();
@@ -157,31 +156,39 @@ export class CustomersComponent implements OnInit {
   }
 
   deleteCustomer(customer: Customer) {
-    this.customerService.DeleteCustomer(customer.customerId).subscribe(() => {
+    customer.status.description='Inactive';
+    customer.status.id=2;
+  
+    
+
+    this.customerService.DeleteCustomer(customer).subscribe(() => {
       this.loadCustomers();
     });
+  
   }
-
   selectItem(event: any) {
     this.status = event.target.value;
     this.selectedStatus = this.statusCodeUser.find(s => s.id == this.status) as StatusCodeUser;
   }
 
-  customNameValidator(): (control: FormControl) => ValidationErrors | null {
-    return (control: FormControl): ValidationErrors | null => {
+  customNameValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
       return this.validatorsService.name(control.value) ? null : { invalidName: true };
     };
   }
 
-  customPhoneValidator(): (control: FormControl) => ValidationErrors | null {
-    return (control: FormControl): ValidationErrors | null => {
+  customPhoneValidator(): ValidatorFn{
+    return (control: AbstractControl): ValidationErrors | null => {
       return this.validatorsService.phone(control.value) ? null : { invalidPhone: true };
     };
   }
 
-  customFutureDateValidator(): (control: FormControl) => ValidationErrors | null {
-    return (control: FormControl): ValidationErrors | null => {
-      return this.validatorsService.futureDate()(control.value) ? null : { invalidDate: true };
+  futureDateValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const selectedDate = new Date(control.value);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return selectedDate > today ? null : { notFutureDate: true };
     };
   }
 
@@ -193,8 +200,7 @@ export class CustomersComponent implements OnInit {
   componentType!: Type<any>;
 
   popUpAddOrEdit(title: string, l: Customer, s: String, id: Number) {
-    // this.flag = false;
-    this.popupOpen = true; // Set popupOpen to true when the pop-up is opened
+    this.popupOpen = true;
     Swal.fire({
       title: title,
       html: '<div id="popupContainer"></div>',

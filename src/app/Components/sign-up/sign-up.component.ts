@@ -59,7 +59,7 @@ export class SignUpComponent {
       lastName: ['', [Validators.required]],
       password: ['', [Validators.required, this.passwordValidator]],
       ConfirmPassword: ['', [Validators.required]],
-      role: [2]
+      role: [{id: 1, description: "Customer"}]
     });
   }
 
@@ -90,9 +90,11 @@ export class SignUpComponent {
       () => {
         this.spinner.hide();
         console.log("User added");
-        this.emailService.sendEmailSignUp(this.signUpForm.value);
-        this.router.navigate(['/worker']);
-      },
+        this.emailService.sendEmailSignUp(this.signUpForm.value).subscribe(
+          () => {
+            this.router.navigate(['../users']);
+          },
+    )},
       (error) => {
         this.spinner.hide();
         Swal.fire({
