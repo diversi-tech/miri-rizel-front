@@ -15,13 +15,14 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-propil-list',
   templateUrl: './propil-list.component.html',
   styleUrls: ['./propil-list.component.css'],
   standalone: true,
-  imports: [NgFor, NewComponent, PropilComponent, GenericBourdComponent, MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule,
+  imports: [TranslateModule,NgFor, NewComponent, PropilComponent, GenericBourdComponent, MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule,
     MatTabsModule, MatButtonToggleModule, NgApexchartsModule, NgFor, NgIf, MatTableModule, NgClass, CurrencyPipe],
 
 })
@@ -105,4 +106,6 @@ export class PropilListComponent implements OnInit {
         this.communicationsFilter = c;
       })
   }
+
+
 }

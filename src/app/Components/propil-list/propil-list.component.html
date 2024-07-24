@@ -3,17 +3,17 @@
     <div id="adds">
         <button (click)="addTask()" class="custom-button" mat-flat-button>
             <span class="pi pi-plus ml-2"></span>
-            <span class="ml-2">משימה</span>
+            <span class="ml-2">{{'task' | translate}}</span>
         </button>
         <button (click)="addCommunication()" class="custom-button" mat-flat-button>
             <span class="pi pi-plus ml-2"></span>
-            <span class="ml-2">הודעה</span>
+            <span class="ml-2">{{'communication' | translate}}</span>
         </button>
     </div>
     <div id="filters" class="flex justify-end space-x-3">
-        <button type="submit" class="send-button" (click)="applyFilter('Lead')">Filter by Lead</button>
-        <button type="submit" class="send-button" (click)="applyFilter('Customer')">Filter by Customer</button>
-        <button type="submit" class="send-button" (click)="applyFilter('')">Show All Messages</button>
+        <button type="submit" class="send-button" (click)="applyFilter('Lead')">{{'Filter by Lead' | translate}}</button>
+        <button type="submit" class="send-button" (click)="applyFilter('Customer')">{{'Filter by Customer' | translate}}</button>
+        <button type="submit" class="send-button" (click)="applyFilter('')">{{'Show All Messages' | translate}}</button>
     </div>
 </div>
 <br><br>

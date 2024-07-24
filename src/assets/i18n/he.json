@@ -246,5 +246,10 @@
   "Type": "נושא",
   "New Message": "תוכן ההודעה",
   "Lead": "ליד",
-  "Customer": "לקוח"
+  "Customer": "לקוח",
+  "task":"משימה",
+  "communication": "הודעה",
+  "Filter by Lead":"לידים",
+  "Filter by Customer":"לקוחות",
+  "Show All Messages":"לידים ולקוחות"
 }
