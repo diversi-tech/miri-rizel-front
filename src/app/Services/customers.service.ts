@@ -44,11 +44,11 @@ export class CustomersService {
     });
   }
 
-  DeleteCustomer(customerId: Number): Observable<boolean> {
-    return this.http.delete<boolean>(
-      `${this.apiUrl}?customerId=${customerId}`,
-      { headers: this.headers }
-    );
+  DeleteCustomer(customer: Customer): Observable<boolean> {
+    customer.status = customer.status as StatusCodeUser;
+    return this.http.put<boolean>(`${this.apiUrl}`, customer, {
+      headers: this.headers,
+    });
   }
   GetAllStatusUser(): Observable<StatusCodeUser[]> {
     return this.http.get<StatusCodeUser[]>(`${this.apiUrl}GetAllStatus`, {
