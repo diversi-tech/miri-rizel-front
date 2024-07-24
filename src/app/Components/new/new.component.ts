@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, EventEmitter, Output, Type, ViewChild, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, Component, ComponentFactoryResolver, EventEmitter, Output, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Communication } from '@app/Model/Communication';
 import { Customer } from '@app/Model/Customer';
@@ -7,23 +7,34 @@ import { RelatedToProject } from '@app/Model/RelatedToCode';
 import { CommunicationService } from '@app/Services/communication.service';
 import { CustomersService } from '@app/Services/customers.service';
 import { LeadService } from '@app/Services/lead.service';
-import { AddTaskComponent } from '../add-task/add-task.component';
 import Swal from 'sweetalert2';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
+import { InputTextModule } from 'primeng/inputtext';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { SharedModule } from 'primeng/api';
 
 @Component({
   selector: 'app-new',
   templateUrl: './new.component.html',
   styleUrls: ['./new.component.css'],
   standalone: true,
-  imports: [ FormsModule,CommonModule,ReactiveFormsModule]
+  imports: [InputTextModule, TranslateModule, NgIf, FormsModule, ReactiveFormsModule, MatButtonModule,
+    CalendarModule,
+    DropdownModule,
+    AutoCompleteModule,
+    SharedModule,
+    TranslateModule, FormsModule,CommonModule,ReactiveFormsModule]
 })
 export class NewComponent {
+  @Output() dataRefreshed: EventEmitter<void> = new EventEmitter<void>();
   @Output() messageSent = new EventEmitter<Communication>();
   newMessageForm: FormGroup;
-  @ViewChild('popupContainer', { read: ViewContainerRef }) popupContainer!: ViewContainerRef;
 
-  constructor(private resolver: ComponentFactoryResolver, private leadservice: LeadService, private customerService: CustomersService, private formBuilder: FormBuilder, private communicationService: CommunicationService) {
+  constructor(private cdr: ChangeDetectorRef,private resolver: ComponentFactoryResolver, private leadservice: LeadService, private customerService: CustomersService, private formBuilder: FormBuilder, private communicationService: CommunicationService) {
     this.newMessageForm = this.formBuilder.group({
       details: [''],
       communicationId: [0],
@@ -37,7 +48,7 @@ export class NewComponent {
   r!: RelatedToProject;
   firstName!:Lead | Customer;
 
-  sendMessage(): void {
+  async sendMessage() {
     if (!this.newMessageForm.valid) {
       return;
     }
@@ -62,37 +73,27 @@ export class NewComponent {
     this.newMessageForm.value.name = this.firstName.firstName;
     this.newMessageForm.value.relatedId = this.newMessageForm.value.relatedId;
     this.communicationService.AddNewCommunication(this.newMessageForm.value).subscribe((response: Communication) => {
-      this.messageSent.emit(response);
-      this.newMessageForm.reset();
+      // this.messageSent.emit(response); // Emit event to notify new message added
+      // this.newMessageForm.reset();
+      // this.dataRefreshed.emit(); // Emit event to trigger data refresh
+      // this.cdr.detectChanges(); // Manually trigger change detection
+      // Swal.close(); // Close the popup
+  });
+  await this.delay(50);
+    Object.keys(this.newMessageForm.controls).forEach((key) => {
+      this.newMessageForm.controls[key].markAsUntouched();
     });
+    this.dataRefreshed.emit();
+    Swal.close();
+  }
+
+  delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   showaddtask: boolean = false;
   namesl: Lead[] = [];
   namesc: Customer[] = [];
-
-  componentType!: Type<any>;
-  showaddtaskf() {
-    // this.showaddtask=!this.showaddtask;
-    this.componentType = AddTaskComponent;
-    this.popUp("Add Task");
-  }
-
-  popUp(title: string) {
-    Swal.fire({
-      title: title,
-      html: '<div id="popupContainer"></div>',
-      showConfirmButton: false,
-      didOpen: () => {
-        const container = document.getElementById('popupContainer');
-        if (container) {
-          const factory = this.resolver.resolveComponentFactory(this.componentType);
-          const componentRef = this.popupContainer.createComponent(factory);
-          container.appendChild(componentRef.location.nativeElement);
-        }
-      },
-    });
-  }
 
   fetchNames(event: Event): void {
     const selectedOption = (event.target as HTMLSelectElement).value;

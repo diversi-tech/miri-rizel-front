@@ -24,4 +24,13 @@
   .send-button:hover {
     background-color: #5CFFAC;
   }
+
+  .line {
+    background-color: #5CFFAC;
+    max-width: 200px;
+    height: 10px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    
+  }
  
