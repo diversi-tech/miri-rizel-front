@@ -4,13 +4,14 @@ import { ValidatorsService } from '@app/Services/validators.service';
 import Swal from 'sweetalert2';
 import { FormsModule } from '@angular/forms';
 import { NgIf, NgFor } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-list-document',
     templateUrl: './list-document.component.html',
     styleUrls: ['./list-document.component.css'],
     standalone: true,
-    imports: [NgIf, FormsModule, NgFor]
+    imports: [NgIf, FormsModule, NgFor,TranslateModule]
 })
 export class ListDocumentComponent implements OnInit {
   folders: any[] = []; 
@@ -20,7 +21,9 @@ export class ListDocumentComponent implements OnInit {
   currentFolderId: string = ''; 
   constructor(
     private documentService: DocumentService,
-    private validatorsService: ValidatorsService
+    private validatorsService: ValidatorsService,
+    private translate: TranslateService,
+
   ) {}
 
   ngOnInit() {
@@ -124,11 +127,14 @@ export class ListDocumentComponent implements OnInit {
 }
 else
 {
+  this.translate.get(['Close', 'empyFolder']).subscribe(translations => {
  Swal.fire({
-   title: 'אין מסמכים זמינים ללקוח זה'})
-} 
-});
-}
+   title: translations['empyFolder'],
+   confirmButtonText: translations['Close']
+  })
+} )
+};
+})}
     
   
   
