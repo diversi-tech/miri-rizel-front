@@ -165,5 +165,9 @@
   "communication": "Communication",
   "Filter by Lead": "Filter by Lead",
   "Filter by Customer": "Filter by Customer",
-  "Show All Messages": "Show All Messages"
+  "Show All Messages": "Show All Messages",
+  "empyFolder":"There are no documents available to view for this client",
+  "listFolders":"List of Folders on the drive",
+  "nameFolder":"Search folder by name"
+
 }

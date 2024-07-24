@@ -141,5 +141,8 @@
   "Filter by Lead":"לידים",
   "Filter by Customer":"לקוחות",
   "Show All Messages":"לידים ולקוחות",
-  "AddCustomerTitle":"הוספת לקוח"
+  "AddCustomerTitle":"הוספת לקוח",
+  "empyFolder":"אין מסמכים זמינים להצגה עבור לקוח זה",
+  "listFolders":"רשימת התקיות בדרייב",
+  "nameFolder":"חיפוש תיקייה לפי שם"
 }
