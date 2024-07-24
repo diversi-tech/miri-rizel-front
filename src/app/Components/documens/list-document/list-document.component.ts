@@ -4,13 +4,14 @@ import { ValidatorsService } from '@app/Services/validators.service';
 import Swal from 'sweetalert2';
 import { FormsModule } from '@angular/forms';
 import { NgIf, NgFor } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-list-document',
     templateUrl: './list-document.component.html',
     styleUrls: ['./list-document.component.css'],
     standalone: true,
-    imports: [NgIf, FormsModule, NgFor]
+    imports: [NgIf, FormsModule, NgFor,TranslateModule]
 })
 export class ListDocumentComponent implements OnInit {
   folders: any[] = []; 
@@ -20,7 +21,9 @@ export class ListDocumentComponent implements OnInit {
   currentFolderId: string = ''; 
   constructor(
     private documentService: DocumentService,
-    private validatorsService: ValidatorsService
+    private validatorsService: ValidatorsService,
+    private translate: TranslateService,
+
   ) {}
 
   ngOnInit() {
@@ -40,56 +43,61 @@ export class ListDocumentComponent implements OnInit {
     this.documentService.getFilesInFolder(folderId).subscribe(files => {
       if(files.length>0){
 
-   Swal.fire({
-  title: 'תוכן התקיה',
-  html: `
-    <style>
-      .file-grid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        justify-content: center;
-      }
-      .file-item {
-        width: 120px;
-        text-align: center;
-      }
-      .file-thumbnail {
-        width: 100px;
-        height: auto;
-        display: block;
-        margin: 0 auto;
-      }
-      .file-name {
-        margin-top: 5px;
-        font-size: 14px;
-        word-wrap: break-word;
-      }
-    </style>
-    <div class="file-grid">
-      ${files.map(file => `
-        <div class="file-item">
-          <a href="${file.webViewLink}" target="_blank">
-            <img src="${file.thumbnailLink}" alt="${file.name}" class="file-thumbnail" />
-            <div class="file-name">${file.name}</div>
-          </a>
+this.translate.get(['Close', 'contentFolder']).subscribe(translations => {
+
+    Swal.fire({
+      title: translations['contentFolder'],
+      html: `
+        <style>
+          .file-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+          }
+          .file-item {
+            width: 120px;
+            text-align: center;
+          }
+          .file-thumbnail {
+            width: 100px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+          }
+          .file-name {
+            margin-top: 5px;
+            font-size: 14px;
+            word-wrap: break-word;
+          }
+        </style>
+        <div class="file-grid">
+          ${files.map(file => `
+            <div class="file-item">
+              <a href="${file.webViewLink}" target="_blank">
+                <img src="${file.thumbnailLink}" alt="${file.name}" class="file-thumbnail" />
+                <div class="file-name">${file.name}</div>
+              </a>
+            </div>
+          `).join('')}
         </div>
-      `).join('')}
-    </div>
-  `,
-  showCloseButton: true,
-  showConfirmButton: false,
-});
-}
-     else
-     {
-      Swal.fire({
-        title: 'אין מסמכים זמינים ללקוח זה'})
-     } 
+      `,
+      showCloseButton: true,
+      showConfirmButton: false,
     });
-  }
-  
-  
+  })
+      }
+else
+{
+  this.translate.get(['Close', 'empyFolder']).subscribe(translations => {
+ Swal.fire({
+   title: translations['empyFolder'],
+   confirmButtonText: translations['Close']
+  })
+} )
+};
+})}
+    
   
   
   
