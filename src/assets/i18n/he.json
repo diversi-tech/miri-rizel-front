@@ -240,6 +240,10 @@
   "edit Lead": "עריכת ליד",
   "notes": "פתקים",
   "Passwords Error": "סיסמא שגויה",
+  "EditCustomerTitle": "עריכת לקוח",
+  "shortName": "השם חייב להכיל לפחות 2 אותיות",
+  "shortLast": "השם חייב להכיל לפחות 2 אותיות",
+  "phoneValid":"הפלאפון חייב להכיל לפחות 9 מספקים ללא תווים אחרים",
   "Add Communication": "הוספת הודעה",
   "Related To": "למי",
   "Select": "בעבור",
@@ -252,4 +256,5 @@
   "Filter by Lead":"לידים",
   "Filter by Customer":"לקוחות",
   "Show All Messages":"לידים ולקוחות"
+
 }
