@@ -14,6 +14,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgIf } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import Swal from 'sweetalert2';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
 
 
 @Component({
@@ -21,14 +23,14 @@ import Swal from 'sweetalert2';
     templateUrl: './add-project.component.html',
     styleUrls: ['./add-project.component.css'],
     standalone: true,
-    imports: [FormsModule, ReactiveFormsModule, MatInputModule, NgIf, MatFormFieldModule, DropdownModule]
+    imports: [FormsModule, ReactiveFormsModule, MatInputModule, NgIf, MatFormFieldModule, DropdownModule,  TranslateModule,]
 })
 export class AddProjectComponent implements OnInit {
 
   statuses: StatusCodeProject[] = [];
   date: Date = new Date();
   projectForm: FormGroup = new FormGroup({});
-  titlePage: string = "AddProjectTitle"
+  titlePage: string = "AddProject"
   custom: Customer[] = [];
   constructor(
     private fb: FormBuilder,
@@ -36,12 +38,14 @@ export class AddProjectComponent implements OnInit {
     private statusService: TaskService,
     private customerService: CustomersService,
     private dialog: MatDialog,
-    private router: Router
-  ) {
-    
-  }
+    private router: Router,
+    private translate:TranslateService
+ 
+ 
+    ) {}
+  
 
-
+ 
   ngOnInit(): void {
     this.date=new Date()
     this.createForm();
@@ -73,10 +77,14 @@ export class AddProjectComponent implements OnInit {
       customer: ['', Validators.required],
      createdDate:[new Date()]
     });
-  
+    this.dateValidator.bind(this)
   }
 
   onSubmit() {
+    if (this.projectForm.invalid) {
+      this.projectForm.markAllAsTouched();
+      return;
+    }
     if (this.projectForm.valid) {
 
       const newProject: Project = this.projectForm.value;
@@ -85,15 +93,16 @@ export class AddProjectComponent implements OnInit {
           (response) => {
             console.log(response);
             if (response) {
+               this.translate.get(['seccesaddProject','close']).subscribe(translation=> 
               this.dialog.open(DialogComponent, {
                 data: {
-                  title: 'המשימה נוספה בהצלחה',
+                  title:translation['seccesaddProject'],
                   context: newProject.name,
-                  buttonText: 'סגור',
-                },
-              });
+                  buttonText:translation['close'],
+                  }, 
+                    }), );
               Swal.close();
-            }
+              }
           },
           (error) => {
             console.error('Error adding project', error);
@@ -115,14 +124,10 @@ export class AddProjectComponent implements OnInit {
     return selectedDate > today ? null : { notFutureDate: true };
   }
 
-  // dateValidator(group: FormGroup) {
-  //   const startDate = group.get('startDate')?.value;
-  //   const endDate = group.get('endDate')?.value;
-
-  //   if (startDate && endDate && new Date(startDate) >= new Date(endDate)) {
-  //     return { invalidDates: true };
-  //   }
-
-  //   return null;
-  // }
+  dateValidator(group: FormGroup) {
+    const startDate =new Date( group.get('startDate')?.value);
+    const endDate = new Date(group.get('endDate')?.value);
+    return startDate&&endDate&& startDate < endDate ? null : { invalidDates: true };
+    
+  }
 }

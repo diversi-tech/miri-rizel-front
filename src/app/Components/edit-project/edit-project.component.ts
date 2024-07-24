@@ -1,7 +1,7 @@
-import { Component, Output ,EventEmitter} from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Component, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Project } from 'src/app/Model/Project';
-import {ProjectService}from 'src/app/Services/project.service'
+import { ProjectService } from 'src/app/Services/project.service'
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,45 +13,39 @@ import { Data } from '@angular/router';
 import { Customer } from '@app/Model/Customer';
 import { CustomersService } from '@app/Services/customers.service';
 import { TaskService } from '@app/Services/task.service';
-import { DropdownModule } from 'primeng/dropdown';
+import Swal from 'sweetalert2';
+import { NgModule } from '@angular/core';
 import { NgIf } from '@angular/common';
+import { DropdownModule } from 'primeng/dropdown';
+import { TranslateModule } from '@ngx-translate/core';
 @Component({
-    selector: 'app-edit-project',
-    templateUrl: './edit-project.component.html',
-    styleUrls: ['./edit-project.component.css'],
-    standalone: true,
-    imports: [NgIf, FormsModule, ReactiveFormsModule, DropdownModule, MatButtonModule]
+  selector: 'app-edit-project',
+  templateUrl: './edit-project.component.html',
+  styleUrls: ['./edit-project.component.css'],
+  standalone: true,
+  imports: [FormsModule, ReactiveFormsModule, MatInputModule, NgIf, MatFormFieldModule, DropdownModule, TranslateModule,]
 })
 export class EditProjectComponent {
   @Output() dataRefreshed: EventEmitter<void> = new EventEmitter<void>();
-  flag: Boolean = false;
+  customerName: any;
+  flag: boolean = false;
   custom: Customer[] = [];
   statuses: StatusCodeProject[] = [];
   project!: Project;
-  status: number= 0;
-  customerId: number= 0;
-  //   ProjectForm: FormGroup<any>=new FormGroup({
-  //     firstName: new FormControl(),
-  //     projectId: new FormControl(),
-  //   myName: new FormControl(),
-  //   myDescription: new FormControl(),
-  //   myStrartDate: new FormControl(),
-  //   myEndDate: new FormControl(),
-  //    mystatuses:new FormControl(),
-  //   myCreatedDate: new FormControl(),
-  //    myCustomerId: new FormControl(),
-  // });
-   ProjectForm!: FormGroup;
-    submitted = false;
-    data: any;
+  status: StatusCodeProject = {};
+  customer: Customer ={customerId:0,status:{}};
+  ProjectForm!: FormGroup;
+  submitted = false;
+  data: any;
   @Output() ProjectId: EventEmitter<void> = new EventEmitter<void>();
-    constructor(private server:ProjectService,private formBuilder:FormBuilder,private pro:ProjectService, private statusService: TaskService,
-      private customerService: CustomersService){
-    }
-    ngOnInit() {
+  constructor(private server: ProjectService, private formBuilder: FormBuilder, private pro: ProjectService, private statusService: TaskService,
+    private customerService: CustomersService) {
+  }
+  ngOnInit() {
     this.statusService.getAllStatus().subscribe(
       (data: any) => {
         this.statuses = data;
+        console.log("statuses", this.statuses);
       },
       (error: any) => {
         console.error('Error fetching status:', error);
@@ -60,12 +54,25 @@ export class EditProjectComponent {
     this.customerService.GetAllCustomers().subscribe(
       (data: any) => {
         this.custom = data;
+        console.log("custom", this.custom);
+
       },
       (error: any) => {
         console.error('Error fetching customers:', error);
       }
     );
-   }
+  }
+  setData(data: any) {
+    debugger;
+    this.data = data;
+    console.log("data: ", data);
+    this.server.getProjectById(this.data).subscribe((project2: Project) => {
+      this.project = project2;
+      console.log(`project: `, this.project);
+      this.fullForm();
+    });
+  }
+
   extractDate(dateTime: string): string {
     const date = new Date(dateTime);
     const year = date.getFullYear();
@@ -73,38 +80,43 @@ export class EditProjectComponent {
     const day = ('0' + date.getDate()).slice(-2);
     return `${year}-${month}-${day}`;
   }
-   fullForm(){
-    console.log(`this.project.status: ${this.project.status} ${Number(this.project.status)}`);
-  this.status= Number(this.project.status);
-// this.c = Number(this.project.customerId)
- this.customerId = Number(this.project.customer)
-   this.ProjectForm = this.formBuilder.group({
-    projectId: [null, Validators.required],
-    name: [this.project.name, Validators.required],
-    description: [this.project.description, Validators.required],
-    startDate: [this.extractDate(String(this.project.startDate)), Validators.required],
-    endDate: [this.extractDate(String(this.project.endDate)), Validators.required],
-    status: [this.project.status, Validators.required],
-    createdDate: [this.extractDate(String(this.project.createdDate)), Validators.required],
-    customerId: [this.project.customer, Validators.required],
-  });
-console.log(this.project);
-this.flag=true;
+  fullForm() {
+    console.log("full form");
+
+    debugger
+    if (!this.project) { console.error('Project data is not available'); return; }
+    console.log(`this.project.status:`);
+    // console.log(`this.custom" ${this.custom[this.customerId].firstName} `);
+    // console.log(`this.stattus" ${this.statuses[this.status].description} `);
+    // this.customerName = this.custom[this.customerId].firstName != null ? this.custom[this.customerId].firstName : 0;
+    this.status = this.project.status!;
+    this.project.isActive=true,
+    this.customer = this.project.customer!
+    this.ProjectForm = this.formBuilder.group({
+      projectId: [null, Validators.required],
+      name: [this.project.name, Validators.required],
+      description: [this.project.description, Validators.required],
+      startDate: [this.extractDate(String(this.project.startDate)), Validators.required],
+      endDate: [this.extractDate(String(this.project.endDate)), Validators.required],
+      status: [this.project.status, Validators.required],
+      createdDate: [this.extractDate(String(this.project.createdDate)), Validators.required],
+      customer: [this.project.customer, Validators.required],
+      isActive:[this.project.isActive]
+    });
+    console.log(this.project);
+    this.flag = true;
+  }
+  async toEnter() {
+    
+    this.server.update(this.ProjectForm.value, this.data).subscribe(() => Swal.close())
+    await this.delay(50);
+    Object.keys(this.ProjectForm.controls).forEach((key) => {
+      this.ProjectForm.controls[key].markAsUntouched();
+    });
+    this.dataRefreshed.emit();
+    Swal.close();
+  }
+  delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 }
-      setData(data: any) {
-        debugger;
-        this.data = data;
-        console.log("data: ", data);
-        this.server.getProjectById(this.data).subscribe((project2: Project) => {
-          this.project = project2;
-          console.log(`project: `, this.project);
-          this.fullForm();
-        });
-      }
-    submit(){
-      if (this.ProjectForm.valid) {
-        const updatedProject: Project = this.ProjectForm.value;
-          this.server.update(updatedProject).subscribe(p=>alert("העדכון בוצע בהצלחה!"));
-      }
-      }
-    }

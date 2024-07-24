@@ -1,24 +1,11 @@
-/* .chat-list-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    padding: 20px;
-  }
-  
-   */
 
    .chat-page-container {
     display: flex;
     gap: 20px;
   }
   
-  .new-message-container {
-    width: 300px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  #filters {
+    margin-right: 100px;
   }
   
   .chat-list-container {
@@ -33,8 +20,29 @@
     padding: 10px 20px;
     border: none;
     border-radius: 4px;
-    background-color: #4CAF50;
+    background-color: #5CFFAC;
     color: white;
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
+
+  .text-base-color{
+    color: #5CFFAC;
+  }
+ 
+  .custom-button {
+    background-color: white !important;
+    border-bottom: 2px solid transparent !important;
+    margin-right: 1.5rem !important; 
+    transition: border-color 0.3s ease !important;
+  }
+  
+  .custom-button:hover {
+    border-color: #5CFFAC !important;
+  }
+  
+  #adds{
+    margin-left: 100px;
+  }
+
+
