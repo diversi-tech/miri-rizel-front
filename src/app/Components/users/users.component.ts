@@ -18,6 +18,7 @@ import { RoleCodeUser } from '@app/Model/RoleCodeUser';
 import { TranslateService } from '@ngx-translate/core';
 import { SignUpComponent } from '../sign-up/sign-up.component';
 import { Router } from '@angular/router';
+import { AuthService } from '@app/Services/auth.service';
 
 @Component({
   selector: 'app-users',
@@ -31,6 +32,7 @@ export class UsersComponent implements OnInit {
   loading: boolean = true;
   componentType!: Type<any>;
   roles: RoleCodeUser[] = [];
+  isAdmin: boolean= false;
 
   // @ViewChild('popupContainer', { read: ViewContainerRef }) popupContainer!: ViewContainerRef;
 
@@ -54,6 +56,11 @@ export class UsersComponent implements OnInit {
         this.loading = false; // לוודא שהטעינה מפסיקה גם במקרה של שגיאה
       }
     );
+    const role= this.authService.getRole();
+      if(role===3){
+        console.log("I am admin");
+        this.isAdmin=true;
+      }
   }
   constructor(
     private userService: UserService,
@@ -62,7 +69,8 @@ export class UsersComponent implements OnInit {
     private injector: Injector,
     private appRef: ApplicationRef,
     private translate: TranslateService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   editUser(user: User) {

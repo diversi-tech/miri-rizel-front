@@ -15,6 +15,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { DocumentComponent } from '../documens/document/document.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { LanguageService } from '@app/Services/language.service';
 
 @Component({
   selector: 'app-customers',
@@ -42,8 +43,12 @@ export class CustomersComponent implements OnInit {
   newCustomer!: Customer;
   @ViewChild('popupContainer', { read: ViewContainerRef }) popupContainer!: ViewContainerRef;
   titlePage!: string;
+  styles = {
+    'text-align': 'right', // ברירת מחדל עברית
+    'direction': 'rtl'     // ברירת מחדל עברית
+  };
 
-  constructor(private resolver: ComponentFactoryResolver, private router: Router, private formBuilder: FormBuilder, private customerService: CustomersService, private validatorsService: ValidatorsService) { }
+  constructor(private resolver: ComponentFactoryResolver, private router: Router, private formBuilder: FormBuilder, private customerService: CustomersService, private validatorsService: ValidatorsService, private languageService: LanguageService) { }
 
   ngOnInit(): void {
     this.customerForm = this.formBuilder.group({
@@ -60,6 +65,19 @@ export class CustomersComponent implements OnInit {
 
     this.loadCustomers();
     this.loadStatusUsers();
+
+    this.languageService.language$.subscribe(lang => {
+     
+      if (lang === 'he') {
+        this.styles['text-align'] = 'right';
+        this.styles['direction'] = 'rtl';
+        
+      } else {
+        this.styles['text-align'] = 'left';
+        this.styles['direction'] = 'ltr';
+      
+      }
+      })
   }
 
   private loadCustomers(): void {
