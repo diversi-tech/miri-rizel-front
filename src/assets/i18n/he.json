@@ -239,6 +239,8 @@
   "Invalid notes format.":"לא בפורמט המתאים",
   "edit Lead": "עריכת ליד",
   "notes": "פתקים",
-  "Passwords Error": "סיסמא שגויה"
+  "Passwords Error": "סיסמא שגויה",
+  "EditProjectTitle":"עריכת פרויקט"
+
 
 }

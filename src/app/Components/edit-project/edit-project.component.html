@@ -1,23 +1,33 @@
-<div *ngIf="flag" class="add-container">
+<div *ngIf="flag" class="add-task-form" [style]="this.styles">
   <form  [formGroup]="ProjectForm"  (ngSubmit)="toEnter()" >
-<!-- <div > -->
-    <label>שם פרויקט</label>
-    <input  type="text" id="Name" formControlName="name" />
-    <label>תאור</label>
-    <input  type="text" id="description" formControlName="description" />
-  <label>תחילת פרויקט</label>
-  <input  type="date" id="strartDate" formControlName="startDate" />
-    <label>סיום פרויקט</label>
-    <input  type="date" id="endDate" formControlName="endDate" />
-  <label>תאריך יצירת הפרויקט </label>
-  <input  type="date" id="createdDate" formControlName="createdDate" />
-    <label>סטאטוס </label>
-    <p-dropdown formControlName="status" [options]="statuses" optionLabel="description" [placeholder]="this.status.description" />
-    <!-- <p-dropdown formControlName="status" [options]="statuses" optionLabel="description" placeholder="בחר סטטוס" /> -->
-    <label>סוג לקוח </label>
-    <p-dropdown formControlName="customerId" [options]="custom" optionLabel="firstName"   [placeholder]="customer.firstName"/>
+    <h1>{{'EditProjectTitle'|translate }}</h1>
+    <div class="line"></div>
+    <label>{{'NameInput'|translate}} </label>
+    <div class="card flex justify-content-center">
+    <input  type="text" id="Name" class="input-field" formControlName="name" />
+  </div>
+    <label>{{'DescriptionInput'|translate}}</label>
+    <div class="card flex justify-content-center">
+    <input  type="text" id="description" class="input-field" formControlName="description" />
+  </div>
+  <label>{{'StartDateInput'|translate}}</label>
+  <div class="card flex justify-content-center">
+  <input  type="date" id="strartDate" class="input-field" formControlName="startDate" />
+</div>
+    <label>{{'EndDateInput'|translate}} </label>
+    <div class="card flex justify-content-center">
+    <input  type="date" id="endDate" class="input-field" formControlName="endDate" />
+  </div>
+    <label>{{'StatusInput'|translate}} </label>
+    <div class="card flex justify-content-center">
+    <p-dropdown formControlName="status" [options]="statuses" class="select-field" optionLabel="description" [placeholder]="this.status.description" />
+  </div>
+    <label> {{'UserInputSelect'|translate}} </label>
+    <div class="card flex justify-content-center">
+    <p-dropdown formControlName="customerId" [options]="custom" optionLabel="firstName" class="select-field"  [placeholder]="customer.firstName"/>
+  </div>
     <br><br/>
-    <button class="submit-button" mat-raised-button type="submit">send</button>
-  <!-- </div> -->
+    <button class="submit-button" mat-raised-button type="submit"><label> {{'Send'|translate}} </label></button>
 </form>
 </div>
+
