@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { RelatedToProject } from '@app/Model/RelatedToCode';
 import { Lead } from '@app/Model/Lead';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
+// import { jsPlumbToolkitModule} from 'jsplumbtoolkit-angular'
 
 @Component({
   selector: 'app-chat',

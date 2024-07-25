@@ -29,6 +29,7 @@ import { PropilListComponent } from './Components/propil-list/propil-list.compon
 import { error404Component } from './Components/errors/error-404.component';
 import { UploadFilseComponent } from './Components/upload-filse/upload-filse.component';
 import { UsersComponent } from './Components/users/users.component';
+// import { ChatComponent } from './Components/chat/chat.component';
 const routes: Routes = [
   // 1=customer, 2=worker, 3=admin
   // { path: 'worker', component: WorkerComponentComponent, canActivate: [AuthGuard], data: { roles: [3] } },
@@ -72,6 +73,7 @@ const routes: Routes = [
   { path: 'documents', component: ListDocumentComponent },
   { path: 'leads', component: ListLeadsComponent },
   { path: 'propil', component: PropilListComponent },
+  // { path: 'chat', component: ChatComponent },
   {
     path: 'leads',
     component: ListLeadsComponent,
