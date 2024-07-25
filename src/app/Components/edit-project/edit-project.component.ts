@@ -111,7 +111,8 @@ export class EditProjectComponent {
       endDate: [this.extractDate(String(this.project.endDate)), Validators.required],
       status: [this.project.status, Validators.required],
       createdDate: [this.extractDate(String(this.project.createdDate)), Validators.required],
-      customerId: [this.project.customer, Validators.required],
+      customer: [this.project.customer, Validators.required],
+      isActive:[true]
     });
     console.log(this.project);
     this.flag = true;
