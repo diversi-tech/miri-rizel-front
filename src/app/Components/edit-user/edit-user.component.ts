@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormsModule } from '@angular/forms';
 import { User } from 'src/app/Model/User';
 import { EditUserService } from '../../Services/edit-user.service';
@@ -13,6 +13,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import Swal from 'sweetalert2';
 import { LanguageService } from '@app/Services/language.service';
 import { AuthService } from '@app/Services/auth.service';
+import { GenericBourdComponent } from '../generic-bourd/generic-bourd.component';
 
 @Component({
     selector: 'app-edit-user',
@@ -36,7 +37,7 @@ export class EditUserComponent implements OnInit {
     'text-align': 'right', // ברירת מחדל עברית
     'direction': 'rtl'     // ברירת מחדל עברית
   };
- 
+  // @ViewChild(GenericBourdComponent) genericBourd: GenericBourdComponent;
 
   constructor(private userService: UserService, private translate: TranslateService, 
     private languageService: LanguageService, private authService:AuthService ) {
@@ -106,5 +107,12 @@ export class EditUserComponent implements OnInit {
     }
     this.roles = filtered;
   }
+
+  // disableDelete() {
+  //   if()
+  //   if (this.genericBourd) {
+  //     this.genericBourd.disableButton = true; // או False, בהתאם לצורך שלך
+  //   }
+  // }
 }
 
