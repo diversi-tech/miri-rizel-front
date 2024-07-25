@@ -151,7 +151,8 @@ export class ProjectTableComponent implements OnInit {
   }
   addProject() {
     this.componentType = AddProjectComponent;
-    this.popUpAddOrEdit("Add project", null);
+    this.popUpAddOrEdit("Add project", null)
+   
   }
   fetchTasks(projectId: string): void {
     if (projectId) {
@@ -177,30 +178,27 @@ export class ProjectTableComponent implements OnInit {
   popUpAddOrEdit(title: string, l: Number | null) {
     Swal.fire({
 
+
       html: '<div id="popupContainer"></div>',
       showConfirmButton: false,
       didOpen: () => {
         const container = document.getElementById('popupContainer');
         if (container) {
+          if(container==undefined)
+            console.log(",l;,");
           const factory = this.resolver.resolveComponentFactory(this.componentType);
           const componentRef = this.popupContainer.createComponent(factory);
-          debugger
-          if (l != null && l!=undefined) {
-            componentRef.instance.setData(l);
-            // componentRef.instance.dataRefreshed.subscribe(() => {
-            //   this.refreshData();
-            // })
-          }
+          if(l!=null && l!=undefined)         
+          componentRef.instance.setData(l);
           container.appendChild(componentRef.location.nativeElement);
           componentRef.instance.dataRefreshed.subscribe(() => {
-            this.refreshData();
-          })
+            this.refreshData();})
         }
       },
-    });
+      });
+      }
 
-
-  }
+  
   refreshData() {
     this.ProjectService.getAll().subscribe(
       (p: Array<Project>) => {
