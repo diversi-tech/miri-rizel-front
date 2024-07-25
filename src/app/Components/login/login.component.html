@@ -29,9 +29,6 @@
           </button>
         </mat-form-field>
         <br>
-        <div *ngIf="isLoading" class="lock-screen">
-          <mat-spinner></mat-spinner>
-        </div>
         <div class="disabled">
           <p class="forgot-password" (click)="resetPassword()">{{'ForgotPasswordLabel' | translate}}</p>
         </div>

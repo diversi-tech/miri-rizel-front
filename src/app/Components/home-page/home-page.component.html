@@ -13,12 +13,12 @@
                         <ng-container>
                             <div *ngIf="user"
                                 class="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate">
-                                שלום {{user.firstName}}!</div>
+                                {{'hello'|translate}} {{user.firstName}}!</div>
                         </ng-container>
                         <div class="flex items-center">
                             <span class="pi pi-bell"></span>
-                            <div class="ml-1.5 leading-6 truncate text-secondary"> יש לך {{getTodoTasksByUser().length}}
-                                משימות חדשות ו-{{getInProgressTasksByUser().length}} בתהליך</div>
+                            <div class="ml-1.5 leading-6 truncate text-secondary"> {{'YouHave'|translate}} {{getTodoTasksByUser().length}}
+                                {{'NewTasks'|translate}} {{'And'|translate}} {{getInProgressTasksByUser().length}} {{'InProsses'|translate}}</div>
                         </div>
                     </div>
                 </div>
@@ -26,15 +26,15 @@
                 <div class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3">
                     <button (click)="addTask()" class="custom-button" mat-flat-button>
                         <span class="pi pi-plus ml-2"></span>
-                        <span class="ml-2">משימה</span>
+                        <span class="ml-2"> {{'Task'|translate}}</span>
                     </button>
                     <button (click)="addLead()" class="custom-button" mat-flat-button>
                         <span class="pi pi-plus ml-2"></span>
-                        <span class="ml-2">ליד</span>
+                        <span class="ml-2"> {{'Lead'|translate}}</span>
                     </button>
                     <button (click)="addLead()" class="custom-button" mat-flat-button>
                         <span class="pi pi-plus ml-2"></span>
-                        <span class="ml-2">לקוח</span>
+                        <span class="ml-2"> {{'Customer'|translate}}</span>
                     </button>
                 </div>
             </div>
@@ -50,19 +50,18 @@
                     </div>
                 </div>
                 <mat-menu #projectsMenu="matMenu" [xPosition]="'before'">
-                    <button mat-menu-item (click)="selectedProject='ACME Corp. Backend App'">ACME Corp. Backend App
+                    <button mat-menu-item (click)="navigateTo('/task')"> {{'Screen'|translate}} {{'Tasks'|translate}} 
                     </button>
-                    <button mat-menu-item (click)="selectedProject='ACME Corp. Frontend App'">ACME Corp. Frontend App
+                    <button mat-menu-item (click)="navigateTo('/project')">{{'Screen'|translate}} {{'Projects'|translate}}
                     </button>
-                    <button mat-menu-item (click)="selectedProject='Creapond'">Creapond
+                    <button mat-menu-item (click)="navigateTo('/customer')">{{'Screen'|translate}} {{'Customers'|translate}}
                     </button>
-                    <button mat-menu-item (click)="selectedProject='Withinpixels'">Withinpixels
+                    <button mat-menu-item (click)="navigateTo('/leads')"> {{'Screen'|translate}} {{'Leads'|translate}}
                     </button>
                 </mat-menu>
             </div>
         </div>
     </div>
-
     <!-- Main -->
     <div class="flex-auto border-t -mt-px pt-4 sm:pt-6 bg-gray-100">
         <div class="w-full max-w-screen-xl mx-auto ">
@@ -77,16 +76,14 @@
                             <div
                                 class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden bg-white">
                                 <div class="flex items-start justify-between">
-                                    <div class="text-lg font-medium tracking-tight leading-6 truncate">Summary</div>
+                                    <div class="text-lg font-medium tracking-tight leading-6 truncate">{{'General'|translate}}</div>
                                     <div class="ml-2 -mt-2 -mr-3">
                                         <button mat-icon-button [matMenuTriggerFor]="summaryMenu">
                                             <span class="pi pi-ellipsis-v"></span>
                                         </button>
                                         <mat-menu #summaryMenu="matMenu">
-                                            <button (click)="routing(getTodoTasks())" mat-menu-item>הצגת המשימות
-                                                החדשות</button>
-                                            <button (click)="routing(getAllTask())" mat-menu-item>הצגת כל
-                                                המשימות</button>
+                                            <button (click)="routing(getTodoTasks())" mat-menu-item>{{'ViewTheNewTasks'|translate}}</button>
+                                            <button (click)="routing(getAllTask())" mat-menu-item>{{'ViewAllTasks'|translate}}</button>
                                         </mat-menu>
                                     </div>
                                 </div>
@@ -95,9 +92,9 @@
                                         class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-black-500">
                                         {{getTodoTasks().length}}
                                     </div>
-                                    <div class="text-lg font-medium  dark: text-base-color">משימות חדשות</div>
+                                    <div class="text-lg font-medium  dark: text-base-color">{{'NewTasks'|translate}}</div>
                                     <div class="flex items-baseline justify-center w-full mt-5 text-secondary ">
-                                        <div class="text-md font-medium truncate">מהיום:</div>
+                                        <div class="text-md font-medium truncate">{{'FromToday'|translate}}:</div>
                                         <div class="ml-1.5 text-lg font-semibold">{{getTodoTasksFromToday().length}}
                                         </div>
                                     </div>
@@ -107,16 +104,14 @@
                             <div
                                 class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden bg-white">
                                 <div class="flex items-start justify-between">
-                                    <div class="text-lg font-medium tracking-tight leading-6 truncate">Overdue</div>
+                                    <div class="text-lg font-medium tracking-tight leading-6 truncate">כללי</div>
                                     <div class="ml-2 -mt-2 -mr-3">
                                         <button mat-icon-button [matMenuTriggerFor]="overdueMenu">
                                             <span class="pi pi-ellipsis-v"></span>
                                         </button>
                                         <mat-menu #overdueMenu="matMenu">
-                                            <button (click)="routing(getInProgressTasks())" mat-menu-item>הצגת המשימות
-                                                בהליך</button>
-                                            <button (click)="routing(getAllTask())" mat-menu-item>הצגת כל
-                                                המשימות</button>
+                                            <button (click)="routing(getInProgressTasks())" mat-menu-item>{{'ViewTheTasksInProgress'|translate}}</button>
+                                            <button (click)="routing(getAllTask())" mat-menu-item>{{'ViewAllTasks'|translate}}</button>
                                         </mat-menu>
                                     </div>
                                 </div>
@@ -124,10 +119,9 @@
                                     <div
                                         class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-black-500">
                                         {{getInProgressTasks().length}}</div>
-                                    <div class="text-lg font-medium text-red-600 dark: text-base-color">משימות בתהליך
-                                    </div>
+                                    <div class="text-lg font-medium text-red-600 dark: text-base-color">{{'TasksInProgress'|translate}}</div>
                                     <div class="flex items-baseline justify-center w-full mt-5 text-secondary">
-                                        <div class="text-md font-medium truncate">נוצרו היום:</div>
+                                        <div class="text-md font-medium truncate">{{'CreatedTtoday'|translate}}:</div>
                                         <div class="ml-1.5 text-lg font-semibold">
                                             {{getInProgressTasksFromToday().length}}</div>
                                     </div>
@@ -137,16 +131,14 @@
                             <div
                                 class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden bg-white">
                                 <div class="flex items-start justify-between">
-                                    <div class="text-lg font-medium tracking-tight leading-6 truncate">Issues</div>
+                                    <div class="text-lg font-medium tracking-tight leading-6 truncate">{{'General'|translate}}</div>
                                     <div class="ml-2 -mt-2 -mr-3">
                                         <button mat-icon-button [matMenuTriggerFor]="issuesMenu">
                                             <span class="pi pi-ellipsis-v"></span>
                                         </button>
                                         <mat-menu #issuesMenu="matMenu">
-                                            <button (click)="routing(getTasksDueToday())" mat-menu-item>הצגת המשימות
-                                                להגשה היום</button>
-                                            <button (click)="routing(getAllTask())" mat-menu-item>הצגת כל
-                                                המשימות</button>
+                                            <button (click)="routing(getTasksDueToday())" mat-menu-item>{{'ShowingTasksToSubmitToday'|translate}}</button>
+                                            <button (click)="routing(getAllTask())" mat-menu-item>{{'ViewAllTasks'|translate}}</button>
                                         </mat-menu>
                                     </div>
                                 </div>
@@ -157,7 +149,7 @@
                                     <div class="text-lg font-medium text-amber-600 dark:text-amber-500 text-base-color">
                                         משימות להגשה היום</div>
                                     <div class="flex items-baseline justify-center w-full mt-5 text-secondary">
-                                        <div class="text-md font-medium truncate">מתוכם נסגרו:</div>
+                                        <div class="text-md font-medium truncate">{{'OfWhichWereClosed'|translate}}:</div>
                                         <div class="ml-1.5 text-lg font-semibold">{{getTasksDueTodayAndClosed().length}}
                                         </div>
                                     </div>
@@ -167,48 +159,35 @@
                             <div
                                 class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden bg-white">
                                 <div class="flex items-start justify-between">
-                                    <div class="text-lg font-medium tracking-tight leading-6 truncate">Features</div>
+                                    <div class="text-lg font-medium tracking-tight leading-6 truncate">{{'General'|translate}}</div>
                                     <div class="ml-2 -mt-2 -mr-3">
                                         <button mat-icon-button [matMenuTriggerFor]="featuresMenu">
                                             <span class="pi pi-ellipsis-v"></span>
                                         </button>
                                         <mat-menu #featuresMenu="matMenu">
-                                            <button (click)="routing(getTasksOverdue())" mat-menu-item>הצגת המשימות
-                                                באיחור</button>
-                                            <button (click)="routing(getAllTask())" mat-menu-item>הצגת כל
-                                                המשימות</button>
-                                            <button mat-menu-item>3 days ago</button>
+                                            <button (click)="routing(getTasksOverdue())" mat-menu-item>{{'ViewTheOverdueTasks'|translate}}</button>
+                                            <button (click)="routing(getAllTask())" mat-menu-item>{{'ViewAllTasks'|translate}}</button>
                                         </mat-menu>
                                     </div>
                                 </div>
                                 <div class="flex flex-col items-center mt-2">
                                     <div class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-black">
                                         {{getTasksOverdue().length}}</div>
-                                    <div class="text-lg font-medium text-green-600 dark: text-base-color">משימות באיחור
-                                    </div>
+                                    <div class="text-lg font-medium text-green-600 dark: text-base-color">{{'OverdueTtasks'|translate}}</div>
                                     <div class="flex items-baseline justify-center w-full mt-5 text-secondary">
-                                        <div class="text-md font-medium truncate">מתוכם מאתמול: </div>
+                                        <div class="text-md font-medium truncate">{{'OfWhichFromYesterday'|translate}}: </div>
                                         <div class="ml-1.5 text-lg font-semibold">
                                             {{getTasksOverdueFromYesterday().length}}</div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- Github issues summary -->
-                            <!-- בחלונות v -->
-
                             <!-- Task distribution -->
-                            <div
+                            <div #fullScreenComponent
                                 class="sm:col-span-2 md:col-span-4 lg:col-span-2 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden bg-white">
-                                <div class="flex flex-col sm:flex-row items-start justify-between">
-                                    <div class="text-lg font-medium tracking-tight leading-6 truncate">לידים ולקוחות
-                                    </div>
-                                    <div class="mt-3 sm:mt-0 sm:ml-2">
-                                        <mat-button-toggle-group value="this-week"
-                                            #taskDistributionWeekSelector="matButtonToggleGroup">
-                                            <mat-button-toggle value="last-week">Last Week</mat-button-toggle>
-                                            <mat-button-toggle value="this-week">This Week</mat-button-toggle>
-                                        </mat-button-toggle-group>
-                                    </div>
+                                <div class="flex flex-col sm:flex-row items-start justify-between fullscreen-container">
+                                    <div class="text-lg font-medium tracking-tight leading-6 truncate">{{'LeadsAndCustomers'|translate}}</div>
+                                    <span (click)="openFullScreen()" class="pi pi-expand"
+                                        style="font-size: 2rem"></span>
                                 </div>
                                 <div class="flex flex-col flex-auto mt-6" *ngIf="chartTaskDistribution">
                                     <apx-chart class="flex-auto w-full h-96" [chart]="chartTaskDistribution.chart"
@@ -224,55 +203,53 @@
                                     class="grid grid-cols-2 border-t divide-x -m-6 mt-4 bg-gray-50 dark:bg-transparent">
                                     <div class="flex flex-col items-center justify-center p-6 sm:p-8">
                                         <div class="text-5xl font-semibold leading-none tracking-tighter">
-                                            54 </div>
-                                        <div class="mt-1 text-center text-secondary">New tasks</div>
+                                            {{leads.length}}</div>
+                                        <div class="mt-1 text-center text-secondary">{{'Leads'|translate}}</div>
                                     </div>
                                     <div class="flex flex-col items-center justify-center p-6 sm:p-8">
                                         <div class="text-5xl font-semibold leading-none tracking-tighter">
-                                            45 </div>
-                                        <div class="mt-1 text-center text-secondary">Completed tasks</div>
+                                            {{customers.length}}</div>
+                                        <div class="mt-1 text-center text-secondary">{{'Customers'|translate}}</div>
                                     </div>
                                 </div>
                             </div>
                             <div
                                 class="bg-white sm:col-span-2 md:col-span-4 lg:col-span-2 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
                                 <div class="flex flex-col sm:flex-row items-start justify-between">
-                                    <div class="text-lg font-medium tracking-tight leading-6 truncate">פרויקטים פעילים
-                                    </div>
+                                    <div class="text-lg font-medium tracking-tight leading-6 truncate">{{'ActiveProjects'|translate}}</div>
                                     <div class="mt-3 sm:mt-0 sm:ml-2">
-                                        <mat-button-toggle-group value="today"
-                                            #scheduleDaySelector="matButtonToggleGroup">
-                                            <mat-button-toggle value="today">Today</mat-button-toggle>
-                                            <mat-button-toggle value="tomorrow">Tomorrow</mat-button-toggle>
+                                        <mat-button-toggle-group value="topTen" (change)="onToggleChange($event)">
+                                            <mat-button-toggle value="topTen">{{'PartialView'|translate}}</mat-button-toggle>
+                                            <mat-button-toggle value="show-all">{{'ShowAll'|translate}}</mat-button-toggle>
                                         </mat-button-toggle-group>
                                     </div>
                                 </div>
-                                <div class="flex flex-col mt-2 divide-y">
-                                    <ng-container *ngFor="let project of projects;">
-                                        <div class="flex flex-row items-center justify-between py-4 px-0.5">
+                                <div class="flex flex-col mt-2 ">
+                                    <ng-container *ngFor="let project of projects; let last = last">
+                                        <div class="project-container flex flex-row items-center justify-between py-4 px-0.5"
+                                            [ngClass]="{'border-b': !last}">
                                             <div class="flex flex-col">
-                                                <div class="font-medium font-bold">{{project.name}}</div>
+                                                <div class="font-medium font-bold font-semibold">{{project.name}}</div>
                                                 <div
                                                     class="flex flex-col sm:flex-row sm:items-center -ml-0.5 mt-2 sm:mt-1 space-y-1 sm:space-y-0 sm:space-x-3">
                                                     <ng-container *ngIf="project.description">
                                                         <div class="flex items-center">
-                                                            <span class="pi pi-user"></span>
-
-                                                            <div class="ml-1.5 text-md text-secondary">
+                                                            <span class="pi pi-circle-off"></span>
+                                                            <div class="mr-1.5 ml-1.5 text-md text-secondary">
                                                                 {{project.description}}</div>
                                                         </div>
                                                     </ng-container>
-                                                    <ng-container *ngIf="project.endDate">
+                                                    <ng-container *ngIf="project.status?.description">
                                                         <div class="flex items-center">
-                                                           
-                                                            <div class="ml-1.5 text-md text-secondary">
-                                                                {{project.endDate}}</div>
+                                                            <span class="pi pi-circle-off"></span>
+                                                            <div class="mr-1.5 text-md text-secondary">
+                                                                {{project.status?.description}}</div>
                                                         </div>
                                                     </ng-container>
                                                 </div>
                                             </div>
                                             <button mat-icon-button>
-                                                <mat-icon [svgIcon]="'heroicons_mini:chevron-right'"></mat-icon>
+                                                <!-- <mat-icon [svgIcon]="'heroicons_mini:chevron-right'"></mat-icon> -->
                                             </button>
                                         </div>
                                     </ng-container>

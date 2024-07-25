@@ -11,7 +11,7 @@
   max-width: 600px;
   margin: auto;
   padding: 15px;
-  text-align: right;
+  /* text-align: right; */
 }
 
 .editCustomer {
@@ -19,20 +19,20 @@
   max-width: 600px;
   margin: auto;
   padding: 15px;
-  text-align: right;
+  /* text-align: right; */
 }
 
 
 .addCustomer label {
   font-weight: bold;
   color: #505050;
-  text-align: right;
+  /* text-align: right; */
 }
 
 .editCustomer label {
   font-weight: bold;
   color: #505050;
-  text-align: right;
+  /* text-align: right; */
 }
 h1{
   text-align: center;
