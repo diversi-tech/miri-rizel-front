@@ -21,10 +21,10 @@ export class DocumentService {
 
     return this.http.post<string>(`${this.baseUrl}/FileUpload/upload?nameFolder=${name}`, file, { headers: this.headers });
   }
-  addDocument(document: Document): Observable<boolean> {
+  addDocument(document: Document,nameCustomer: string): Observable<boolean> {
     console.log(document);
 
-    return this.http.post<boolean>(`${this.baseUrl}/Document`, document, { headers: this.headers });
+    return this.http.post<boolean>(`${this.baseUrl}/Document?name=${nameCustomer}`, document, { headers: this.headers });
   }
   getFolders(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/FileUpload/Folders`, { headers: this.headers });
@@ -34,10 +34,6 @@ export class DocumentService {
     return this.http.get<any[]>(`${this.baseUrl}/FileUpload/folders/${folderId}/files`, { headers: this.headers });
   }
 
-  sendEmail(nameCustomer: string): Observable<any> {
-  
-    
-    return this.http.post<any>(`${this.baseUrl}/Document/send`, {nameCustomer});
-  }
+
   
 }
