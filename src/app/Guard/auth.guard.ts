@@ -12,9 +12,7 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     let userRole = this.authService.getRole();
     // if(userRole== null|| userRole== undefined)
-    //   userRole=this.authService.
-    console.log(`role: ${userRole}`);
-    
+    //   userRole=this.authService.    
     const roles = route.data['roles'] as Array<number>;
     if (roles && roles.includes(userRole!)) {
       return true;

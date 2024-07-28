@@ -88,17 +88,13 @@ export class LoginComponent implements OnInit {
     this.userService.login(email, password).subscribe(
       (user: any) => {
         this.router.navigate(['/home'])
-        //     console.log("user");
-        //     if (user.role == 1) {
-        //       this.router.navigate(['/admin'], { relativeTo: this.active });
-        //     }
-        //     if (user.role == 2) {
-        //       this.router.navigate(['/worker'], { relativeTo: this.active });
-        //     }
-        //     if (user.role == 3) {
-        //       this.router.navigate(['/customer'], { relativeTo: this.active });
-        //     }
-        //   },
+            // console.log("user");
+            // if (user.role == 1) {
+            //   this.router.navigate(['/dashboard'], { relativeTo: this.active });
+            // }
+            // else {
+            //   this.router.navigate(['/home'], { relativeTo: this.active });
+            // }
       },
       (error) => {
         // Check if errorMessage contains the specific string

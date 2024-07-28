@@ -29,6 +29,7 @@ import { PropilListComponent } from './Components/propil-list/propil-list.compon
 import { error404Component } from './Components/errors/error-404.component';
 import { UploadFilseComponent } from './Components/upload-filse/upload-filse.component';
 import { UsersComponent } from './Components/users/users.component';
+import { CustomersDashboardComponent } from './Components/customers-dashboard/customers-dashboard.component';
 const routes: Routes = [
   // 1=customer, 2=worker, 3=admin
   // { path: 'worker', component: WorkerComponentComponent, canActivate: [AuthGuard], data: { roles: [3] } },
@@ -47,7 +48,8 @@ const routes: Routes = [
   // { path: 'editLead', component: EditLeadComponent ,canActivate: [AuthGuard], data: { roles: [3] }},
   // { path: 'leads', component: ListLeadsComponent ,canActivate: [AuthGuard], data: { roles: [3] }},
   // { path: 'propil', component: PropilListComponent ,canActivate: [AuthGuard], data: { roles: [3] }},
-
+  { path: 'home', component: HomePageComponent ,canActivate: [AuthGuard], data: { roles: [3,2] }},
+  { path: 'Dashboard', component: CustomersDashboardComponent,canActivate: [AuthGuard], data: { roles: [1,2,3] } },
   { path: 'customer', component: CustomersComponent },
   { path: 'worker', component: WorkerComponentComponent },
   {path: 'users', component : UsersComponent},
@@ -71,6 +73,7 @@ const routes: Routes = [
   { path: 'editLead', component: EditLeadComponent },
   { path: 'documents', component: ListDocumentComponent },
   { path: 'leads', component: ListLeadsComponent },
+  { path: 'Dashboard', component: CustomersDashboardComponent },
   { path: 'propil', component: PropilListComponent },
   {
     path: 'leads',

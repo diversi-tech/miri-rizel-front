@@ -447,7 +447,8 @@
   "userUndeleted": "The user is not deleted",
   "userDeleted": "User deleted successfully",
   "userUnFound": "The user is not found",
-  "Worker": "Worker"
+  "Worker": "Worker",
+  "DropFiles":"Drag and drop files to here to upload."
   
   
 }
