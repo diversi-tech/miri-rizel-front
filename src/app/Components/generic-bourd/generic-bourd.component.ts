@@ -347,7 +347,7 @@ document(rowData: any){
   //פופ-אפ
   async showPopupSheet(): Promise<void> {
     Swal.fire({
-      title: ' XSL-יצוא נתוני טבלה זו ל',
+      // title: ' XSL-יצוא נתוני טבלה זו ל',
       html: '<div id="popupContainer"></div>',
       showCancelButton: true,
       showConfirmButton: false,

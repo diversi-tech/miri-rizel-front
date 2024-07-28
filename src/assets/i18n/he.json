@@ -169,5 +169,12 @@
   "listFolders": "רשימת התקיות בדרייב",
   "nameFolder": "חיפוש תיקייה לפי שם",
   "contentFolder": "תוכן התקייה",
-  "upLoadFile": "הקובץ הועלה בהצלחה"
+  "upLoadFile": "הקובץ הועלה בהצלחה",
+  "Cutomer": "לקוח",
+  "userSaved": "המשתמש נשמר בהצלחה!",
+  "userNotSaved": "המשתמש לא נשמר! נסה שוב",
+  "existingDoc": "מסמך קיים",
+  "newDoc": "מסמך חדש",
+  "chooseMatchOption": "בחר באופציה הטובה ביותר בעבורך",
+  "titleExport": "XSL ייצוא נתוני טבלה זו ל"
 }
