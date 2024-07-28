@@ -107,4 +107,30 @@ export class AccessibilityComponent {
       heading.style.backgroundColor = '';
     });
   }
+
+  handleSwitch3Change(event: any): void {
+    if (event.checked) {
+      this.addUnderlineToText();
+    } else {
+      this.removeUnderlineFromText();
+    }
+  }
+
+  removeUnderlineFromText() {
+    const elements = document.querySelectorAll('body *');
+    elements.forEach((element: Element) => {
+      if (element instanceof HTMLElement) {
+        element.style.textDecoration = '';
+      }
+    });
+  }
+
+  addUnderlineToText() {
+    const elements = document.querySelectorAll('body *');
+    elements.forEach((element: Element) => {
+      if (element instanceof HTMLElement) {
+        element.style.textDecoration = 'underline';
+      }
+    });
+  }
 }
