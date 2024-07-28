@@ -14,6 +14,9 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 })
 export class AccessibilityComponent {
 
+  speakPageContentEnabled: boolean = false;
+  speechSynthesis: SpeechSynthesis = window.speechSynthesis;
+
   toggleAccessibilityMenu() {
     const menu = document.getElementById('accessibility-menu');
     if (menu) {
@@ -29,5 +32,27 @@ export class AccessibilityComponent {
 
   toggleHighContrast() {
     document.body.classList.toggle('high-contrast');
+  }
+
+  speakPageContent() {
+    if (this.speakPageContentEnabled) {
+      const pageContent = document.body.innerText;
+      const speechSynthesis = window.speechSynthesis;
+      const speechUtterance = new SpeechSynthesisUtterance(pageContent);
+
+      speechSynthesis.speak(speechUtterance);
+    } else {
+      this.speechSynthesis.cancel();
+    }
+  }
+
+  handleSwitch1Change(event: any): void {
+    this.speakPageContentEnabled = event.checked;
+
+    if (this.speakPageContentEnabled) {
+      this.speakPageContent();
+    } else {
+      this.speechSynthesis.cancel();
+    }
   }
 }
