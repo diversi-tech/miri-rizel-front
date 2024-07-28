@@ -3,13 +3,14 @@ import { RouterOutlet } from '@angular/router';
 import { NavComponent } from './Components/nav/nav.component';
 import { NgxSpinnerService } from "ngx-spinner";
 import { NgxSpinnerModule } from "ngx-spinner";
+import { AccessibilityComponent } from "./Components/accessibility/accessibility.component";
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
     standalone: true,
-    imports: [NgxSpinnerModule,NavComponent, RouterOutlet]
+    imports: [NgxSpinnerModule, NavComponent, RouterOutlet, AccessibilityComponent]
 })
 export class AppComponent {
   value:any
