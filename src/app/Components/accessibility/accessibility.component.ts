@@ -84,4 +84,27 @@ export class AccessibilityComponent {
       }
     });
   }
+
+  handleSwitch8Change(event: any): void {
+    this.increaseFontSizeEnabled = event.checked;
+    if (this.increaseFontSizeEnabled) {
+      this.highlightHeadings();
+    } else {
+      this.removeHighlightHeadings();
+    }
+  }
+
+  highlightHeadings() {
+    const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+    headings.forEach((heading: any) => {
+      heading.style.backgroundColor = 'red';
+    });
+  }
+
+  removeHighlightHeadings() {
+    const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+    headings.forEach((heading: any) => {
+      heading.style.backgroundColor = '';
+    });
+  }
 }
