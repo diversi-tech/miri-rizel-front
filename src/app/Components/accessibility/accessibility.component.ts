@@ -16,6 +16,7 @@ export class AccessibilityComponent {
 
   speakPageContentEnabled: boolean = false;
   speechSynthesis: SpeechSynthesis = window.speechSynthesis;
+  increaseFontSizeEnabled: boolean = false;
 
   toggleAccessibilityMenu() {
     const menu = document.getElementById('accessibility-menu');
@@ -54,5 +55,33 @@ export class AccessibilityComponent {
     } else {
       this.speechSynthesis.cancel();
     }
+  }
+
+  handleSwitch2Change(event: any): void {
+    this.increaseFontSizeEnabled = event.checked;
+
+    if (this.increaseFontSizeEnabled) {
+      this.increaseFontSize();
+    } else {
+      this.increaseFontSizeRemove();
+    }
+  }
+
+  increaseFontSize() {
+    const elements = document.querySelectorAll('body *');
+    elements.forEach((element: Element) => {
+      if (element instanceof HTMLElement) {
+        element.style.fontSize = 'large';
+      }
+    });
+  }
+
+  increaseFontSizeRemove() {
+    const elements = document.querySelectorAll('body *');
+    elements.forEach((element: Element) => {
+      if (element instanceof HTMLElement) {
+        element.style.fontSize = '';
+      }
+    });
   }
 }
