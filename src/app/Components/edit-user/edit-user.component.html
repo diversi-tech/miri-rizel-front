@@ -59,7 +59,7 @@
     class="select-field"
     (completeMethod)="filterProjectAuto($event)"
     [ngModelOptions]="{standalone: true}"
-    [attr.placeholder]="(user.role?.description|| '') | translate"
+    
   >
     <ng-template let-role pTemplate="item">
       {{ role.description |translate }} <!-- הצגת המידע בצורה הנכונה -->
