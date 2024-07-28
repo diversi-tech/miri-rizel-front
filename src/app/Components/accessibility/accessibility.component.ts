@@ -17,6 +17,8 @@ export class AccessibilityComponent {
   speakPageContentEnabled: boolean = false;
   speechSynthesis: SpeechSynthesis = window.speechSynthesis;
   increaseFontSizeEnabled: boolean = false;
+  zoomLevel: number = 1;
+  initialZoomLevel: number = 1;
 
   toggleAccessibilityMenu() {
     const menu = document.getElementById('accessibility-menu');
@@ -132,5 +134,23 @@ export class AccessibilityComponent {
         element.style.textDecoration = 'underline';
       }
     });
+  }
+
+  zoomIn() {
+    this.zoomLevel += 0.1;
+    document.body.style.transform = `scale(${this.zoomLevel})`;
+  }
+
+  handleSwitch6Change(event: any): void {
+    if (event.checked) {
+      this.zoomIn();
+    } else {
+      this.resetZoom();
+    }
+  }
+
+  resetZoom() {
+    this.zoomLevel = this.initialZoomLevel;
+    document.body.style.transform = `scale(${this.zoomLevel})`;
   }
 }
