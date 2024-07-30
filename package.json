@@ -41,6 +41,7 @@
     "primeng": "^17.18.4",
     "quill": "^2.0.2",
     "rxjs": "~7.8.0",
+    "simple-keyboard": "^3.7.96",
     "sweetalert2": "^11.12.0",
     "tslib": "^2.3.0",
     "zone.js": "^0.14.7"

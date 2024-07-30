@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { KeyboardService } from '@app/Services/keyboard.service';
 import { InputSwitchModule } from 'primeng/inputswitch';
 
 @Component({
@@ -12,7 +13,9 @@ import { InputSwitchModule } from 'primeng/inputswitch';
   templateUrl: './accessibility.component.html',
   styleUrl: './accessibility.component.css'
 })
-export class AccessibilityComponent {
+export class AccessibilityComponent  implements AfterViewInit {
+
+  constructor(private el: ElementRef, private renderer: Renderer2, private keyboardService: KeyboardService) { }
 
   speakPageContentEnabled: boolean = false;
   speechSynthesis: SpeechSynthesis = window.speechSynthesis;
@@ -152,5 +155,138 @@ export class AccessibilityComponent {
   resetZoom() {
     this.zoomLevel = this.initialZoomLevel;
     document.body.style.transform = `scale(${this.zoomLevel})`;
+  }
+
+  // handleSwitch7Change(event: any): void {
+  //   this.showKeyboard = event.checked;
+  //   console.log(this.showKeyboard);
+
+  //   if (this.showKeyboard) {
+  //     this.toggleKeyboard();
+  //   } else {
+  //     this.closeKeyboard();
+  //   }
+  // }
+
+  //   handleSwitch7Change(event: any): void {
+  //     this.showKeyboard = event.checked;
+  //     if (this.showKeyboard) {
+  //       this.openKeyboard();
+  //     } else {
+  //       this.closeKeyboard();
+  //     }
+  //   }
+
+
+//   //   @ViewChild('keyboardContainer', { static: false }) keyboardContainer!: ElementRef;
+//   //   showKeyboard: boolean = true;
+
+//   //   closeKeyboard() {
+//   //     this.showKeyboard = false;
+//   //   }
+
+//   //   // openKeyboard() {
+//   //   //   console.log(this.keyboardContainer);
+//   //   //   if (this.keyboardContainer) {
+//   //   //     alert("!!!!")
+//   //   //     if (!this.keyboardService.isInitialized()) {
+//   //   //       this.keyboardService.initialize(this.keyboardContainer.nativeElement);
+//   //   //     }
+//   //   //   } else {
+//   //   //     console.error('keyboardContainer is undefined. Make sure it is properly initialized.');
+//   //   //   }
+//   //   // }
+
+//   //   openKeyboard() {
+//   //     if (this.keyboardContainer) {
+//   //         this.keyboardService.resetKeyboard(); // Reset the keyboard service
+//   //         this.keyboardService.initialize(this.keyboardContainer.nativeElement); // Reinitialize the keyboard
+//   //         this.showKeyboard = true;
+//   //     } else {
+//   //         console.error('keyboardContainer is undefined. Make sure it is properly initialized.');
+//   //     }
+//   // }
+ 
+  
+
+//   @ViewChild('keyboardContainer', { static: false }) keyboardContainer!: ElementRef;
+//   showKeyboard: boolean = false;
+
+//   ngAfterViewInit() {
+//     // This ensures that keyboardContainer is available after the view has initialized
+//     console.log(this.keyboardContainer);
+//   }
+
+//   handleSwitch7Change(event: any): void {
+//     this.showKeyboard = event.checked;
+//     if (this.showKeyboard) {
+//       this.openKeyboard();
+//     } else {
+//       this.closeKeyboard();
+//     }
+//   }
+
+//   closeKeyboard() {
+//     this.showKeyboard = false;
+//   }
+
+//   openKeyboard() {
+//     if (this.keyboardContainer) {
+//       if (!this.keyboardService.isInitialized()) {
+//         this.keyboardService.initialize(this.keyboardContainer.nativeElement);
+//       } else {
+//         this.keyboardService.resetKeyboard(this.keyboardContainer.nativeElement);
+//       }
+//       this.showKeyboard = true;
+//     } else {
+//       console.error('keyboardContainer is undefined. Make sure it is properly initialized.');
+//     }
+//   }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+  @ViewChild('keyboardContainer', { static: false }) keyboardContainer?: ElementRef;
+  showKeyboard: boolean = false;
+
+
+  ngAfterViewInit() {
+    // This will log the keyboardContainer after the view has initialized
+    console.log(this.keyboardContainer); 
+  }
+
+  handleSwitch7Change(event: any): void {
+    this.showKeyboard = event.checked;
+    if (this.showKeyboard) {
+      setTimeout(() => this.openKeyboard(), 0);
+    } else {
+      this.closeKeyboard();
+    }
+  }
+
+  openKeyboard() {
+    if (this.keyboardContainer?.nativeElement) {
+      if (!this.keyboardService.isInitialized()) {
+        this.keyboardService.initialize(this.keyboardContainer.nativeElement);
+      } else {
+        this.keyboardService.resetKeyboard(this.keyboardContainer.nativeElement);
+      }
+      this.showKeyboard = true;
+    } else {
+      console.error('keyboardContainer is undefined. Make sure it is properly initialized.');
+    }
+  }
+
+  closeKeyboard() {
+    this.showKeyboard = false;
   }
 }

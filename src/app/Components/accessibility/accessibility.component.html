@@ -26,4 +26,9 @@
         <span class="material-icons">zoom_in</span> זום
         <p-inputSwitch #switch6 id="four" ariaLabelledBy="switch6" (onChange)="handleSwitch6Change($event)"></p-inputSwitch>
     </div>
+    <div class="container-item">
+        <span class="material-icons">keyboard</span> מקלדת על המסך
+        <p-inputSwitch id="keyboardSwitch" ariaLabelledBy="switch7" (onChange)="handleSwitch7Change($event)"></p-inputSwitch>
+        <div *ngIf="showKeyboard" #keyboardContainer class="simple-keyboard"></div>
+    </div>
 </div>
