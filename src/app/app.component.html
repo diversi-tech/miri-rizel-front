@@ -1,8 +1,7 @@
-<app-nav ></app-nav>
-<div class="content-offset" >
-  <router-outlet ></router-outlet>
+<div *ngIf="shouldShowNav" class="content-offset">
+  <app-nav ></app-nav>
 </div>
+<router-outlet></router-outlet>
 <ngx-spinner [fullScreen]="true">
   <img style="width: 100px" src="../assets/images/three-dots.svg" />
 </ngx-spinner>
-<!-- <app-customers-dashboard></app-customers-dashboard> -->

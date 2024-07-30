@@ -5,7 +5,7 @@ import { ValidatorsService } from '@app/Services/validators.service';
 import Swal from 'sweetalert2';
 import { NgIf } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-document',
@@ -25,7 +25,9 @@ export class DocumentComponent implements OnInit {
   constructor(
     private documentService: DocumentService,
     private formBuilder: FormBuilder,
-    private vlidatorsService: ValidatorsService
+    private vlidatorsService: ValidatorsService,
+    private translate: TranslateService,
+
   ) {
 
   }
@@ -92,7 +94,6 @@ export class DocumentComponent implements OnInit {
       this.documentService.upFile(formData, this.nameCustomer).subscribe(res => {
         this.documentForm.patchValue({
           filePath: res
-
         })
       })
     };
@@ -109,13 +110,16 @@ export class DocumentComponent implements OnInit {
       return;
     if (this.documentForm.value.title.invalid)
       return;
-    console.log(this.documentForm.value.filePath);
-    this.documentService.addDocument(this.documentForm.value).subscribe(res => {
-      alert('הקובץ הועלאה בהצלחה')
-      this.documentService.sendEmail(this.nameCustomer).subscribe();
+    console.log("file",this.documentForm.value.filePath);
+    this.documentService.addDocument(this.documentForm.value,this.nameCustomer).subscribe(res => {
+      this.translate.get(['upLoadFile']).subscribe(translations => {
+
+      alert(translations['upLoadFile'])
       Swal.close();
-    })
-  }
+    
+  })
+  })
+}
   changeTitle() {
     this.trueTitle = true;
   }

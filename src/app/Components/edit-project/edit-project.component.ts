@@ -17,7 +17,8 @@ import Swal from 'sweetalert2';
 import { NgModule } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { DropdownModule } from 'primeng/dropdown';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { LanguageService } from '@app/Services/language.service';
 @Component({
   selector: 'app-edit-project',
   templateUrl: './edit-project.component.html',
@@ -37,11 +38,25 @@ export class EditProjectComponent {
   ProjectForm!: FormGroup;
   submitted = false;
   data: any;
+  styles = {
+    'text-align': 'right', // ברירת מחדל עברית
+    'direction': 'rtl'     // ברירת מחדל עברית
+  };
   @Output() ProjectId: EventEmitter<void> = new EventEmitter<void>();
   constructor(private server: ProjectService, private formBuilder: FormBuilder, private pro: ProjectService, private statusService: TaskService,
-    private customerService: CustomersService) {
+    private customerService: CustomersService,
+    private languageService: LanguageService,private translate:TranslateService) {
   }
   ngOnInit() {
+    this.languageService.language$.subscribe(lang=> {
+      if (lang === 'he') {
+        this.styles['text-align'] = 'right';
+        this.styles['direction'] = 'rtl';
+      } else {
+        this.styles['text-align'] = 'left';
+        this.styles['direction'] = 'ltr';
+      }
+      })
     this.statusService.getAllStatus().subscribe(
       (data: any) => {
         this.statuses = data;
@@ -55,7 +70,6 @@ export class EditProjectComponent {
       (data: any) => {
         this.custom = data;
         console.log("custom", this.custom);
-
       },
       (error: any) => {
         console.error('Error fetching customers:', error);
@@ -63,7 +77,7 @@ export class EditProjectComponent {
     );
   }
   setData(data: any) {
-    debugger;
+    // debugger;
     this.data = data;
     console.log("data: ", data);
     this.server.getProjectById(this.data).subscribe((project2: Project) => {
@@ -72,7 +86,6 @@ export class EditProjectComponent {
       this.fullForm();
     });
   }
-
   extractDate(dateTime: string): string {
     const date = new Date(dateTime);
     const year = date.getFullYear();
@@ -82,15 +95,13 @@ export class EditProjectComponent {
   }
   fullForm() {
     console.log("full form");
-
-    debugger
+    // debugger
     if (!this.project) { console.error('Project data is not available'); return; }
     console.log(`this.project.status:`);
     // console.log(`this.custom" ${this.custom[this.customerId].firstName} `);
     // console.log(`this.stattus" ${this.statuses[this.status].description} `);
     // this.customerName = this.custom[this.customerId].firstName != null ? this.custom[this.customerId].firstName : 0;
     this.status = this.project.status!;
-    this.project.isActive=true,
     this.customer = this.project.customer!
     this.ProjectForm = this.formBuilder.group({
       projectId: [null, Validators.required],
@@ -100,14 +111,12 @@ export class EditProjectComponent {
       endDate: [this.extractDate(String(this.project.endDate)), Validators.required],
       status: [this.project.status, Validators.required],
       createdDate: [this.extractDate(String(this.project.createdDate)), Validators.required],
-      customer: [this.project.customer, Validators.required],
-      isActive:[this.project.isActive]
+      customerId: [this.project.customer, Validators.required],
     });
     console.log(this.project);
     this.flag = true;
   }
   async toEnter() {
-    
     this.server.update(this.ProjectForm.value, this.data).subscribe(() => Swal.close())
     await this.delay(50);
     Object.keys(this.ProjectForm.controls).forEach((key) => {

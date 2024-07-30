@@ -28,6 +28,7 @@ import { StatusCodeProject } from '@app/Model/StatusCodeProject';
 import { Project } from '@app/Model/Project';
 import { GenericBourdComponent } from '../generic-bourd/generic-bourd.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { AuthService } from '@app/Services/auth.service';
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
@@ -35,11 +36,12 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [GenericBourdComponent, MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule, MatTabsModule, MatButtonToggleModule, NgFor, NgIf, MatTableModule, NgClass, CurrencyPipe,TranslateModule,NgApexchartsModule],
+  imports: [GenericBourdComponent, MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule, MatTabsModule, MatButtonToggleModule, NgFor, NgIf, MatTableModule, NgClass, CurrencyPipe, TranslateModule, NgApexchartsModule],
 })
 export class HomePageComponent implements OnInit, OnDestroy {
 
-  constructor(private router: Router, private _userService: UserService, private TaskService: TaskService, private _leadService: LeadService, private _customerService: CustomersService, private resolver: ComponentFactoryResolver, private ProjectService: ProjectService,private translate: TranslateService,
+  constructor(private router: Router, private _userService: UserService, private authService: AuthService, private TaskService: TaskService, private _leadService: LeadService, private _customerService: CustomersService, private resolver: ComponentFactoryResolver,
+    private ProjectService: ProjectService, private translate: TranslateService
   ) { }
   isAdmin: boolean = false;
   user: User | any
@@ -52,7 +54,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   tasks!: Task[]
   loading: boolean = true;
 
-  currentEmail: string = localStorage.getItem("email") ?? 'מסתננת';
+  // currentEmail: string = localStorage.getItem("email") ?? 'מסתננת';
   componentType!: Type<any>;
 
   @ViewChild('popupContainer', { read: ViewContainerRef }) popupContainer!: ViewContainerRef;
@@ -90,9 +92,11 @@ export class HomePageComponent implements OnInit, OnDestroy {
     );
     this._userService.getAll().subscribe((data: User[]) => {
       this.users = data
-      this.user = data.find(u => u.email == this.currentEmail)
+      const token = localStorage.getItem("token")?.toString()!
+      const idtoken = this.authService.getClaim(token, "id")
+      this.user = this.users.find(u => u.userId == idtoken)
       if (!this.user)
-        this.user.firstName = this.currentEmail
+        this.user.firstName = "משתמש"
     },
       (error: any) => {
         console.error('Error fetching user:', error);
@@ -111,7 +115,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
     this.ProjectService.getAll().subscribe(
       (p: Array<Project>) => {
-        this.projects = p.slice(0,7);
+        this.projects = p.slice(0, 7);
       },
       (error) => {
         this.loading = true;
@@ -119,17 +123,14 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.TaskService.getAllStatus().subscribe(
       (data) => {
         this.statuses = data
-
       },
       (error: any) => {
         console.error('Error fetching customers:', error);
       }
     );
-
     this.TaskService.getAllPriorities().subscribe(
       (data) => {
         this.priorities = data
-
       },
       (error: any) => {
         console.error('Error fetching priorities:', error);
@@ -248,7 +249,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     console.log(taskFilter);
     if (taskFilter.length != 0) {
       let loading: boolean = true;
-      let col$types = { 'title': 'text','description':'text','dueDate': 'date', 'createdDate': 'date' };
+      let col$types = { 'title': 'text', 'description': 'text', 'dueDate': 'date', 'createdDate': 'date' };
       let positionD = [this.statuses];
       let objData = [this.projects];
       let objFields = ['name'];

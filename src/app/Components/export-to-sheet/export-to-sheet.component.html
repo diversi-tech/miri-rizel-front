@@ -1,13 +1,25 @@
 
 <form id="form" #form="ngForm">
-    <h2>בחר אפשרות</h2>
+  
     <div>
-      <input type="radio" id="newDoc" name="radioOption" value="newDoc" (change)="onRadioChange($event)" [(ngModel)]="formValues.selectedOption" [ngModelOptions]="{standalone: true}" required>
       <label for="newDoc">דף חדש</label><br>
-      <input type="radio" id="existingDoc" name="radioOption" value="existingDoc" (change)="onRadioChange($event)" [(ngModel)]="formValues.selectedOption" [ngModelOptions]="{standalone: true}" required>
+      <input type="radio" id="newDoc" name="radioOption" value="newDoc" (change)="onRadioChange($event)" [(ngModel)]="formValues.selectedOption" [ngModelOptions]="{standalone: true}" required>
       <label for="existingDoc">מסמך קיים</label>
+      <input type="radio" id="existingDoc" name="radioOption" value="existingDoc" (change)="onRadioChange($event)" [(ngModel)]="formValues.selectedOption" [ngModelOptions]="{standalone: true}" required>
+      <!-- <div class="error-message" *ngIf="title!.invalid && (title!.touched || title!.dirty)">
+        <span *ngIf="title!.errors?.['required']">{{'RequiredField'|translate}}</span>
+      </div> -->
     </div>
   
+    <!-- <label for="title">{{'TitleInputLabel'|translate}}</label>
+    <div class="card flex justify-content-center">
+      <input type="text" id="title" pInputText class="input-field" formControlName="title" />
+      <div class="error-message" *ngIf="title!.invalid && (title!.touched || title!.dirty)">
+        <span *ngIf="title!.errors?.['required']">{{'RequiredField'|translate}}</span>
+      </div>
+    </div>
+ -->
+
     <div *ngIf="formValues.selectedOption === 'newDoc'">
       <input type="text" [(ngModel)]="formValues.fileName" name="fileName" placeholder="הכנס שם לקובץ" required >
     </div>

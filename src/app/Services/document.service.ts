@@ -17,13 +17,14 @@ export class DocumentService {
     return localStorage.getItem('token');
   }
   upFile(file: FormData, name: string): Observable<string> {
-    console.log(name);
-    return this.http.post<any>(`${this.baseUrl}/FileUpload/upload?nameFolder=${name}`, file, { headers: this.headers });
+    return this.http.post(`${this.baseUrl}/FileUpload/upload?nameFolder=${name}`, file, { 
+      headers: this.headers, 
+      responseType: 'text' 
+    });
   }
-  addDocument(document: Document): Observable<boolean> {
-    // console.log(document);
-    console.log("addDocument");
-    return this.http.post<boolean>(`${this.baseUrl}/Document`, document, { headers: this.headers });
+  
+  addDocument(document: Document,nameCustomer: string): Observable<boolean> {
+    return this.http.post<boolean>(`${this.baseUrl}/Document?name=${nameCustomer}`, document, { headers: this.headers });
   }
   getFolders(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/FileUpload/Folders`, { headers: this.headers });
@@ -36,5 +37,7 @@ export class DocumentService {
   sendEmail(nameCustomer: string): Observable<any> {  
     return this.http.post<any>(`${this.baseUrl}/Document/send`, {nameCustomer});
   }
+
+
   
 }

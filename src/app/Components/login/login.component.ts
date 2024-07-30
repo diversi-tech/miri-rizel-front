@@ -59,7 +59,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private active: ActivatedRoute,
-    private translate: TranslateService
+    private translate: TranslateService,
+
   ) {}
 
   hide = signal(true);
@@ -86,18 +87,19 @@ export class LoginComponent implements OnInit {
     const email = this.email.value;
     const password = this.pass.value;
     this.userService.login(email, password).subscribe(
-      (user: any) => {
-        this.router.navigate(['/home'])
-            // console.log("user");
-            // if (user.role == 1) {
-            //   this.router.navigate(['/dashboard'], { relativeTo: this.active });
-            // }
-            // else {
-            //   this.router.navigate(['/home'], { relativeTo: this.active });
-            // }
+      (user: any) => {  
+        console.log(user.role);
+           
+        this.spinner.hide();
+            if (user.user.role.id == 1) {
+              this.router.navigate(['/Dashboard'], { relativeTo: this.active });
+              console.log(user.user.role,"user.role");             
+            }
+            else{
+              this.router.navigate(['/home'], { relativeTo: this.active });
+            }
       },
       (error) => {
-        // Check if errorMessage contains the specific string
         if (error.status == 500) {
           Swal.fire({
             text: 'Email not found',
@@ -114,7 +116,9 @@ export class LoginComponent implements OnInit {
           this.passwordCheck = true;
         }
       }
-    );
+    
+    )
+    this.spinner.hide();
   }
   resetPassword() {
     if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email.value)) {

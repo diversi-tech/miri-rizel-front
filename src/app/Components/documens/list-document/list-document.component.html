@@ -1,5 +1,5 @@
 <div class="folder-list">
-  <h3 class="document-folder">רשימת תיקיות בדרייב</h3>
+  <h3 class="document-folder"> {{'listFolders'|translate}} </h3>
 
   <div class="folder-filter">
     <div class="input-wrapper">
@@ -8,7 +8,8 @@
         type="text"
         [(ngModel)]="searchQuery"
         (ngModelChange)="filterFolders()"
-        placeholder="           ...חפש תקייה לפי שם"
+        [placeholder]="'nameFolder' | translate"
+        style="padding-left: 55px;"
       />
     </div>
   </div>
