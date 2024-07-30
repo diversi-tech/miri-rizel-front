@@ -27,6 +27,7 @@
     gap: 10px;
     z-index: 1000;
     border: 2px solid #000000 !important;
+    border-radius: 5px;
 }
 
 .hidden {
@@ -54,8 +55,8 @@ button,
 .container-item {
     padding: 10px;
     font-size: 16px;
-    background-color: #5CFFAC;
-    color: #fff;
+    background-color: #f9fafb;
+    color: #0d0d0d;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -65,8 +66,8 @@ button,
     gap: 8px;
 }
 
-#one {
-    margin-left: 146px;
+/* #one {
+    margin-left: 142px;
 }
 
 #five {
@@ -82,12 +83,12 @@ button,
 }
 
 #three {
-    margin-left: 56px;
+    margin-left: 52px;
 }
 
 #four {
     margin-left: 170px;
-}
+} */
 
 #keyboardSwitch {
     margin-left: 73px;
@@ -127,4 +128,61 @@ button,
 .simple-keyboard .hg-button:active {
     background-color: #999;
     /* צבע כפתורים בעת לחיצה */
+}
+
+.green-switch .ui-inputswitch-checked .ui-inputswitch-slider {
+    background-color: #5CFFAC;
+}
+
+/* שים את הסגנון בקובץ CSS או SCSS של הרכיב */
+:host ::ng-deep .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+    background-color: #5CFFAC !important;
+}
+
+/* שים את הסגנון בקובץ CSS או SCSS של הרכיב */
+:host ::ng-deep .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider::before {
+    background-color: white !important;
+}
+
+:host ::ng-deep .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+    background-color: #5CFFAC !important;
+    box-shadow: 0 0 0 2px #5CFFAC !important; /* מסגרת זוהרת ירוקה */
+}
+
+/* שים את הסגנון בקובץ CSS או SCSS של הרכיב */
+:host ::ng-deep .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider::before {
+    background-color: white !important;
+}
+
+/* אנימציה למסגרת ירוקה רק בזמן המעבר */
+:host ::ng-deep .p-inputswitch .p-inputswitch-slider {
+    transition: box-shadow 0.3s ease-in-out; /* עדכון ההנפשה של המסגרת */
+}
+
+/* שינוי צבע המסגרת הזוהרת רק בזמן המעבר (בהתמקדות או כשלוחצים על הסוויץ') */
+:host ::ng-deep .p-inputswitch:active .p-inputswitch-slider {
+    box-shadow: 0 0 0 2px #5CFFAC !important; /* מסגרת זוהרת ירוקה בעת מעבר */
+}
+
+/* שינוי צבע המסגרת הזוהרת רק בזמן מעבר בין מצבים */
+:host ::ng-deep .p-inputswitch:focus .p-inputswitch-slider {
+    box-shadow: 0 0 0 2px #5CFFAC !important; /* מסגרת זוהרת ירוקה בזמן פוקוס */
+}
+
+/* ודא שהקונטיינר של כל פריט נמתח לאורך התצוגה */
+.container-item {
+    display: flex;
+    align-items: center; /* ממקם את האייקון והסוויץ' במרכז */
+    margin-bottom: 5px; /* רווח בין שורות של פריטים */
+}
+
+/* התאם את התצוגה של האייקון והסוויץ' */
+.container-item span {
+    margin-right: 10px; /* רווח בין האייקון לסוויץ' */
+    font-size: 24px; /* גודל האייקון */
+}
+
+/* התאמה לצורת הסוויץ' */
+.container-item p-inputSwitch {
+    margin-left: auto; /* מיקום הסוויץ' בצד ימין */
 }
