@@ -100,8 +100,6 @@ export class GenericBourdComponent implements OnInit, OnChanges {
       throw new Error('The data input is required and must be provided.');
     }
     this.generateColumns();
-    //שינוי הצדדים לימין ושמאל בהתאם לבחירת השפה
-     // האזנה לשינויים בשפה
      this.languageService.language$.subscribe(lang => {
       this.textDirection = lang === 'he' ? 'rtl' : 'ltr';
     });

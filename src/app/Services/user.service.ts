@@ -14,15 +14,13 @@ export class UserService {
   private apiUrl = `${environment.apiUrl}User/`;
 
   getToken() {
-    console.log('token' + localStorage.getItem('token'));
-
     return localStorage.getItem('token');
   }
 
   private headers = new HttpHeaders({
     Authorization: `Bearer ${this.getToken()}`,
   });
-
+ 
   //אין פונקציה כזו בקונטרלר!!
   // editUser(email: any): Observable<any> {
   //   return this.http.get(`${this.apiUrl}?email=${email}`);
@@ -53,6 +51,8 @@ export class UserService {
           email: response.user.email,
           role: response.user.role,
         };
+        // console.log("user",user);
+        
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('token', token);
         // const user2 = response.user;
@@ -88,7 +88,6 @@ export class UserService {
         };
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('token', token);
-        console.log(token);
         const encryptedRole = CryptoJS.AES.encrypt(
           user.role.id.toString(),
           'encryptionKey'

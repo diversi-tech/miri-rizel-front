@@ -77,7 +77,7 @@ export class EditProjectComponent {
     );
   }
   setData(data: any) {
-    debugger;
+    // debugger;
     this.data = data;
     console.log("data: ", data);
     this.server.getProjectById(this.data).subscribe((project2: Project) => {
@@ -95,7 +95,7 @@ export class EditProjectComponent {
   }
   fullForm() {
     console.log("full form");
-    debugger
+    // debugger
     if (!this.project) { console.error('Project data is not available'); return; }
     console.log(`this.project.status:`);
     // console.log(`this.custom" ${this.custom[this.customerId].firstName} `);

@@ -206,6 +206,7 @@
   "CreatedTtoday": "נוצרו היום",
   "FromToday": "מהיום",
   "ViewTheTasksInProgress": "הצגת המשימות בתהליך",
+  "ViewTheTasksToSubmitToday": "הצגת המשימות להגשה היום ",
   "TasksInProgress": "משימות בתהליך",
   "ViewAllTasks": "הצגת כל המשימות",
   "ViewTheNewTasks": "הצגת המשימות החדשות",
@@ -248,5 +249,9 @@
   "existingDoc": "מסמך קיים",
   "newDoc": "מסמך חדש",
   "chooseMatchOption": "בחר באופציה הטובה ביותר בעבורך",
-  "titleExport": "XSL ייצוא נתוני טבלה זו ל"
+  "titleExport": "XSL ייצוא נתוני טבלה זו ל",
+  "upLoadFile": "הקובץ הועלה בהצלחה",
+   "DropFiles":"גרור ושחרר קבצים לכאן כדי להעלות.",
+   "TasksToSubmitToday":"משימות להגשה היום"
+
 }

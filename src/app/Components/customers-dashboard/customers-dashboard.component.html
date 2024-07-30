@@ -1,1 +1,44 @@
-<p>customers-dashboard works!</p>
+<div class="flex flex-col flex-auto min-w-0 bg-gray-50" dir="rtl">
+    <!-- Header -->
+    <div class="bg-white">
+        <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
+            <div class="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 my-8 sm:my-12">
+                <!-- Avatar and name -->
+                <div class="flex flex-auto items-center min-w-0">
+                    <div class="flex-0 w-20 h-25 rounded-full overflow-hidden">
+                        <img class="w-full h-full object-cover" src="../../../assets/images/לוגו מוגדל.png">
+                    </div>
+                    <div class="flex flex-col min-w-0 ml-4">
+                        <ng-container>
+                            <div class="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate">
+                                שלום {{user?user.firstName:"לקוח"}}!
+                            </div>
+                        </ng-container>
+                        <div class="flex items-center">
+                            <span class="pi pi-sparkles"></span>
+                            שמחים לראות אותך איתנו:)
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- File Upload Section -->
+    <div class="bg-card p-6 sm:p-8">
+        <div class="flex justify-center">
+            <div class="card file-upload-card p-6 sm:p-8 bg-white rounded-lg shadow-md max-w-3xl w-full  ">
+                <app-upload-filse [user]="getUser()"></app-upload-filse>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="bg-card p-6 sm:p-8 mt-8">
+        <div class="text-center text-lg">
+            תמיד תוכל לשאול אותנו בכתובת המייל:
+            <a href="mailto:systemcopyright1@gmail.com" class="text-blue-500">support&#64;gmail.com</a>
+        </div>
+    </div>
+</div>

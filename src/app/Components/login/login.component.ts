@@ -95,23 +95,19 @@ export class LoginComponent implements OnInit {
     const email = this.email.value;
     const password = this.pass.value;
     this.userService.login(email, password).subscribe(
-      (user: any) => {
-        this.router.navigate(['/home'])
+      (user: any) => {  
+        console.log(user.role);
+           
         this.spinner.hide();
-        //     console.log("user");
-        //     if (user.role == 1) {
-        //       this.router.navigate(['/admin'], { relativeTo: this.active });
-        //     }
-        //     if (user.role == 2) {
-        //       this.router.navigate(['/worker'], { relativeTo: this.active });
-        //     }
-        //     if (user.role == 3) {
-        //       this.router.navigate(['/customer'], { relativeTo: this.active });
-        //     }
-        //   },
+            if (user.user.role.id == 1) {
+              this.router.navigate(['/Dashboard'], { relativeTo: this.active });
+              console.log(user.user.role,"user.role");             
+            }
+            else{
+              this.router.navigate(['/home'], { relativeTo: this.active });
+            }
       },
       (error) => {
-        // Check if errorMessage contains the specific string
         if (error.status == 500) {
           Swal.fire({
             text: 'Email not found',

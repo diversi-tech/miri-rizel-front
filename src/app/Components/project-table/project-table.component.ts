@@ -208,7 +208,7 @@ export class ProjectTableComponent implements OnInit {
       })
   }
   onDeleteTask(task: Task) {
-    debugger
+    // debugger
     this.taskService.deleteTask(task.taskId!).subscribe(
       (data: any) => {
         if (data == true) {

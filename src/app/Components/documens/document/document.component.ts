@@ -99,7 +99,6 @@ export class DocumentComponent implements OnInit {
 
         this.documentForm.patchValue({
           filePath: res
-
         })
       })
     };
@@ -116,7 +115,7 @@ export class DocumentComponent implements OnInit {
       return;
     if (this.documentForm.value.title.invalid)
       return;
-    console.log(this.documentForm.value.filePath);
+    console.log("file",this.documentForm.value.filePath);
     this.documentService.addDocument(this.documentForm.value,this.nameCustomer).subscribe(res => {
       this.translate.get(['upLoadFile']).subscribe(translations => {
 

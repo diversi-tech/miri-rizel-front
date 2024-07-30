@@ -162,6 +162,8 @@
   "userDeleted": "User deleted successfully",
   "userUnFound": "The user is not found",
   "Worker": "Worker",
+  "DropFiles":"Drag and drop files to here to upload.",
+  "Worker": "Worker",
   "empyFolder": "There are no documents available to view for this client",
   "listFolders": "List of folders on the drive",
   "nameFolder": "Search folder by name",
@@ -206,5 +208,7 @@
   "existingDoc": "existing document",
   "newDoc": "new document",
   "chooseMatchOption": "chooseMatchOption",
-  "titleExport": "titleExport"
+  "titleExport": "titleExport",
+  "ShortLast": "The last name must contain at least 2 letters",
+  "TasksToSubmitToday":"Tasks to submit today"
 }
