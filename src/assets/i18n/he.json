@@ -243,6 +243,14 @@
   "nameFolder": "חיפוש תיקייה לפי שם",
   "contentFolder": "תוכן התקייה",
   "upLoadFile": "הקובץ הועלה בהצלחה",
+  "Cutomer": "לקוח",
+  "userSaved": "המשתמש נשמר בהצלחה!",
+  "userNotSaved": "המשתמש לא נשמר! נסה שוב",
+  "existingDoc": "מסמך קיים",
+  "newDoc": "מסמך חדש",
+  "chooseMatchOption": "בחר באופציה הטובה ביותר בעבורך",
+  "titleExport": "XSL ייצוא נתוני טבלה זו ל",
+  "upLoadFile": "הקובץ הועלה בהצלחה",
    "DropFiles":"גרור ושחרר קבצים לכאן כדי להעלות.",
    "TasksToSubmitToday":"משימות להגשה היום"
 

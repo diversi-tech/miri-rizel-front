@@ -3,6 +3,7 @@ import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { NavComponent } from './Components/nav/nav.component';
 import { NgxSpinnerService } from "ngx-spinner";
 import { NgxSpinnerModule } from "ngx-spinner";
+import { AccessibilityComponent } from "./Components/accessibility/accessibility.component";
 import { CustomersDashboardComponent } from './Components/customers-dashboard/customers-dashboard.component';
 import { AuthService } from './Services/auth.service';
 import { NgIf } from '@angular/common';
@@ -12,7 +13,7 @@ import { NgIf } from '@angular/common';
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
     standalone: true,
-    imports: [NgxSpinnerModule,NavComponent, RouterOutlet,CustomersDashboardComponent,NgIf]
+    imports: [NgxSpinnerModule, NavComponent, RouterOutlet, AccessibilityComponent,CustomersDashboardComponent,NgIf]
 })
 export class AppComponent {
   value:any

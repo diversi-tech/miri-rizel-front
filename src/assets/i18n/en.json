@@ -202,5 +202,13 @@
   "ViewTheOverdueTasks": "View the overdue tasks",
   "ShortName": "The name must contain at least 2 letters",
   "ShortLast": "The last name must contain at least 2 letters",
+  "Cutomer": "Cutomer",
+  "userSaved": "User saved successfully!",
+  "userNotSaved": "The user is not saved. Try again",
+  "existingDoc": "existing document",
+  "newDoc": "new document",
+  "chooseMatchOption": "chooseMatchOption",
+  "titleExport": "titleExport",
+  "ShortLast": "The last name must contain at least 2 letters",
   "TasksToSubmitToday":"Tasks to submit today"
 }

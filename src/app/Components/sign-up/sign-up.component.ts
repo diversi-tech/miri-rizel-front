@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   Validators,
   FormsModule,
   ReactiveFormsModule,
+  FormControl,
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '@app/Services/user.service';
@@ -21,6 +22,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { SharedModule } from 'primeng/api';
 import { InputTextModule } from 'primeng/inputtext';
 import { EmailService } from '@app/Services/sendEmailSignUp';
+import { KeyboardService } from '@app/Services/keyboard.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -57,9 +59,17 @@ export class SignUpComponent {
     private emailService: EmailService,
     private dialog: MatDialog,
     private router: Router,
-    private formBuilder: FormBuilder,
+    private formBuilder: FormBuilder,private fb: FormBuilder,    
+    private Keyboardservice: KeyboardService,
     private userService: UserService
-  ) {}
+  ) {this.signUpForm = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
+      password: ['', [Validators.required, this.passwordValidator]],
+      ConfirmPassword: ['', [Validators.required]],
+      role: [{ id: 1, description: 'Customer' }],
+  })}
 
   ngOnInit() {
     this.fullForm(); // Call the function to initialize the form
@@ -120,5 +130,35 @@ export class SignUpComponent {
         });
       }
     );
+  }
+
+  @ViewChild('emailInput') emailInput!: ElementRef;
+  @ViewChild('passwordInput') passwordInput!: ElementRef;
+  @ViewChild('passwordtwoInput') passwordtwoinput!: ElementRef;
+  @ViewChild('fnameInput') fnameInput!: ElementRef;
+  @ViewChild('lnameInput') lnameInput!: ElementRef;
+
+
+
+  ngAfterViewInit() {
+    this.emailInput.nativeElement.addEventListener('focus', () => {
+      this.Keyboardservice.setActiveInput(this.emailInput.nativeElement, this.signUpForm.get('email') as FormControl);
+    });
+
+    this.passwordInput.nativeElement.addEventListener('focus', () => {
+      this.Keyboardservice.setActiveInput(this.passwordInput.nativeElement, this.signUpForm.get('password') as FormControl);
+    });
+
+    this.passwordtwoinput.nativeElement.addEventListener('focus', () => {
+      this.Keyboardservice.setActiveInput(this.passwordtwoinput.nativeElement, this.signUpForm.get('ConfirmPassword') as FormControl);
+    });
+
+    this.fnameInput.nativeElement.addEventListener('focus', () => {
+      this.Keyboardservice.setActiveInput(this.fnameInput.nativeElement, this.signUpForm.get('firstName') as FormControl);
+    });
+
+    this.lnameInput.nativeElement.addEventListener('focus', () => {
+      this.Keyboardservice.setActiveInput(this.lnameInput.nativeElement, this.signUpForm.get('lastName') as FormControl);
+    });
   }
 }

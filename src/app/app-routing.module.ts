@@ -75,6 +75,7 @@ const routes: Routes = [
   { path: 'leads', component: ListLeadsComponent },
   { path: 'Dashboard', component: CustomersDashboardComponent },
   { path: 'propil', component: PropilListComponent },
+  // { path: 'chat', component: ChatComponent },
   {
     path: 'leads',
     component: ListLeadsComponent,

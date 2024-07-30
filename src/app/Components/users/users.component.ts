@@ -19,6 +19,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { SignUpComponent } from '../sign-up/sign-up.component';
 import { Router } from '@angular/router';
 import { AuthService } from '@app/Services/auth.service';
+import { LanguageService } from '@app/Services/language.service';
 
 @Component({
   selector: 'app-users',
@@ -32,7 +33,7 @@ export class UsersComponent implements OnInit {
   loading: boolean = true;
   componentType!: Type<any>;
   roles: RoleCodeUser[] = [];
-  isAdmin: boolean= false;
+  isAdmin: boolean = false;
 
   // @ViewChild('popupContainer', { read: ViewContainerRef }) popupContainer!: ViewContainerRef;
 
@@ -40,28 +41,15 @@ export class UsersComponent implements OnInit {
   popupContainer!: ViewContainerRef;
 
   ngOnInit(): void {
-    this.userService.getAll().subscribe((users) => {
-      console.log('users: ' + users);
-      this.users = users;
-    });
-    this.userService.getAllRoles().subscribe(
-      (roles) => {
-        this.roles = roles;
-        // roles.map(role=> role as RoleCodeUser);
-        // console.log('roles: ' + this.roles + this.roles[0].description);
-        this.loading = false;
-      },
-      (error) => {
-        console.error('Error fetching users:', error);
-        this.loading = false; // לוודא שהטעינה מפסיקה גם במקרה של שגיאה
-      }
-    );
-    const role= this.authService.getRole();
-      if(role===3){
-        console.log("I am admin");
-        this.isAdmin=true;
-      }
+    // this.loadUsersAndRolesAndtranslate();
+    // const role = this.authService.getRole();
+    // if (role != 3) {
+    //   this.isAdmin = true;
+    // }
+    this.languageService.language$.subscribe((lang) => {this.loadUsersAndRolesAndtranslate(); console.log("hi!");
+    })
   }
+
   constructor(
     private userService: UserService,
     private resolver: ComponentFactoryResolver,
@@ -70,31 +58,36 @@ export class UsersComponent implements OnInit {
     private appRef: ApplicationRef,
     private translate: TranslateService,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private languageService: LanguageService
   ) {}
 
   editUser(user: User) {
     this.componentType = EditUserComponent;
-    console.log(`user: ${user} userId: ${user.userId}`);
     this.popUpAddOrEdit(user.userId);
   }
+
   addUser() {
     // this.componentType = SignUpComponent;
     // this.popUpAddOrEdit();
     this.router.navigate(['/sign-up']);
-  } 
+  }
+
   deleteUser(user: User) {
     this.translate
     .get(['userDeleted', 'userUndeleted', 'userUndefind', 'userUnFound'])
     .subscribe((translations) => {
       this.userService.deleteUserById(user.userId!).subscribe(
         (deleted) => {
-          deleted
-            ? Swal.fire({ title: translations['userDeleted'], icon: 'success' })
-            : Swal.fire({
-                title: translations['userUndeleted'],
-                icon: 'error',
-              });
+          if (deleted) {
+            Swal.fire({ title: translations['userDeleted'], icon: 'success' });
+            this.loadUsersAndRolesAndtranslate();
+          } else {
+            Swal.fire({
+              title: translations['userUndeleted'],
+              icon: 'error',
+            });
+          }
         },
         (error) =>
           error.status == 404
@@ -119,14 +112,61 @@ export class UsersComponent implements OnInit {
           if (l != null && l != undefined) componentRef.instance.userId = l;
           // componentRef.instance.setData(l);
           componentRef.instance.dataRefreshed.subscribe(() => {
-            this.refreshData();})
+            this.loadUsersAndRolesAndtranslate();
+          });
           container.appendChild(componentRef.location.nativeElement);
         }
       },
     });
   }
-
-  refreshData() {
-    this.userService.getAll().subscribe((users) => (this.users = users));
+  
+  //D
+  translateAllRoleInUsers(roles: any) {
+    this.users = this.users.map((user) => {
+      if (user.role) {
+        user.role.description = roles[user.role.description] || '';
+      }
+      return user;
+    });
   }
+  //C
+  translateAllRoles() {
+    this.translate
+    .get(this.roles.map((role: RoleCodeUser) => role.description))
+    .subscribe((rolestrans) => {
+      this.roles = this.roles.map(
+        (role1) => (role1.description = rolestrans[role1.description])
+      );
+      this.translateAllRoleInUsers(rolestrans);
+      this.loading = false;
+    });
+  }
+  //B
+  getAllRoles() {
+    this.userService.getAllRoles().subscribe((roles) => {
+      this.roles = roles;
+      console.log('getAllRoles');
+      this.translateAllRoles();
+    });
+  }
+  //A
+  loadUsersAndRolesAndtranslate() {
+    try {
+      this.userService.getAll().subscribe((users) => {
+        this.users = users;
+        this.getAllRoles();
+      });
+    } catch (error) {
+      console.log("something worng in loading: ", error);
+      
+    }
+  }
+
+  // getAllUsers() {
+  //   this.userService.getAll().subscribe((users) => {
+  //     this.users = users;
+  //     console.log('getAllUsers');
+  //   });
+  // }
+  
 }
