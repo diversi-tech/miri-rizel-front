@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, ElementRef, OnInit, signal, ViewChild } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -7,6 +7,7 @@ import {
   Validators,
   FormsModule,
   ReactiveFormsModule,
+  FormBuilder,
 } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/Model/User';
@@ -25,6 +26,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { NgxSpinnerService } from "ngx-spinner";
+import { KeyboardService } from 'src/app/Services/keyboard.service';
+
 
 @Component({
   selector: 'app-login',
@@ -59,8 +62,14 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private active: ActivatedRoute,
-    private translate: TranslateService
-  ) {}
+    private translate: TranslateService,
+    private fb: FormBuilder,
+    private Keyboardservice: KeyboardService
+  ) {   this.logInForm = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', Validators.required]
+  });}
+
 
   hide = signal(true);
 
@@ -184,4 +193,19 @@ export class LoginComponent implements OnInit {
   signUp() {
     this.router.navigate(['../signUp']);
   }
+
+  @ViewChild('emailInput') emailInput!: ElementRef;
+  @ViewChild('passwordInput') passwordInput!: ElementRef;
+
+
+  ngAfterViewInit() {
+    this.emailInput.nativeElement.addEventListener('focus', () => {
+      this.Keyboardservice.setActiveInput(this.emailInput.nativeElement, this.logInForm.get('email') as FormControl);
+    });
+
+    this.passwordInput.nativeElement.addEventListener('focus', () => {
+      this.Keyboardservice.setActiveInput(this.passwordInput.nativeElement, this.logInForm.get('password') as FormControl);
+    });
+  }
+
 }
