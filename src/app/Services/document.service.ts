@@ -19,7 +19,9 @@ export class DocumentService {
   upFile(file: FormData, name: string): Observable<string> {
     console.log(name);
 
-    return this.http.post<string>(`${this.baseUrl}/FileUpload/upload?nameFolder=${name}`, file, { headers: this.headers });
+    return this.http.post(`${this.baseUrl}/FileUpload/upload?nameFolder=${name}`, file, { 
+      headers: this.headers,
+      responseType: 'text' });
   }
   addDocument(document: Document,nameCustomer: string): Observable<boolean> {
     console.log(document);

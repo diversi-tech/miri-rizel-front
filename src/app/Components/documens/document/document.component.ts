@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { NgIf } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-document',
@@ -27,6 +28,7 @@ export class DocumentComponent implements OnInit {
     private formBuilder: FormBuilder,
     private vlidatorsService: ValidatorsService,
     private translate: TranslateService,
+    private spiner:NgxSpinnerService
 
   ) {
 
@@ -91,7 +93,10 @@ export class DocumentComponent implements OnInit {
       const formData = new FormData(); {
         formData.append('file', this.file, title);
       }
-      this.documentService.upFile(formData, this.nameCustomer).subscribe(res => {
+      this.spiner.show();
+      this.documentService.upFile(formData, this.nameCustomer).subscribe(res => {   
+        this.spiner.hide();
+
         this.documentForm.patchValue({
           filePath: res
 
