@@ -40,7 +40,7 @@ jobs:
         uses: actions/upload-pages-artifact@v2
         with:
           # Upload dist repository
-          path: './dist/copy-right/browser'
+          path: './dist/copy-right'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
