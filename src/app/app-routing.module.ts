@@ -66,7 +66,7 @@ const routes: Routes = [
   { path: 'signUp', component: SignUpComponent },
   { path: 'home', component: HomePageComponent },
   { path: 'customer-profile', component: CustomerProfileComponent },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '',component: LoginComponent  },
   { path: 'add-task', component: AddTaskComponent },
   { path: 'add-task/:id', component: AddTaskComponent },
   { path: 'addLead', component: AddLeadComponent },
