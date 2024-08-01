@@ -42,7 +42,7 @@ export class NavComponent implements OnInit {
     private languageService: LanguageService,
     private authService: AuthService,
     private route: Router,
-       private generalService: GeneralService,
+    private generalService: GeneralService,
     private userService: UserService,
     @Inject(WINDOW) private window: Window 
   ) {
@@ -115,7 +115,6 @@ export class NavComponent implements OnInit {
     else{
       Swal.fire("אינך מחובר למערכת!");
     }
-    
   }
 
   logOut() {
