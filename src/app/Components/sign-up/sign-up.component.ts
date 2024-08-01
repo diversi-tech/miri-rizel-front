@@ -23,6 +23,7 @@ import { SharedModule } from 'primeng/api';
 import { InputTextModule } from 'primeng/inputtext';
 import { EmailService } from '@app/Services/sendEmailSignUp';
 import { KeyboardService } from '@app/Services/keyboard.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-sign-up',
@@ -59,17 +60,20 @@ export class SignUpComponent {
     private emailService: EmailService,
     private dialog: MatDialog,
     private router: Router,
-    private formBuilder: FormBuilder,private fb: FormBuilder,    
+    private formBuilder: FormBuilder, private fb: FormBuilder,
     private Keyboardservice: KeyboardService,
-    private userService: UserService
-  ) {this.signUpForm = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
+    private userService: UserService,
+    private spiner: NgxSpinnerService,
+  ) {
+    this.signUpForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       password: ['', [Validators.required, this.passwordValidator]],
       ConfirmPassword: ['', [Validators.required]],
       role: [{ id: 1, description: 'Customer' }],
-  })}
+    })
+  }
 
   ngOnInit() {
     this.fullForm(); // Call the function to initialize the form
@@ -105,20 +109,20 @@ export class SignUpComponent {
   }
 
   async toEnter() {
-    console.log('enter');
     this.submitted = true;
     if (this.signUpForm.invalid) {
       return;
     }
-    console.log('seccsus');
+    this.spiner.show();
     this.userService.addUser(this.signUpForm.value).subscribe(
       () => {
-        console.log('User added');
+       
         this.emailService
-        .sendEmailSignUp(this.signUpForm.value)
-        .subscribe(() => {
-          this.router.navigate(['../login']);
-        });
+          .sendEmailSignUp(this.signUpForm.value)
+          .subscribe(() => {
+            this.spiner.hide();
+            this.router.navigate(['../login']);
+          });
       },
       (error) => {
         this.dialog.open(DialogComponent, {
