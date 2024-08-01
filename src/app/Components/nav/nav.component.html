@@ -4,25 +4,25 @@
             <i class="pi pi-user" style="font-size: 1.5rem"></i>
         </div>
         <mat-menu #profileMenu="matMenu">
-            <div class="profile-info">
-                <div class="user-details">
+            <!-- <div class="profile-info"> -->
+                <!-- <div class="user-details">
                     <span class="user-name"></span>Feigi
                     <span class="user-email">Feigi&#64;gmail.com</span>
                 </div>
-                <img src="../../../assets/images/profile.png" alt="Profile Picture" class="profile-picture">
-            </div>
-            <button mat-menu-item (click)="goLogIn()">
+                <img src="assets/images/profile.png" alt="Profile Picture" class="profile-picture"> -->
+            <!-- </div> -->
+            <!-- <button mat-menu-item (click)="editUser()">
                 <span>Edit Profile</span>
                 <mat-icon>edit</mat-icon>
-            </button>
+            </button> -->
             <button mat-menu-item (click)="logOut()">
                 <mat-icon>logout</mat-icon>
                 <span>Sign Out</span>
             </button>
         </mat-menu>
 
-        <button class="create-design-btn log-in-btn" (click)="goLogIn()">התחברות</button>
-        <button class="create-design-btn sign-up-btn" (click)="goSignUp()">הרשמה</button>
+        <button class="create-design-btn log-in-btn" routerLink="/login" >התחברות</button>
+        <button class="create-design-btn sign-up-btn" routerLink="/sign-up">הרשמה</button>
 
         <i class="nav-icon pi pi-language language-btn" (click)="switchLanguage()"
             [title]="'switchLanguage'|translate"></i>
@@ -34,7 +34,7 @@
     </div>
     <div class="nav-right">
         <div class="logo">
-            <img src="../../../assets/images/logo.jpeg" title="Copy Right" (click)="goHome()">
+            <img src="assets/images/logo.jpeg" title="Copy Right" routerLink="/home">
         </div>
     </div>
 </nav>

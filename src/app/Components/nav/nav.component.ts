@@ -78,16 +78,9 @@ export class NavComponent implements OnInit {
     console.log('Update details clicked')
   }
 
-  goHome() {
-    this.route.navigate(['./home']);
-  }
-
-  goLogIn() {
-    this.route.navigate(['./login']);
-  }
-
-  goSignUp() {
-    this.route.navigate(['./sign-up']);
+  editUser()
+  {
+    this.route.navigate(['/edit-user'])
   }
 
   logOut() {
