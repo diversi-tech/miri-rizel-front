@@ -68,6 +68,7 @@
   "Cancle": "Cancle",
   "Approve": "Approve",
   "Close": "Close",
+  "addCustomerSuccess":"The Customer added succses",
   "LoginWithGoogle": "Login with Google",
   "ResetPasswordTitle": "Reset Password",
   "PasswordAuthentication": "Password Authentication",
