@@ -89,7 +89,7 @@ export class EditLeadComponent implements OnInit {
       const selectedDate = new Date(control.value);
       const today = new Date();
       today.setHours(0, 0, 0, 0);
-      return selectedDate > today ? null : { notFutureDate: true };
+      return selectedDate >= today ? null : { notFutureDate: true };
     };
   }
 
