@@ -1,1 +1,172 @@
-<p>add-customer works!</p>
+<form
+  class="addCustomer"
+  id="addCustomer"
+  [formGroup]="customerForm"
+  (ngSubmit)="addCustomerSubmit()"
+  [style]="this.styles"
+>
+  <h1>{{ this.titlePage | translate }}</h1>
+  <div class="line"></div>
+  <label for="firstName">{{ "firstName" | translate }}</label>
+  <input
+    type="text"
+    formControlName="firstName"
+    pInputText
+    class="input-field"
+  />
+  <div
+    class="error-message"
+    *ngIf="submitted1 && customerForm.controls['firstName'].errors"
+  >
+    <span *ngIf="customerForm.controls['firstName'].errors['required']">
+      {{ "RequiredField" | translate }}
+    </span>
+    <span *ngIf="customerForm.controls['firstName'].errors['invalidName']">{{
+      "shortName" | translate
+    }}</span>
+  </div>
+
+  <label for="lastName">{{ "lastName" | translate }} </label>
+  <input
+    id="lastName"
+    type="text"
+    formControlName="lastName"
+    pInputText
+    class="input-field"
+  />
+  <div
+    class="error-message"
+    *ngIf="submitted1 && customerForm.controls['lastName'].errors"
+  >
+    <span *ngIf="customerForm.controls['lastName'].errors['required']">
+      {{ "RequiredField" | translate }}
+    </span>
+    <span *ngIf="customerForm.controls['lastName'].errors['invalidName']">{{
+      "shortLast" | translate
+    }}</span>
+  </div>
+
+  <div class="form-group">
+    <label for="phone">{{ "phone" | translate }}</label>
+    <input
+      type="text"
+      id="phone"
+      formControlName="phone"
+      pInputText
+      class="input-field"
+    />
+    <div
+      class="error-message"
+      *ngIf="submitted1 && customerForm.controls['phone'].errors"
+    >
+      <span *ngIf="customerForm.controls['phone'].errors['required']">
+        {{ "RequiredField" | translate }}
+      </span>
+      <span *ngIf="customerForm.controls['phone'].errors['phone']"
+        >פלאפון לא תקין</span
+      >
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="email"> {{ "email" | translate }}</label>
+    <input
+      type="email"
+      formControlName="email"
+      pInputText
+      class="input-field"
+    />
+    <div
+      class="error-message"
+      *ngIf="submitted1 && customerForm.controls['email'].errors"
+    >
+      <span *ngIf="customerForm.controls['email'].errors['required']">
+        {{ "RequiredField" | translate }}
+      </span>
+      <span *ngIf="customerForm.controls['email'].errors['email']">
+        {{ "InvalidEmailError" | translate }}
+      </span>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="businessName"> {{ "businessName" | translate }}</label>
+    <input
+      type="text"
+      formControlName="businessName"
+      pInputText
+      class="input-field"
+    />
+    <div
+      class="error-message"
+      *ngIf="submitted1 && customerForm.controls['businessName'].errors"
+    >
+      <span *ngIf="customerForm.controls['businessName'].errors['required']">
+        {{ "RequiredField" | translate }}
+      </span>
+      <span
+        *ngIf="customerForm.controls['businessName'].errors['invalidName']"
+        >{{ "shortName" | translate }}</span
+      >
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="source">{{ "source" | translate }}</label>
+    <input
+      type="text"
+      formControlName="source"
+      pInputText
+      class="input-field"
+    />
+    <div
+      class="error-message"
+      *ngIf="submitted1 && customerForm.controls['source'].errors"
+    >
+      <span *ngIf="customerForm.controls['source'].errors['required']">
+        {{ "RequiredField" | translate }}
+      </span>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="status">{{ "status" | translate }}</label>
+    <p-dropdown
+      id="status"
+      formControlName="status"
+      [options]="statusCodeUser"
+      optionLabel="description"
+      [placeholder]="'StatusInputSelect' | translate"
+      class="select-field"
+    ></p-dropdown>
+    <div
+      class="error-message"
+      *ngIf="submitted1 && customerForm.controls['status'].errors"
+    >
+      <span *ngIf="customerForm.controls['status'].errors['required']">
+        {{ "RequiredField" | translate }}</span
+      >
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="createdDate">{{ "date" | translate }}</label>
+    <p-calendar
+      id="date"
+      type="date"
+      formControlName="createdDate"
+      placeholder="mm/dd/yyyy"
+      class="input-field"
+    ></p-calendar>
+    <div
+      class="error-message"
+      *ngIf="submitted1 && customerForm.controls['createdDate'].errors"
+    >
+      <span *ngIf="customerForm.controls['createdDate'].errors['required']">
+        {{ "RequiredField" | translate }}
+      </span>
+      <span
+        *ngIf="customerForm.controls['createdDate'].errors['notFutureDate']"
+      >
+        {{ "DueDateError" | translate }}</span
+      >
+    </div>
+  </div>
+  <button type="submit" class="submit">{{ "Approve" | translate }}</button>
+</form>
