@@ -50,7 +50,8 @@ export class NavComponent implements OnInit {
         this.links.push(
           { path: '/task', label: 'Tasks' },
           { path: '/leads', label: 'Leads' },
-          { path: '/customer', label: 'Customers' }
+          { path: '/customer', label: 'Customers' },
+          { path: '/home', label: 'HomePage' }
         )
       }
       if (role == 3) {
@@ -59,10 +60,10 @@ export class NavComponent implements OnInit {
           { path: '/project', label: 'Projects' },
           { path: '/leads', label: 'Leads' },
           { path: '/customer', label: 'Customers' },
-          { path: '/users', label: 'Users' }
+          { path: '/users', label: 'Users' },
+          { path: '/home', label: 'HomePage' }
         )
       }
-      this.links.push({ path: '/home', label: 'HomePage' })
     }
   }
 

@@ -1,7 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
 import { environment } from 'src/enviroments/environment';
 import Swal from 'sweetalert2';
-import { TaskService } from './task.service';
+import { TaskService } from '@app/Services/task.service';
 
 declare var gapi: any;
 declare var google: any;

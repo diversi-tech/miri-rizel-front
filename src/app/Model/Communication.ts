@@ -1,4 +1,4 @@
-import { RelatedToProject } from "./RelatedToCode";
+import { RelatedToProject } from "@app/Model/RelatedToCode";
 
 export interface Communication {
     communicationId?: Number;

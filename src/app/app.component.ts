@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { NavComponent } from './Components/nav/nav.component';
+import { NavComponent } from '@app/Components/nav/nav.component';
 import { NgxSpinnerService } from "ngx-spinner";
 import { NgxSpinnerModule } from "ngx-spinner";
-import { AccessibilityComponent } from "./Components/accessibility/accessibility.component";
-import { CustomersDashboardComponent } from './Components/customers-dashboard/customers-dashboard.component';
-import { AuthService } from './Services/auth.service';
+import { AccessibilityComponent } from "@app/Components/accessibility/accessibility.component";
+import { CustomersDashboardComponent } from '@app/Components/customers-dashboard/customers-dashboard.component';
+import { AuthService } from '@app/Services/auth.service';
 import { NgIf } from '@angular/common';
 
 @Component({

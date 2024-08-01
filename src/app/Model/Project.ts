@@ -1,6 +1,6 @@
-import { Customer } from './Customer';
-import { StatusCodeProject } from './StatusCodeProject';
-import { User } from './User';
+import { Customer } from '@app/Model/Customer';
+import { StatusCodeProject } from '@app/Model/StatusCodeProject';
+import { User } from '@app/Model/User';
 
 export interface Project {
   projectId: number;
