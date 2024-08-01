@@ -108,7 +108,8 @@ export class LoginComponent implements OnInit {
             }
       },
       (error) => {
-        if (error.status == 500) {
+        if (error.status == 404) {
+          this.spinner.hide()
           Swal.fire({
             text: 'Email not found',
             icon: 'error',
@@ -119,9 +120,30 @@ export class LoginComponent implements OnInit {
           }).then((res) => {
             this.spinner.hide()
           });
-        } else {
-          this.spinner.hide()
+        } else if (error.status == 400) {
           this.passwordCheck = true;
+          this.spinner.hide()
+          // Swal.fire({
+          //   text: 'error password',
+          //   icon: 'error',
+          //   showCancelButton: false,
+          //   showCloseButton: true,
+          //   confirmButtonColor: '#d33',
+          //   confirmButtonText: 'Close',
+          // }).then((res) => {
+          //   this.spinner.hide()
+          // });
+        }
+        else {
+          this.spinner.hide()
+          Swal.fire({
+            text: 'error',
+            icon: 'error',
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Close',
+          })
         }
       }
     
