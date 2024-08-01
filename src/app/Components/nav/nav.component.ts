@@ -1,36 +1,39 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { Router, RouterLink } from '@angular/router';
 import { LanguageService } from '@app/Services/language.service';
-import { NgIf,NgFor } from '@angular/common';
+import { NgIf, NgFor } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '@app/Services/auth.service';
 import { UserService } from '@app/Services/user.service';
 import { MatIconModule } from '@angular/material/icon';
+import { WINDOW } from '@app/Services/window.token';
 
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css'],
   standalone: true,
-  imports: [NgFor,MatIconModule,RouterLink, TranslateModule,NgIf, MatMenuModule,MatButtonModule],
+  imports: [NgFor, MatIconModule, RouterLink, TranslateModule, NgIf, MatMenuModule, MatButtonModule],
 })
 export class NavComponent implements OnInit {
-  
-  ngOnInit() {
-    this.updateLinks()
-  }
 
-  constructor(public translate: TranslateService,
+  constructor(
+    public translate: TranslateService,
     private languageService: LanguageService,
     private authService: AuthService,
     private route: Router,
-    private userService: UserService
+    private userService: UserService,
+    @Inject(WINDOW) private window: Window 
   ) {
     this.currentLanguage = 'he';
     this.translate.use(this.currentLanguage);
     this.languageService.setLanguage(this.currentLanguage);
+  }
+
+  ngOnInit() {
+    this.updateLinks();
   }
 
   links: { path: string, label: string }[] = [];
@@ -52,7 +55,7 @@ export class NavComponent implements OnInit {
           { path: '/project', label: 'Projects' },
           { path: '/customer', label: 'Customers' },
           { path: '/home', label: 'HomePage' }
-        )
+        );
       }
       if (role == 3) {
         this.links.push(
@@ -62,7 +65,7 @@ export class NavComponent implements OnInit {
           { path: '/customer', label: 'Customers' },
           { path: '/users', label: 'Users' },
           { path: '/home', label: 'HomePage' }
-        )
+        );
       }
     }
   }
@@ -74,19 +77,17 @@ export class NavComponent implements OnInit {
     this.languageService.setLanguage(this.currentLanguage);
   }
 
-
   updateDetails(): void {
-    console.log('Update details clicked')
+    console.log('Update details clicked');
   }
 
-  editUser()
-  {
-    this.route.navigate(['/edit-user'])
+  editUser() {
+    this.route.navigate(['/edit-user']);
   }
 
   logOut() {
-    this.userService.signOut()
-    this.updateLinks()
-    this.route.navigate(['/login'])
+    this.userService.signOut();
+    this.updateLinks();
+    this.window.location.href = '/login'; 
   }
 }
