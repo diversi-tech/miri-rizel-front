@@ -127,10 +127,16 @@ import {
   bootstrapApplication,
 } from '@angular/platform-browser';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
+
+
 import { authInterceptor } from '@app/Interceptors/auth.interceptor';
 
 bootstrapApplication(AppComponent, {
-  providers: [
+    providers: [
+        JwtHelperService, // הוסף את JwtHelperService כ-Provider
+        { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+       
     importProvidersFrom(
       TranslateModule.forRoot({
         loader: {

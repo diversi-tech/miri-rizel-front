@@ -68,6 +68,7 @@
   "Cancle": "Cancle",
   "Approve": "Approve",
   "Close": "Close",
+  "addCustomerSuccess":"The Customer added succses",
   "LoginWithGoogle": "Login with Google",
   "ResetPasswordTitle": "Reset Password",
   "PasswordAuthentication": "Password Authentication",
@@ -203,5 +204,6 @@
   "newDoc": "new document",
   "chooseMatchOption": "chooseMatchOption",
   "titleExport": "titleExport",
-  "TasksToSubmitToday": "Tasks to submit today"
+  "TasksToSubmitToday": "Tasks to submit today",
+  "403":"It seems you are not authorized"
 }

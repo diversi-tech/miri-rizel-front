@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnInit,Inject, ViewChild, ViewContainerRef } from '@angular/core';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { Router, RouterLink } from '@angular/router';
 import { LanguageService } from '@app/Services/language.service';
@@ -12,6 +12,7 @@ import { GeneralService } from '@app/Services/general.service';
 import { EditUserComponent } from '../edit-user/edit-user.component';
 import Swal from 'sweetalert2';
 
+import { WINDOW } from '@app/Services/window.token';
 
 @Component({
   selector: 'app-nav',
@@ -41,13 +42,15 @@ export class NavComponent implements OnInit {
     private languageService: LanguageService,
     private authService: AuthService,
     private route: Router,
+       private generalService: GeneralService,
     private userService: UserService,
-    private generalService: GeneralService
+    @Inject(WINDOW) private window: Window 
   ) {
     this.currentLanguage = 'he';
     this.translate.use(this.currentLanguage);
     this.languageService.setLanguage(this.currentLanguage);
   }
+
 
   links: { path: string; label: string }[] = [];
   currentLanguage: string = '';
@@ -65,10 +68,11 @@ export class NavComponent implements OnInit {
       if (role === 2) {
         this.links.push(
           { path: '/task', label: 'Tasks' },
-          { path: '/leads', label: 'Leads' },
+          { path: '/project', label: 'Projects' },
           { path: '/customer', label: 'Customers' },
           { path: '/home', label: 'HomePage' }
         );
+        
       }
       if (role == 3) {
         this.links.push(
@@ -79,6 +83,7 @@ export class NavComponent implements OnInit {
           { path: '/users', label: 'Users' },
           { path: '/home', label: 'HomePage' }
         );
+        
       }
     }
   }
@@ -116,6 +121,6 @@ export class NavComponent implements OnInit {
   logOut() {
     this.userService.signOut();
     this.updateLinks();
-    window.location.href = '/login';
+    this.window.location.href = '/login'; 
   }
 }

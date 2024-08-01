@@ -99,7 +99,7 @@ export class CustomersComponent implements OnInit {
 
   get formControls() { return this.customerForm.controls; }
 
-  openEditCustomerPopup(title: string, formId: string) {
+  editOrAddCustomerPopup(title: string, formId: string) {
     const formElement = document.getElementById(formId);
     this.titlePage = title
     if (formElement) {
@@ -126,7 +126,7 @@ export class CustomersComponent implements OnInit {
   }
 
   addCustomer() {
-    this.openEditCustomerPopup("AddCustomerTitle", "addCustomer");
+    this.editOrAddCustomerPopup("AddCustomerTitle", "addCustomer");
   }
 
   addCustomerSubmit() {
@@ -156,7 +156,7 @@ export class CustomersComponent implements OnInit {
       const status = res1.status as StatusCodeUser
       res1.status = status
       this.customerForm.setValue(res1);
-      this.openEditCustomerPopup("EditCustomerTitle", "editCustomer");
+      this.editOrAddCustomerPopup("EditCustomerTitle", "editCustomer");
     });
   }
 
@@ -206,7 +206,7 @@ export class CustomersComponent implements OnInit {
       const selectedDate = new Date(control.value);
       const today = new Date();
       today.setHours(0, 0, 0, 0);
-      return selectedDate > today ? null : { notFutureDate: true };
+      return selectedDate >= today ? null : { notFutureDate: true };
     };
   }
 

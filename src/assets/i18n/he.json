@@ -20,6 +20,7 @@
   "descriptionDocument": "תאור מסמך",
   "phone": "פלאפון",
   "email": "אימייל",
+  "addCustomerSuccess":"הלקוח נוסף בהצלחה",
   "lastName": "שם משפחה",
   "firstName": "שם פרטי",
   "source": "מקור",
@@ -212,5 +213,7 @@
   "titleExport": "XSL ייצוא נתוני טבלה זו ל",
   "upLoadFile": "הקובץ הועלה בהצלחה",
   "DropFiles": "גרור ושחרר קבצים לכאן כדי להעלות",
-  "TasksToSubmitToday": "משימות להגשה היום"
+  "TasksToSubmitToday": "משימות להגשה היום",
+  "403":"נראה שאינך מורשה"
+
 }
