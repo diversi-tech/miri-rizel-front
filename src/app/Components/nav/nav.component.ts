@@ -49,7 +49,7 @@ export class NavComponent implements OnInit {
       if (role === 2) {
         this.links.push(
           { path: '/task', label: 'Tasks' },
-          { path: '/leads', label: 'Leads' },
+          { path: '/project', label: 'Projects' },
           { path: '/customer', label: 'Customers' },
           { path: '/home', label: 'HomePage' }
         )
@@ -87,6 +87,6 @@ export class NavComponent implements OnInit {
   logOut() {
     this.userService.signOut()
     this.updateLinks()
-    window.location.href='/login'
+    this.route.navigate(['/login'])
   }
 }
