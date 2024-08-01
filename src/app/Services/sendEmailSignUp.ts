@@ -8,7 +8,7 @@ import { User } from '@app/Model/User';
   providedIn: 'root',
 })
 export class EmailService {
-  private apiUrl = `${environment.apiUrl}SendEmail/`;
+  private apiUrl = `${environment.apiUrl}SendEmail`;
 
 
   constructor(private http: HttpClient) { }
