@@ -1,7 +1,7 @@
-import { Priority } from './Priority';
-import { Project } from './Project';
-import { StatusCodeProject } from './StatusCodeProject';
-import { User } from './User';
+import { Priority } from '@app/Model/Priority';
+import { Project } from '@app/Model/Project';
+import { StatusCodeProject } from '@app/Model/StatusCodeProject';
+import { User } from '@app/Model/User';
 
 export interface Task {
   taskId?: number;
