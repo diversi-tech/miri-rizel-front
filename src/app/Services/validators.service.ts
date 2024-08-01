@@ -38,7 +38,7 @@ export class ValidatorsService {
       const today = new Date();
       const inputDate = new Date(date);
       // משווה את התאריך עם היום הנוכחי
-      return inputDate > today;
+      return inputDate >= today;
     };
   }
 
