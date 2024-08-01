@@ -114,11 +114,14 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from '@abacritt/angularx-social-login';
 import { provideClientHydration, BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 
 
 
 bootstrapApplication(AppComponent, {
     providers: [
+        JwtHelperService, // הוסף את JwtHelperService כ-Provider
+        { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
         importProvidersFrom(TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -150,7 +153,7 @@ bootstrapApplication(AppComponent, {
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClient(withInterceptorsFromDi()),
         provideAnimations(),
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(withInterceptorsFromDi()),        
     ]
 })
   .catch(err => console.error(err));

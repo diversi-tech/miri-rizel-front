@@ -30,6 +30,10 @@ import { error404Component } from '@app/Components/errors/error-404.component';
 import { UploadFilseComponent } from '@app/Components/upload-filse/upload-filse.component';
 import { UsersComponent } from '@app/Components/users/users.component';
 import { CustomersDashboardComponent } from '@app/Components/customers-dashboard/customers-dashboard.component';
+import { NoAuthGuard } from './Guard/noAuth.guard';
+import { error403Component } from './Components/errors/error-403.component';
+import { RoleBasedGuard } from './Guard/role-based.guard';
+import { PlaceholderComponent } from './Components/Placeholder/Placeholder.component';
 const routes: Routes = [
   // 1=customer, 2=worker, 3=admin
   // { path: 'worker', component: WorkerComponentComponent, canActivate: [AuthGuard], data: { roles: [3] } },
@@ -48,13 +52,22 @@ const routes: Routes = [
   // { path: 'editLead', component: EditLeadComponent ,canActivate: [AuthGuard], data: { roles: [3] }},
   // { path: 'leads', component: ListLeadsComponent ,canActivate: [AuthGuard], data: { roles: [3] }},
   // { path: 'propil', component: PropilListComponent ,canActivate: [AuthGuard], data: { roles: [3] }},
-  { path: 'home', component: HomePageComponent ,canActivate: [AuthGuard], data: { roles: [3,2] }},
-  { path: 'Dashboard', component: CustomersDashboardComponent,canActivate: [AuthGuard], data: { roles: [1,2,3] } },
+   {path: '', pathMatch : 'full', redirectTo: 'redirect'},
+   { path: 'login', component: LoginComponent },
+   { path: 'home', component: HomePageComponent, canActivate: [AuthGuard], data: { roles: [2, 3] } },
+   { path: 'redirect', canActivate: [RoleBasedGuard], component: PlaceholderComponent }, // placeholder component
+
+  // { path: '', component: LoginComponent,canActivate: [NoAuthGuard] },
+  // { path: '', component: HomePageComponent ,canActivate: [AuthGuard] },
+
+  // { path: 'home', component: HomePageComponent ,canActivate: [AuthGuard], data: { roles: [3,2] }},
+    // { path: ' ',redirectTo: 'login' },
+{ path: 'Dashboard', component: CustomersDashboardComponent,canActivate: [AuthGuard], data: { roles: [1,2,3] } },
   { path: 'customer', component: CustomersComponent },
   { path: 'worker', component: WorkerComponentComponent },
   {path: 'users', component : UsersComponent},
   { path: 'admin', component: AdminComponent },
-  { path: 'login', component: LoginComponent },
+  // { path: 'login', component: LoginComponent },
   { path: 'edit', component: EditUserComponent },
   { path: 'add', component: AddUserComponent },
   { path: 'sign-up', component: SignUpComponent },
@@ -64,9 +77,9 @@ const routes: Routes = [
   { path: 'project', component: ProjectTableComponent },
   { path: 'projectTable', component: ProjectTableComponent },
   { path: 'signUp', component: SignUpComponent },
-  { path: 'home', component: HomePageComponent },
+  // { path: 'home', component: HomePageComponent },
   { path: 'customer-profile', component: CustomerProfileComponent },
-  { path: '',component: LoginComponent  },
+  // { path: '',component: LoginComponent  },
   { path: 'add-task', component: AddTaskComponent },
   { path: 'add-task/:id', component: AddTaskComponent },
   { path: 'addLead', component: AddLeadComponent },
@@ -87,6 +100,7 @@ const routes: Routes = [
     canActivate: [AuthCodeGuard],
   },
   { path: '404-not-found', pathMatch: 'full',  component:error404Component },
+  { path: '403-Forbidden', pathMatch: 'full',  component:error403Component },
   { path: '**', redirectTo: '404-not-found' },
   { path: 'home/:role', component: HomePageComponent }
 ];

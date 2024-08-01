@@ -99,13 +99,15 @@ export class LoginComponent implements OnInit {
         console.log(user.role);
            
         this.spinner.hide();
-            if (user.user.role.id == 1) {
-              this.router.navigate(['/Dashboard'], { relativeTo: this.active });
-              console.log(user.user.role,"user.role");             
-            }
-            else{
-              this.router.navigate(['/home'], { relativeTo: this.active });
-            }
+            // if (user.user.role.id == 1) {
+            //   this.router.navigate(['/Dashboard'], { relativeTo: this.active });
+            //   console.log(user.user.role,"user.role");             
+            // }
+            // else{
+            //   this.router.navigate(['/home'], { relativeTo: this.active });
+            // }
+            this.router.navigate(['/redirect']);
+
       },
       (error) => {
         if (error.status == 500) {
