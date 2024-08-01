@@ -10,13 +10,13 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { User } from '@app/Model/User';
-import { GenericBourdComponent } from '../generic-bourd/generic-bourd.component';
+import { GenericBourdComponent } from '@app/Components/generic-bourd/generic-bourd.component';
 import { UserService } from '@app/Services/user.service';
 import Swal from 'sweetalert2';
-import { EditUserComponent } from '../edit-user/edit-user.component';
+import { EditUserComponent } from '@app/Components/edit-user/edit-user.component';
 import { RoleCodeUser } from '@app/Model/RoleCodeUser';
 import { TranslateService } from '@ngx-translate/core';
-import { SignUpComponent } from '../sign-up/sign-up.component';
+import { SignUpComponent } from '@app/Components/sign-up/sign-up.component';
 import { Router } from '@angular/router';
 import { AuthService } from '@app/Services/auth.service';
 import { LanguageService } from '@app/Services/language.service';

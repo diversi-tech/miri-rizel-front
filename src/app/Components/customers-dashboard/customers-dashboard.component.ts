@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UploadFilseComponent } from '../upload-filse/upload-filse.component';
+import { UploadFilseComponent } from '@app/Components/upload-filse/upload-filse.component';
 import { NgFor, NgIf } from '@angular/common';
 import { AuthService } from '@app/Services/auth.service';
 import { User } from '@app/Model/User';

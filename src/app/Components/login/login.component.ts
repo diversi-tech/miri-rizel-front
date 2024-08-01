@@ -11,13 +11,13 @@ import {
 } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/Model/User';
-import { ResetPasswordService } from '../../Services/reset-password.service';
+import { ResetPasswordService } from '@app/Services/reset-password.service';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../dialog/dialog.component';
+import { DialogComponent } from '@app/Components/dialog/dialog.component';
 import { UserService } from 'src/app/Services/user.service';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import Swal from 'sweetalert2';
-import { GoogleComponent } from '../google/google.component';
+import { GoogleComponent } from '@app/Components/google/google.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';

@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Task } from '../Model/Task';
+import { Task } from '@app/Model/Task';
 import {  catchError, of, switchMap, throwError } from 'rxjs';
 import { environment } from 'src/enviroments/environment';
 

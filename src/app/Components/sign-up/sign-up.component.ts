@@ -9,13 +9,13 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '@app/Services/user.service';
-import { GoogleComponent } from '../google/google.component';
+import { GoogleComponent } from '@app/Components/google/google.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgIf } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { DropdownModule } from 'primeng/dropdown';
-import { DialogComponent } from '../dialog/dialog.component';
+import { DialogComponent } from '@app/Components/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { CalendarModule } from 'primeng/calendar';
 import { AutoCompleteModule } from 'primeng/autocomplete';

@@ -13,7 +13,7 @@ import {
   FormsModule,
 } from '@angular/forms';
 import { User } from 'src/app/Model/User';
-import { EditUserService } from '../../Services/edit-user.service';
+import { EditUserService } from '@app/Services/edit-user.service';
 import { NgIf } from '@angular/common';
 import { UserService } from '@app/Services/user.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -28,7 +28,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import Swal from 'sweetalert2';
 import { LanguageService } from '@app/Services/language.service';
 import { AuthService } from '@app/Services/auth.service';
-import { GenericBourdComponent } from '../generic-bourd/generic-bourd.component';
+import { GenericBourdComponent } from '@app/Components/generic-bourd/generic-bourd.component';
 
 @Component({
   selector: 'app-edit-user',

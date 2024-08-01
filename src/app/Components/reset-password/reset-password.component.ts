@@ -3,7 +3,7 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators, 
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/Services/user.service';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../dialog/dialog.component';
+import { DialogComponent } from '@app/Components/dialog/dialog.component';
 import Swal from 'sweetalert2';
 import { ResetPasswordService } from '@app/Services/reset-password.service';
 import { TranslateModule } from '@ngx-translate/core';

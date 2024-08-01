@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, of, switchMap, tap, throwError } from 'rxjs';
-import { User } from '../Model/User';
+import { User } from '@app/Model/User';
 import { environment } from 'src/enviroments/environment';
 import * as CryptoJS from 'crypto-js';
 import { RoleCodeUser } from '@app/Model/RoleCodeUser';
@@ -169,5 +169,11 @@ export class UserService {
 
   getAllRoles(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}roles`, { headers: this.headers });
+  }
+
+  signOut() {
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    localStorage.removeItem('authData');
   }
 }

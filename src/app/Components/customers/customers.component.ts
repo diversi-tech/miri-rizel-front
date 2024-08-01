@@ -6,14 +6,14 @@ import { Customer } from 'src/app/Model/Customer';
 import { CustomersService } from 'src/app/Services/customers.service';
 import { ValidatorsService } from 'src/app/Services/validators.service';
 import { Router } from '@angular/router';
-import { ChatComponent } from '../chat/chat.component';
+import { ChatComponent } from '@app/Components/chat/chat.component';
 import { Lead } from '@app/Model/Lead';
-import { GenericBourdComponent } from '../generic-bourd/generic-bourd.component';
+import { GenericBourdComponent } from '@app/Components/generic-bourd/generic-bourd.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { DocumentComponent } from '../documens/document/document.component';
+import { DocumentComponent } from '@app/Components/documens/document/document.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from '@app/Services/language.service';
 
@@ -22,8 +22,8 @@ import { LanguageService } from '@app/Services/language.service';
   templateUrl: './customers.component.html',
   styleUrls: ['./customers.component.css'],
   standalone: true,
-  imports: [ CommonModule,GenericBourdComponent,FormsModule, DropdownModule, CalendarModule, ReactiveFormsModule, InputTextModule, NgIf, NgFor,TranslateModule
-    
+  imports: [CommonModule, GenericBourdComponent, FormsModule, DropdownModule, CalendarModule, ReactiveFormsModule, InputTextModule, NgIf, NgFor, TranslateModule
+
   ]
 })
 export class CustomersComponent implements OnInit {
@@ -55,34 +55,34 @@ export class CustomersComponent implements OnInit {
       customerId: [0],
       firstName: ['', [Validators.required, this.customNameValidator()]],
       lastName: ['', [Validators.required, this.customNameValidator()]],
-      phone: ['', [Validators.required,this.customPhoneValidator()]],
+      phone: ['', [Validators.required, this.customPhoneValidator()]],
       email: ['', [Validators.required, Validators.email]],
       businessName: ['', [Validators.required]],
       source: ['', [Validators.required]],
       status: ['', [Validators.required]],
-      createdDate: ['', [Validators.required,this.futureDateValidator()]],
+      createdDate: ['', [Validators.required, this.futureDateValidator()]],
     });
 
     this.loadCustomers();
     this.loadStatusUsers();
 
     this.languageService.language$.subscribe(lang => {
-     
+
       if (lang === 'he') {
         this.styles['text-align'] = 'right';
         this.styles['direction'] = 'rtl';
-        
+
       } else {
         this.styles['text-align'] = 'left';
         this.styles['direction'] = 'ltr';
-      
+
       }
-      })
+    })
   }
 
   private loadCustomers(): void {
     this.customerService.GetAllCustomers().subscribe(res => {
-     res= res.filter(cutomer=>cutomer.status.id!==2)
+      res = res.filter(cutomer => cutomer.status.id !== 2)
       this.customers = res;
       this.loading = false;
     });
@@ -101,7 +101,7 @@ export class CustomersComponent implements OnInit {
 
   openEditCustomerPopup(title: string, formId: string) {
     const formElement = document.getElementById(formId);
-    this.titlePage=title
+    this.titlePage = title
     if (formElement) {
       this.originalParent = formElement.parentElement;
       Swal.fire({
@@ -135,7 +135,7 @@ export class CustomersComponent implements OnInit {
       return;
     }
     this.newCustomer = this.customerForm.value;
-    this.selectedStatus=this.customerForm.value.status as StatusCodeUser
+    this.selectedStatus = this.customerForm.value.status as StatusCodeUser
     this.newCustomer.status = this.selectedStatus;
     this.newCustomer.customerId = 0;
     this.newCustomer.customerId = 0;
@@ -174,15 +174,15 @@ export class CustomersComponent implements OnInit {
   }
 
   deleteCustomer(customer: Customer) {
-    customer.status.description='Inactive';
-    customer.status.id=2;
-  
-    
+    customer.status.description = 'Inactive';
+    customer.status.id = 2;
+
+
 
     this.customerService.DeleteCustomer(customer).subscribe(() => {
       this.loadCustomers();
     });
-  
+
   }
   selectItem(event: any) {
     this.status = event.target.value;
@@ -195,7 +195,7 @@ export class CustomersComponent implements OnInit {
     };
   }
 
-  customPhoneValidator(): ValidatorFn{
+  customPhoneValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       return this.validatorsService.phone(control.value) ? null : { invalidPhone: true };
     };
@@ -246,9 +246,9 @@ export class CustomersComponent implements OnInit {
       if (this.popupOpen) {
         counter++;
       } else {
-        clearInterval(interval); 
+        clearInterval(interval);
       }
-    }, 1000); 
+    }, 1000);
   }
   popUpAddDocument(nameCustomer: string) {
     this.componentType = DocumentComponent;
@@ -271,7 +271,7 @@ export class CustomersComponent implements OnInit {
   }
 
   addDocument(customer: Customer) {
-    const fullName=customer.firstName!+" "+customer.lastName!;
+    const fullName = customer.firstName! + " " + customer.lastName!;
     this.popUpAddDocument(fullName);
   }
 
