@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Lead } from '../Model/Lead';
+import { Lead } from '@app/Model/Lead';
 import { Observable } from 'rxjs';
 import { environment } from 'src/enviroments/environment';
 

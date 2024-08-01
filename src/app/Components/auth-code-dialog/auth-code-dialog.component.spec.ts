@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AuthCodeDialogComponent } from './auth-code-dialog.component';
+import { AuthCodeDialogComponent } from '@app/Components/auth-code-dialog/auth-code-dialog.component';
 
 describe('AuthCodeDialogComponent', () => {
   let component: AuthCodeDialogComponent;

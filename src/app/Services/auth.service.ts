@@ -30,4 +30,8 @@ export class AuthService {
    const decodedToken = helper.decodeToken(token);
    return decodedToken
    }
+
+   isLoggedIn(): boolean {
+    return localStorage.getItem('authData') !== null;
+  }
 }

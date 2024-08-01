@@ -13,7 +13,7 @@ import {
 import { SheetsApiService } from '@app/Services/sheets-api.service';
 import { Table, TableModule } from 'primeng/table';
 import Swal from 'sweetalert2';
-import { ExportToSheetComponent } from '../export-to-sheet/export-to-sheet.component';
+import { ExportToSheetComponent } from '@app/Components/export-to-sheet/export-to-sheet.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { TagModule } from 'primeng/tag';

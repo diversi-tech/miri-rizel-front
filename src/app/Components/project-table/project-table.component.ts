@@ -4,15 +4,15 @@ import { Customer } from '@app/Model/Customer';
 import { ProjectService } from 'src/app/Services/project.service';
 import { Project } from 'src/app/Model/Project';
 import Swal from 'sweetalert2';
-import { AddProjectComponent } from '../add-project/add-project.component';
-import { EditProjectComponent } from '../edit-project/edit-project.component';
+import { AddProjectComponent } from '@app/Components/add-project/add-project.component';
+import { EditProjectComponent } from '@app/Components/edit-project/edit-project.component';
 import { GenericBourdComponent } from 'src/app/Components/generic-bourd/generic-bourd.component';
 import { StatusCodeProject } from '@app/Model/StatusCodeProject';
 import { TaskService } from 'src/app/Services/task.service';
 import { Task } from '@app/Model/Task';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Priority } from '@app/Model/Priority';
-import { TaskBoardComponent } from '../task-board/task-board.component';
+import { TaskBoardComponent } from '@app/Components/task-board/task-board.component';
 import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-project-table',

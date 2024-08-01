@@ -1,6 +1,6 @@
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { importProvidersFrom } from '@angular/core';
-import { AppComponent } from './app/app.component';
+import { AppComponent } from '@app/app.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -108,7 +108,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AppRoutingModule } from './app/app-routing.module';
+import { AppRoutingModule } from '@app/app-routing.module';
 import { HttpClient, withInterceptorsFromDi, provideHttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from '@abacritt/angularx-social-login';
@@ -155,5 +155,5 @@ bootstrapApplication(AppComponent, {
 })
   .catch(err => console.error(err));
  export function HttpLoaderFactory(http: HttpClient) {
-   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
