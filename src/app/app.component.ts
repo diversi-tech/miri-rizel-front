@@ -37,15 +37,15 @@ export class AppComponent {
     const userRole = this.authService.getRole();
     
     // תנאי למסך הלוגין
-    if (currentRoute === '/Dashboard') {
-      this.shouldShowNav = false;
-    } 
+    // if (currentRoute === '/Dashboard') {
+   //   this.shouldShowNav = false;
+    // } 
     // תנאי לפי הרשאות
     // else if (userRole ===1) {
     //   this.shouldShowNav = false;
     // } 
-    else {
+    // else {
       this.shouldShowNav = true;
-    }
+    //}
   }
 }

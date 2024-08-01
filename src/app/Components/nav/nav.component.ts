@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit,Inject, ViewChild, ViewContainerRef } from '@angular/core';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { Router, RouterLink } from '@angular/router';
 import { LanguageService } from '@app/Services/language.service';
@@ -8,6 +8,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '@app/Services/auth.service';
 import { UserService } from '@app/Services/user.service';
 import { MatIconModule } from '@angular/material/icon';
+import { GeneralService } from '@app/Services/general.service';
+import { EditUserComponent } from '../edit-user/edit-user.component';
+import Swal from 'sweetalert2';
+
 import { WINDOW } from '@app/Services/window.token';
 
 @Component({
@@ -15,15 +19,30 @@ import { WINDOW } from '@app/Services/window.token';
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css'],
   standalone: true,
-  imports: [NgFor, MatIconModule, RouterLink, TranslateModule, NgIf, MatMenuModule, MatButtonModule],
+  imports: [
+    NgFor,
+    MatIconModule,
+    RouterLink,
+    TranslateModule,
+    NgIf,
+    MatMenuModule,
+    MatButtonModule,
+  ],
 })
 export class NavComponent implements OnInit {
+  @ViewChild('popupContainer', { read: ViewContainerRef, static: true })
+  popupContainer!: ViewContainerRef;
+
+  ngOnInit() {
+    this.updateLinks();
+  }
 
   constructor(
     public translate: TranslateService,
     private languageService: LanguageService,
     private authService: AuthService,
     private route: Router,
+    private generalService: GeneralService,
     private userService: UserService,
     @Inject(WINDOW) private window: Window 
   ) {
@@ -32,12 +51,9 @@ export class NavComponent implements OnInit {
     this.languageService.setLanguage(this.currentLanguage);
   }
 
-  ngOnInit() {
-    this.updateLinks();
-  }
 
-  links: { path: string, label: string }[] = [];
-  currentLanguage: string = "";
+  links: { path: string; label: string }[] = [];
+  currentLanguage: string = '';
   dropdownOpen: boolean = false;
 
   toggleDropdown() {
@@ -56,6 +72,7 @@ export class NavComponent implements OnInit {
           { path: '/customer', label: 'Customers' },
           { path: '/home', label: 'HomePage' }
         );
+        
       }
       if (role == 3) {
         this.links.push(
@@ -66,6 +83,7 @@ export class NavComponent implements OnInit {
           { path: '/users', label: 'Users' },
           { path: '/home', label: 'HomePage' }
         );
+        
       }
     }
   }
@@ -82,7 +100,21 @@ export class NavComponent implements OnInit {
   }
 
   editUser() {
-    this.route.navigate(['/edit-user']);
+    //this.route.navigate(['/edit'])
+    //פתחיחת פופאפ עריכת משתמש
+    const token = localStorage.getItem('token')?.toString()!;
+    if (token != null && token != undefined) {
+      const id = this.authService.getClaim(token, 'id');
+      this.generalService.popUpAddOrEdit(
+        EditUserComponent,
+        this.popupContainer,
+        () => {},
+        id
+      );
+    }
+    else{
+      Swal.fire("אינך מחובר למערכת!");
+    }
   }
 
   logOut() {
