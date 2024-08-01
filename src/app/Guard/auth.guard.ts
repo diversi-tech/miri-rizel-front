@@ -3,6 +3,7 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Rout
 import { AuthService } from '@app/Services/auth.service';
 import { Observable, map, catchError, of } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,13 @@ export class AuthGuard implements CanActivate {
     
     const token = this.authService.accessToken;
     if (token=="" || this.jwtHelper.isTokenExpired(token)) {
-      alert("עליך להיות מחובר/ת")
-      this.router.navigate(['/login']);
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "לא מחובר- מעבר להתחברות",
+        showConfirmButton: false,
+        timer: 2000
+      });      this.router.navigate(['/login']);
       return false;
     }
 

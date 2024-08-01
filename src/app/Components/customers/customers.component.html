@@ -333,7 +333,7 @@
     ></p-dropdown>
     <div
       class="error-message"
-      *ngIf="submitted && customerForm.controls['status'].errors"
+      *ngIf="submitted1 && customerForm.controls['status'].errors"
     >
       <span *ngIf="customerForm.controls['status'].errors['required']">
         {{ "RequiredField" | translate }}</span

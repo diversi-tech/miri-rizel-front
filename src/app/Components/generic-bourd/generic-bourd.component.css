@@ -23,6 +23,17 @@ button:hover {
     background-color: #9b9b9bb9;
 }
 
+/* הכפתור של ההוספה */
+.p-button-success {
+    border: 1px solid rgba(218, 215, 215, 0.86);
+    background-color: white;
+    color: black;
+}
+
+.p-button-success:hover {
+    background-color: #51f9a2c4;
+}
+
 /* הכפתור של העריכה */
 .p-button-secondary {
     background-color:transparent; 
@@ -186,11 +197,16 @@ p-table tbody tr:hover {
 }
 
 .p-selectable-row td {
-    border: 1px solid rgba(237, 235, 235, 0.361);
-    text-align: center;
-    padding: 0px; /* הסרת רווחים בתוך התאים */
+    text-align: start;
+    padding: 0px;
+    padding-right: 10px;
+    padding-left: 10px; 
 }
 
+.position-cell {
+    text-align: center !important;
+    /* מרכז את הטקסט בתאים עם מחלקת position-cell */
+}
 
 .p-selectable-row td button {
     margin: 10px; /* הסרת מרווחים בין הכפתורים */
