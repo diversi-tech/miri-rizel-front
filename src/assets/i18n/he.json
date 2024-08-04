@@ -57,7 +57,7 @@
   "PriorityInputSelect": "עדיפות",
   "StatusInputSelect": "סטטוס",
   "ProjectInputSelect": "פרויקט",
-  "UserInputSelect": "עובד",
+  "CustomerInputSelect": "לקוח",
   "InvalidEmailError": "כתובת מייל אינה תקנית",
   "ExistWorkerError": "יש לבחור עובד שקיים במערכת",
   "ExistProjectError": "יש לבחור פרויקט שקיים במערכת",
