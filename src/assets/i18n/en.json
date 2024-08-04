@@ -231,5 +231,12 @@
   "newDoc": "new document",
   "chooseMatchOption": "chooseMatchOption",
   "titleExport": "titleExport",
-  "TasksToSubmitToday": "Tasks to submit today"
+  "TasksToSubmitToday": "Tasks to submit today",
+  "contrast": "contrast",
+  "record_voice_over": "text reader",
+  "text_fields": "enlarge the text",
+  "highlight":"highlight headings",
+  "format_underlined":"adding underscores",
+  "zoom_in":"zoom",
+  "keyboard":"keyboard"
 }

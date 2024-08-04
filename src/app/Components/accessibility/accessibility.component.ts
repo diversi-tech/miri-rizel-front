@@ -4,12 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { KeyboardService } from '@app/Services/keyboard.service';
+import { TranslateModule } from '@ngx-translate/core';
 import { InputSwitchModule } from 'primeng/inputswitch';
 
 @Component({
   selector: 'app-accessibility',
   standalone: true,
-  imports: [CommonModule, InputSwitchModule, MatInputModule, FormsModule, MatButtonModule],
+  imports: [CommonModule, InputSwitchModule, MatInputModule, FormsModule, MatButtonModule , TranslateModule],
   templateUrl: './accessibility.component.html',
   styleUrl: './accessibility.component.css'
 })

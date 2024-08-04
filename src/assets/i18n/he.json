@@ -260,5 +260,12 @@
   "errorUpdatePassword": "התרחשה שגיאה בעת עדכון הסיסמה",
   "unConnectToConnect": "לא מחובר- מועבר להתחברות",
   "viewTaskBord": " לצפיה בלוח המשימות",
-  "clickHere": "לחץ כאן"
+  "clickHere": "לחץ כאן",
+  "contrast": "ניגודיות",
+  "record_voice_over"  : "קורא טקסט",
+  "text_fields": "הגדל את הטקסט",
+  "highlight":"הדגשת כותרות",
+  "format_underlined":"הוספת קווים תחתונים",
+  "zoom_in":"זום",
+  "keyboard":"לוח מקשים על המסך"
 }
