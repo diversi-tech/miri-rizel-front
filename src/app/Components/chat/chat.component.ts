@@ -53,24 +53,23 @@ export class ChatComponent implements OnInit {
     this.data = any;
     this.string = s;
     this.firstName=this.data.firstName!;
-    if (s == "Lead") {
+    if (s == "Lead" || s=="lead") {
       this.communicationService.readAll().subscribe(res => {
         this.communications = res.filter(comm => comm.relatedId === id && comm.relatedTo?.id==2);
         this.flag = true;
-        this.r = { id: 2, description: "Lead" };
+        this.r = { id: 2, description: "lead" };
         this.chat.patchValue({ relatedId: id });
-        this.id2 = id;
       });
     }
     else {
       this.communicationService.readAll().subscribe(res => {
         this.communications = res.filter(comm => comm.relatedId === id && comm.relatedTo?.id==1);
         this.flag = true;
-        this.r = { id: 1, description: "Customer" };
+        this.r = { id: 1, description: "customer" };
         this.chat.patchValue({ relatedId: id });
-        this.id2 = id;
       });
     }
+    this.id2 = id;
   }
 
   sendMessage(): void {
@@ -83,10 +82,10 @@ export class ChatComponent implements OnInit {
       this.r = { id: 1, description: "Customer" };
     this.chat.patchValue({ relatedId: this.id2 });
     this.chat.value.relatedTo = this.r;
-    this.chat.value.date = new Date(new Date().getTime() - (new Date().getTimezoneOffset()) * 60000);
+    this.chat.value.date = new Date()//(new Date().getTime() - (new Date().getTimezoneOffset()) * 60000);
     this.chat.value.type = ""
     this.chat.value.communicationId = 0;   
-    this.chat.value.name = this.firstName;    
+    this.chat.value.name = this.firstName;
     this.communicationService.AddNewCommunication(this.chat.value).subscribe(() => {
       this.flag = false;
       this.fetchChatMessages();
@@ -96,7 +95,15 @@ export class ChatComponent implements OnInit {
 
   fetchChatMessages(): void {
     this.communicationService.readAll().subscribe(res => {
-      this.communications = res.filter(comm => comm.relatedTo?.description === this.string && comm.relatedId === this.id2);
+      if(this.string=="lead" || this.string=="Lead")
+        this.string="Lead";
+      else
+        this.string="Customer";
+      this.communications = res.filter(comm => {console.log(comm),comm.relatedTo?.description === this.string && comm.relatedId === this.id2});
+      res.forEach(comm => {
+        if(comm.relatedTo?.description === this.string && comm.relatedId === this.id2)
+            this.communications.push(comm)
+      });
       this.flag = true;
     });
   }
