@@ -18,7 +18,7 @@
       <span *ngIf="description!.errors?.['required']">{{'RequiredField'|translate}}</span>
     </div>
   </div>
-  <label for="name">{{'StartDateInput'|translate}}</label>
+  <!-- <label for="name">{{'StartDateInput'|translate}}</label>
   <div class="card ">
     <input type="date" id="startDate" formControlName="startDate" placeholder="startDate" class="input-field" />
     <div class="error-message">
@@ -33,7 +33,7 @@
         </ng-template>
       </mat-error>
     </div>
-  </div>
+  </div> -->
   <label for="name">{{'EndDateInput'|translate}}</label>
   <div class="card ">
     <input type="date" id="endDate" formControlName="endDate" placeholder="endDate" class="input-field">
@@ -60,7 +60,7 @@
   </div>
   <div class="card flex justify-content-center">
     <p-dropdown formControlName="customer" formControlName="customer" [options]="custom" optionLabel="firstName"
-      class="select-field" placeholder="{{'UserInputSelect'|translate}}" />
+      class="select-field" placeholder="{{'CustomerInputSelect'|translate}}" />
 
   </div>
 
