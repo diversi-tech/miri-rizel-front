@@ -21,7 +21,7 @@ import { GoogleComponent } from '@app/Components/google/google.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { NgIf } from '@angular/common';
+import { Location, NgIf } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgxSpinnerModule } from "ngx-spinner";
@@ -60,6 +60,7 @@ export class LoginComponent implements OnInit {
     private resetPasswordService: ResetPasswordService,
     private dialog: MatDialog,
     private router: Router,
+    private location:Location,
     private userService: UserService,
     private active: ActivatedRoute,
     private translate: TranslateService,
@@ -122,10 +123,12 @@ export class LoginComponent implements OnInit {
             confirmButtonText:  translation['Close'],
           }).then((res) => {
             this.spinner.hide()
+            this.location.go(this.location.path());
           }))
         } else if (error.status == 400) {
           this.passwordCheck = true;
           this.spinner.hide()
+          this.location.go(this.location.path());
           // Swal.fire({
           //   text: 'error password',
           //   icon: 'error',
