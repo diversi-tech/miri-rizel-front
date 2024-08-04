@@ -141,7 +141,7 @@ export class LoginComponent implements OnInit {
           this.spinner.hide()
           this.translate.get(['Close','error']).subscribe(translation=>
           Swal.fire({
-            text: translation['error'],
+            text: translation,
             icon: 'error',
             showCancelButton: false,
             showCloseButton: true,
