@@ -54,6 +54,7 @@
   "StatusInputSelect": "Select status",
   "ProjectInputSelect": "Select project",
   "CustomerInputSelect": "Select customer",
+  "UserInputSelect": "Select employee",
   "InvalidEmailError": "Invalid email",
   "ExistWorkerError": "You must select an employee that exists in the system",
   "ExistProjectError": "You must select a project that exists in the system",
@@ -224,6 +225,4 @@
   "unConnectToConnect": "not connected - transferred to connect",
   "viewTaskBord":"To view the task board",
   "clickHere":"Click here"
-
-
 }

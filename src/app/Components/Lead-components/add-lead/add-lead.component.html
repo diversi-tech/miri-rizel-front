@@ -1,171 +1,92 @@
 <div class="add-lead-form" [style]="this.styles">
   <!-- <h2>הוספת ליד</h2> -->
-  <form [formGroup]="userForm" (ngSubmit)="submitForm()" >
-    <h1 id="h1" >{{this.titlePage |translate}}</h1>
+  <form [formGroup]="userForm" (ngSubmit)="submitForm()">
+    <h1 id="h1">{{this.titlePage |translate}}</h1>
     <div class="line"></div>
 
     <label for="firstName">{{'firstName' | translate }}</label>
     <div class="card flex justify-content-center">
-      <input
-        type="text"
-        id="firstName"
-        pInputText
-        class="input-field"
-        formControlName="firstName"
-      />
-      <div
-        class="error-message"
-        *ngIf="
+      <input type="text" id="firstName" pInputText class="input-field" formControlName="firstName" />
+      <div class="error-message" *ngIf="
           userForm.controls['firstName'].invalid &&
           userForm.controls['firstName'].touched
-        "
-      >
-        <span *ngIf="userForm.controls['firstName'].hasError('required')"
-          >{{'RequiredField'| translate}}</span
-        >
-        <span *ngIf="userForm.controls['firstName'].hasError('minlength')"
-          > {{'firstName' | translate}} {{'mustContainMintwoCharacters'|translate}}</span
-        >
+        ">
+        <span *ngIf="userForm.controls['firstName'].hasError('required')">{{'RequiredField'| translate}}</span>
+        <span *ngIf="userForm.controls['firstName'].hasError('minlength')"> {{'firstName' | translate}}
+          {{'mustContainMintwoCharacters'|translate}}</span>
       </div>
     </div>
 
     <label> {{'lastName'| translate}}</label>
     <div class="card flex justify-content-center">
-      <input
-        pInputText
-        class="input-field"
-        type="text"
-        id="lastName"
-        formControlName="lastName"
-      />
-      <div
-        class="error-message"
-        *ngIf="
+      <input pInputText class="input-field" type="text" id="lastName" formControlName="lastName" />
+      <div class="error-message" *ngIf="
           userForm.controls['lastName'].invalid &&
           userForm.controls['lastName'].touched
-        "
-      >
-      <span *ngIf="userForm.controls['lastName'].hasError('required')"
-      >{{'RequiredField'| translate}}</span
-    >
-    <span *ngIf="userForm.controls['lastName'].hasError('minlength')"
-      > {{'lastName' | translate}} {{'mustContainMintwoCharacters'|translate}}</span
-    >
+        ">
+        <span *ngIf="userForm.controls['lastName'].hasError('required')">{{'RequiredField'| translate}}</span>
+        <span *ngIf="userForm.controls['lastName'].hasError('minlength')"> {{'lastName' | translate}}
+          {{'mustContainMintwoCharacters'|translate}}</span>
       </div>
     </div>
 
     <label>{{'phone'|translate}}</label>
     <div class="card flex justify-content-center">
-      <input
-        pInputText
-        class="input-field"
-        type="tel"
-        id="phone"
-        formControlName="phone"
-      />
-      <div
-        class="error-message"
-        *ngIf="
+      <input pInputText class="input-field" type="tel" id="phone" formControlName="phone" />
+      <div class="error-message" *ngIf="
           userForm.controls['phone'].invalid &&
           userForm.controls['phone'].touched
-        "
-      >
-        <span *ngIf="userForm.controls['phone'].hasError('required')"
-        >{{'RequiredField'| translate}}</span
-        >
-        <span *ngIf="userForm.controls['phone'].hasError('minlength')"
-          >{{'phoneNumberMust9Characters'|translate}}</span
-        >
+        ">
+        <span *ngIf="userForm.controls['phone'].hasError('required')">{{'RequiredField'| translate}}</span>
+        <span *ngIf="userForm.controls['phone'].hasError('minlength')">{{'phoneNumberMust9Characters'|translate}}</span>
 
-        <span *ngIf="userForm.controls['phone'].hasError('maxlength')"
-          >{{'phoneNumberContainMax12Characters'|translate}}</span
-        >
+        <span
+          *ngIf="userForm.controls['phone'].hasError('maxlength')">{{'phoneNumberContainMax12Characters'|translate}}</span>
         <div *ngIf="userForm.controls['phone'].errors?.['invalidPhone']">{{'validPhone'|translate}}</div>
       </div>
     </div>
 
     <label>{{'email'|translate}}</label>
     <div class="card flex justify-content-center">
-      <input
-        pInputText
-        class="input-field"
-        type="email"
-        id="email"
-        formControlName="email"
-      />
-      <div
-        class="error-message"
-        *ngIf="
+      <input pInputText class="input-field" type="email" id="email" formControlName="email" />
+      <div class="error-message" *ngIf="
           userForm.controls['email'].invalid &&
           userForm.controls['email'].touched
-        "
-      >
-        <span *ngIf="userForm.controls['email'].hasError('required')"
-        >{{'RequiredField'| translate}}</span
-        >
-        <span *ngIf="userForm.controls['email'].hasError('email')"
-          >{{'InvalidEmailError'|translate}}</span
-        >
+        ">
+        <span *ngIf="userForm.controls['email'].hasError('required')">{{'RequiredField'| translate}}</span>
+        <span *ngIf="userForm.controls['email'].hasError('email')">{{'InvalidEmailError'|translate}}</span>
       </div>
     </div>
 
     <label>{{'source'|translate}}</label>
     <div class="card flex justify-content-center">
-      <input
-        pInputText
-        class="input-field"
-        type="text"
-        id="source"
-        formControlName="source"
-      />
-      <div
-        class="error-message"
-        *ngIf="
+      <input pInputText class="input-field" type="text" id="source" formControlName="source" />
+      <div class="error-message" *ngIf="
           userForm.controls['source'].invalid &&
           userForm.controls['source'].touched
-        "
-      >
-        <span *ngIf="userForm.controls['source'].hasError('required')"
-        >{{'RequiredField'| translate}}</span
-        >
+        ">
+        <span *ngIf="userForm.controls['source'].hasError('required')">{{'RequiredField'| translate}}</span>
       </div>
     </div>
 
     <label>{{'businessName'| translate}}</label>
     <div class="card flex justify-content-center">
-      <input
-        pInputText
-        class="input-field"
-        type="text"
-        id="business_name"
-        formControlName="businessName"
-      />
-      <div
-        class="error-message"
-        *ngIf="
+      <input pInputText class="input-field" type="text" id="business_name" formControlName="businessName" />
+      <div class="error-message" *ngIf="
           userForm.controls['businessName'].invalid &&
           userForm.controls['businessName'].touched
-        "
-      >
-        <span *ngIf="userForm.controls['businessName'].hasError('required')"
-        >{{'RequiredField'| translate}}</span
-        >
+        ">
+        <span *ngIf="userForm.controls['businessName'].hasError('required')">{{'RequiredField'| translate}}</span>
       </div>
     </div>
 
     <label>{{'notes'| translate}}</label>
     <div class="card flex justify-content-center">
-      <input
-        pInputText
-        class="input-field"
-        type="text"
-        id="notes"
-        formControlName="notes"
-      />
+      <input pInputText class="input-field" type="text" id="notes" formControlName="notes" />
     </div>
 
     <button type="submit" class="submit-button" [disabled]="userForm.invalid">
-      שליחה
+      {{'NewItem'|translate}}
     </button>
   </form>
 </div>
