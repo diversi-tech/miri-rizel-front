@@ -19,6 +19,7 @@ import { Location } from '@angular/common';
 import { StatusCodeProject } from '@app/Model/StatusCodeProject';
 import { Priority } from '@app/Model/Priority';
 import { ProjectService } from '@app/Services/project.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -26,7 +27,7 @@ import { ProjectService } from '@app/Services/project.service';
     templateUrl: './task-board.component.html',
     styleUrls: ['./task-board.component.css'],
     standalone: true,
-    imports: [GenericBourdComponent],
+    imports: [GenericBourdComponent,TranslateModule],
 })
 
 export class TaskBoardComponent implements OnInit {
@@ -42,7 +43,7 @@ export class TaskBoardComponent implements OnInit {
   @ViewChild('popupContainer', { read: ViewContainerRef }) popupContainer!: ViewContainerRef;
 
   constructor(private location: Location
-    , private taskService: TaskService, private userService: UserService, private projectService: ProjectService, private resolver: ComponentFactoryResolver, private dialog: MatDialog) { }
+    , private taskService: TaskService, private userService: UserService, private projectService: ProjectService, private resolver: ComponentFactoryResolver, private dialog: MatDialog,private translate:TranslateService) { }
 
   ngOnInit() {
     this.taskService.getAllPriorities().subscribe(
@@ -66,7 +67,7 @@ export class TaskBoardComponent implements OnInit {
 
     this.taskService.getAll().subscribe(
       (tasks: Array<Task>) => {
-        this.tasks = tasks;
+        this.tasks = tasks.filter(o=>o.project?.isActive==true);
         console.log(this.tasks);
         this.userService.getAll().subscribe(
           (users: Array<User>) => {
@@ -74,16 +75,27 @@ export class TaskBoardComponent implements OnInit {
             this.loading = false;
             console.log(this.users);
           },
-          (error) => {
-            console.error('Error fetching users:', error);
-            this.loading = false; // לוודא שהטעינה מפסיקה גם במקרה של שגיאה
+          (error: any) => {
+            this.loading = false;
+            this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+              Swal.fire({
+                text: translations[ 'errorServer'],
+                icon: "error",
+                showCancelButton: false,
+                showCloseButton: true,
+                confirmButtonColor: "#d33",
+                confirmButtonText: translations['Close']
+              })
+            })
           }
+        
         );
       },
-      (error) => {
-        console.error('Error fetching tasks:', error);
-        this.loading = false; // לוודא שהטעינה מפסיקה גם במקרה של שגיאה
-      }
+
+      // (error) => {
+      //   console.error('Error fetching tasks:', error);
+      //   this.loading = false; // לוודא שהטעינה מפסיקה גם במקרה של שגיאה
+      // }
     );
   }
 
@@ -104,7 +116,6 @@ export class TaskBoardComponent implements OnInit {
       (tasks: any) => {
         this.tasks = tasks;
         this.loading = false;
-        console.log("refreshData: ", this.tasks);
       })
   }
 
@@ -131,22 +142,33 @@ export class TaskBoardComponent implements OnInit {
     this.taskService.deleteTask(task.taskId!).subscribe(
       (data: any) => {
         if (data == true) {
+          this.translate.get(['deleteTask','Close']).subscribe(translion=>
           Swal.fire({
-            text: "The task was successfully deleted",
+            text: translion['deleteTask'],
             icon: "success",
             showCancelButton: false,
             showCloseButton: true,
             confirmButtonColor: "#3085D6",
-            confirmButtonText: "Close"
+            confirmButtonText: translion['Close']
           }).then((result) => {
             this.taskService.getAll().subscribe((data) => {
               this.tasks = data
             })
-          });
+          }));
         }
       },
       (error: any) => {
-        console.error('Error fetching users:', error);
+        this.loading = false;
+        this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+          Swal.fire({
+            text: translations[ 'errorServer'],
+            icon: "error",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#d33",
+            confirmButtonText: translations['Close']
+          })
+        })
       }
     );
   }

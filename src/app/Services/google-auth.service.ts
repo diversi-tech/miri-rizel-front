@@ -1,4 +1,5 @@
 import { Injectable, NgZone } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { environment } from 'src/enviroments/environment';
 import Swal from 'sweetalert2';
 import { TaskService } from '@app/Services/task.service';
@@ -15,12 +16,11 @@ export class GoogleAuthService {
   private API_KEY = environment.API_KEY;
   private DISCOVERY_DOC = "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest";
   private SCOPES = "https://www.googleapis.com/auth/calendar";
-
   private tokenClient: any;
   private gapiInited = false;
   private gisInited = false;
 
-  constructor(private ngZone: NgZone, private taskService: TaskService) {
+  constructor(private ngZone: NgZone, private taskService: TaskService,private translate:TranslateService) {
     this.loadGapi();
     this.loadGis();
   }
@@ -75,13 +75,33 @@ export class GoogleAuthService {
 
   public createGoogleEvent(eventDetails: any, taskId: number) {
     if (!this.gapiInited || !this.gisInited) {
-      console.error("GAPI or GIS not initialized");
+    
+      this.translate.get(['Close', 'GAPI or GIS not initialized']).subscribe(translations => {
+        Swal.fire({
+          text: translations[ 'GAPI or GIS not initialized'],
+          icon: "error",
+          showCancelButton: false,
+          showCloseButton: true,
+          confirmButtonColor: "#d33",
+          confirmButtonText: translations['Close']
+        })
+      })
+    
       this.reinitializeGapi();
       return;
     }
     this.tokenClient.callback = async (resp: any) => {
       if (resp.error !== undefined) {
-        console.error("Error during token request", resp.error);
+        this.translate.get(['Close', 'Error during token request']).subscribe(translations => {
+          Swal.fire({
+            text: translations[ 'Error during token request'],
+            icon: "error",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#d33",
+            confirmButtonText: translations['Close']
+          })
+        })
         throw resp;
       }
       await this.scheduleEvent(eventDetails, taskId);
@@ -93,9 +113,18 @@ export class GoogleAuthService {
         this.tokenClient.requestAccessToken({ prompt: "" });
       }
     } catch (error) {
-      console.error("Error requesting access token", error);
+     this.translate.get(['Close', 'Error requesting access token']).subscribe(translations => {
+      Swal.fire({
+        text: translations[ 'Error requesting access token'],
+        icon: "error",
+        showCancelButton: false,
+        showCloseButton: true,
+        confirmButtonColor: "#d33",
+        confirmButtonText: translations['Close']
+      })
+    })
     }
-    console.log('Token request initiated');
+   
   }
 
   private async scheduleEvent(eventDetails: any, taskId: number) {
@@ -127,32 +156,59 @@ export class GoogleAuthService {
     request.execute((event: any) => {
       console.log("event created: ", event);
       this.taskService.updateGoogleId(taskId, event.id).subscribe((res) => {
-        console.log(res);
+      
       }, (err) => {
-        console.log(err);
+        this.translate.get(['Close', 'error']).subscribe(translations => {
+          Swal.fire({
+            text: translations[ 'error'],
+            icon: "error",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#d33",
+            confirmButtonText: translations['Close']
+          })
+        })
       })
+      this.translate.get(['GoogleTaskSuccess','viewTaskBord','clickHere']).subscribe(translation=>
       Swal.fire({
         position: "top-end",
         icon: "success",
-        title: "המשימה נשמרה",
-        html: `
-        לצפיה בלוח המשימות
-    <a href="${event.htmlLink}" target="_blank" autofocus>לחץ כאן</a> `,
+        title: translation['GoogleTaskSuccess'],
+        html: `${translation['viewTaskBord']}       
+    <a href="${event.htmlLink}" target="_blank" autofocus> ${translation['clickHere']}</a> `,
         showConfirmButton: false,
         timer: 3000
-      });
+      }));
     });
   }
 
   public updateGoogleEvent(eventDetails: any, googleId: string) {
     if (!this.gapiInited || !this.gisInited) {
-      console.error("GAPI or GIS not initialized");
+      this.translate.get(['Close', 'GAPI or GIS not initialized']).subscribe(translations => {
+        Swal.fire({
+          text: translations[ 'GAPI or GIS not initialized'],
+          icon: "error",
+          showCancelButton: false,
+          showCloseButton: true,
+          confirmButtonColor: "#d33",
+          confirmButtonText: translations['Close']
+        })
+      })
       this.reinitializeGapi();
       return;
     }
     this.tokenClient.callback = async (resp: any) => {
       if (resp.error !== undefined) {
-        console.error("Error during token request", resp.error);
+        this.translate.get(['Close', 'Error during token request']).subscribe(translations => {
+          Swal.fire({
+            text: translations[ 'Error during token request'],
+            icon: "error",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#d33",
+            confirmButtonText: translations['Close']
+          })
+        })
         throw resp;
       }
       await this.scheduleUpdateEvent(eventDetails, googleId);
@@ -164,9 +220,18 @@ export class GoogleAuthService {
         this.tokenClient.requestAccessToken({ prompt: "" });
       }
     } catch (error) {
-      console.error("Error requesting access token", error);
-    }
-    console.log('Token request initiated');
+      this.translate.get(['Close', 'Error requesting access token']).subscribe(translations => {
+        Swal.fire({
+          text: translations[ 'Error requesting access token'],
+          icon: "error",
+          showCancelButton: false,
+          showCloseButton: true,
+          confirmButtonColor: "#d33",
+          confirmButtonText: translations['Close']
+        })
+      })
+      }
+    
   }
 
   private async scheduleUpdateEvent(eventDetails: any, googleId: string) {
@@ -198,33 +263,51 @@ export class GoogleAuthService {
     });
     request.execute((event: any) => {
       console.log("event updated: ", event);
+      this.translate.get(['TaskUpdateSuccess','viewTaskBord','clickHere']).subscribe(translation=>
+      
       Swal.fire({
         position: "top-end",
         icon: "success",
-        title: "המשימה עודכנה",
-        html: `
-        לצפיה בלוח המשימות
-    <a href="${event.htmlLink}" target="_blank" autofocus>לחץ כאן</a> `,
+        title: translation['TaskUpdateSuccess'],
+        html: `${translation['viewTaskBord']}
+    <a href="${event.htmlLink}" target="_blank" autofocus>${translation['clickHere']}/</a> `,
         showConfirmButton: false,
         timer: 3000
-      });
+      }));
     });
   }
 
   // 
   public deleteGoogleEvent(googleId: string) {
-    console.log("delete google event: ", googleId);
-
     if (!this.gapiInited || !this.gisInited) {
-      console.error("GAPI or GIS not initialized");
+      this.translate.get(['Close', 'GAPI or GIS not initialized']).subscribe(translations => {
+        Swal.fire({
+          text: translations[ 'GAPI or GIS not initialized'],
+          icon: "error",
+          showCancelButton: false,
+          showCloseButton: true,
+          confirmButtonColor: "#d33",
+          confirmButtonText: translations['Close']
+        })
+      })
       this.reinitializeGapi();
       return;
     }
     this.tokenClient.callback = async (resp: any) => {
       if (resp.error !== undefined) {
-        console.error("Error during token request", resp.error);
+        this.translate.get(['Close', 'Error during token request']).subscribe(translations => {
+          Swal.fire({
+            text: translations[ 'Error during token request'],
+            icon: "error",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#d33",
+            confirmButtonText: translations['Close']
+          })
+        })
         throw resp;
       }
+      
       await this.scheduleDeleteEvent(googleId);
     };
     try {
@@ -236,33 +319,39 @@ export class GoogleAuthService {
         this.tokenClient.requestAccessToken({ prompt: "" });
       }
     } catch (error) {
-      console.error("Error requesting access token", error);
+      this.translate.get(['Close', 'Error requesting access token']).subscribe(translations => {
+        Swal.fire({
+          text: translations[ 'Error requesting access token'],
+          icon: "error",
+          showCancelButton: false,
+          showCloseButton: true,
+          confirmButtonColor: "#d33",
+          confirmButtonText: translations['Close']
+        })
+      })
     }
-    console.log('Token request initiated');
   }
 
   private async scheduleDeleteEvent(googleId: string) {
-    console.log("scheduleDeleteEvent", googleId);
-
     const request = gapi.client.calendar.events.delete({
       calendarId: "primary",
       eventId: googleId,
     });
-    console.log("request", request);
 
     request.execute((event: any) => {
       console.log("event updated: ", event);
+      this.translate.get(['deleteTask','viewTaskBord','clickHere']).subscribe(translation=>
+
       Swal.fire({
         position: "top-end",
         icon: "success",
-        title: "המשימה נמחקה",
-        html: `
-        לצפיה בלוח המשימות
-    <a href="${event.htmlLink}" target="_blank" autofocus>לחץ כאן</a> `,
+        title: translation['deleteTask'],
+        html: `${translation['deleteTask']}
+    <a href="${event.htmlLink}" target="_blank" autofocus> ${translation['clickHere']}</a> `,
         showConfirmButton: false,
         timer: 3000
-      });
+      }));
     });
   }
-  // 
+  
 }

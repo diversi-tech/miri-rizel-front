@@ -13,7 +13,6 @@ import {
   FormsModule,
 } from '@angular/forms';
 import { User } from 'src/app/Model/User';
-import { EditUserService } from '@app/Services/edit-user.service';
 import { NgIf } from '@angular/common';
 import { UserService } from '@app/Services/user.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -67,14 +66,17 @@ export class EditUserComponent implements OnInit {
     private authService: AuthService
   ) {}
   ngOnInit() {
-    this.userService.getUserById(this.userId).subscribe((user) => {
-      this.user = user;
-      // this.desc= user.role? user.role.description: '';
-      const role = this.authService.getRole();
-      if (role === 3) this.isAdmin = true;
-      this.getAllRolesAndTranslate();
-      this.flag = true;
-    });
+    if(this.userId!=0){
+      this.userService.getUserById(this.userId).subscribe((user) => {
+        this.user = user;
+        // this.desc= user.role? user.role.description: '';
+        const role = this.authService.getRole();
+        if (role === 3) this.isAdmin = true;
+        this.getAllRolesAndTranslate();
+        this.flag = true;
+      });
+    }
+    
     this.languageService.language$.subscribe((lang) => {
       if (lang === 'he') {
         this.styles['text-align'] = 'right';
@@ -127,7 +129,6 @@ export class EditUserComponent implements OnInit {
   onRoleSelected(event: any) {
     const selectedRole = event.value; // הערך הנבחר
     this.user.role = selectedRole; // עדכון התפקיד של המשתמש
-    console.log('Selected Role:', selectedRole);
   }
 
   filterProjectAuto(event: AutoCompleteCompleteEvent) {

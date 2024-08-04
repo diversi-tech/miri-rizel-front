@@ -9,8 +9,9 @@ declare global {
 }
 import { UserService } from '@app/Services/user.service';
 import { DialogComponent } from 'src/app/Components/dialog/dialog.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { EmailService } from '@app/Services/sendEmailSignUp';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-google',
   templateUrl: './google.component.html',
@@ -23,7 +24,7 @@ import { EmailService } from '@app/Services/sendEmailSignUp';
 export class GoogleComponent {
 
   constructor(private emailService: EmailService,private dialog: MatDialog,
-    private router: Router, private login: UserService) { }
+    private router: Router, private login: UserService,  private translate: TranslateService,) { }
 
   initGoogleOneTap(): void {
     if (window.google.accounts.id) {
@@ -33,7 +34,17 @@ export class GoogleComponent {
       });
       window.google.accounts.id.prompt();
     } else {
-      console.error("Google accounts.id API not loaded.");
+        this.translate.get(['Close', 'Google accounts.id API not loadedr']).subscribe(translations => {
+          Swal.fire({
+            text: translations[ 'Google accounts.id API not loadedr'],
+            icon: "error",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#d33",
+            confirmButtonText: translations['Close']
+          })
+        })
+      
     }
   }
 
@@ -47,14 +58,9 @@ export class GoogleComponent {
       var email = decodedToken.email;
       var userName = decodedToken.name;
       this.login.getByMail(email).subscribe(res => {
-        console.log("res");
-
-        console.log(res);
-
         if (this.userData == "logIn" && res != null) {
           this.login.loginGoogle(email, userName).subscribe(
             (response: any) => {
-              console.log(response);
               const user = response.user;
               if (user.role == 1) {
                 this.router.navigate(['/admin']);

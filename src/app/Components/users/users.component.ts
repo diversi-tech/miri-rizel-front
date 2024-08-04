@@ -41,6 +41,34 @@ export class UsersComponent implements OnInit {
   popupContainer!: ViewContainerRef;
 
   ngOnInit(): void {
+    this.userService.getAll().subscribe((users) => {
+      this.users = users;
+    });
+    this.userService.getAllRoles().subscribe(
+      (roles) => {
+        this.roles = roles;
+        
+        this.loading = false;
+      },
+     
+      (error: any) => {
+        this.loading = false;
+        this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+          Swal.fire({
+            text: translations[ 'errorServer'],
+            icon: "error",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#d33",
+            confirmButtonText: translations['Close']
+          })
+        })
+      }
+    );
+    const role= this.authService.getRole();
+      if(role===3){
+        this.isAdmin=true;
+      }
     // this.loadUsersAndRolesAndtranslate();
     // const role = this.authService.getRole();
     // if (role != 3) {

@@ -22,7 +22,6 @@ import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 import { SharedModule } from 'primeng/api';
 import { ToolbarModule } from 'primeng/toolbar';
-import Swal from 'sweetalert2';
 import { Renderer2 } from '@angular/core';
 
 @Component({
@@ -65,7 +64,6 @@ export class PropilComponent implements OnInit {
 
   fetchResponses(): void {
     this.communicationService.readAll().subscribe(res => {
-      console.log(res);
       this.responses = res.filter(comm => comm.relatedId === this.communication.communicationId);
     });
   }

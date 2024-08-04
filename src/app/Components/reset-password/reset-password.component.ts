@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '@app/Components/dialog/dialog.component';
 import Swal from 'sweetalert2';
 import { ResetPasswordService } from '@app/Services/reset-password.service';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { NgIf, NgClass } from '@angular/common';
@@ -34,7 +34,7 @@ import { NgxSpinnerService } from "ngx-spinner";
     ],
 })
 export class ResetPasswordComponent implements OnInit {
-  constructor(private spinner:NgxSpinnerService,private route: Router, private userService: UserService, private dialog: MatDialog, private resetPasswordService: ResetPasswordService) { }
+  constructor(private spinner:NgxSpinnerService,private route: Router, private userService: UserService,  private translate: TranslateService, private dialog: MatDialog, private resetPasswordService: ResetPasswordService) { }
 
   ngOnInit(): void {
     this.resetForm = new FormGroup({
@@ -81,29 +81,43 @@ export class ResetPasswordComponent implements OnInit {
         (res) => {
           if (res === true) {
             this.spinner.hide()
+            this.translate.get(['Close', 'updatePassword','reConnect']).subscribe(translations => 
+
             Swal.fire({
-              title: "סיסמתך עודכנה בהצלחה",
-              text: "הנך מועבר להתחברות מחדש",
+              title: translations['updatePassword'],
+              text: translations['reConnect'],
               icon: "success",
               showCancelButton: false,
               showCloseButton: true,
               confirmButtonColor: "#3085D6",
-              confirmButtonText: "Close"
-            })
+              confirmButtonText:translations['Close']
+            }))
             this.route.navigate(['/login']);
           }
         },
         (error) => {
+          this.translate.get(['close', 'errorUpdatePassword']).subscribe(translations => 
+
           Swal.fire({
-            text: "התרחשה שגיאה בעת עדכון הסיסמה",
+            text: translations['errorUpdatePassword'],
             icon: "error",
             showCancelButton: false,
             showCloseButton: true,
             confirmButtonColor: "#d33",
-            confirmButtonText: "סגור"
-          })
+            confirmButtonText: translations['close']
+          }))
           this.spinner.hide()
-          console.error('Error updating password:', error);
+            this.translate.get(['Close', 'Error updating password']).subscribe(translations => {
+              Swal.fire({
+                text: translations[ 'Error updating password'],
+                icon: "error",
+                showCancelButton: false,
+                showCloseButton: true,
+                confirmButtonColor: "#d33",
+                confirmButtonText: translations['Close']
+              })
+            })
+          
         }
       );
     }

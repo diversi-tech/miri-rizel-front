@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet ,RouterModule} from '@angular/router';
 import { NavComponent } from '@app/Components/nav/nav.component';
 import { NgxSpinnerService } from "ngx-spinner";
 import { NgxSpinnerModule } from "ngx-spinner";
@@ -13,12 +13,12 @@ import { NgIf } from '@angular/common';
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
     standalone: true,
-    imports: [NgxSpinnerModule, NavComponent, RouterOutlet, AccessibilityComponent,CustomersDashboardComponent,NgIf]
+    imports: [NgxSpinnerModule, NavComponent, RouterOutlet,RouterModule, AccessibilityComponent,CustomersDashboardComponent,NgIf]
 })
 export class AppComponent {
-  value:any
+  value: any
   title = 'copyRight';
-  shouldShowNav:boolean = true;
+  shouldShowNav: boolean = true;
 
   constructor(private router: Router, private authService: AuthService) {
     this.router.events.subscribe((event) => {
@@ -35,17 +35,17 @@ export class AppComponent {
   updateNavVisibility() {
     const currentRoute = this.router.url;
     const userRole = this.authService.getRole();
-    
+
     // תנאי למסך הלוגין
-    if (currentRoute === '/Dashboard') {
-      this.shouldShowNav = false;
-    } 
+    // if (currentRoute === '/Dashboard') {
+   //   this.shouldShowNav = false;
+    // } 
     // תנאי לפי הרשאות
     // else if (userRole ===1) {
     //   this.shouldShowNav = false;
     // } 
-    else {
+    // else {
       this.shouldShowNav = true;
-    }
+    //}
   }
 }

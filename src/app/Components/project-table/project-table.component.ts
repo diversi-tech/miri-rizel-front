@@ -46,13 +46,11 @@ export class ProjectTableComponent implements OnInit {
     this.taskService.getAll().subscribe(
       (data) => {
         this.tasks = data
-        console.log("tasks=", this.tasks);
       }
     );
     this.ProjectService.getAll().subscribe(
       (p: Array<Project>) => {
         this.projects = p;
-        console.log("project=", this.projects);
         this.taskService.getAllStatus().subscribe(
           (data) => {
             this.statuses = data
@@ -71,7 +69,6 @@ export class ProjectTableComponent implements OnInit {
         this.loading = false;
       },
       (error) => {
-        console.error('Error fetching project:', error);
         this.translate.get(['Close', 'unAuthorize']).subscribe(translations => {
           Swal.fire({
             text: translations['unAuthorize'],
@@ -95,24 +92,26 @@ export class ProjectTableComponent implements OnInit {
 
         // Remove the project from the local list after successful deletion
         this.loadP()
+        this.translate.get(['deleteProject','OK']).subscribe(translation=>
         Swal.fire({
-          text: 'Project deleted successfully',
+          text: translation['deleteProject'],
           icon: "success",
           showCancelButton: false,
           showCloseButton: true,
           confirmButtonColor: "#3085D6",
-          confirmButtonText: 'OK'
-        });
+          confirmButtonText:translation['OK']
+        }))
       },
       (error) => {
+        this.translate.get(['errorDeletProject','Close']).subscribe(translation=>
         Swal.fire({
-          text: 'Error deleting project. Please try again.',
+          text: translation['errorDeletProject'],
           icon: "error",
           showCancelButton: false,
           showCloseButton: true,
           confirmButtonColor: "#d33",
-          confirmButtonText: 'Close'
-        });
+          confirmButtonText: translation['Close']
+        }))
       }
     );
     Swal.close();
@@ -161,24 +160,43 @@ export class ProjectTableComponent implements OnInit {
           this.tasks = data;
           this.errorMessage = '';
         },
-        (error) => {
-          this.errorMessage = 'Error fetching tasks. Please try again.';
+        (error: any) => {
           this.tasks = [];
+          this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+            Swal.fire({
+              text: translations[ 'errorServer'],
+              icon: "error",
+              showCancelButton: false,
+              showCloseButton: true,
+              confirmButtonColor: "#d33",
+              confirmButtonText: translations['Close']
+            })
+          })
         }
+        
+        
       );
     } else {
       this.errorMessage = 'Please enter a valid project code.';
+      this.translate.get(['Close', 'Please enter a valid project code.']).subscribe(translations => {
+        Swal.fire({
+          text: translations[ 'Please enter a valid project code.'],
+          icon: "error",
+          showCancelButton: false,
+          showCloseButton: true,
+          confirmButtonColor: "#d33",
+          confirmButtonText: translations['Close']
+        })
+      })
     }
-  }
+    }
+  
   onEditProject(p: Project) {
     this.componentType = EditProjectComponent;
     this.popUpAddOrEdit("edit project", p.projectId);
-    console.log('Edit p:', p);
   }
   popUpAddOrEdit(title: string, l: Number | null) {
     Swal.fire({
-
-
       html: '<div id="popupContainer"></div>',
       showConfirmButton: false,
       didOpen: () => {
@@ -203,7 +221,6 @@ export class ProjectTableComponent implements OnInit {
     this.ProjectService.getAll().subscribe(
       (p: Array<Project>) => {
         this.projects = p;
-        console.log(this.projects);
         this.loading = false;
       })
   }
@@ -212,22 +229,32 @@ export class ProjectTableComponent implements OnInit {
     this.taskService.deleteTask(task.taskId!).subscribe(
       (data: any) => {
         if (data == true) {
+          this.translate.get(['deleteTask', 'Close']).subscribe(translations => 
           Swal.fire({
-            text: "The task was successfully deleted",
+            text: translations['deleteTask'],
             icon: "success",
             showCancelButton: false,
             showCloseButton: true,
             confirmButtonColor: "#3085D6",
-            confirmButtonText: "close"
+            confirmButtonText: translations['Close']
           }).then((result) => {
             this.taskService.getAll().subscribe((data) => {
               this.tasks = data
             })
-          });
+          }))
         }
       },
       (error: any) => {
-        console.error('Error fetching Tasks:', error);
+        this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+          Swal.fire({
+            text: translations[ 'errorServer'],
+            icon: "error",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#d33",
+            confirmButtonText: translations['Close']
+          })
+        })
       }
     );
   }

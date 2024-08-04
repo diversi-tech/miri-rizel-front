@@ -1,4 +1,5 @@
 {
+  "Documents":"Documents",
   "HomePage": "Home Page",
   "Customers": "Customers",
   "Projects": "Projects",
@@ -52,6 +53,7 @@
   "PriorityInputSelect": "Select priority",
   "StatusInputSelect": "Select status",
   "ProjectInputSelect": "Select project",
+  "CustomerInputSelect": "Select customer",
   "UserInputSelect": "Select employee",
   "InvalidEmailError": "Invalid email",
   "ExistWorkerError": "You must select an employee that exists in the system",
@@ -68,7 +70,7 @@
   "Cancle": "Cancle",
   "Approve": "Approve",
   "Close": "Close",
-  "addCustomerSuccess":"The Customer added succses",
+  "addCustomerSuccess": "The Customer added succses",
   "LoginWithGoogle": "Login with Google",
   "ResetPasswordTitle": "Reset Password",
   "PasswordAuthentication": "Password Authentication",
@@ -197,6 +199,31 @@
   "ViewTheOverdueTasks": "View the overdue tasks",
   "ShortName": "The name must contain at least 2 letters",
   "ShortLast": "The last name must contain at least 2 letters",
+   "Error adding project":"Error adding project",
+   "error fetching tasks":"error fetching tasks",
+   "errorServer":"error on getting data from the the server",
+   "error loading ":"error loading data",
+   "Google accounts.id API not loadedr":"Google accounts.id API not loadedr",
+   "genericBourd is not initialized":"genericBourd is not initialized",
+   "Please enter a valid project code.":"Please enter a valid project code.",
+   "Error updating password":"Error updating password",
+   "EGAPI or GIS not initialized":"GAPI or GIS not initialized",
+   "Error during token request":"Error during token request",
+   "Error requesting access token":"Error requesting access token",
+"Error adding sheet:":"Error adding sheet:",
+"Error creating spreadsheet or adding data:":"Error creating spreadsheet or adding data:",
+"Error getting sheet names:":"Error getting sheet names:",
+"No sheets found":"No sheets found",
+"Error listing Google Sheets":"Error listing Google Sheets",
+"GAPI client not loaded":"GAPI client not loaded",
+"gapi client not loaded":"gapi client not loaded",
+"spreadSheetBtn not found":"spreadSheetBtn not found",
+"gapiInited is false":"gapiInited is false",
+"gapiInited is true":"gapiInited is true",
+
+
+
+"Submit":"Submit",
   "Cutomer": "Cutomer",
   "userSaved": "User saved successfully!",
   "userNotSaved": "The user is not saved. Try again",
@@ -204,6 +231,5 @@
   "newDoc": "new document",
   "chooseMatchOption": "chooseMatchOption",
   "titleExport": "titleExport",
-  "TasksToSubmitToday": "Tasks to submit today",
-   "Submit":"Submit"
+  "TasksToSubmitToday": "Tasks to submit today"
 }

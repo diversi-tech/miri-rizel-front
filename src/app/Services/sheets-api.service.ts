@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import Swal from 'sweetalert2';
 declare const gapi: any;
 declare const google: any;
 
@@ -21,7 +23,7 @@ export class SheetsApiService {
 
   //טעינת הגאפי והגיס-----------------------------------
 
-  constructor() {
+  constructor(private translate:TranslateService) {
     this.loadGapi();
     this.loadGis();
   }
@@ -35,14 +37,11 @@ export class SheetsApiService {
   }
 
   gapiLoaded() {
-    console.log('gapiLoaded');
     gapi.load('client', this.initializeGapiClient());
     // this.initializeGapiClient();
   }
 
   initializeGapiClient(): void {
-    console.log('initializeGapiClient');
-
     gapi.load('client', () => {
       gapi.client
       .init({
@@ -54,14 +53,12 @@ export class SheetsApiService {
       .then(() => {
         this.gapiInited = true;
         this.maybeEnableButtons();
-        console.log('after all');
         //קריאה לhandle
         //this.handleAuthClick();
       });
     });
   }
   loadGis(): void {
-    console.log('loadGis');
     const script = document.createElement('script');
     script.src = 'https://accounts.google.com/gsi/client';
     script.onload = () => this.gisLoaded();
@@ -69,7 +66,6 @@ export class SheetsApiService {
   }
 
   gisLoaded(): void {
-    console.log('gisLoaded');
 
     this.tokenClient = google.accounts.oauth2.initTokenClient({
       client_id:
@@ -82,27 +78,72 @@ export class SheetsApiService {
   }
 
   maybeEnableButtons(): void {
-    console.log('maybeEnableButtons');
-
     if (this.gapiInited) {
-      console.log('gapiInited is true');
+     // console.log('gapiInited is true');
+     this.translate.get(['Close', 'gapiInited is true']).subscribe(translations => {
+      Swal.fire({
+        text: translations[ 'gapiInited is true'],
+        icon: "error",
+        showCancelButton: false,
+        showCloseButton: true,
+        confirmButtonColor: "#d33",
+        confirmButtonText: translations['Close']
+      })
+    })
     } else {
       console.log('gapiInited is false');
+      this.translate.get(['Close', 'gapiInited is false']).subscribe(translations => {
+        Swal.fire({
+          text: translations[ 'gapiInited is false'],
+          icon: "error",
+          showCancelButton: false,
+          showCloseButton: true,
+          confirmButtonColor: "#d33",
+          confirmButtonText: translations['Close']
+        })
+      })
     }
 
     if (this.gisInited) {
-      console.log('gisInited is true');
+      this.translate.get(['Close', 'gapiInited is true']).subscribe(translations => {
+        Swal.fire({
+          text: translations[ 'gapiInited is true'],
+          icon: "error",
+          showCancelButton: false,
+          showCloseButton: true,
+          confirmButtonColor: "#d33",
+          confirmButtonText: translations['Close']
+        })
+      })
     } else {
-      console.log('gisInited is false');
+      this.translate.get(['Close', 'gapiInited is false']).subscribe(translations => {
+        Swal.fire({
+          text: translations[ 'gapiInited is false'],
+          icon: "error",
+          showCancelButton: false,
+          showCloseButton: true,
+          confirmButtonColor: "#d33",
+          confirmButtonText: translations['Close']
+        })
+      })
     }
 
     if (this.gapiInited && this.gisInited) {
       const spreadSheetBtn = document.getElementById('spreadSheetBtn');
       if (spreadSheetBtn) {
-        console.log('spreadSheetBtn visible');
         spreadSheetBtn.style.visibility = 'visible';
       } else {
         console.log('spreadSheetBtn not found');
+        this.translate.get(['Close', 'spreadSheetBtn not found']).subscribe(translations => {
+          Swal.fire({
+            text: translations[ 'spreadSheetBtn not found'],
+            icon: "error",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#d33",
+            confirmButtonText: translations['Close']
+          })
+        })
       }
     }
   }
@@ -151,7 +192,16 @@ export class SheetsApiService {
   //לפני הכל- בדיקה שגאפי קיים
   checkInitGapi(): boolean {
     if (!gapi || !gapi.client) {
-      console.error('gapi client not loaded.');
+      this.translate.get(['Close', 'gapi client not loaded']).subscribe(translations => {
+        Swal.fire({
+          text: translations[ 'gapi client not loaded'],
+          icon: "error",
+          showCancelButton: false,
+          showCloseButton: true,
+          confirmButtonColor: "#d33",
+          confirmButtonText: translations['Close']
+        })
+      })
       return false;
     }
     return true;
@@ -160,7 +210,6 @@ export class SheetsApiService {
   navigationToTheSheet(spreadsheetId: string) {
     // sheetUrl = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/edit`;
     const spreadsheetUrl = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/edit`;
-    console.log('View the new spreadsheet at:', spreadsheetUrl);
     // Open the URL in a new tab
     window.open(spreadsheetUrl, '_blank');
   }
@@ -183,8 +232,16 @@ export class SheetsApiService {
       // Ensure GAPI is loaded
       if (!gapi || !gapi.client) {
         console.log('GAPI client not loaded.');
-        throw new Error('GAPI client not loaded.');
-      }
+        this.translate.get(['Close', 'gapi client not loaded']).subscribe(translations => {
+          Swal.fire({
+            text: translations[ 'gapi client not loaded'],
+            icon: "error",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#d33",
+            confirmButtonText: translations['Close']
+          })
+        })      }
 
       // Ensure the Google Drive API is initialized
       await gapi.client.load('drive', 'v3');
@@ -196,7 +253,6 @@ export class SheetsApiService {
 
       const files = response.result.files;
       if (!files || files.length === 0) {
-        console.log('No Google Sheets found.');
         return [];
       }
 
@@ -207,7 +263,16 @@ export class SheetsApiService {
 
       return googleSheets;
     } catch (error) {
-      console.error('Error listing Google Sheets:', error);
+      this.translate.get(['Close', 'cc']).subscribe(translations => {
+        Swal.fire({
+          text: translations[ 'Error listing Google Sheets'],
+          icon: "error",
+          showCancelButton: false,
+          showCloseButton: true,
+          confirmButtonColor: "#d33",
+          confirmButtonText: translations['Close']
+        })
+      })
       return [];
     }
   }
@@ -221,14 +286,33 @@ export class SheetsApiService {
 
       const sheets = response.result.sheets;
       if (!sheets) {
-        console.error('No sheets found.');
+        this.translate.get(['Close', 'No sheets found.']).subscribe(translations => {
+          Swal.fire({
+            text: translations[ 'No sheets found.'],
+            icon: "error",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#d33",
+            confirmButtonText: translations['Close']
+          })
+        })
         return [];
       }
 
       const sheetNames = sheets.map((sheet: any) => sheet.properties.title);
       return sheetNames;
     } catch (error) {
-      console.error('Error getting sheet names:', error);
+     
+      this.translate.get(['Close', 'Error getting sheet names:']).subscribe(translations => {
+        Swal.fire({
+          text: translations[ 'Error getting sheet names:'+error],
+          icon: "error",
+          showCancelButton: false,
+          showCloseButton: true,
+          confirmButtonColor: "#d33",
+          confirmButtonText: translations['Close']
+        })
+      })
       return [];
     }
   }
@@ -253,9 +337,17 @@ export class SheetsApiService {
       const response = await gapi.client.sheets.spreadsheets.values.append(
         request
       );
-      console.log('Data added to sheet:', JSON.stringify(response, null, 2));
     } catch (err) {
-      console.error('Error creating spreadsheet or adding data:', err);
+      this.translate.get(['Close', 'Error creating spreadsheet or adding data:']).subscribe(translations => {
+        Swal.fire({
+          text: translations[ 'Error creating spreadsheet or adding data:'+err],
+          icon: "error",
+          showCancelButton: false,
+          showCloseButton: true,
+          confirmButtonColor: "#d33",
+          confirmButtonText: translations['Close']
+        })
+      })
     }
   }
   //יצירת גוגל שיטס חדש
@@ -267,7 +359,6 @@ export class SheetsApiService {
         },
       });
       const spreadsheetId = createResponse.result.spreadsheetId;
-      console.log('Created new spreadsheet with ID:', spreadsheetId);
       return spreadsheetId;
     } catch (error) {
       return '';
@@ -366,7 +457,16 @@ export class SheetsApiService {
       window.open(spreadsheetUrl, '_blank'); // פתיחת הגיליון בחלון חדש
       return response.result.replies[0].addSheet.properties.sheetId;
     } catch (error) {
-      console.error('Error adding sheet:', error);
+      this.translate.get(['Close', 'Error adding sheet:']).subscribe(translations => {
+        Swal.fire({
+          text: translations[ 'Error adding sheet:'+error],
+          icon: "error",
+          showCancelButton: false,
+          showCloseButton: true,
+          confirmButtonColor: "#d33",
+          confirmButtonText: translations['Close']
+        })
+      })
       return 'erorr!';
     }
   }
@@ -415,7 +515,16 @@ export class SheetsApiService {
         },
       };
     } catch (erorr) {
-      console.log('error: ', erorr);
+      this.translate.get(['Close', 'error']).subscribe(translations => {
+        Swal.fire({
+          text: translations[ 'error'+erorr],
+          icon: "error",
+          showCancelButton: false,
+          showCloseButton: true,
+          confirmButtonColor: "#d33",
+          confirmButtonText: translations['Close']
+        })
+      })
     }
   }
 }

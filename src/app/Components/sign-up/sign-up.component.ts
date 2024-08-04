@@ -117,12 +117,18 @@ export class SignUpComponent {
     this.userService.addUser(this.signUpForm.value).subscribe(
       () => {
         this.emailService.sendEmailSignUp(this.signUpForm.value).subscribe(() => {
-          this.spiner.hide();
-          this.router.navigate(['../login']);
+          
+          this.userService.login(this.signUpForm.value.email,this.signUpForm.value.password).subscribe( 
+            (user: any) => {
+            this.spiner.hide();
+            this.router.navigate(['/redirect']);
+
+           } )
+
+
         },
           (error) => {
             this.spiner.hide();
-            console.log(error);
             this.dialog.open(DialogComponent, {
               data: {
                 title: 'שגיאה',

@@ -84,7 +84,8 @@ export class GenericBourdComponent implements OnInit, OnChanges {
     private resolver: ComponentFactoryResolver,
     private sheetsAPI: SheetsApiService,
     private translateService: TranslateService,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private translate:TranslateService
   ) {}
 
   columns: Column[] = [];
@@ -128,19 +129,22 @@ document(rowData: any){
   }
 
   onDelete(rowData: any) {
+    this.translate.get(['sure','revert','revertTrue','cancel']).subscribe(translation=> 
     Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      title:translation['sure'],
+      text:translation['revert'],
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!',
-    }).then((result) => {
+      cancelButtonText: translation['cancel'],
+      confirmButtonText: translation['revertTrue'],
+    })
+  .then((result) => {
       if (result.isConfirmed) {
         this.delete.emit(rowData);
       }
-    });
+    }))
   }
 
   generateColumns() {
@@ -194,7 +198,6 @@ document(rowData: any){
       this.columns.forEach((c) => this.globalFilterFields.push(c.field));
     }
     if (this.positionData.length == 0 || !this.positionData) {
-      console.log(this.positionData);
     }
    }
 
@@ -476,8 +479,6 @@ document(rowData: any){
       result.push(row);
       rowIndex++;
     });
-
-    console.log('result: ', result);
     return result;
   }
 
