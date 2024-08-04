@@ -204,5 +204,6 @@
   "newDoc": "new document",
   "chooseMatchOption": "chooseMatchOption",
   "titleExport": "titleExport",
-  "TasksToSubmitToday": "Tasks to submit today"
+  "TasksToSubmitToday": "Tasks to submit today",
+   "Submit":"Submit"
 }

@@ -213,5 +213,6 @@
   "titleExport": "XSL ייצוא נתוני טבלה זו ל",
   "upLoadFile": "הקובץ הועלה בהצלחה",
   "DropFiles": "גרור ושחרר קבצים לכאן כדי להעלות",
-  "TasksToSubmitToday": "משימות להגשה היום"
+  "TasksToSubmitToday": "משימות להגשה היום",
+  "Submit":"שלח"
 }
