@@ -1,4 +1,4 @@
-import { Component, OnInit,Inject, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ViewContainerRef } from '@angular/core';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { Router, RouterLink } from '@angular/router';
 import { LanguageService } from '@app/Services/language.service';
@@ -44,7 +44,7 @@ export class NavComponent implements OnInit {
     private authService: AuthService,
     private route: Router,
     private generalService: GeneralService,
-    @Inject(WINDOW) private window: Window ,
+    @Inject(WINDOW) private window: Window,
     private userService: UserService,
   ) {
     this.currentLanguage = 'he';
@@ -73,7 +73,7 @@ export class NavComponent implements OnInit {
           { path: '/customer', label: 'Customers' },
           { path: '/home', label: 'HomePage' }
         );
-        
+
       }
       if (role == 3) {
         this.links.push(
@@ -85,7 +85,7 @@ export class NavComponent implements OnInit {
           { path: '/users', label: 'Users' },
           { path: '/home', label: 'HomePage' }
         );
-        
+
       }
     }
   }
@@ -98,7 +98,7 @@ export class NavComponent implements OnInit {
   }
 
   updateDetails(): void {
-  
+
   }
 
   editUser() {
@@ -110,15 +110,15 @@ export class NavComponent implements OnInit {
       this.generalService.popUpAddOrEdit(
         EditUserComponent,
         this.popupContainer,
-        () => {},
+        () => { },
         id
       );
     }
-    else{
-      this.translate.get('unConnect').subscribe(translation=>
-      Swal.fire({
-        text:translation
-      })
+    else {
+      this.translate.get('unConnect').subscribe(translation =>
+        Swal.fire({
+          text: translation
+        })
       )
     }
   }
@@ -129,6 +129,10 @@ export class NavComponent implements OnInit {
   logOut() {
     this.userService.signOut();
     this.updateLinks();
-    this.route.navigate(['/login'])
+    this.route.navigate(['/login']).then(() => {
+      setTimeout(() => {
+        window.location.reload();
+      }, 100);
+    });
   }
 }
