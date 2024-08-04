@@ -106,13 +106,17 @@ export class LoginComponent implements OnInit {
         // else{
         //   this.router.navigate(['/home'], { relativeTo: this.active });
         // }
-        this.router.navigate(['/redirect']);
+        this.router.navigate(['/redirect']).then(() => {
+          // רענן את העמוד לאחר ניווט מוצלח
+          setTimeout(() => {
+            window.location.reload();
+          }, 100); // ה-delay תלוי בצורך שלך
+        });
 
       },
       (error) => {
         if (error.status == 404) {
           this.spinner.hide()
-          window.location.reload()
           this.translate.get(['EmailNotFound', 'Close']).subscribe(translation =>
             Swal.fire({
               text: translation['EmailNotFound'],
@@ -127,7 +131,6 @@ export class LoginComponent implements OnInit {
         } else if (error.status == 400) {
           this.passwordCheck = true;
           this.spinner.hide()
-          window.location.reload()
           // Swal.fire({
           //   text: 'error password',
           //   icon: 'error',
