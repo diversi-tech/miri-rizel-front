@@ -29,6 +29,7 @@ import { Project } from '@app/Model/Project';
 import { GenericBourdComponent } from '@app/Components/generic-bourd/generic-bourd.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '@app/Services/auth.service';
+import { AddCustomerComponent } from '../customers/add-customer/add-customer.component';
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
@@ -272,14 +273,15 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.componentType = AddLeadComponent;
     this.popUpAddOrEdit("Add Lead");
   }
+  addCustomer(){
+    this.componentType = AddCustomerComponent;
+    this.popUpAddOrEdit("AddCustomerTitle");
+  }  
   addTask() {
     this.componentType = AddTaskComponent;
     this.popUpAddOrEdit("Add Task");
   }
-  addCustomer() {
-    this.componentType = AddLeadComponent;
-    this.popUpAddOrEdit("Add Lead");
-  }
+ 
 
   popUpAddOrEdit(title: string) {
     Swal.fire({
@@ -289,6 +291,8 @@ export class HomePageComponent implements OnInit, OnDestroy {
         const container = document.getElementById('popupContainer');
         if (container) {
           const factory = this.resolver.resolveComponentFactory(this.componentType);
+          console.log(factory);
+          
           const componentRef = this.popupContainer.createComponent(factory);
           componentRef.instance.dataRefreshed.subscribe(() => {
           })
