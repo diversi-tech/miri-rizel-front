@@ -58,18 +58,18 @@ export class LoginComponent implements OnInit {
   constructor(
     private spinner: NgxSpinnerService,
     private resetPasswordService: ResetPasswordService,
-    private dialog: MatDialog,
     private router: Router,
-    private location:Location,
     private userService: UserService,
     private active: ActivatedRoute,
     private translate: TranslateService,
     private fb: FormBuilder,
     private Keyboardservice: KeyboardService
-  ) {   this.logInForm = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', Validators.required]
-  });}
+  ) {
+    this.logInForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
+    });
+  }
 
 
   hide = signal(true);
@@ -96,39 +96,38 @@ export class LoginComponent implements OnInit {
     const email = this.email.value;
     const password = this.pass.value;
     this.userService.login(email, password).subscribe(
-      (user: any) => {  
-        console.log(user.role);
-           
+      (user: any) => {
         this.spinner.hide();
-            // if (user.user.role.id == 1) {
-            //   this.router.navigate(['/Dashboard'], { relativeTo: this.active });
-            //   console.log(user.user.role,"user.role");             
-            // }
-            // else{
-            //   this.router.navigate(['/home'], { relativeTo: this.active });
-            // }
-            this.router.navigate(['/redirect']);
+        window.location.reload()
+        // if (user.user.role.id == 1) {
+        //   this.router.navigate(['/Dashboard'], { relativeTo: this.active });
+        //   console.log(user.user.role,"user.role");             
+        // }
+        // else{
+        //   this.router.navigate(['/home'], { relativeTo: this.active });
+        // }
+        this.router.navigate(['/redirect']);
 
       },
       (error) => {
         if (error.status == 404) {
           this.spinner.hide()
-          this.translate.get(['EmailNotFound','Close']).subscribe(translation=>
-          Swal.fire({
-            text: translation['EmailNotFound'],
-            icon: 'error',
-            showCancelButton: false,
-            showCloseButton: true,
-            confirmButtonColor: '#d33',
-            confirmButtonText:  translation['Close'],
-          }).then((res) => {
-            this.spinner.hide()
-            this.location.go(this.location.path());
-          }))
+          window.location.reload()
+          this.translate.get(['EmailNotFound', 'Close']).subscribe(translation =>
+            Swal.fire({
+              text: translation['EmailNotFound'],
+              icon: 'error',
+              showCancelButton: false,
+              showCloseButton: true,
+              confirmButtonColor: '#d33',
+              confirmButtonText: translation['Close'],
+            }).then((res) => {
+              this.spinner.hide()
+            }))
         } else if (error.status == 400) {
           this.passwordCheck = true;
           this.spinner.hide()
-          this.location.go(this.location.path());
+          window.location.reload()
           // Swal.fire({
           //   text: 'error password',
           //   icon: 'error',
@@ -142,18 +141,18 @@ export class LoginComponent implements OnInit {
         }
         else {
           this.spinner.hide()
-          this.translate.get(['Close','error']).subscribe(translation=>
-          Swal.fire({
-            text: translation,
-            icon: 'error',
-            showCancelButton: false,
-            showCloseButton: true,
-            confirmButtonColor: '#d33',
-            confirmButtonText: translation['Close'],
-          }))
+          this.translate.get(['Close', 'error']).subscribe(translation =>
+            Swal.fire({
+              text: translation,
+              icon: 'error',
+              showCancelButton: false,
+              showCloseButton: true,
+              confirmButtonColor: '#d33',
+              confirmButtonText: translation['Close'],
+            }))
         }
       }
-    
+
     )
     this.spinner.hide();
   }
@@ -171,32 +170,32 @@ export class LoginComponent implements OnInit {
           this.spinner.hide()
           if (err.status == 400) {
             this.translate
-            .get(['Close', 'EmailNotFound'])
-            .subscribe((translations) => {
-              Swal.fire({
-                text: translations['EmailNotFound'],
-                icon: 'error',
-                showCancelButton: false,
-                showCloseButton: true,
-                confirmButtonColor: '#d33',
-                confirmButtonText: translations['Close'],
+              .get(['Close', 'EmailNotFound'])
+              .subscribe((translations) => {
+                Swal.fire({
+                  text: translations['EmailNotFound'],
+                  icon: 'error',
+                  showCancelButton: false,
+                  showCloseButton: true,
+                  confirmButtonColor: '#d33',
+                  confirmButtonText: translations['Close'],
+                });
               });
-            });
           } else {
             this.translate
-            .get(['Close', 'ProblemSendingEmail'])
-            .subscribe((translations) => {
-              Swal.fire({
-                text: translations['ProblemSendingEmail'],
-                icon: 'error',
-                showCancelButton: false,
-                showCloseButton: true,
-                confirmButtonColor: '#d33',
-                confirmButtonText: translations['Close'],
-              }).then((res) => {
-                this.spinner.hide()
+              .get(['Close', 'ProblemSendingEmail'])
+              .subscribe((translations) => {
+                Swal.fire({
+                  text: translations['ProblemSendingEmail'],
+                  icon: 'error',
+                  showCancelButton: false,
+                  showCloseButton: true,
+                  confirmButtonColor: '#d33',
+                  confirmButtonText: translations['Close'],
+                }).then((res) => {
+                  this.spinner.hide()
+                });
               });
-            });
           }
         }
       );
