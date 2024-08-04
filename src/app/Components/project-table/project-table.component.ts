@@ -134,7 +134,7 @@ export class ProjectTableComponent implements OnInit {
       const deletecallback = (row: any) => {
         this.onDeleteTask(row)
       }
-      this.genericBourd.PopTable(taskFilter, loading, col$types, objData, objFields, positionD, '800px', deletecallback, true);
+      this.genericBourd.PopTable(taskFilter, loading, col$types, objData, objFields, positionD, '1000px', deletecallback, true);
 
     } else {
       this.translate.get(['close', 'notasks']).subscribe(translations => {

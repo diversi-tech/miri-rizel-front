@@ -79,53 +79,15 @@ export class SheetsApiService {
 
   maybeEnableButtons(): void {
     if (this.gapiInited) {
-     // console.log('gapiInited is true');
-     this.translate.get(['Close', 'gapiInited is true']).subscribe(translations => {
-      Swal.fire({
-        text: translations[ 'gapiInited is true'],
-        icon: "error",
-        showCancelButton: false,
-        showCloseButton: true,
-        confirmButtonColor: "#d33",
-        confirmButtonText: translations['Close']
-      })
-    })
+   
     } else {
-      console.log('gapiInited is false');
-      this.translate.get(['Close', 'gapiInited is false']).subscribe(translations => {
-        Swal.fire({
-          text: translations[ 'gapiInited is false'],
-          icon: "error",
-          showCancelButton: false,
-          showCloseButton: true,
-          confirmButtonColor: "#d33",
-          confirmButtonText: translations['Close']
-        })
-      })
+    
     }
 
     if (this.gisInited) {
-      this.translate.get(['Close', 'gapiInited is true']).subscribe(translations => {
-        Swal.fire({
-          text: translations[ 'gapiInited is true'],
-          icon: "error",
-          showCancelButton: false,
-          showCloseButton: true,
-          confirmButtonColor: "#d33",
-          confirmButtonText: translations['Close']
-        })
-      })
+     
     } else {
-      this.translate.get(['Close', 'gapiInited is false']).subscribe(translations => {
-        Swal.fire({
-          text: translations[ 'gapiInited is false'],
-          icon: "error",
-          showCancelButton: false,
-          showCloseButton: true,
-          confirmButtonColor: "#d33",
-          confirmButtonText: translations['Close']
-        })
-      })
+     
     }
 
     if (this.gapiInited && this.gisInited) {
