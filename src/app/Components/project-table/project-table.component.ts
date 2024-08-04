@@ -95,24 +95,26 @@ export class ProjectTableComponent implements OnInit {
 
         // Remove the project from the local list after successful deletion
         this.loadP()
+        this.translate.get(['deleteProject','OK']).subscribe(translation=>
         Swal.fire({
-          text: 'Project deleted successfully',
+          text: translation['deleteProject'],
           icon: "success",
           showCancelButton: false,
           showCloseButton: true,
           confirmButtonColor: "#3085D6",
-          confirmButtonText: 'OK'
-        });
+          confirmButtonText:translation['OK']
+        }))
       },
       (error) => {
+        this.translate.get(['errorDeletProject','Close']).subscribe(translation=>
         Swal.fire({
-          text: 'Error deleting project. Please try again.',
+          text: translation['errorDeletProject'],
           icon: "error",
           showCancelButton: false,
           showCloseButton: true,
           confirmButtonColor: "#d33",
-          confirmButtonText: 'Close'
-        });
+          confirmButtonText: translation['Close']
+        }))
       }
     );
     Swal.close();
@@ -177,8 +179,6 @@ export class ProjectTableComponent implements OnInit {
   }
   popUpAddOrEdit(title: string, l: Number | null) {
     Swal.fire({
-
-
       html: '<div id="popupContainer"></div>',
       showConfirmButton: false,
       didOpen: () => {
@@ -212,18 +212,19 @@ export class ProjectTableComponent implements OnInit {
     this.taskService.deleteTask(task.taskId!).subscribe(
       (data: any) => {
         if (data == true) {
+          this.translate.get(['deleteTask', 'Close']).subscribe(translations => 
           Swal.fire({
-            text: "The task was successfully deleted",
+            text: translations['deleteTask'],
             icon: "success",
             showCancelButton: false,
             showCloseButton: true,
             confirmButtonColor: "#3085D6",
-            confirmButtonText: "close"
+            confirmButtonText: translations['Close']
           }).then((result) => {
             this.taskService.getAll().subscribe((data) => {
               this.tasks = data
             })
-          });
+          }))
         }
       },
       (error: any) => {

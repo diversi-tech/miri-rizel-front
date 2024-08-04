@@ -116,22 +116,54 @@ export class SignUpComponent {
     this.spiner.show();
     this.userService.addUser(this.signUpForm.value).subscribe(
       () => {
-       
-        this.emailService
-          .sendEmailSignUp(this.signUpForm.value)
-          .subscribe(() => {
+        this.emailService.sendEmailSignUp(this.signUpForm.value).subscribe(() => {
+          
+          this.userService.login(this.signUpForm.value.email,this.signUpForm.value.password).subscribe( 
+            (user: any) => {
             this.spiner.hide();
-            this.router.navigate(['../login']);
-          });
+            this.router.navigate(['/redirect']);
+
+           } )
+
+
+        },
+          (error) => {
+            this.spiner.hide();
+            this.dialog.open(DialogComponent, {
+              data: {
+                title: 'שגיאה',
+                context: 'לא קיים חשבון שזאת כתובת המייל שלו',
+                buttonText: 'סגור',
+              },
+            });
+           
+          }
+        );
+
       },
       (error) => {
-        this.dialog.open(DialogComponent, {
-          data: {
-            title: 'שגיאה',
-            context: 'כתובת מייל כבר קיימת',
-            buttonText: 'סגור',
-          },
-        });
+        this.spiner.hide();
+        console.log(error);
+        if (error.status == 409)
+          this.dialog.open(DialogComponent, {
+            data: {
+              title: 'שגיאה',
+              context: 'כתובת מייל כבר קיימת',
+              buttonText: 'סגור',
+            },
+          }
+          );
+        else{
+          this.spiner.hide();
+       
+          this.dialog.open(DialogComponent, {
+            data: {
+              title: 'שגיאה',
+              context: 'אין אפשרות להרשם כעת , נסה שוב במועד מאוחר יותר',
+              buttonText: 'סגור',
+            },
+          });
+        }
       }
     );
   }
@@ -141,8 +173,6 @@ export class SignUpComponent {
   @ViewChild('passwordtwoInput') passwordtwoinput!: ElementRef;
   @ViewChild('fnameInput') fnameInput!: ElementRef;
   @ViewChild('lnameInput') lnameInput!: ElementRef;
-
-
 
   ngAfterViewInit() {
     this.emailInput.nativeElement.addEventListener('focus', () => {

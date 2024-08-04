@@ -13,12 +13,12 @@ export class TaskService {
   private apiUrl = `${environment.apiUrl}task/`
 
   constructor(private http: HttpClient) { }
-  getToken() {
-    return localStorage.getItem('token');
-  }
-  private headers = new HttpHeaders({
-    Authorization: `Bearer ${this.getToken()}`,
-  });
+  // getToken() {
+  //   return localStorage.getItem('token');
+  // }
+  // private headers = new HttpHeaders({
+  //   Authorization: `Bearer ${this.getToken()}`,
+  // });
 
   addTask(task: Task): Observable<any> {
     const taskToSend: Task = {
@@ -30,15 +30,15 @@ export class TaskService {
         customer: undefined
       }
     }
-    return this.http.post<any>(`${this.apiUrl}`, taskToSend, {headers: this.headers});
+    return this.http.post<any>(`${this.apiUrl}`, taskToSend);
   }
 
   getTaskById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}GetById/?id=${id}`, {headers: this.headers});
+    return this.http.get<any>(`${this.apiUrl}GetById/?id=${id}`);
   }
 
   updateTask(task: Task): Observable<any> {
-    return this.http.put<boolean>(`${this.apiUrl}`, task, {headers: this.headers})
+    return this.http.put<boolean>(`${this.apiUrl}`, task)
   }
 
   updateGoogleId(taskId: number,googleId:string): Observable<any> {
@@ -46,26 +46,26 @@ export class TaskService {
   }
   
   getAllStatus(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}readAllStatus`, {headers: this.headers})
+    return this.http.get<any>(`${this.apiUrl}readAllStatus`)
   }
 
   deleteTask(id:number):Observable<any>{
-    return this.http.delete<any>(`${this.apiUrl}?id=${id}`, {headers: this.headers});
+    return this.http.delete<any>(`${this.apiUrl}?id=${id}`);
   }
 
   getAllPriorities(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}readAllPriority`,  {headers: this.headers})
+    return this.http.get<any>(`${this.apiUrl}readAllPriority`)
   }
 
   editUserPost(task: Task) {
-    this.http.put(`${this.apiUrl}`, task , {headers: this.headers});
+    this.http.put(`${this.apiUrl}`, task );
   }
   //אין כזה ניתוב בקןמטרולר של משימות
   getTaskByIdProject(id: number): Observable<Task[]> {
     return this.http.get<Task[]>(`${this.apiUrl}GetByIdProject?id=${id}`);
   }
   getAll():Observable<Array<Task>> {
-    return this.http.get<Array<Task>>(`${this.apiUrl}`, {headers: this.headers}).pipe(
+    return this.http.get<Array<Task>>(`${this.apiUrl}`).pipe(
       switchMap((response: Array<Task>) => {
         return of(response);
       }),

@@ -109,51 +109,237 @@ import { RouterModule } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from '@app/app-routing.module';
-import { HttpClient, withInterceptorsFromDi, provideHttpClient } from '@angular/common/http';
+import {
+  HttpClient,
+  withInterceptorsFromDi,
+  provideHttpClient,
+  withInterceptors,
+} from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from '@abacritt/angularx-social-login';
-import { provideClientHydration, BrowserModule, bootstrapApplication } from '@angular/platform-browser';
+import {
+  GoogleLoginProvider,
+  SocialAuthServiceConfig,
+  SocialLoginModule,
+} from '@abacritt/angularx-social-login';
+import {
+  provideClientHydration,
+  BrowserModule,
+  bootstrapApplication,
+} from '@angular/platform-browser';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 
 
+import { authInterceptor } from '@app/Interceptors/auth.interceptor';
 
 bootstrapApplication(AppComponent, {
     providers: [
-        importProvidersFrom(TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient]
-            }
-        }), TranslateModule, BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, RouterModule, SocialLoginModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatIconModule, MatSlideToggleModule, MatCardModule, MatDialogModule, MatToolbarModule, MatSortModule, MatPaginatorModule, MatTableModule, InputTextModule, ButtonModule, ToastModule, MatProgressSpinnerModule, ProgressBarModule, TagModule, AvatarModule, AvatarGroupModule, AccordionModule, AutoCompleteModule, BadgeModule, BreadcrumbModule, BlockUIModule, CalendarModule, CarouselModule, CascadeSelectModule, ChartModule, CheckboxModule, ChipsModule, ChipModule, ColorPickerModule, ConfirmDialogModule, ConfirmPopupModule, ContextMenuModule, VirtualScrollerModule, DataViewModule, DialogModule, DividerModule, DockModule, DragDropModule, DropdownModule, DynamicDialogModule, EditorModule, FieldsetModule, FileUploadModule, GalleriaModule, InplaceModule, InputMaskModule, InputSwitchModule, InputTextareaModule, InputNumberModule, ImageModule, KnobModule, ListboxModule, MegaMenuModule, MenuModule, MenubarModule, MessageModule, MessagesModule, MultiSelectModule, OrganizationChartModule, OrderListModule, OverlayPanelModule, PaginatorModule, PanelModule, PanelMenuModule, PasswordModule, PickListModule, ProgressSpinnerModule, RadioButtonModule, RatingModule, SelectButtonModule, SidebarModule, ScrollerModule, ScrollPanelModule, ScrollTopModule, SkeletonModule, SlideMenuModule, SliderModule, SpeedDialModule, SpinnerModule, SplitterModule, SplitButtonModule, StepsModule, TableModule, TabMenuModule, TabViewModule, TerminalModule, TieredMenuModule, TimelineModule, ToggleButtonModule, ToolbarModule, TooltipModule, TriStateCheckboxModule, TreeModule, TreeSelectModule, TreeTableModule, AnimateModule, CardModule, MatDatepickerModule, BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatIconModule, MatSlideToggleModule, MatCardModule, MatDialogModule, AppRoutingModule, FormsModule, MatToolbarModule, MatSortModule, MatPaginatorModule, MatTableModule, InputTextModule, ButtonModule, CalendarModule, FormsModule, AutoCompleteModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatAutocompleteModule, DropdownModule, CardModule, MatDatepickerModule, BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatIconModule, MatSlideToggleModule, MatCardModule, MatDialogModule, AppRoutingModule, FormsModule, MatToolbarModule, MatSortModule, MatPaginatorModule, MatTableModule, InputTextModule, ButtonModule, CalendarModule, FormsModule, AutoCompleteModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatAutocompleteModule, DropdownModule),
-        provideClientHydration(),
-        {
-            provide: 'SocialAuthServiceConfig',
-            useValue: {
-                autoLogin: false,
-                providers: [
-                    {
-                        id: GoogleLoginProvider.PROVIDER_ID,
-                        provider: new GoogleLoginProvider(" 592574124687-bvpc5dmgfms66j1q6725fi5gevmsmtmf.apps.googleusercontent.com")
-                    },
-                ],
-                callback: 'initGoogleOneTap',
-                onError: (err: any) => {
-                    console.error(err);
-                }
-            } as SocialAuthServiceConfig,
+        JwtHelperService, // הוסף את JwtHelperService כ-Provider
+        { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+       
+    importProvidersFrom(
+      TranslateModule.forRoot({
+        loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient],
         },
-        provideHttpClient(withInterceptorsFromDi()),
-        provideAnimations(),
-        provideHttpClient(withInterceptorsFromDi()),
-        provideAnimations(),
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClient(withInterceptorsFromDi()),
-        provideAnimations(),
-        provideHttpClient(withInterceptorsFromDi()),
-    ]
-})
-  .catch(err => console.error(err));
- export function HttpLoaderFactory(http: HttpClient) {
-   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+      }),
+      TranslateModule,
+      BrowserModule,
+      AppRoutingModule,
+      FormsModule,
+      ReactiveFormsModule,
+      RouterModule,
+      SocialLoginModule,
+      MatButtonModule,
+      MatFormFieldModule,
+      MatInputModule,
+      MatIconModule,
+      MatSlideToggleModule,
+      MatCardModule,
+      MatDialogModule,
+      MatToolbarModule,
+      MatSortModule,
+      MatPaginatorModule,
+      MatTableModule,
+      InputTextModule,
+      ButtonModule,
+      ToastModule,
+      MatProgressSpinnerModule,
+      ProgressBarModule,
+      TagModule,
+      AvatarModule,
+      AvatarGroupModule,
+      AccordionModule,
+      AutoCompleteModule,
+      BadgeModule,
+      BreadcrumbModule,
+      BlockUIModule,
+      CalendarModule,
+      CarouselModule,
+      CascadeSelectModule,
+      ChartModule,
+      CheckboxModule,
+      ChipsModule,
+      ChipModule,
+      ColorPickerModule,
+      ConfirmDialogModule,
+      ConfirmPopupModule,
+      ContextMenuModule,
+      VirtualScrollerModule,
+      DataViewModule,
+      DialogModule,
+      DividerModule,
+      DockModule,
+      DragDropModule,
+      DropdownModule,
+      DynamicDialogModule,
+      EditorModule,
+      FieldsetModule,
+      FileUploadModule,
+      GalleriaModule,
+      InplaceModule,
+      InputMaskModule,
+      InputSwitchModule,
+      InputTextareaModule,
+      InputNumberModule,
+      ImageModule,
+      KnobModule,
+      ListboxModule,
+      MegaMenuModule,
+      MenuModule,
+      MenubarModule,
+      MessageModule,
+      MessagesModule,
+      MultiSelectModule,
+      OrganizationChartModule,
+      OrderListModule,
+      OverlayPanelModule,
+      PaginatorModule,
+      PanelModule,
+      PanelMenuModule,
+      PasswordModule,
+      PickListModule,
+      ProgressSpinnerModule,
+      RadioButtonModule,
+      RatingModule,
+      SelectButtonModule,
+      SidebarModule,
+      ScrollerModule,
+      ScrollPanelModule,
+      ScrollTopModule,
+      SkeletonModule,
+      SlideMenuModule,
+      SliderModule,
+      SpeedDialModule,
+      SpinnerModule,
+      SplitterModule,
+      SplitButtonModule,
+      StepsModule,
+      TableModule,
+      TabMenuModule,
+      TabViewModule,
+      TerminalModule,
+      TieredMenuModule,
+      TimelineModule,
+      ToggleButtonModule,
+      ToolbarModule,
+      TooltipModule,
+      TriStateCheckboxModule,
+      TreeModule,
+      TreeSelectModule,
+      TreeTableModule,
+      AnimateModule,
+      CardModule,
+      MatDatepickerModule,
+      BrowserModule,
+      AppRoutingModule,
+      FormsModule,
+      ReactiveFormsModule,
+      MatButtonModule,
+      MatFormFieldModule,
+      MatInputModule,
+      MatIconModule,
+      MatSlideToggleModule,
+      MatCardModule,
+      MatDialogModule,
+      AppRoutingModule,
+      FormsModule,
+      MatToolbarModule,
+      MatSortModule,
+      MatPaginatorModule,
+      MatTableModule,
+      InputTextModule,
+      ButtonModule,
+      CalendarModule,
+      FormsModule,
+      AutoCompleteModule,
+      MatDatepickerModule,
+      MatNativeDateModule,
+      MatSelectModule,
+      MatAutocompleteModule,
+      DropdownModule,
+      CardModule,
+      MatDatepickerModule,
+      BrowserModule,
+      AppRoutingModule,
+      FormsModule,
+      ReactiveFormsModule,
+      MatButtonModule,
+      MatFormFieldModule,
+      MatInputModule,
+      MatIconModule,
+      MatSlideToggleModule,
+      MatCardModule,
+      MatDialogModule,
+      AppRoutingModule,
+      FormsModule,
+      MatToolbarModule,
+      MatSortModule,
+      MatPaginatorModule,
+      MatTableModule,
+      InputTextModule,
+      ButtonModule,
+      CalendarModule,
+      FormsModule,
+      AutoCompleteModule,
+      MatDatepickerModule,
+      MatNativeDateModule,
+      MatSelectModule,
+      MatAutocompleteModule,
+      DropdownModule
+    ),
+    provideHttpClient(withInterceptors([authInterceptor])),
+    provideClientHydration(),
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              ' 592574124687-bvpc5dmgfms66j1q6725fi5gevmsmtmf.apps.googleusercontent.com'
+            ),
+          },
+        ],
+        callback: 'initGoogleOneTap',
+        onError: (err: any) => {
+          console.error(err);
+        },
+      } as SocialAuthServiceConfig,
+    },
+    provideHttpClient(withInterceptorsFromDi()),
+    provideAnimations(),
+    provideHttpClient(withInterceptorsFromDi()),
+    provideAnimations(),
+    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(withInterceptorsFromDi()),
+    provideAnimations(),
+    provideHttpClient(withInterceptorsFromDi()),
+  ],
+}).catch((err) => console.error(err));
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }

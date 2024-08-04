@@ -19,6 +19,7 @@ import { Location } from '@angular/common';
 import { StatusCodeProject } from '@app/Model/StatusCodeProject';
 import { Priority } from '@app/Model/Priority';
 import { ProjectService } from '@app/Services/project.service';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -42,7 +43,7 @@ export class TaskBoardComponent implements OnInit {
   @ViewChild('popupContainer', { read: ViewContainerRef }) popupContainer!: ViewContainerRef;
 
   constructor(private location: Location
-    , private taskService: TaskService, private userService: UserService, private projectService: ProjectService, private resolver: ComponentFactoryResolver, private dialog: MatDialog) { }
+    , private taskService: TaskService, private userService: UserService, private projectService: ProjectService, private resolver: ComponentFactoryResolver, private dialog: MatDialog,private translate:TranslateService) { }
 
   ngOnInit() {
     this.taskService.getAllPriorities().subscribe(
@@ -131,18 +132,19 @@ export class TaskBoardComponent implements OnInit {
     this.taskService.deleteTask(task.taskId!).subscribe(
       (data: any) => {
         if (data == true) {
+          this.translate.get(['deleteTask','Close']).subscribe(translion=>
           Swal.fire({
-            text: "The task was successfully deleted",
+            text: translion['deleteTask'],
             icon: "success",
             showCancelButton: false,
             showCloseButton: true,
             confirmButtonColor: "#3085D6",
-            confirmButtonText: "Close"
+            confirmButtonText: translion['Close']
           }).then((result) => {
             this.taskService.getAll().subscribe((data) => {
               this.tasks = data
             })
-          });
+          }));
         }
       },
       (error: any) => {
