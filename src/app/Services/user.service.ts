@@ -124,7 +124,6 @@ export class UserService {
   // }
 
   getByMail(mail: string): Observable<User> {
-    console.log(mail);
     return this.http.get<User>(`${this.apiUrl}GetByEmail?email=${mail}`);
     // console.log(mail);
     // return this.http.get<User>(`${this.apiUrl}GetByEmail?email=${mail}`);
@@ -137,7 +136,6 @@ export class UserService {
   addUser(userDetails: any): Observable<any> {
     const url = `${this.apiUrl}`;
     userDetails.role = { id: 1, description: 'Customer' };
-    console.log(userDetails);
     return this.http.post(url, userDetails);
   }
 
@@ -146,7 +144,6 @@ export class UserService {
   }
 
   deleteUserById(userId: number): Observable<boolean> {
-    console.log('delete id ', userId);
     return this.http.delete<boolean>(`${this.apiUrl}DeleteById?id=${userId}`);
   }
   deleteUserEmail(email: string): Observable<boolean> {

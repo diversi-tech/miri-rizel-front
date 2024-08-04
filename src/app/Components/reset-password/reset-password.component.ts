@@ -34,7 +34,7 @@ import { NgxSpinnerService } from "ngx-spinner";
     ],
 })
 export class ResetPasswordComponent implements OnInit {
-  constructor(private spinner:NgxSpinnerService,private route: Router, private userService: UserService, private dialog: MatDialog, private resetPasswordService: ResetPasswordService,private translate:TranslateService) { }
+  constructor(private spinner:NgxSpinnerService,private route: Router, private userService: UserService,  private translate: TranslateService, private dialog: MatDialog, private resetPasswordService: ResetPasswordService) { }
 
   ngOnInit(): void {
     this.resetForm = new FormGroup({
@@ -107,7 +107,17 @@ export class ResetPasswordComponent implements OnInit {
             confirmButtonText: translations['close']
           }))
           this.spinner.hide()
-          console.error('Error updating password:', error);
+            this.translate.get(['Close', 'Error updating password']).subscribe(translations => {
+              Swal.fire({
+                text: translations[ 'Error updating password'],
+                icon: "error",
+                showCancelButton: false,
+                showCloseButton: true,
+                confirmButtonColor: "#d33",
+                confirmButtonText: translations['Close']
+              })
+            })
+          
         }
       );
     }
