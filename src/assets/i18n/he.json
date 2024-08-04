@@ -1,4 +1,6 @@
 {
+  "CustomerInputSelect": "בחירת לקוח",
+  "Documents": "מסמכים",
   "HomePage": "דף הבית",
   "Customers": "לקוחות",
   "customer": "לקוח",
@@ -56,7 +58,7 @@
   "PriorityInputSelect": "עדיפות",
   "StatusInputSelect": "סטטוס",
   "ProjectInputSelect": "פרויקט",
-  "CustomerInputSelect": "לקוח",
+  "UserInputSelect": "עובד",
   "InvalidEmailError": "כתובת מייל אינה תקנית",
   "ExistWorkerError": "יש לבחור עובד שקיים במערכת",
   "ExistProjectError": "יש לבחור פרויקט שקיים במערכת",
@@ -228,9 +230,8 @@
   "deleteTask": "המשימה נמחקה בהצלחה",
   "updatePassword": "סיסמתך עודכנה בהצלחה",
   "reConnect": "הנך מועבר להתחברות מחדש",
-  "errorUpdatePassword":"התרחשה שגיאה בעת עדכון הסיסמה",
-  "unConnectToConnect":"לא מחובר- מועבר להתחברות",
-  "viewTaskBord":" לצפיה בלוח המשימות",
-  "clickHere":"לחץ כאן"
-
+  "errorUpdatePassword": "התרחשה שגיאה בעת עדכון הסיסמה",
+  "unConnectToConnect": "לא מחובר- מועבר להתחברות",
+  "viewTaskBord": " לצפיה בלוח המשימות",
+  "clickHere": "לחץ כאן"
 }

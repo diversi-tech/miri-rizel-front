@@ -33,6 +33,7 @@ export class NavComponent implements OnInit {
   @ViewChild('popupContainer', { read: ViewContainerRef, static: true })
   popupContainer!: ViewContainerRef;
 
+
   ngOnInit() {
     this.updateLinks();
   }
@@ -43,8 +44,8 @@ export class NavComponent implements OnInit {
     private authService: AuthService,
     private route: Router,
     private generalService: GeneralService,
+    @Inject(WINDOW) private window: Window ,
     private userService: UserService,
-    @Inject(WINDOW) private window: Window 
   ) {
     this.currentLanguage = 'he';
     this.translate.use(this.currentLanguage);
@@ -76,6 +77,7 @@ export class NavComponent implements OnInit {
       }
       if (role == 3) {
         this.links.push(
+          { path: '/documents', label: 'Documents' },
           { path: '/task', label: 'Tasks' },
           { path: '/project', label: 'Projects' },
           { path: '/leads', label: 'Leads' },
@@ -120,6 +122,9 @@ export class NavComponent implements OnInit {
       )
     }
   }
+  // editUser() {
+  //   this.route.navigate(['/edit-user'])
+  // }
 
   logOut() {
     this.userService.signOut();
