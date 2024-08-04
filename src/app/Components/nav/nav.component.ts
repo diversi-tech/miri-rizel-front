@@ -98,7 +98,7 @@ export class NavComponent implements OnInit {
   }
 
   updateDetails(): void {
-    console.log('Update details clicked');
+  
   }
 
   editUser() {

@@ -19,11 +19,11 @@ import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
 
 
 @Component({
-    selector: 'app-add-project',
-    templateUrl: './add-project.component.html',
-    styleUrls: ['./add-project.component.css'],
-    standalone: true,
-    imports: [FormsModule, ReactiveFormsModule, MatInputModule, NgIf, MatFormFieldModule, DropdownModule,  TranslateModule,]
+  selector: 'app-add-project',
+  templateUrl: './add-project.component.html',
+  styleUrls: ['./add-project.component.css'],
+  standalone: true,
+  imports: [FormsModule, ReactiveFormsModule, MatInputModule, NgIf, MatFormFieldModule, DropdownModule, TranslateModule,]
 })
 export class AddProjectComponent implements OnInit {
 
@@ -39,19 +39,20 @@ export class AddProjectComponent implements OnInit {
     private customerService: CustomersService,
     private dialog: MatDialog,
     private router: Router,
-    private translate:TranslateService
- 
- 
-    ) {}
-  
+    private translate: TranslateService
 
- 
+
+  ) { }
+
+
+
   ngOnInit(): void {
-    this.date=new Date()
+    this.date = new Date()
     this.createForm();
     this.statusService.getAllStatus().subscribe(
       (data: any) => {
         this.statuses = data;
+        console.log(this.statuses)
       },
       (error: any) => {
         console.error('Error fetching status:', error);
@@ -70,12 +71,12 @@ export class AddProjectComponent implements OnInit {
   createForm() {
     this.projectForm = this.fb.group({
       name: ['', Validators.required],
-      description:  ['', Validators.required],
-      startDate: ['',[ Validators.required,this.futureDateValidator.bind(this)]],
-      endDate: ['',[ Validators.required,this.futureDateValidator.bind(this)]],
+      description: ['', Validators.required],
+      startDate: ['', [Validators.required, this.futureDateValidator.bind(this)]],
+      endDate: ['', [Validators.required, this.futureDateValidator.bind(this)]],
       status: '',
       customer: ['', Validators.required],
-     createdDate:[new Date()]
+      createdDate: [new Date()]
     });
     this.dateValidator.bind(this)
   }
@@ -91,21 +92,29 @@ export class AddProjectComponent implements OnInit {
       this.projectService.addProject(newProject)
         .subscribe(
           (response) => {
-            console.log(response);
+
             if (response) {
-               this.translate.get(['seccesaddProject','close']).subscribe(translation=> 
-              this.dialog.open(DialogComponent, {
-                data: {
-                  title:translation['seccesaddProject'],
-                  context: newProject.name,
-                  buttonText:translation['close'],
-                  }, 
-                    }), );
+              this.translate.get(['seccesaddProject', 'close']).subscribe(translation =>
+                this.dialog.open(DialogComponent, {
+                  data: {
+                    title: translation['seccesaddProject'],
+                    context: newProject.name,
+                    buttonText: translation['close'],
+                  },
+                }));
               Swal.close();
-              }
+            }
           },
           (error) => {
-            console.error('Error adding project', error);
+            this.translate.get(['Error adding project', 'close']).subscribe(translation =>
+              this.dialog.open(DialogComponent, {
+                data: {
+                  title: translation['Error adding project'],
+                  context: newProject.name,
+                  buttonText: translation['close'],
+                },
+              }));
+            Swal.close();
           }
         );
     }
@@ -115,19 +124,22 @@ export class AddProjectComponent implements OnInit {
   get startDate() { return this.projectForm.get('startDate') }
   get endDate() { return this.projectForm.get('endDate') }
   get status() { return this.projectForm.get('status') }
-  get cucustomer(){ return this.projectForm.get('customer')}
+  get cucustomer() { return this.projectForm.get('customer') }
   // get createdDate(){ return this.projectForm.get('createdDate')}
   futureDateValidator(control: AbstractControl): ValidationErrors | null {
     const selectedDate = new Date(control.value);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    return selectedDate >= today ? null : { notFutureDate: true };
+    if (selectedDate >= today) {
+      return null; // Return null if the selected date is in the future
+    } else {
+      return { notFutureDate: true }; // Return an error object if the selected date is not in the future
+    }
   }
-
   dateValidator(group: FormGroup) {
-    const startDate =new Date( group.get('startDate')?.value);
+    const startDate = new Date(group.get('startDate')?.value);
     const endDate = new Date(group.get('endDate')?.value);
-    return startDate&&endDate&& startDate < endDate ? null : { invalidDates: true };
-    
+    return startDate && endDate && startDate < endDate ? null : { invalidDates: true };
+
   }
 }

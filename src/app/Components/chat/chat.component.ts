@@ -96,8 +96,6 @@ export class ChatComponent implements OnInit {
 
   fetchChatMessages(): void {
     this.communicationService.readAll().subscribe(res => {
-      console.log(res);
-      
       this.communications = res.filter(comm => comm.relatedTo?.description === this.string && comm.relatedId === this.id2);
       this.flag = true;
     });

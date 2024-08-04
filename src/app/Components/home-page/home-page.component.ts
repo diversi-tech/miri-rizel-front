@@ -80,7 +80,16 @@ export class HomePageComponent implements OnInit, OnDestroy {
         this.tasks = data;
       },
       (error: any) => {
-        console.error('Error fetching tasks:', error);
+        this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+          Swal.fire({
+            text: translations[ 'errorServer'],
+            icon: "error",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#d33",
+            confirmButtonText: translations['Close']
+          })
+        })
       }
     );
     this._leadService.getAllLeads().subscribe(
@@ -88,7 +97,16 @@ export class HomePageComponent implements OnInit, OnDestroy {
         this.leads = data;
       },
       (error: any) => {
-        console.error('Error fetching leads:', error);
+        this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+          Swal.fire({
+            text: translations[ 'errorServer'],
+            icon: "error",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#d33",
+            confirmButtonText: translations['Close']
+          })
+        })
       }
     );
     this._userService.getAll().subscribe((data: User[]) => {
@@ -99,9 +117,18 @@ export class HomePageComponent implements OnInit, OnDestroy {
       if (!this.user)
         this.user.firstName = "משתמש"
     },
-      (error: any) => {
-        console.error('Error fetching user:', error);
-      }
+    (error: any) => {
+      this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+        Swal.fire({
+          text: translations[ 'errorServer'],
+          icon: "error",
+          showCancelButton: false,
+          showCloseButton: true,
+          confirmButtonColor: "#d33",
+          confirmButtonText: translations['Close']
+        })
+      })
+    }
     )
     this._customerService.GetAllCustomers().subscribe(
       (data: Customer[]) => {
@@ -110,7 +137,16 @@ export class HomePageComponent implements OnInit, OnDestroy {
         this.initChart();
       },
       (error: any) => {
-        console.error('Error fetching customers:', error);
+        this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+          Swal.fire({
+            text: translations[ 'errorServer'],
+            icon: "error",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#d33",
+            confirmButtonText: translations['Close']
+          })
+        })
       }
     );
 
@@ -126,7 +162,16 @@ export class HomePageComponent implements OnInit, OnDestroy {
         this.statuses = data
       },
       (error: any) => {
-        console.error('Error fetching customers:', error);
+        this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+          Swal.fire({
+            text: translations[ 'errorServer'],
+            icon: "error",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#d33",
+            confirmButtonText: translations['Close']
+          })
+        })
       }
     );
     this.TaskService.getAllPriorities().subscribe(
@@ -134,7 +179,16 @@ export class HomePageComponent implements OnInit, OnDestroy {
         this.priorities = data
       },
       (error: any) => {
-        console.error('Error fetching priorities:', error);
+        this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+          Swal.fire({
+            text: translations[ 'errorServer'],
+            icon: "error",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#d33",
+            confirmButtonText: translations['Close']
+          })
+        })
       }
     );
     this.loading = false;
@@ -144,7 +198,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.activeCustomers = this.customers.filter(customer => customer.status.description === 'Active').length;
     this.inactiveCustomers = this.customers.filter(customer => customer.status.description === 'Inactive').length;
     this.totalLeads = this.leads.length;
-    console.log(this.activeCustomers, this.inactiveCustomers,);
   }
 
   initChart() {
@@ -257,7 +310,16 @@ export class HomePageComponent implements OnInit, OnDestroy {
       if (this.genericBourd) {
         this.genericBourd.PopTable(taskFilter, loading, col$types, objData, objFields, positionD, "1000px");
       } else {
-        console.error('genericBourd is not initialized');
+          this.translate.get(['Close', 'genericBourd is not initialized']).subscribe(translations => {
+            Swal.fire({
+              text: translations[ 'genericBourd is not initialized'],
+              icon: "error",
+              showCancelButton: false,
+              showCloseButton: true,
+              confirmButtonColor: "#d33",
+              confirmButtonText: translations['Close']
+            })
+          })
       }
     } else {
       Swal.fire({
