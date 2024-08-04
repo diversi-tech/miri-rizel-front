@@ -1,7 +1,7 @@
 import { Component, QueryList, ViewChildren } from '@angular/core';
 import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { ResetPasswordService } from 'src/app/Services/reset-password.service';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -26,7 +26,8 @@ export class AuthCodeDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<AuthCodeDialogComponent>,
-    private codeService: ResetPasswordService
+    private codeService: ResetPasswordService,
+    private translate:TranslateService
   ) {}
 
   onNoClick(): void {
@@ -39,14 +40,15 @@ export class AuthCodeDialogComponent {
     if (enteredCode === validCode?.toString()) {
       this.dialogRef.close(true);
     } else {
-      Swal.fire({
-        text: "קוד לא תקין, נסה שוב",
+      this.translate.get(['errorCode']).subscribe(translation=> 
+        Swal.fire({
+        text:translation['errorCode'] ,
         icon: "error",
         showCancelButton: false,
         showCloseButton: true,
         confirmButtonColor: "#d33",
         confirmButtonText: "סגור"
-      })
+      }))
     }
   }
 

@@ -112,16 +112,17 @@ export class LoginComponent implements OnInit {
       (error) => {
         if (error.status == 404) {
           this.spinner.hide()
+          this.translate.get(['EmailNotFound','Close']).subscribe(translation=>
           Swal.fire({
-            text: 'Email not found',
+            text: translation['EmailNotFound'],
             icon: 'error',
             showCancelButton: false,
             showCloseButton: true,
             confirmButtonColor: '#d33',
-            confirmButtonText: 'Close',
+            confirmButtonText:  translation['Close'],
           }).then((res) => {
             this.spinner.hide()
-          });
+          }))
         } else if (error.status == 400) {
           this.passwordCheck = true;
           this.spinner.hide()
@@ -138,14 +139,15 @@ export class LoginComponent implements OnInit {
         }
         else {
           this.spinner.hide()
+          this.translate.get(['Close','error']).subscribe(translation=>
           Swal.fire({
-            text: 'error',
+            text: translation['error'],
             icon: 'error',
             showCancelButton: false,
             showCloseButton: true,
             confirmButtonColor: '#d33',
-            confirmButtonText: 'Close',
-          })
+            confirmButtonText: translation['Close'],
+          }))
         }
       }
     
