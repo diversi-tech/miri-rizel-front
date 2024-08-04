@@ -1,8 +1,8 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { Router, RouterLink } from '@angular/router';
 import { LanguageService } from '@app/Services/language.service';
-import { NgIf,NgFor } from '@angular/common';
+import { NgIf, NgFor } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '@app/Services/auth.service';
@@ -14,10 +14,10 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css'],
   standalone: true,
-  imports: [NgFor,MatIconModule,RouterLink, TranslateModule,NgIf, MatMenuModule,MatButtonModule],
+  imports: [NgFor, MatIconModule, RouterLink, TranslateModule, NgIf, MatMenuModule, MatButtonModule],
 })
 export class NavComponent implements OnInit {
-  
+
   ngOnInit() {
     this.updateLinks()
   }
@@ -26,7 +26,7 @@ export class NavComponent implements OnInit {
     private languageService: LanguageService,
     private authService: AuthService,
     private route: Router,
-    private userService: UserService
+    private userService: UserService,
   ) {
     this.currentLanguage = 'he';
     this.translate.use(this.currentLanguage);
@@ -56,6 +56,7 @@ export class NavComponent implements OnInit {
       }
       if (role == 3) {
         this.links.push(
+          { path: '/documents', label: 'Documents' },
           { path: '/task', label: 'Tasks' },
           { path: '/project', label: 'Projects' },
           { path: '/leads', label: 'Leads' },
@@ -79,8 +80,7 @@ export class NavComponent implements OnInit {
     console.log('Update details clicked')
   }
 
-  editUser()
-  {
+  editUser() {
     this.route.navigate(['/edit-user'])
   }
 

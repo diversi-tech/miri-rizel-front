@@ -60,7 +60,6 @@ export class UserService {
           user.role.id.toString(),
           'encryptionKey'
         ).toString();
-        localStorage.setItem(user.email, encryptedRole);
         localStorage.setItem('authData', encryptedRole);
       })
     );
@@ -92,7 +91,6 @@ export class UserService {
           user.role.id.toString(),
           'encryptionKey'
         ).toString();
-        localStorage.setItem(user.email, encryptedRole);
         localStorage.setItem('authData', encryptedRole);
       })
     );

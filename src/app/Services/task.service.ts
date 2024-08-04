@@ -40,11 +40,10 @@ export class TaskService {
   updateTask(task: Task): Observable<any> {
     return this.http.put<boolean>(`${this.apiUrl}`, task, {headers: this.headers})
   }
-  //אין כזה ניתוב בקןמטרולר של משימות
+
   updateGoogleId(taskId: number,googleId:string): Observable<any> {
     return this.http.put<boolean>(`${this.apiUrl}googleCalendar`, {taskId,googleId})
   }
-
   
   getAllStatus(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}readAllStatus`, {headers: this.headers})
