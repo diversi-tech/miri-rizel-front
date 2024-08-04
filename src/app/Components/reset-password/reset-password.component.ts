@@ -3,7 +3,7 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators, 
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/Services/user.service';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../dialog/dialog.component';
+import { DialogComponent } from '@app/Components/dialog/dialog.component';
 import Swal from 'sweetalert2';
 import { ResetPasswordService } from '@app/Services/reset-password.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -81,27 +81,31 @@ export class ResetPasswordComponent implements OnInit {
         (res) => {
           if (res === true) {
             this.spinner.hide()
+            this.translate.get(['Close', 'updatePassword','reConnect']).subscribe(translations => 
+
             Swal.fire({
-              title: "סיסמתך עודכנה בהצלחה",
-              text: "הנך מועבר להתחברות מחדש",
+              title: translations['updatePassword'],
+              text: translations['reConnect'],
               icon: "success",
               showCancelButton: false,
               showCloseButton: true,
               confirmButtonColor: "#3085D6",
-              confirmButtonText: "Close"
-            })
+              confirmButtonText:translations['Close']
+            }))
             this.route.navigate(['/login']);
           }
         },
         (error) => {
+          this.translate.get(['close', 'errorUpdatePassword']).subscribe(translations => 
+
           Swal.fire({
-            text: "התרחשה שגיאה בעת עדכון הסיסמה",
+            text: translations['errorUpdatePassword'],
             icon: "error",
             showCancelButton: false,
             showCloseButton: true,
             confirmButtonColor: "#d33",
-            confirmButtonText: "סגור"
-          })
+            confirmButtonText: translations['close']
+          }))
           this.spinner.hide()
             this.translate.get(['Close', 'Error updating password']).subscribe(translations => {
               Swal.fire({

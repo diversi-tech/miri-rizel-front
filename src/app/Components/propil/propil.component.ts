@@ -11,7 +11,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatRippleModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { GenericBourdComponent } from '../generic-bourd/generic-bourd.component';
+import { GenericBourdComponent } from '@app/Components/generic-bourd/generic-bourd.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { TagModule } from 'primeng/tag';
@@ -22,7 +22,6 @@ import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 import { SharedModule } from 'primeng/api';
 import { ToolbarModule } from 'primeng/toolbar';
-import Swal from 'sweetalert2';
 import { Renderer2 } from '@angular/core';
 
 @Component({

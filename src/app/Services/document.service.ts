@@ -7,7 +7,7 @@ import { environment } from 'src/enviroments/environment';
   providedIn: 'root'
 })
 export class DocumentService {
-  private baseUrl = 'https://localhost:7141/api';
+  private baseUrl = `${environment.apiUrl}/api`;
 
   constructor(private http: HttpClient) { }
   private headers = new HttpHeaders({
@@ -18,19 +18,24 @@ export class DocumentService {
   }
   upFile(file: FormData, name: string): Observable<string> {
 
-    return this.http.post<string>(`${this.baseUrl}/FileUpload/upload?nameFolder=${name}`, file, { headers: this.headers });
+    return this.http.post(`${this.baseUrl}/FileUpload/upload?nameFolder=${name}`, file, { 
+      headers: this.headers,
+      responseType: 'text' });
   }
+  
   addDocument(document: Document,nameCustomer: string): Observable<boolean> {
-   
-
-    return this.http.post<boolean>(`${this.baseUrl}/Document?name=${nameCustomer}`, document, { headers: this.headers });
+    return this.http.post<boolean>(`${this.baseUrl}/Document?name=${nameCustomer}`, document);
   }
   getFolders(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/FileUpload/Folders`, { headers: this.headers });
+    return this.http.get<any>(`${this.baseUrl}/FileUpload/Folders`);
   }
   getFilesInFolder(folderId: string): Observable<any[]> {
 
-    return this.http.get<any[]>(`${this.baseUrl}/FileUpload/folders/${folderId}/files`, { headers: this.headers });
+    return this.http.get<any[]>(`${this.baseUrl}/FileUpload/folders/${folderId}/files`);
+  }
+
+  sendEmail(nameCustomer: string): Observable<any> {  
+    return this.http.post<any>(`${this.baseUrl}/Document/send`, {nameCustomer});
   }
 
 

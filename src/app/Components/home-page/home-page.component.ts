@@ -8,25 +8,28 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
-import { ApexOptions, NgApexchartsModule } from 'ng-apexcharts';
+// import { ApexOptions, NgApexchartsModule } from 'ng-apexcharts';
+import { NgApexchartsModule } from 'ng-apexcharts';
 import { Subject, takeUntil } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/Model/User';
-import { ProjectService } from '../../Services/project.service';
+import { ProjectService } from '@app/Services/project.service';
 import { DateTime } from 'luxon';
 import { Lead } from '@app/Model/Lead';
 import { TaskService } from '@app/Services/task.service';
 import { LeadService } from '@app/Services/lead.service';
-import { AddLeadComponent } from '../Lead-components/add-lead/add-lead.component';
+import { AddLeadComponent } from '@app/Components/Lead-components/add-lead/add-lead.component';
 import Swal from 'sweetalert2';
 import { UserService } from '@app/Services/user.service';
 import { Customer } from '@app/Model/Customer';
 import { CustomersService } from '@app/Services/customers.service';
-import { AddTaskComponent } from '../add-task/add-task.component';
+import { AddTaskComponent } from '@app/Components/add-task/add-task.component';
 import { StatusCodeProject } from '@app/Model/StatusCodeProject';
 import { Project } from '@app/Model/Project';
-import { GenericBourdComponent } from '../generic-bourd/generic-bourd.component';
+import { GenericBourdComponent } from '@app/Components/generic-bourd/generic-bourd.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { AuthService } from '@app/Services/auth.service';
+import { AddCustomerComponent } from '../customers/add-customer/add-customer.component';
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
@@ -34,11 +37,12 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [GenericBourdComponent, MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule, MatTabsModule, MatButtonToggleModule, NgApexchartsModule, NgFor, NgIf, MatTableModule, NgClass, CurrencyPipe,TranslateModule],
+  imports: [GenericBourdComponent, MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule, MatTabsModule, MatButtonToggleModule, NgFor, NgIf, MatTableModule, NgClass, CurrencyPipe, TranslateModule, NgApexchartsModule],
 })
 export class HomePageComponent implements OnInit, OnDestroy {
 
-  constructor(private router: Router, private _userService: UserService, private TaskService: TaskService, private _leadService: LeadService, private _customerService: CustomersService, private resolver: ComponentFactoryResolver, private ProjectService: ProjectService,private translate: TranslateService,
+  constructor(private router: Router, private _userService: UserService, private authService: AuthService, private TaskService: TaskService, private _leadService: LeadService, private _customerService: CustomersService, private resolver: ComponentFactoryResolver,
+    private ProjectService: ProjectService, private translate: TranslateService
   ) { }
   isAdmin: boolean = false;
   user: User | any
@@ -51,7 +55,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   tasks!: Task[]
   loading: boolean = true;
 
-  currentEmail: string = localStorage.getItem("email") ?? 'מסתננת';
+  // currentEmail: string = localStorage.getItem("email") ?? 'מסתננת';
   componentType!: Type<any>;
 
   @ViewChild('popupContainer', { read: ViewContainerRef }) popupContainer!: ViewContainerRef;
@@ -107,9 +111,11 @@ export class HomePageComponent implements OnInit, OnDestroy {
     );
     this._userService.getAll().subscribe((data: User[]) => {
       this.users = data
-      this.user = data.find(u => u.email == this.currentEmail)
+      const token = localStorage.getItem("token")?.toString()!
+      const idtoken = this.authService.getClaim(token, "id")
+      this.user = this.users.find(u => u.userId == idtoken)
       if (!this.user)
-        this.user.firstName = this.currentEmail
+        this.user.firstName = "משתמש"
     },
     (error: any) => {
       this.translate.get(['Close', 'errorServer']).subscribe(translations => {
@@ -146,7 +152,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
     this.ProjectService.getAll().subscribe(
       (p: Array<Project>) => {
-        this.projects = p.slice(0,7);
+        this.projects = p.slice(0, 7);
       },
       (error) => {
         this.loading = true;
@@ -154,7 +160,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.TaskService.getAllStatus().subscribe(
       (data) => {
         this.statuses = data
-
       },
       (error: any) => {
         this.translate.get(['Close', 'errorServer']).subscribe(translations => {
@@ -169,11 +174,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
         })
       }
     );
-
     this.TaskService.getAllPriorities().subscribe(
       (data) => {
         this.priorities = data
-
       },
       (error: any) => {
         this.translate.get(['Close', 'errorServer']).subscribe(translations => {
@@ -300,7 +303,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     console.log(taskFilter);
     if (taskFilter.length != 0) {
       let loading: boolean = true;
-      let col$types = { 'title': 'text','description':'text','dueDate': 'date', 'createdDate': 'date' };
+      let col$types = { 'title': 'text', 'description': 'text', 'dueDate': 'date', 'createdDate': 'date' };
       let positionD = [this.statuses];
       let objData = [this.projects];
       let objFields = ['name'];
@@ -332,14 +335,15 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.componentType = AddLeadComponent;
     this.popUpAddOrEdit("Add Lead");
   }
+  addCustomer(){
+    this.componentType = AddCustomerComponent;
+    this.popUpAddOrEdit("AddCustomerTitle");
+  }  
   addTask() {
     this.componentType = AddTaskComponent;
     this.popUpAddOrEdit("Add Task");
   }
-  addCustomer() {
-    this.componentType = AddLeadComponent;
-    this.popUpAddOrEdit("Add Lead");
-  }
+ 
 
   popUpAddOrEdit(title: string) {
     Swal.fire({
@@ -349,6 +353,8 @@ export class HomePageComponent implements OnInit, OnDestroy {
         const container = document.getElementById('popupContainer');
         if (container) {
           const factory = this.resolver.resolveComponentFactory(this.componentType);
+          console.log(factory);
+          
           const componentRef = this.popupContainer.createComponent(factory);
           componentRef.instance.dataRefreshed.subscribe(() => {
           })

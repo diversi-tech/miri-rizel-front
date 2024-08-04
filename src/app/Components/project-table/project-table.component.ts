@@ -4,15 +4,15 @@ import { Customer } from '@app/Model/Customer';
 import { ProjectService } from 'src/app/Services/project.service';
 import { Project } from 'src/app/Model/Project';
 import Swal from 'sweetalert2';
-import { AddProjectComponent } from '../add-project/add-project.component';
-import { EditProjectComponent } from '../edit-project/edit-project.component';
+import { AddProjectComponent } from '@app/Components/add-project/add-project.component';
+import { EditProjectComponent } from '@app/Components/edit-project/edit-project.component';
 import { GenericBourdComponent } from 'src/app/Components/generic-bourd/generic-bourd.component';
 import { StatusCodeProject } from '@app/Model/StatusCodeProject';
 import { TaskService } from 'src/app/Services/task.service';
 import { Task } from '@app/Model/Task';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Priority } from '@app/Model/Priority';
-import { TaskBoardComponent } from '../task-board/task-board.component';
+import { TaskBoardComponent } from '@app/Components/task-board/task-board.component';
 import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-project-table',
@@ -92,24 +92,26 @@ export class ProjectTableComponent implements OnInit {
 
         // Remove the project from the local list after successful deletion
         this.loadP()
+        this.translate.get(['deleteProject','OK']).subscribe(translation=>
         Swal.fire({
-          text: 'Project deleted successfully',
+          text: translation['deleteProject'],
           icon: "success",
           showCancelButton: false,
           showCloseButton: true,
           confirmButtonColor: "#3085D6",
-          confirmButtonText: 'OK'
-        });
+          confirmButtonText:translation['OK']
+        }))
       },
       (error) => {
+        this.translate.get(['errorDeletProject','Close']).subscribe(translation=>
         Swal.fire({
-          text: 'Error deleting project. Please try again.',
+          text: translation['errorDeletProject'],
           icon: "error",
           showCancelButton: false,
           showCloseButton: true,
           confirmButtonColor: "#d33",
-          confirmButtonText: 'Close'
-        });
+          confirmButtonText: translation['Close']
+        }))
       }
     );
     Swal.close();
@@ -195,8 +197,6 @@ export class ProjectTableComponent implements OnInit {
   }
   popUpAddOrEdit(title: string, l: Number | null) {
     Swal.fire({
-
-
       html: '<div id="popupContainer"></div>',
       showConfirmButton: false,
       didOpen: () => {
@@ -225,22 +225,23 @@ export class ProjectTableComponent implements OnInit {
       })
   }
   onDeleteTask(task: Task) {
-    debugger
+    // debugger
     this.taskService.deleteTask(task.taskId!).subscribe(
       (data: any) => {
         if (data == true) {
+          this.translate.get(['deleteTask', 'Close']).subscribe(translations => 
           Swal.fire({
-            text: "The task was successfully deleted",
+            text: translations['deleteTask'],
             icon: "success",
             showCancelButton: false,
             showCloseButton: true,
             confirmButtonColor: "#3085D6",
-            confirmButtonText: "close"
+            confirmButtonText: translations['Close']
           }).then((result) => {
             this.taskService.getAll().subscribe((data) => {
               this.tasks = data
             })
-          });
+          }))
         }
       },
       (error: any) => {

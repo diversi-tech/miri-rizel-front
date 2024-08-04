@@ -1,4 +1,4 @@
-import { StatusCodeUser } from "./StatusCodeUser";
+import { StatusCodeUser } from "@app/Model/StatusCodeUser";
 
 export interface Customer {
     customerId: number,

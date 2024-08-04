@@ -93,7 +93,7 @@ export class EditProjectComponent {
     );
   }
   setData(data: any) {
-    debugger;
+    // debugger;
     this.data = data;
     this.server.getProjectById(this.data).subscribe((project2: Project) => {
       this.project = project2;

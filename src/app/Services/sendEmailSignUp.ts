@@ -8,14 +8,14 @@ import { User } from '@app/Model/User';
   providedIn: 'root',
 })
 export class EmailService {
-  private apiUrl = `${environment.apiUrl}SendEmail/`;
+  private apiUrl = `${environment.apiUrl}SendEmail`;
 
 
   constructor(private http: HttpClient) { }
 
   sendEmailSignUp(user: User): Observable<any> {
     const name = `${user.firstName} ${user.lastName}`;
-    return this.http.post<any>("https://localhost:7141/SendEmail", { name: name });
+    return this.http.post<any>(this.apiUrl, { name: name });
 }
 
 }

@@ -2,7 +2,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from 'src/enviroments/environment';
 import Swal from 'sweetalert2';
-import { TaskService } from './task.service';
+import { TaskService } from '@app/Services/task.service';
 
 declare var gapi: any;
 declare var google: any;
@@ -20,8 +20,7 @@ export class GoogleAuthService {
   private gapiInited = false;
   private gisInited = false;
 
-  constructor(private ngZone: NgZone, private taskService: TaskService,  private translate: TranslateService
-    ) {
+  constructor(private ngZone: NgZone, private taskService: TaskService,private translate:TranslateService) {
     this.loadGapi();
     this.loadGis();
   }
@@ -170,16 +169,16 @@ export class GoogleAuthService {
           })
         })
       })
+      this.translate.get(['GoogleTaskSuccess','viewTaskBord','clickHere']).subscribe(translation=>
       Swal.fire({
         position: "top-end",
         icon: "success",
-        title: "המשימה נשמרה",
-        html: `
-        לצפיה בלוח המשימות
-    <a href="${event.htmlLink}" target="_blank" autofocus>לחץ כאן</a> `,
+        title: translation['GoogleTaskSuccess'],
+        html: `${translation['viewTaskBord']}       
+    <a href="${event.htmlLink}" target="_blank" autofocus> ${translation['clickHere']}</a> `,
         showConfirmButton: false,
         timer: 3000
-      });
+      }));
     });
   }
 
@@ -264,16 +263,17 @@ export class GoogleAuthService {
     });
     request.execute((event: any) => {
       console.log("event updated: ", event);
+      this.translate.get(['TaskUpdateSuccess','viewTaskBord','clickHere']).subscribe(translation=>
+      
       Swal.fire({
         position: "top-end",
         icon: "success",
-        title: "המשימה עודכנה",
-        html: `
-        לצפיה בלוח המשימות
-    <a href="${event.htmlLink}" target="_blank" autofocus>לחץ כאן</a> `,
+        title: translation['TaskUpdateSuccess'],
+        html: `${translation['viewTaskBord']}
+    <a href="${event.htmlLink}" target="_blank" autofocus>${translation['clickHere']}/</a> `,
         showConfirmButton: false,
         timer: 3000
-      });
+      }));
     });
   }
 
@@ -340,16 +340,17 @@ export class GoogleAuthService {
 
     request.execute((event: any) => {
       console.log("event updated: ", event);
+      this.translate.get(['deleteTask','viewTaskBord','clickHere']).subscribe(translation=>
+
       Swal.fire({
         position: "top-end",
         icon: "success",
-        title: "המשימה נמחקה",
-        html: `
-        לצפיה בלוח המשימות
-    <a href="${event.htmlLink}" target="_blank" autofocus>לחץ כאן</a> `,
+        title: translation['deleteTask'],
+        html: `${translation['deleteTask']}
+    <a href="${event.htmlLink}" target="_blank" autofocus> ${translation['clickHere']}</a> `,
         showConfirmButton: false,
         timer: 3000
-      });
+      }));
     });
   }
   

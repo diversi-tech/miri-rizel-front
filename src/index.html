@@ -1,51 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>CopyRight</title>
-    <base href="/" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Varela Round:wght@400;700&display=swap"
-    />
-    <style>
-      body,
-      h1,
-      h2,
-      mat-form-field,
-      input,
-      button,
-      mat-label,
-      mat-error,
-      .mat-body,
-      .mat-body-2,
-      .mat-typography .mat-body,
-      .mat-typography .mat-body-2,
-      .mat-typography {
-        font-family: "Varela Round", sans-serif !important;
-      }
-    </style>
-  </head>
-  <body class="mat-typography">
-    <app-root></app-root>
-  </body>
-  <script src="https://apis.google.com/js/api.js"></script>
 
-  <div >
-    <script src="https://accounts.google.com/gsi/client" async defer   data-callback="initGoogleOneTap"
-    ></script>
-  </div>
+<head>
+  <meta charset="utf-8" />
+  <title>CopyRight</title>
+  <base href="/" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Varela Round:wght@400;700&display=swap" />
+  <link rel="stylesheet" type="text/css" href="node_modules/primeicons/primeicons.css" />
+  <style>
+    body,
+    h1,
+    h2,
+    mat-form-field,
+    input,
+    button,
+    mat-label,
+    mat-error,
+    .mat-body,
+    .mat-body-2,
+    .mat-typography .mat-body,
+    .mat-typography .mat-body-2,
+    .mat-typography {
+      font-family: "Varela Round", sans-serif !important;
+    }
+
+    .high-contrast {
+      background-color: #000 !important;
+      /* צבע רקע שחור */
+      color: #ed0b0b !important;
+      /* צבע טקסט לבן */
+    }
+
+    .high-contrast h1,
+    .high-contrast h2,
+    .high-contrast h3 {
+      color: rgb(255, 0, 0) !important;
+      /* צבע טקסט צהוב לכותרות */
+    }
+
+    .high-contrast p {
+      color: #fff !important;
+      /* צבע טקסט לבן */
+      background-color: #000 !important;
+      /* צבע רקע שחור */
+      font-size: 1.25em !important;
+      /* גודל טקסט מוגדל */
+      padding: 10px !important;
+      /* ריווח פנימי */
+      border: 2px solid #fff !important;
+      /* גבול לבן */
+    }
+
+    .high-contrast .nav-link {
+      color: rgb(255, 0, 0) !important;
+      /* צבע טקסט צהוב */
+      font-size: 1.25em !important;
+      /* גודל טקסט מוגדל */
+    }
+
+    .high-contrast .btn-primary {
+      background-color: rgb(255, 0, 0) !important;
+      /* צבע רקע צהוב */
+      color: #000 !important;
+      /* צבע טקסט שחור */
+      font-size: 1.25em !important;
+      /* גודל טקסט מוגדל */
+      padding: 15px 30px !important;
+      /* ריווח פנימי */
+    }
+
+    .high-contrast * {
+      color: #eb0f0f !important;
+      /* צבע טקסט לבן */
+    }
+
+    .high-contrast .black-text {
+      color: #000 !important;
+      /* טקסט שחור */
+    }
+  </style>
+</head>
+
+<body class="mat-typography">
+  <app-root></app-root>
+</body>
+<script src="https://apis.google.com/js/api.js"></script>
+
+<div>
+  <script src="https://accounts.google.com/gsi/client" async defer data-callback="initGoogleOneTap"></script>
+</div>
+
 </html>
-

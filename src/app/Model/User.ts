@@ -1,4 +1,4 @@
-import { RoleCodeUser } from "./RoleCodeUser";
+import { RoleCodeUser } from "@app/Model/RoleCodeUser";
 
 export interface User {
     userId?:number,

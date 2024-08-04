@@ -1,14 +1,14 @@
 <div class="signUp-container">
     <div class="signUp-form">
         <div class="signUp-image">
-            <img src="../../../assets/images/login bac.png" alt="Login Background">
+            <img src="assets/images/login bac.png" alt="Login Background">
         </div>
         <div class="signUp-inputs">
             <form [formGroup]="signUpForm" (ngSubmit)="toEnter()">
                 <h1>{{'SignUp' | translate}}</h1>
 
                 <div class="card flex justify-content-center">
-                    <input id="firstName" formControlName="firstName" type="text" id="title" pInputText
+                    <input #fnameInput id="firstName" formControlName="firstName" type="text" id="title" pInputText
                         class="input-field" placeholder="{{'First Name' | translate}}" />
                     <div *ngIf="submitted && signUpForm.get('firstName')?.hasError('required')" style="color: red;">
                         {{'FirstNameRequired' | translate}}
@@ -19,7 +19,7 @@
                 </div>
 
                 <div class="card flex justify-content-center">
-                    <input id="lastName" formControlName="lastName" type="text" id="title" pInputText
+                    <input #lnameInput id="lastName" formControlName="lastName" type="text" id="title" pInputText
                         class="input-field" placeholder="{{'Last Name' | translate}}" />
                     <div *ngIf="submitted && signUpForm.get('lastName')?.hasError('required')" style="color: red;">
                         {{'LastNameRequired' | translate}}
@@ -30,7 +30,7 @@
                 </div>
 
                 <div class="card flex justify-content-center">
-                    <input id="email" formControlName="email" type="text" id="title" pInputText class="input-field"
+                    <input #emailInput id="email" formControlName="email" type="text" id="title" pInputText class="input-field"
                         placeholder="{{'Email' | translate}}" />
                     <div *ngIf="submitted && signUpForm.get('email')?.hasError('required')" style="color: red;">
                         {{'EmailRequired' | translate}}
@@ -41,7 +41,7 @@
                 </div>
 
                 <div class="card flex justify-content-center">
-                    <input id="password" formControlName="password" [(ngModel)]="userDetails.password" type="password"
+                    <input #passwordInput id="password" formControlName="password" [(ngModel)]="userDetails.password" type="password"
                         id="title" pInputText class="input-field" placeholder="{{'Password' | translate}}" />
                     <div *ngIf="submitted && signUpForm.get('password')?.hasError('required')" style="color: red;">
                         {{'PasswordRequirements' | translate}}
@@ -54,7 +54,7 @@
                 </div>
 
                 <div class="card flex justify-content-center">
-                    <input id="ConfirmPassword" formControlName="ConfirmPassword" [(ngModel)]="userDetails.password2"
+                    <input #passwordtwoInput id="ConfirmPassword" formControlName="ConfirmPassword" [(ngModel)]="userDetails.password2"
                         type="password" id="title" pInputText class="input-field"
                         placeholder="{{'Confirm Password' | translate}}" (ngModelChange)="validatePasswords()" />
                     <div *ngIf="submitted && signUpForm.controls['ConfirmPassword'].errors">

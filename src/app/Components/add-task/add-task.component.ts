@@ -202,7 +202,7 @@ export class AddTaskComponent implements OnInit {
     const selectedDate = new Date(control.value);
     const today = new Date();
     // today.setHours(0, 0, 0, 0);
-    return selectedDate > today ? null : { notFutureDate: true };
+    return selectedDate >= today ? null : { notFutureDate: true };
   }
   userExistsValidator(user: User) {
     if (user && !this.users.find(u => u.userId === user.userId))

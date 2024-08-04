@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, ElementRef, OnInit, signal, ViewChild } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -7,16 +7,17 @@ import {
   Validators,
   FormsModule,
   ReactiveFormsModule,
+  FormBuilder,
 } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/Model/User';
-import { ResetPasswordService } from '../../Services/reset-password.service';
+import { ResetPasswordService } from '@app/Services/reset-password.service';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../dialog/dialog.component';
+import { DialogComponent } from '@app/Components/dialog/dialog.component';
 import { UserService } from 'src/app/Services/user.service';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import Swal from 'sweetalert2';
-import { GoogleComponent } from '../google/google.component';
+import { GoogleComponent } from '@app/Components/google/google.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -25,6 +26,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { NgxSpinnerService } from "ngx-spinner";
+import { KeyboardService } from 'src/app/Services/keyboard.service';
+
 
 @Component({
   selector: 'app-login',
@@ -59,8 +62,14 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private active: ActivatedRoute,
-    private translate: TranslateService
-  ) {}
+    private translate: TranslateService,
+    private fb: FormBuilder,
+    private Keyboardservice: KeyboardService
+  ) {   this.logInForm = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', Validators.required]
+  });}
+
 
   hide = signal(true);
 
@@ -86,37 +95,59 @@ export class LoginComponent implements OnInit {
     const email = this.email.value;
     const password = this.pass.value;
     this.userService.login(email, password).subscribe(
-      (user: any) => {
-        this.router.navigate(['/home'])
+      (user: any) => {  
+        console.log(user.role);
+           
         this.spinner.hide();
-        //     console.log("user");
-        //     if (user.role == 1) {
-        //       this.router.navigate(['/admin'], { relativeTo: this.active });
-        //     }
-        //     if (user.role == 2) {
-        //       this.router.navigate(['/worker'], { relativeTo: this.active });
-        //     }
-        //     if (user.role == 3) {
-        //       this.router.navigate(['/customer'], { relativeTo: this.active });
-        //     }
-        //   },
+            // if (user.user.role.id == 1) {
+            //   this.router.navigate(['/Dashboard'], { relativeTo: this.active });
+            //   console.log(user.user.role,"user.role");             
+            // }
+            // else{
+            //   this.router.navigate(['/home'], { relativeTo: this.active });
+            // }
+            this.router.navigate(['/redirect']);
+
       },
       (error) => {
-        // Check if errorMessage contains the specific string
-        if (error.status == 500) {
+        if (error.status == 404) {
+          this.spinner.hide()
+          this.translate.get(['EmailNotFound','Close']).subscribe(translation=>
           Swal.fire({
-            text: 'Email not found',
+            text: translation['EmailNotFound'],
             icon: 'error',
             showCancelButton: false,
             showCloseButton: true,
             confirmButtonColor: '#d33',
-            confirmButtonText: 'Close',
+            confirmButtonText:  translation['Close'],
           }).then((res) => {
             this.spinner.hide()
-          });
-        } else {
-          this.spinner.hide()
+          }))
+        } else if (error.status == 400) {
           this.passwordCheck = true;
+          this.spinner.hide()
+          // Swal.fire({
+          //   text: 'error password',
+          //   icon: 'error',
+          //   showCancelButton: false,
+          //   showCloseButton: true,
+          //   confirmButtonColor: '#d33',
+          //   confirmButtonText: 'Close',
+          // }).then((res) => {
+          //   this.spinner.hide()
+          // });
+        }
+        else {
+          this.spinner.hide()
+          this.translate.get(['Close','error']).subscribe(translation=>
+          Swal.fire({
+            text: translation,
+            icon: 'error',
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: '#d33',
+            confirmButtonText: translation['Close'],
+          }))
         }
       }
     
@@ -184,4 +215,19 @@ export class LoginComponent implements OnInit {
   signUp() {
     this.router.navigate(['../signUp']);
   }
+
+  @ViewChild('emailInput') emailInput!: ElementRef;
+  @ViewChild('passwordInput') passwordInput!: ElementRef;
+
+
+  ngAfterViewInit() {
+    this.emailInput.nativeElement.addEventListener('focus', () => {
+      this.Keyboardservice.setActiveInput(this.emailInput.nativeElement, this.logInForm.get('email') as FormControl);
+    });
+
+    this.passwordInput.nativeElement.addEventListener('focus', () => {
+      this.Keyboardservice.setActiveInput(this.passwordInput.nativeElement, this.logInForm.get('password') as FormControl);
+    });
+  }
+
 }

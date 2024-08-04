@@ -1,27 +1,30 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, of, switchMap, tap, throwError } from 'rxjs';
-import { User } from '../Model/User';
+import { User } from '@app/Model/User';
 import { environment } from 'src/enviroments/environment';
 import * as CryptoJS from 'crypto-js';
 import { RoleCodeUser } from '@app/Model/RoleCodeUser';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    console.log("The token created!");
+  }
   private apiUrl = `${environment.apiUrl}User/`;
 
-  getToken() {
+  // getToken() {
+  //   return localStorage.getItem('token');
+  // }
 
-    return localStorage.getItem('token');
-  }
-
-  private headers = new HttpHeaders({
-    Authorization: `Bearer ${this.getToken()}`,
-  });
-
+  // private headers = new HttpHeaders({
+  //   Authorization: `Bearer ${this.getToken()}`,
+  // });
+ 
+ 
   //אין פונקציה כזו בקונטרלר!!
   // editUser(email: any): Observable<any> {
   //   return this.http.get(`${this.apiUrl}?email=${email}`);
@@ -32,6 +35,8 @@ export class UserService {
   // }
 
   login(email: string, password: string): Observable<any> {
+    console.log(``);
+    
     return this.http
     .get<any>(`${this.apiUrl}Login?email=${email}&password=${password}`)
     .pipe(
@@ -52,6 +57,8 @@ export class UserService {
           email: response.user.email,
           role: response.user.role,
         };
+        // console.log("user",user);
+        
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('token', token);
         // const user2 = response.user;
@@ -98,10 +105,10 @@ export class UserService {
   }
 
   getAll(): Observable<any> {
-    const head = new HttpHeaders({
-      Authorization: `Bearer ${this.getToken()}`,
-    });
-    return this.http.get(`${this.apiUrl}`, { headers: head });
+    // const head = new HttpHeaders({
+    //   Authorization: `Bearer ${this.getToken()}`,
+    // });
+    return this.http.get(`${this.apiUrl}`);
   }
 
   getUserMail(): string | null {
@@ -119,19 +126,15 @@ export class UserService {
   // }
 
   getByMail(mail: string): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}GetByEmail?email=${mail}`, {
-      headers: this.headers,
-    });
+    return this.http.get<User>(`${this.apiUrl}GetByEmail?email=${mail}`);
     // console.log(mail);
     // return this.http.get<User>(`${this.apiUrl}GetByEmail?email=${mail}`);
   }
 
   getUserById(id: Number) {
-    return this.http.get<User>(`${this.apiUrl}GetById?id=${id}`, {
-      headers: this.headers,
-    });
+    
+    return this.http.get<User>(`${this.apiUrl}GetById?id=${id}`);
   }
-
   addUser(userDetails: any): Observable<any> {
     const url = `${this.apiUrl}`;
     userDetails.role = { id: 1, description: 'Customer' };
@@ -139,20 +142,15 @@ export class UserService {
   }
 
   updateUser(user: User): Observable<any> {
-    return this.http.put<boolean>(`${this.apiUrl}`, user, {
-      headers: this.headers,
-    });
+    return this.http.put<boolean>(`${this.apiUrl}`, user);
   }
 
   deleteUserById(userId: number): Observable<boolean> {
-    return this.http.delete<boolean>(`${this.apiUrl}DeleteById?id=${userId}`, {
-      headers: this.headers,
-    });
+    return this.http.delete<boolean>(`${this.apiUrl}DeleteById?id=${userId}`);
   }
   deleteUserEmail(email: string): Observable<boolean> {
     return this.http.delete<boolean>(
-      `${this.apiUrl}DeleteByEmail?email=${email}`,
-      { headers: this.headers }
+      `${this.apiUrl}DeleteByEmail?email=${email}`
     );
   }
   //אין לה הרשאה בסרבר, למה?
@@ -164,6 +162,12 @@ export class UserService {
   }
 
   getAllRoles(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}roles`, { headers: this.headers });
+    return this.http.get<any>(`${this.apiUrl}roles`);
+  }
+
+  signOut() {
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    localStorage.removeItem('authData');
   }
 }

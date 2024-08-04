@@ -130,7 +130,6 @@ export class AddProjectComponent implements OnInit {
     const selectedDate = new Date(control.value);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-
     if (selectedDate >= today) {
       return null; // Return null if the selected date is in the future
     } else {

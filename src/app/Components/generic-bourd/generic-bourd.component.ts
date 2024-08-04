@@ -13,7 +13,7 @@ import {
 import { SheetsApiService } from '@app/Services/sheets-api.service';
 import { Table, TableModule } from 'primeng/table';
 import Swal from 'sweetalert2';
-import { ExportToSheetComponent } from '../export-to-sheet/export-to-sheet.component';
+import { ExportToSheetComponent } from '@app/Components/export-to-sheet/export-to-sheet.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { TagModule } from 'primeng/tag';
@@ -84,7 +84,8 @@ export class GenericBourdComponent implements OnInit, OnChanges {
     private resolver: ComponentFactoryResolver,
     private sheetsAPI: SheetsApiService,
     private translateService: TranslateService,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private translate:TranslateService
   ) {}
 
   columns: Column[] = [];
@@ -100,8 +101,6 @@ export class GenericBourdComponent implements OnInit, OnChanges {
       throw new Error('The data input is required and must be provided.');
     }
     this.generateColumns();
-    //שינוי הצדדים לימין ושמאל בהתאם לבחירת השפה
-     // האזנה לשינויים בשפה
      this.languageService.language$.subscribe(lang => {
       this.textDirection = lang === 'he' ? 'rtl' : 'ltr';
     });
@@ -130,19 +129,22 @@ document(rowData: any){
   }
 
   onDelete(rowData: any) {
+    this.translate.get(['sure','revert','revertTrue','cancel']).subscribe(translation=> 
     Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      title:translation['sure'],
+      text:translation['revert'],
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!',
-    }).then((result) => {
+      cancelButtonText: translation['cancel'],
+      confirmButtonText: translation['revertTrue'],
+    })
+  .then((result) => {
       if (result.isConfirmed) {
         this.delete.emit(rowData);
       }
-    });
+    }))
   }
 
   generateColumns() {
@@ -346,7 +348,7 @@ document(rowData: any){
   //פופ-אפ
   async showPopupSheet(): Promise<void> {
     Swal.fire({
-      title: ' XSL-יצוא נתוני טבלה זו ל',
+      // title: ' XSL-יצוא נתוני טבלה זו ל',
       html: '<div id="popupContainer"></div>',
       showCancelButton: true,
       showConfirmButton: false,
