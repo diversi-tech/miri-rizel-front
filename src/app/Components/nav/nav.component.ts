@@ -124,6 +124,6 @@ export class NavComponent implements OnInit {
   logOut() {
     this.userService.signOut();
     this.updateLinks();
-    this.window.location.href = '/login'; 
+    this.route.navigate(['/login'])
   }
 }
