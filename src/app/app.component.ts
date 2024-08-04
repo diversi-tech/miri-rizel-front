@@ -16,9 +16,9 @@ import { NgIf } from '@angular/common';
     imports: [NgxSpinnerModule, NavComponent, RouterOutlet,RouterModule, AccessibilityComponent,CustomersDashboardComponent,NgIf]
 })
 export class AppComponent {
-  value:any
+  value: any
   title = 'copyRight';
-  shouldShowNav:boolean = true;
+  shouldShowNav: boolean = true;
 
   constructor(private router: Router, private authService: AuthService) {
     this.router.events.subscribe((event) => {
@@ -35,7 +35,7 @@ export class AppComponent {
   updateNavVisibility() {
     const currentRoute = this.router.url;
     const userRole = this.authService.getRole();
-    
+
     // תנאי למסך הלוגין
     // if (currentRoute === '/Dashboard') {
    //   this.shouldShowNav = false;
