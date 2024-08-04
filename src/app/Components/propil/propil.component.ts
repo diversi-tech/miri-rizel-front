@@ -22,7 +22,6 @@ import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 import { SharedModule } from 'primeng/api';
 import { ToolbarModule } from 'primeng/toolbar';
-import Swal from 'sweetalert2';
 import { Renderer2 } from '@angular/core';
 
 @Component({

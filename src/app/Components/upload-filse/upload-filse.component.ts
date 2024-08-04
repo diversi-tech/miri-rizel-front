@@ -11,7 +11,7 @@ import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, 
 import { DocumentService } from '@app/Services/document.service';
 import { ValidatorsService } from '@app/Services/validators.service';
 import { InputTextModule } from 'primeng/inputtext';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { User } from '@app/Model/User';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
@@ -40,7 +40,8 @@ export class UploadFilseComponent implements OnInit,OnChanges {
     private documentService: DocumentService,
     private formBuilder: FormBuilder,
     private vlidatorsService: ValidatorsService,
-    private spinner:NgxSpinnerService) { }
+    private spinner:NgxSpinnerService,
+  private translate:TranslateService) { }
 
   ngOnInit(): void {    
     this.nameCustomer=this.user?this.user.firstName+" "+this.user.lastName:"חריגים"
@@ -109,14 +110,15 @@ export class UploadFilseComponent implements OnInit,OnChanges {
     }
     this.spinner.show()
     this.documentService.upFile(formData, this.nameCustomer).subscribe(res => {  
-    this.spinner.hide()    
+    this.spinner.hide()  
+    this.translate.get('upLoadFile').subscribe(translion=>
     Swal.fire({
       position: "top-end",
       icon: "success",
-      title: "הקובץ נוסף בהצלחה",
+      title: translion,
       showConfirmButton: false,
       timer: 2500
-    });
+    }));
     this.documentForm.patchValue({ filePath: res });    
     // this.documentService.addDocument(this.documentForm.value,this.nameCustomer).subscribe(res => {     
     //   },(error: any) => {

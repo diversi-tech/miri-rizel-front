@@ -113,7 +113,11 @@ export class NavComponent implements OnInit {
       );
     }
     else{
-      Swal.fire("אינך מחובר למערכת!");
+      this.translate.get('unConnect').subscribe(translation=>
+      Swal.fire({
+        text:translation
+      })
+      )
     }
   }
 

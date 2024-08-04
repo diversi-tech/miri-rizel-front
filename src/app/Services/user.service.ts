@@ -5,7 +5,6 @@ import { User } from '@app/Model/User';
 import { environment } from 'src/enviroments/environment';
 import * as CryptoJS from 'crypto-js';
 import { RoleCodeUser } from '@app/Model/RoleCodeUser';
-import Swal from 'sweetalert2';
 
 
 @Injectable({
