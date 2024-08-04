@@ -60,29 +60,43 @@ export class EditProjectComponent {
     this.statusService.getAllStatus().subscribe(
       (data: any) => {
         this.statuses = data;
-        console.log("statuses", this.statuses);
       },
       (error: any) => {
-        console.error('Error fetching status:', error);
+        this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+          Swal.fire({
+            text: translations[ 'errorServer'],
+            icon: "error",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#d33",
+            confirmButtonText: translations['Close']
+          })
+        })
       }
     );
     this.customerService.GetAllCustomers().subscribe(
       (data: any) => {
         this.custom = data;
-        console.log("custom", this.custom);
       },
       (error: any) => {
-        console.error('Error fetching customers:', error);
+        this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+          Swal.fire({
+            text: translations[ 'errorServer'],
+            icon: "error",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#d33",
+            confirmButtonText: translations['Close']
+          })
+        })
       }
     );
   }
   setData(data: any) {
     debugger;
     this.data = data;
-    console.log("data: ", data);
     this.server.getProjectById(this.data).subscribe((project2: Project) => {
       this.project = project2;
-      console.log(`project: `, this.project);
       this.fullForm();
     });
   }
@@ -94,13 +108,7 @@ export class EditProjectComponent {
     return `${year}-${month}-${day}`;
   }
   fullForm() {
-    console.log("full form");
-    debugger
     if (!this.project) { console.error('Project data is not available'); return; }
-    console.log(`this.project.status:`);
-    // console.log(`this.custom" ${this.custom[this.customerId].firstName} `);
-    // console.log(`this.stattus" ${this.statuses[this.status].description} `);
-    // this.customerName = this.custom[this.customerId].firstName != null ? this.custom[this.customerId].firstName : 0;
     this.status = this.project.status!;
     this.customer = this.project.customer!
     this.ProjectForm = this.formBuilder.group({
@@ -114,7 +122,6 @@ export class EditProjectComponent {
       customer: [this.project.customer, Validators.required],
       isActive:[true]
     });
-    console.log(this.project);
     this.flag = true;
   }
   async toEnter() {

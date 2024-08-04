@@ -85,7 +85,7 @@ export class ListLeadsComponent {
       (Leads: Array<Lead>) => {
         this.Leads = Leads;
         this.loading= false;
-        console.log("refreshData: ", this.Leads);
+     
       })
   }
 

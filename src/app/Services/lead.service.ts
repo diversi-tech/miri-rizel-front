@@ -31,7 +31,6 @@ export class LeadService {
 
   editLead(lead: Lead,id:Number): Observable<Lead>  {
     lead.leadId = id;
-    console.log(lead);
     return this.http.put<Lead>(`${this.apiUrl}`, lead, {headers: this.headers});
   }
 

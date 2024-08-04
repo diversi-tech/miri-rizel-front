@@ -57,7 +57,6 @@ export class EditUserComponent implements OnInit {
       // }
       const role= this.authService.getRole();
       if(role===3){
-        console.log("I am admin");
         this.isAdmin=true;
       }
        
@@ -93,7 +92,6 @@ export class EditUserComponent implements OnInit {
   onRoleSelected(event: any) {
     const selectedRole = event.value; // הערך הנבחר
     this.user.role = selectedRole; // עדכון התפקיד של המשתמש
-    console.log('Selected Role:', selectedRole); 
   }
   
   filterProjectAuto(event: AutoCompleteCompleteEvent) {

@@ -27,6 +27,6 @@ export class NavComponent {
   
 
   updateDetails(): void {
-    console.log('Update details clicked')
+  
   }
 }

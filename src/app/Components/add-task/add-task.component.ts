@@ -48,8 +48,6 @@ export class AddTaskComponent implements OnInit {
     'direction': 'rtl'     // ברירת מחדל עברית
   };
   setData(data: any) {
-    console.log();
-
     if (data) {
       this.data = data;
       this.isEdit = true;
@@ -100,15 +98,34 @@ export class AddTaskComponent implements OnInit {
         this.filteredUsers = data
       },
       (error: any) => {
-        console.error('Error fetching users:', error);
-      }
+          this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+            Swal.fire({
+              text: translations['errorServer'],
+              icon: "error",
+              showCancelButton: false,
+              showCloseButton: true,
+              confirmButtonColor: "#d33",
+              confirmButtonText: translations['Close']
+            })
+          })
+        }
+      
     );
     this.taskService.getAllStatus().subscribe(
       (data: any) => {
         this.statuses = data;
       },
       (error: any) => {
-        console.error('Error fetching status:', error);
+        this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+          Swal.fire({
+            text: translations['errorServer'],
+            icon: "error",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#d33",
+            confirmButtonText: translations['Close']
+          })
+        })
       }
     );
     this.taskService.getAllPriorities().subscribe(
@@ -116,7 +133,18 @@ export class AddTaskComponent implements OnInit {
         this.priorities = data;
       },
       (error: any) => {
-        console.error('Error fetching status:', error);
+        (error: any) => {
+          this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+            Swal.fire({
+              text: translations['errorServer'],
+              icon: "error",
+              showCancelButton: false,
+              showCloseButton: true,
+              confirmButtonColor: "#d33",
+              confirmButtonText: translations['Close']
+            })
+          })
+        }
       }
     );
     this.projectService.getAll().subscribe(
@@ -125,7 +153,18 @@ export class AddTaskComponent implements OnInit {
         this.filteredProjects = data;
       },
       (error: any) => {
-        console.error('Error fetching projects:', error);
+        (error: any) => {
+          this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+            Swal.fire({
+              text: translations['errorServer'],
+              icon: "error",
+              showCancelButton: false,
+              showCloseButton: true,
+              confirmButtonColor: "#d33",
+              confirmButtonText: translations['Close']
+            })
+          })
+        }
       }
     );
     this.route.params.subscribe(params => {
@@ -193,7 +232,16 @@ export class AddTaskComponent implements OnInit {
         this.newTask = this.taskForm.value;
       },
       (error: any) => {
-        console.error('Error loading task', error);
+        this.translate.get(['Close', 'error loading']).subscribe(translations => {
+          Swal.fire({
+            text: translations['error loading '],
+            icon: "error",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#d33",
+            confirmButtonText: translations['Close']
+          })
+        })
       }
     );
   }

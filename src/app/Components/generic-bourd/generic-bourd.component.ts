@@ -196,7 +196,6 @@ document(rowData: any){
       this.columns.forEach((c) => this.globalFilterFields.push(c.field));
     }
     if (this.positionData.length == 0 || !this.positionData) {
-      console.log(this.positionData);
     }
    }
 
@@ -478,8 +477,6 @@ document(rowData: any){
       result.push(row);
       rowIndex++;
     });
-
-    console.log('result: ', result);
     return result;
   }
 

@@ -103,7 +103,6 @@ export class SignUpComponent {
     console.log('seccsus');
     this.userService.addUser(this.signUpForm.value).subscribe(
       () => {
-        console.log('User added');
         this.emailService
         .sendEmailSignUp(this.signUpForm.value)
         .subscribe(() => {

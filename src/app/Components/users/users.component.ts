@@ -41,24 +41,31 @@ export class UsersComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.getAll().subscribe((users) => {
-      console.log('users: ' + users);
       this.users = users;
     });
     this.userService.getAllRoles().subscribe(
       (roles) => {
         this.roles = roles;
-        // roles.map(role=> role as RoleCodeUser);
-        console.log('roles: ' + this.roles + this.roles[0].description);
+        
         this.loading = false;
       },
-      (error) => {
-        console.error('Error fetching users:', error);
-        this.loading = false; // לוודא שהטעינה מפסיקה גם במקרה של שגיאה
+     
+      (error: any) => {
+        this.loading = false;
+        this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+          Swal.fire({
+            text: translations[ 'errorServer'],
+            icon: "error",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#d33",
+            confirmButtonText: translations['Close']
+          })
+        })
       }
     );
     const role= this.authService.getRole();
       if(role===3){
-        console.log("I am admin");
         this.isAdmin=true;
       }
   }

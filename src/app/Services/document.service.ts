@@ -17,12 +17,11 @@ export class DocumentService {
     return localStorage.getItem('token');
   }
   upFile(file: FormData, name: string): Observable<string> {
-    console.log(name);
 
     return this.http.post<string>(`${this.baseUrl}/FileUpload/upload?nameFolder=${name}`, file, { headers: this.headers });
   }
   addDocument(document: Document,nameCustomer: string): Observable<boolean> {
-    console.log(document);
+   
 
     return this.http.post<boolean>(`${this.baseUrl}/Document?name=${nameCustomer}`, document, { headers: this.headers });
   }

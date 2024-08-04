@@ -36,7 +36,6 @@ export class ProjectService {
 }
 update(project:Project,id:number): Observable<Project>{
   project.projectId = id;
-  console.log(project)
   return this.http.put<Project>(`${this.apiUrl}`, project, { headers: this.headers });
 }
 getProjectById(id:number): Observable<any> {

@@ -10,9 +10,7 @@ export class AuthService {
 
   getRole(): number | null {
     const storedRole = localStorage.getItem('authData');
-    console.log("storedRole", storedRole);
     const role = parseInt(this.decryptRole(storedRole!), 10)
-    console.log("role", role);
     return role;
   }
 

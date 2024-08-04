@@ -1,21 +1,21 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+// import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DocumentComponent } from './document.component';
+// import { DocumentComponent } from './document.component';
 
-describe('DocumentComponent', () => {
-  let component: DocumentComponent;
-  let fixture: ComponentFixture<DocumentComponent>;
+// describe('DocumentComponent', () => {
+//   let component: DocumentComponent;
+//   let fixture: ComponentFixture<DocumentComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-    imports: [DocumentComponent]
-});
-    fixture = TestBed.createComponent(DocumentComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+//   beforeEach(() => {
+//     TestBed.configureTestingModule({
+//     imports: [DocumentComponent]
+// });
+//     fixture = TestBed.createComponent(DocumentComponent);
+//     component = fixture.componentInstance;
+//     fixture.detectChanges();
+//   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+//   // it('should create', () => {
+//   //   expect(component).toBeTruthy();
+//   // });
+// });

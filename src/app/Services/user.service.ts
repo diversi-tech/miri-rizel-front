@@ -14,7 +14,6 @@ export class UserService {
   private apiUrl = `${environment.apiUrl}User/`;
 
   getToken() {
-    console.log('token' + localStorage.getItem('token'));
 
     return localStorage.getItem('token');
   }
@@ -88,7 +87,6 @@ export class UserService {
         };
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('token', token);
-        console.log(token);
         const encryptedRole = CryptoJS.AES.encrypt(
           user.role.id.toString(),
           'encryptionKey'
@@ -121,7 +119,6 @@ export class UserService {
   // }
 
   getByMail(mail: string): Observable<User> {
-    console.log(mail);
     return this.http.get<User>(`${this.apiUrl}GetByEmail?email=${mail}`, {
       headers: this.headers,
     });
@@ -138,7 +135,6 @@ export class UserService {
   addUser(userDetails: any): Observable<any> {
     const url = `${this.apiUrl}`;
     userDetails.role = { id: 1, description: 'Customer' };
-    console.log(userDetails);
     return this.http.post(url, userDetails);
   }
 
@@ -149,7 +145,6 @@ export class UserService {
   }
 
   deleteUserById(userId: number): Observable<boolean> {
-    console.log('delete id ', userId);
     return this.http.delete<boolean>(`${this.apiUrl}DeleteById?id=${userId}`, {
       headers: this.headers,
     });
