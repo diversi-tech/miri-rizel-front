@@ -52,18 +52,36 @@ export class AddProjectComponent implements OnInit {
     this.statusService.getAllStatus().subscribe(
       (data: any) => {
         this.statuses = data;
-        console.log(this.statuses)
       },
-      (error: any) => {
-        console.error('Error fetching status:', error);
-      }
+        (error: any) => {
+          this.translate.get(['Close', 'Error Server']).subscribe(translations => {
+            Swal.fire({
+              text: translations['Error Server '],
+              icon: "error",
+              showCancelButton: false,
+              showCloseButton: true,
+              confirmButtonColor: "#d33",
+              confirmButtonText: translations['Close']
+            })
+          })
+        }
+      
     );
     this.customerService.GetAllCustomers().subscribe(
       (data: any) => {
         this.custom = data;
       },
       (error: any) => {
-        console.error('Error fetching customers:', error);
+        this.translate.get(['Close', 'Error Server']).subscribe(translations => {
+          Swal.fire({
+            text: translations['Error Server '],
+            icon: "error",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#d33",
+            confirmButtonText: translations['Close']
+          })
+        })
       }
     );
   }
@@ -72,7 +90,7 @@ export class AddProjectComponent implements OnInit {
     this.projectForm = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
-      startDate: ['', [Validators.required, this.futureDateValidator.bind(this)]],
+      startDate: [new Date()],
       endDate: ['', [Validators.required, this.futureDateValidator.bind(this)]],
       status: '',
       customer: ['', Validators.required],
