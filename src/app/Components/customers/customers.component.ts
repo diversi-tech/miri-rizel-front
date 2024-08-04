@@ -112,6 +112,8 @@ export class CustomersComponent implements OnInit {
           if (container) {
             container.appendChild(formElement);
             formElement.style.display = 'block';
+            formElement.style.direction= this.styles['direction'];
+            formElement.style.textAlign= this.styles['text-align'];
           }
         },
         willClose: () => {

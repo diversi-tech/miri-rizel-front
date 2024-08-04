@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Customer } from '@app/Model/Customer';
 import { StatusCodeUser } from '@app/Model/StatusCodeUser';
 import { CustomersService } from '@app/Services/customers.service';
+import { LanguageService } from '@app/Services/language.service';
 import { ValidatorsService } from '@app/Services/validators.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CalendarModule } from 'primeng/calendar';
@@ -40,7 +41,7 @@ export class AddCustomerComponent implements OnInit {
     'text-align': 'right', // ברירת מחדל עברית
     'direction': 'rtl'     // ברירת מחדל עברית
   };
-  constructor(private router: Router, private formBuilder: FormBuilder,private translate:TranslateService, private customerService: CustomersService, private validatorsService: ValidatorsService) {
+  constructor(private router: Router, private formBuilder: FormBuilder,private translate:TranslateService, private customerService: CustomersService, private validatorsService: ValidatorsService, private languageService: LanguageService) {
 
   }
   @Output() dataRefreshed: EventEmitter<void> = new EventEmitter<void>();
@@ -58,7 +59,19 @@ export class AddCustomerComponent implements OnInit {
       createdDate: ['', [Validators.required, this.futureDateValidator()]],
     });
     this.loadStatusUsers();
-    this.titlePage="AddCustomerTitle"
+    this.titlePage="AddCustomerTitle";
+    this.languageService.language$.subscribe(lang => {
+
+      if (lang === 'he') {
+        this.styles['text-align'] = 'right';
+        this.styles['direction'] = 'rtl';
+
+      } else {
+        this.styles['text-align'] = 'left';
+        this.styles['direction'] = 'ltr';
+
+      }
+    })
   }
   get formControls() { return this.customerForm.controls; }
   private loadStatusUsers(): void {
