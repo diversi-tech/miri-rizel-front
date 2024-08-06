@@ -236,5 +236,6 @@
   "format_underlined": "adding underscores",
   "zoom_in": "zoom",
   "keyboard": "keyboard",
-  "emptyFoler":"No folders available to view"
+  "emptyFoler":"No folders available to view",
+  "Documentation": "Documentation"
 }
