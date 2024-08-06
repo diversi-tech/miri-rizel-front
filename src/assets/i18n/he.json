@@ -261,10 +261,16 @@
   "contrast": "ניגודיות",
   "record_voice_over": "קורא טקסט",
   "text_fields": "הגדל את הטקסט",
-  "highlight": "הדגשת כותרות",
-  "format_underlined": "הוספת קווים תחתונים",
-  "zoom_in": "זום",
-  "keyboard": "לוח מקשים על המסך",
-  "emptyFoler": "אין תקיות זמינות להצגה",
+  "highlight":"הדגשת כותרות",
+  "format_underlined":"הוספת קווים תחתונים",
+  "zoom_in":"זום",
+  "keyboard":"לוח מקשים על המסך",
+  "emptyFoler":"אין תקיות זמינות להצגה",
+  "editToolLip":"עריכת פרטים",
+  "documentToolLip":"הוספת מסמך",
+  "propilToolLip":"הוספת תיעוד",
+  "deleteToolLip":"מחיקת פריט זה",
+  "popTableToolLip":"הצגת פריטים נוספים",
   "requardTitle": "הוסף כותרת",
-  "Documentation": "תעוד"}
+  "Documentation": "תעוד"
+}

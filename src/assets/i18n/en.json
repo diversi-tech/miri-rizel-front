@@ -237,7 +237,6 @@
   "format_underlined": "adding underscores",
   "zoom_in": "zoom",
   "keyboard": "keyboard",
-  "emptyFoler":"No folders available to view",
   "requardTitle":"Add a title",
   "Documentation": "Documentation",
   "ViewTheTasksToSubmitToday": "View tasks to submit today",
@@ -269,5 +268,11 @@
   "errorUpdatePassword": "התרחשה שגיאה בעת עדכון הסיסמה",
   "unConnectToConnect": "לא מחובר- מועבר להתחברות",
   "viewTaskBord": " לצפיה בלוח המשימות",
-  "clickHere": "לחץ כאן"
+  "clickHere": "לחץ כאן",
+  "emptyFoler":"No folders available to view",
+  "editToolLip":"Editing details",
+  "documentToolLip":"Adding a document",
+  "propilToolLip":"Adding documentation",
+  "deleteToolLip":"Deleting an item",
+  "popTableToolLip":"Show more items"
 }
