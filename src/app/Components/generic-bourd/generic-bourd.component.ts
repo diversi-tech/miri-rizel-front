@@ -205,19 +205,19 @@ document(rowData: any){
       case 'TO DO':
         return 'danger';
 
-      case 'In PROGRESS':
+      case 'IN PROGRESS':
         return 'info';
 
       case 'DONE':
         return 'success';
 
-      case 'High':
+      case 'HIGH':
         return 'danger';
 
-      case 'Low':
+      case 'LOW':
         return 'success';
 
-      case 'Medium':
+      case 'MEDIUM':
         return 'info';
 
       default:
