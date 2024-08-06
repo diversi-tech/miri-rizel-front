@@ -12,8 +12,7 @@ body {
   padding: 10px 20px;
   background-color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  z-index: 9999999 !important;
-
+  z-index: 999 !important;
 }
 
 .nav-left,
