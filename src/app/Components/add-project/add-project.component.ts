@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -26,6 +26,7 @@ import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
   imports: [FormsModule, ReactiveFormsModule, MatInputModule, NgIf, MatFormFieldModule, DropdownModule, TranslateModule,]
 })
 export class AddProjectComponent implements OnInit {
+  @Output() dataRefreshed: EventEmitter<void> = new EventEmitter<void>();
 
   statuses: StatusCodeProject[] = [];
   date: Date = new Date();
@@ -54,23 +55,24 @@ authorize: any;
     authorize:[null];
     this.date = new Date()
     this.createForm();
+    debugger
     this.statusService.getAllStatus().subscribe(
       (data: any) => {
         this.statuses = data;
       },
-        (error: any) => {
-          this.translate.get(['Close', 'Error Server']).subscribe(translations => {
-            Swal.fire({
-              text: translations['Error Server '],
-              icon: "error",
-              showCancelButton: false,
-              showCloseButton: true,
-              confirmButtonColor: "#d33",
-              confirmButtonText: translations['Close']
-            })
+      (error: any) => {
+        this.translate.get(['Close', 'Error Server']).subscribe(translations => {
+          Swal.fire({
+            text: translations['Error Server '],
+            icon: "error",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#d33",
+            confirmButtonText: translations['Close']
           })
-        }
-      
+        })
+      }
+
     );
     this.customerService.GetAllCustomers().subscribe(
       (data: any) => {
@@ -128,6 +130,7 @@ authorize: any;
                     buttonText: translation['close'],
                   },
                 }));
+              this.dataRefreshed.emit();
               Swal.close();
             }
           },
