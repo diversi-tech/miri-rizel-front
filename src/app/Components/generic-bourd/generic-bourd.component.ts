@@ -318,10 +318,10 @@ document(rowData: any){
           container.appendChild(componentRef.location.nativeElement);
           componentRef.instance.loading = false;
           if (edit)  componentRef.instance.hideEditButton = edit 
-          // 
+          
           if (deleteCallBack)
             componentRef.instance.onDelete = deleteCallBack
-          // 
+         
         }
         if (customWidth) {
           const popup = Swal.getPopup();
