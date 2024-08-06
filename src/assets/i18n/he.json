@@ -1,4 +1,6 @@
 {
+  "logOut": "התנתקות",
+  "EditYourDetails": "עריכת פרטי משתמש",
   "CustomerInputSelect": "בחירת לקוח",
   "Documents": "מסמכים",
   "HomePage": "דף הבית",
@@ -184,6 +186,7 @@
   "ActiveProjects": "פרויקטים פעילים",
   "ShowAll": "הצגת כל התוצאות",
   "PartialView": "תצוגה חלקית",
+  "ViewTheOverdueTasks": "הצגת המשימות באיחור",
   "shortName": "השם חייב להכיל לפחות 2 אותיות",
   "shortLast": "השם חייב להכיל לפחות 2 אותיות",
   "phoneValid": "הפלאפון חייב להכיל לפחות 9 מספרים ללא תווים אחרים",
@@ -266,4 +269,5 @@
   "keyboard": "לוח מקשים על המסך",
   "emptyFoler": "אין תקיות זמינות להצגה",
   "requardTitle": "הוסף כותרת",
-  "Documentation": "תעוד"}
+  "Documentation": "תיעוד"
+}
