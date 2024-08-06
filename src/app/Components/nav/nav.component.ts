@@ -77,6 +77,7 @@ export class NavComponent implements OnInit {
       }
       if (role == 3) {
         this.links.push(
+          { path: '/propil', label: 'Documentation' },
           { path: '/documents', label: 'Documents' },
           { path: '/task', label: 'Tasks' },
           { path: '/project', label: 'Projects' },

@@ -300,7 +300,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   filterData(objToFilter: any): void {
     let taskFilter: Task[] = objToFilter;
-    console.log(taskFilter);
     if (taskFilter.length != 0) {
       let loading: boolean = true;
       let col$types = { 'title': 'text', 'description': 'text', 'dueDate': 'date', 'createdDate': 'date' };
@@ -353,7 +352,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
         const container = document.getElementById('popupContainer');
         if (container) {
           const factory = this.resolver.resolveComponentFactory(this.componentType);
-          console.log(factory);
           
           const componentRef = this.popupContainer.createComponent(factory);
           componentRef.instance.dataRefreshed.subscribe(() => {
@@ -368,22 +366,21 @@ export class HomePageComponent implements OnInit, OnDestroy {
     return this.tasks
   }
   getTodoTasks(): Task[] {
+    
     if (this.tasks)
-      // return this.tasks.filter(task => task.status?.description === "TO DO");
-      return this.tasks.filter(task => task.status?.description === "Not Started");
+      return this.tasks.filter(task => task.status?.description === "TO DO");
     return []
   }
   getTodoTasksByUser(): Task[] {
-    // return this.tasks.filter(task => task.status?.description === "TO DO");
     if (this.tasks)
-      return this.tasks.filter(task => task.status?.description === "Not Started" && task.assignedTo?.email == this.user.email);
+      return this.tasks.filter(task => task.status?.description === "TO DO" && task.assignedTo?.email == this.user.email);
     return []
   }
 
   getTodoTasksFromToday(): Task[] {
     const today = new Date().toDateString();
     return this.getTodoTasks().filter(task => {
-      if (task.createdDate) {
+      if (task.createdDate) {        
         return new Date(task.createdDate).toDateString() === today;
       }
       return false;
@@ -391,15 +388,13 @@ export class HomePageComponent implements OnInit, OnDestroy {
   }
 
   getInProgressTasks(): Task[] {
-    // return this.tasks.filter(task => task.status?.description === "In PROGRESS");
     if (this.tasks)
-      return this.tasks.filter(task => task.status?.description === "In Progress");
+      return this.tasks.filter(task => task.status?.description === "IN PROGRESS");
     return []
   }
   getInProgressTasksByUser(): Task[] {
     if (this.tasks)
-      // return this.tasks.filter(task => task.status?.description === "In PROGRESS");
-      return this.tasks.filter(task => task.status?.description === "In Progress" && task.assignedTo?.email == this.user.email);
+      return this.tasks.filter(task => task.status?.description === "IN PROGRESS" && task.assignedTo?.email == this.user.email);
     return []
   }
   getInProgressTasksFromToday(): Task[] {
@@ -430,8 +425,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     if (this.tasks)
       return this.tasks.filter(task => {
         if (task.dueDate) {
-          // return new Date(task.dueDate).toDateString() === today&&task.status?.description=="DONE";
-          return new Date(task.dueDate).toDateString() === today && task.status?.description == "Completed";
+          return new Date(task.dueDate).toDateString() === today && task.status?.description == "COMPLETE";
         }
         return false;
       })
@@ -443,8 +437,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
       return this.tasks.filter(task => {
         if (task.dueDate) {
           const dueDate = new Date(task.dueDate);
-          return dueDate < now && task.status?.description !== "Completed";
-          // return dueDate < now && task.status?.description !== "DONE";
+          return dueDate < now && task.status?.description !== "COMPLETE";
         }
         return false;
       });

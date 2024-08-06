@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, ComponentFactoryResolver, EventEmitter, Output, Type, ViewChild, ViewContainerRef } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Communication } from '@app/Model/Communication';
 import { Customer } from '@app/Model/Customer';
 import { Lead } from '@app/Model/Lead';
@@ -36,7 +36,7 @@ export class NewComponent {
 
   constructor(private cdr: ChangeDetectorRef,private resolver: ComponentFactoryResolver, private leadservice: LeadService, private customerService: CustomersService, private formBuilder: FormBuilder, private communicationService: CommunicationService) {
     this.newMessageForm = this.formBuilder.group({
-      details: [''],
+      details: ['', Validators.required],
       communicationId: [0],
       type: [''],
       date: [''],
