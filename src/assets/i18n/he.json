@@ -255,8 +255,6 @@
   "updatePassword": "סיסמתך עודכנה בהצלחה",
   "reConnect": "הנך מועבר להתחברות מחדש",
   
-
-
   "errorUpdatePassword": "התרחשה שגיאה בעת עדכון הסיסמה",
   "unConnectToConnect": "לא מחובר- מועבר להתחברות",
   "viewTaskBord": " לצפיה בלוח המשימות",
@@ -267,5 +265,6 @@
   "highlight":"הדגשת כותרות",
   "format_underlined":"הוספת קווים תחתונים",
   "zoom_in":"זום",
-  "keyboard":"לוח מקשים על המסך"
+  "keyboard":"לוח מקשים על המסך",
+  "emptyFoler":"אין תקיות זמינות להצגה"
 }
