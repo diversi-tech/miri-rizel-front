@@ -80,16 +80,16 @@ export class HomePageComponent implements OnInit, OnDestroy {
         this.cdr.markForCheck(); 
       },
       (error: any) => {
-        this.translate.get(['Close', 'errorServer']).subscribe(translations => {
-          Swal.fire({
-            text: translations[ 'errorServer'],
-            icon: "error",
-            showCancelButton: false,
-            showCloseButton: true,
-            confirmButtonColor: "#d33",
-            confirmButtonText: translations['Close']
-          })
-        })
+        // this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+        //   Swal.fire({
+        //     text: translations[ 'errorServer'],
+        //     icon: "error",
+        //     showCancelButton: false,
+        //     showCloseButton: true,
+        //     confirmButtonColor: "#d33",
+        //     confirmButtonText: translations['Close']
+        //   })
+        // })
       }
     );
     this._leadService.getAllLeads().subscribe(
@@ -98,16 +98,16 @@ export class HomePageComponent implements OnInit, OnDestroy {
         this.cdr.markForCheck(); 
       },
       (error: any) => {
-        this.translate.get(['Close', 'errorServer']).subscribe(translations => {
-          Swal.fire({
-            text: translations[ 'errorServer'],
-            icon: "error",
-            showCancelButton: false,
-            showCloseButton: true,
-            confirmButtonColor: "#d33",
-            confirmButtonText: translations['Close']
-          })
-        })
+        // this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+        //   Swal.fire({
+        //     text: translations[ 'errorServer'],
+        //     icon: "error",
+        //     showCancelButton: false,
+        //     showCloseButton: true,
+        //     confirmButtonColor: "#d33",
+        //     confirmButtonText: translations['Close']
+        //   })
+        // })
       }
     );
     this._userService.getAll().subscribe((data: User[]) => {
@@ -120,16 +120,16 @@ export class HomePageComponent implements OnInit, OnDestroy {
       this.cdr.markForCheck(); 
     },
     (error: any) => {
-      this.translate.get(['Close', 'errorServer']).subscribe(translations => {
-        Swal.fire({
-          text: translations[ 'errorServer'],
-          icon: "error",
-          showCancelButton: false,
-          showCloseButton: true,
-          confirmButtonColor: "#d33",
-          confirmButtonText: translations['Close']
-        })
-      })
+      // this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+      //   Swal.fire({
+      //     text: translations[ 'errorServer'],
+      //     icon: "error",
+      //     showCancelButton: false,
+      //     showCloseButton: true,
+      //     confirmButtonColor: "#d33",
+      //     confirmButtonText: translations['Close']
+      //   })
+      // })
     }
     )
     this._customerService.GetAllCustomers().subscribe(
@@ -140,16 +140,16 @@ export class HomePageComponent implements OnInit, OnDestroy {
         this.cdr.markForCheck(); 
       },
       (error: any) => {
-        this.translate.get(['Close', 'errorServer']).subscribe(translations => {
-          Swal.fire({
-            text: translations[ 'errorServer'],
-            icon: "error",
-            showCancelButton: false,
-            showCloseButton: true,
-            confirmButtonColor: "#d33",
-            confirmButtonText: translations['Close']
-          })
-        })
+        // this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+        //   Swal.fire({
+        //     text: translations[ 'errorServer'],
+        //     icon: "error",
+        //     showCancelButton: false,
+        //     showCloseButton: true,
+        //     confirmButtonColor: "#d33",
+        //     confirmButtonText: translations['Close']
+        //   })
+        // })
       }
     );
 
@@ -167,16 +167,16 @@ export class HomePageComponent implements OnInit, OnDestroy {
         this.cdr.markForCheck(); 
       },
       (error: any) => {
-        this.translate.get(['Close', 'errorServer']).subscribe(translations => {
-          Swal.fire({
-            text: translations[ 'errorServer'],
-            icon: "error",
-            showCancelButton: false,
-            showCloseButton: true,
-            confirmButtonColor: "#d33",
-            confirmButtonText: translations['Close']
-          })
-        })
+        // this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+        //   Swal.fire({
+        //     text: translations[ 'errorServer'],
+        //     icon: "error",
+        //     showCancelButton: false,
+        //     showCloseButton: true,
+        //     confirmButtonColor: "#d33",
+        //     confirmButtonText: translations['Close']
+        //   })
+        // })
       }
     );
     this.TaskService.getAllPriorities().subscribe(
@@ -186,16 +186,16 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
       },
       (error: any) => {
-        this.translate.get(['Close', 'errorServer']).subscribe(translations => {
-          Swal.fire({
-            text: translations[ 'errorServer'],
-            icon: "error",
-            showCancelButton: false,
-            showCloseButton: true,
-            confirmButtonColor: "#d33",
-            confirmButtonText: translations['Close']
-          })
-        })
+        // this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+        //   Swal.fire({
+        //     text: translations[ 'errorServer'],
+        //     icon: "error",
+        //     showCancelButton: false,
+        //     showCloseButton: true,
+        //     confirmButtonColor: "#d33",
+        //     confirmButtonText: translations['Close']
+        //   })
+        // })
       }
     );
     this.loading = false;
