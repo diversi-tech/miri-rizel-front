@@ -1,23 +1,21 @@
+<br>
+<br>
 <div class="folder-list">
   <h3 class="document-folder"> {{'listFolders'|translate}} </h3>
-
-  <div class="folder-filter">
-    <div class="input-wrapper">
-      <i *ngIf="!searchQuery" class="pi pi-search search-icon"></i>
-      <input
-        type="text"
-        [(ngModel)]="searchQuery"
-        (ngModelChange)="filterFolders()"
-        [placeholder]="'nameFolder' | translate"
-        style="padding-left: 55px;"
-      />
+  <div *ngIf="emptyFolder">
+    <div class="folder-filter">
+      <div class="input-wrapper">
+        <i *ngIf="!searchQuery" class="pi pi-search search-icon"></i>
+        <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="filterFolders()"
+          [placeholder]="'nameFolder' | translate" style="padding-left: 55px;" />
+      </div>
     </div>
-  </div>
-  
-  <div class="folder-grid">
-    <div *ngFor="let folder of filteredFolders" class="folder-item" (click)="viewFolderContents(folder.id)">
-      <i class="pi pi-folder folder-icon"></i>
-      <div class="folder-name">{{ folder.name }}</div>
+
+    <div class="folder-grid">
+      <div *ngFor="let folder of filteredFolders" class="folder-item" (click)="viewFolderContents(folder.id)">
+        <i class="pi pi-folder folder-icon"></i>
+        <div class="folder-name">{{ folder.name }}</div>
+      </div>
     </div>
   </div>
 </div>
