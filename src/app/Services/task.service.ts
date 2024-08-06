@@ -46,6 +46,7 @@ export class TaskService {
   }
   
   getAllStatus(): Observable<any> {
+    debugger
     return this.http.get<any>(`${this.apiUrl}readAllStatus`)
   }
 
