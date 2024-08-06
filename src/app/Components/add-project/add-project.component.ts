@@ -33,6 +33,10 @@ export class AddProjectComponent implements OnInit {
   projectForm: FormGroup = new FormGroup({});
   titlePage: string = "AddProject"
   custom: Customer[] = [];
+  authorizeOptions: { label: number, value: number }[] = [
+    { label: 1, value: 1 },
+    { label: 2, value: 2 }]
+authorize: any;
   constructor(
     private fb: FormBuilder,
     private projectService: ProjectService,
@@ -48,6 +52,7 @@ export class AddProjectComponent implements OnInit {
 
 
   ngOnInit(): void {
+    authorize:[null];
     this.date = new Date()
     this.createForm();
     debugger
@@ -96,7 +101,8 @@ export class AddProjectComponent implements OnInit {
       endDate: ['', [Validators.required, this.futureDateValidator.bind(this)]],
       status: '',
       customer: ['', Validators.required],
-      createdDate: [new Date()]
+      createdDate: [new Date()],
+      authorize: [null]
     });
     this.dateValidator.bind(this)
   }
@@ -109,7 +115,9 @@ export class AddProjectComponent implements OnInit {
     if (this.projectForm.valid) {
 
       const newProject: Project = this.projectForm.value;
+      console.log('Selected Authorization:', newProject.authorize);
       this.projectService.addProject(newProject)
+      
         .subscribe(
           (response) => {
 
