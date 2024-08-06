@@ -46,10 +46,13 @@ export class ListDocumentComponent implements OnInit {
       if(this.filteredFolders.length>0)
         this.emptyFolder=true
       else
-         Swal.fire("אין תקיות זמינות להצגה")
-      console.log(this.folders)
-      
+      {
+      this.translate.get('emptyFoler').subscribe(translations => {
 
+         Swal.fire(translations)
+      })
+      
+    }
     });
   }
 
