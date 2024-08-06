@@ -89,7 +89,7 @@ export class ListLeadsComponent {
       })
   }
 
-  propil(l: Lead) {
+  documentation(l: Lead) {
     this.componentType = ChatComponent;
     this.popUpPropil(`Communication ${l.firstName}`, l, "Lead" , l.leadId);
   }
