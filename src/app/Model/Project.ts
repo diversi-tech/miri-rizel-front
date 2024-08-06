@@ -12,6 +12,5 @@ export interface Project {
   customer?: Customer;
   createdDate?: Date;
   isActive?:boolean;
-  authorize?:number;
- 
+  authorize?:number
 }

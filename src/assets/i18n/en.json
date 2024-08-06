@@ -101,6 +101,7 @@
   "EndDateInput": "End date",
   "StartDateInput": "Start date",
   "StatusInput": "Status",
+  "AuthorizeInput":"Authorize",
   "CustomerInput": "Customer Name",
   "CreateProject": "Create",
   "YourDeatailsWorng": "Your details are wrong",
