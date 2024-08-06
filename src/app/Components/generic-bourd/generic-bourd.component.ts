@@ -83,7 +83,6 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   constructor(
     private resolver: ComponentFactoryResolver,
     private sheetsAPI: SheetsApiService,
-    private translateService: TranslateService,
     private languageService: LanguageService,
     private translate:TranslateService
   ) {}
@@ -483,9 +482,9 @@ document(rowData: any){
   }
 
   translateTitles(titles: string[]) :Promise<string[]>{
-    //return titles.forEach(title=> this.translateService.get(title).subscribe(translation=> title= translation));
+    //return titles.forEach(title=> this.translate.get(title).subscribe(translation=> title= translation));
     const translationPromises = titles.map(title => 
-      this.translateService.get(title).toPromise()
+      this.translate.get(title).toPromise()
     );
 
     return Promise.all(translationPromises);

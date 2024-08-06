@@ -236,5 +236,10 @@
   "format_underlined": "adding underscores",
   "zoom_in": "zoom",
   "keyboard": "keyboard",
-  "emptyFoler":"No folders available to view"
+  "emptyFoler":"No folders available to view",
+  "editToolLip":"Editing details",
+  "documentToolLip":"Adding a document",
+  "propilToolLip":"Adding documentation",
+  "deleteToolLip":"Deleting an item",
+  "popTableToolLip":"Show more items"
 }
