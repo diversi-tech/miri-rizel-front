@@ -326,7 +326,7 @@ export class AddTaskComponent implements OnInit {
                   }
                 });
                 this.location.go(this.location.path());
-                this.router.navigate(['/task-board']);
+                this.router.navigate(['/task']);
               })
             }
           },
