@@ -63,7 +63,17 @@
       class="select-field" [placeholder]="'CustomerInputSelect'|translate" />
 
   </div>
-
+  <div class="card flex justify-content-center">
+    <p-dropdown 
+      formControlName="authorize" 
+      [options]="authorizeOptions" 
+      optionLabel="label"
+      optionValue="value"
+      placeholder="{{'AuthorizeInput' | translate}}" 
+      class="select-field"
+    />
+    
+  </div>
   <button type="submit" class="submit-button"><label *ngIf="!projectForm.valid">{{'YourDeatailsWorng'|translate}}
     </label><label *ngIf="projectForm.valid">{{'CreateProject'|translate}}</label></button>
 </form>
