@@ -86,22 +86,22 @@
                   [severity]="getSeverity(rowData[col.field].description)"></p-tag>
                 <div *ngIf="edit.observers.length > 0">
                   <button pButton type="button" class="p-button-secondary" icon="pi pi-pencil"
-                    *ngIf="getTypeOfCol(col, rowIndex) == 'edit'" (click)="onEdit(rowData)"></button>
+                    *ngIf="getTypeOfCol(col, rowIndex) == 'edit'" (click)="onEdit(rowData)" [pTooltip]="'editToolLip' | translate"></button>
                 </div>
                 <div *ngIf="addDocument.observers.length > 0">
                   <button pButton type="button" class="p-button-danger" icon="pi pi-file"
-                    *ngIf="getTypeOfCol(col, rowIndex) == 'document'" (click)="document(rowData)"></button>
+                    *ngIf="getTypeOfCol(col, rowIndex) == 'document'" (click)="document(rowData)"[pTooltip]="'documentToolLip' | translate"></button>
                 </div>
                 <div *ngIf="propil.observers.length > 0">
                   <button pButton type="button" class="p-button-info" icon="pi pi-external-link"
-                    *ngIf="getTypeOfCol(col, rowIndex) == 'propil'" (click)="onPropil(rowData)"></button>
+                    *ngIf="getTypeOfCol(col, rowIndex) == 'propil'" (click)="onPropil(rowData)" [pTooltip]="'propilToolLip' | translate"></button>
                 </div>
                 <div >
                   <button pButton type="button" class="p-button-danger" icon="pi pi-trash"
-                    *ngIf="getTypeOfCol(col, rowIndex) == 'delete'" (click)="onDelete(rowData)"></button>
+                    *ngIf="getTypeOfCol(col, rowIndex) == 'delete'" (click)="onDelete(rowData)" [pTooltip]="'deleteToolLip' | translate"></button>
                 </div>
                 <button pButton type="button" class="p-button-Help" icon="pi pi-angle-down"
-                  *ngIf="getTypeOfCol(col, rowIndex) == 'popTable'" (click)="getDataForPopTable(rowData)"></button>
+                  *ngIf="getTypeOfCol(col, rowIndex) == 'popTable'" (click)="getDataForPopTable(rowData)"[pTooltip]="'popTableToolLip' | translate"></button>
               </td>
             </tr>
           </ng-template>
