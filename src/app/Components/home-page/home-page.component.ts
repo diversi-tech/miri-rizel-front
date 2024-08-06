@@ -1,6 +1,6 @@
 import { Task } from 'src/app/Model/Task';
 import { CurrencyPipe, NgClass, NgFor, NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, Type, ViewEncapsulation, ComponentFactoryResolver, ViewChild, ViewContainerRef, ElementRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, Type, ViewEncapsulation, ComponentFactoryResolver, ViewChild, ViewContainerRef, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatRippleModule } from '@angular/material/core';
@@ -42,7 +42,7 @@ import { AddCustomerComponent } from '../customers/add-customer/add-customer.com
 export class HomePageComponent implements OnInit, OnDestroy {
 
   constructor(private router: Router, private _userService: UserService, private authService: AuthService, private TaskService: TaskService, private _leadService: LeadService, private _customerService: CustomersService, private resolver: ComponentFactoryResolver,
-    private ProjectService: ProjectService, private translate: TranslateService
+    private ProjectService: ProjectService, private translate: TranslateService,  private cdr: ChangeDetectorRef
   ) { }
   isAdmin: boolean = false;
   user: User | any
@@ -55,7 +55,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
   tasks!: Task[]
   loading: boolean = true;
 
-  // currentEmail: string = localStorage.getItem("email") ?? 'מסתננת';
   componentType!: Type<any>;
 
   @ViewChild('popupContainer', { read: ViewContainerRef }) popupContainer!: ViewContainerRef;
@@ -78,6 +77,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.TaskService.getAll().subscribe(
       (data: any) => {
         this.tasks = data;
+        this.cdr.markForCheck(); 
       },
       (error: any) => {
         this.translate.get(['Close', 'errorServer']).subscribe(translations => {
@@ -95,6 +95,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this._leadService.getAllLeads().subscribe(
       (data: Lead[]) => {
         this.leads = data;
+        this.cdr.markForCheck(); 
       },
       (error: any) => {
         this.translate.get(['Close', 'errorServer']).subscribe(translations => {
@@ -116,6 +117,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
       this.user = this.users.find(u => u.userId == idtoken)
       if (!this.user)
         this.user.firstName = "משתמש"
+      this.cdr.markForCheck(); 
     },
     (error: any) => {
       this.translate.get(['Close', 'errorServer']).subscribe(translations => {
@@ -135,6 +137,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
         this.customers = data;
         this.calculateStats();
         this.initChart();
+        this.cdr.markForCheck(); 
       },
       (error: any) => {
         this.translate.get(['Close', 'errorServer']).subscribe(translations => {
@@ -153,6 +156,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.ProjectService.getAll().subscribe(
       (p: Array<Project>) => {
         this.projects = p.slice(0, 7);
+        this.cdr.markForCheck(); 
       },
       (error) => {
         this.loading = true;
@@ -160,6 +164,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.TaskService.getAllStatus().subscribe(
       (data) => {
         this.statuses = data
+        this.cdr.markForCheck(); 
       },
       (error: any) => {
         this.translate.get(['Close', 'errorServer']).subscribe(translations => {
@@ -177,6 +182,8 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.TaskService.getAllPriorities().subscribe(
       (data) => {
         this.priorities = data
+        this.cdr.markForCheck(); 
+
       },
       (error: any) => {
         this.translate.get(['Close', 'errorServer']).subscribe(translations => {
@@ -192,6 +199,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
       }
     );
     this.loading = false;
+    this.cdr.markForCheck(); 
   }
 
   calculateStats() {
@@ -300,7 +308,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   filterData(objToFilter: any): void {
     let taskFilter: Task[] = objToFilter;
-    console.log(taskFilter);
     if (taskFilter.length != 0) {
       let loading: boolean = true;
       let col$types = { 'title': 'text', 'description': 'text', 'dueDate': 'date', 'createdDate': 'date' };
@@ -353,7 +360,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
         const container = document.getElementById('popupContainer');
         if (container) {
           const factory = this.resolver.resolveComponentFactory(this.componentType);
-          console.log(factory);
           
           const componentRef = this.popupContainer.createComponent(factory);
           componentRef.instance.dataRefreshed.subscribe(() => {
@@ -367,23 +373,21 @@ export class HomePageComponent implements OnInit, OnDestroy {
   getAllTask(): Task[] {
     return this.tasks
   }
-  getTodoTasks(): Task[] {
+  getTodoTasks(): Task[] { 
     if (this.tasks)
-      // return this.tasks.filter(task => task.status?.description === "TO DO");
-      return this.tasks.filter(task => task.status?.description === "Not Started");
+      return this.tasks.filter(task => task.status?.description === "TO DO");
     return []
   }
   getTodoTasksByUser(): Task[] {
-    // return this.tasks.filter(task => task.status?.description === "TO DO");
     if (this.tasks)
-      return this.tasks.filter(task => task.status?.description === "Not Started" && task.assignedTo?.email == this.user.email);
+      return this.tasks.filter(task => task.status?.description === "TO DO" && task.assignedTo?.email == this.user.email);
     return []
   }
 
   getTodoTasksFromToday(): Task[] {
     const today = new Date().toDateString();
     return this.getTodoTasks().filter(task => {
-      if (task.createdDate) {
+      if (task.createdDate) {        
         return new Date(task.createdDate).toDateString() === today;
       }
       return false;
@@ -391,15 +395,13 @@ export class HomePageComponent implements OnInit, OnDestroy {
   }
 
   getInProgressTasks(): Task[] {
-    // return this.tasks.filter(task => task.status?.description === "In PROGRESS");
     if (this.tasks)
-      return this.tasks.filter(task => task.status?.description === "In Progress");
+      return this.tasks.filter(task => task.status?.description === "IN PROGRESS");
     return []
   }
   getInProgressTasksByUser(): Task[] {
     if (this.tasks)
-      // return this.tasks.filter(task => task.status?.description === "In PROGRESS");
-      return this.tasks.filter(task => task.status?.description === "In Progress" && task.assignedTo?.email == this.user.email);
+      return this.tasks.filter(task => task.status?.description === "IN PROGRESS" && task.assignedTo?.email == this.user.email);
     return []
   }
   getInProgressTasksFromToday(): Task[] {
@@ -411,7 +413,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
       return false;
     })
   }
-
 
   getTasksDueToday(): Task[] {
     const today = new Date().toDateString();
@@ -430,8 +431,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     if (this.tasks)
       return this.tasks.filter(task => {
         if (task.dueDate) {
-          // return new Date(task.dueDate).toDateString() === today&&task.status?.description=="DONE";
-          return new Date(task.dueDate).toDateString() === today && task.status?.description == "Completed";
+          return new Date(task.dueDate).toDateString() === today && task.status?.description == "COMPLETE";
         }
         return false;
       })
@@ -443,8 +443,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
       return this.tasks.filter(task => {
         if (task.dueDate) {
           const dueDate = new Date(task.dueDate);
-          return dueDate < now && task.status?.description !== "Completed";
-          // return dueDate < now && task.status?.description !== "DONE";
+          return dueDate < now && task.status?.description !== "COMPLETE";
         }
         return false;
       });

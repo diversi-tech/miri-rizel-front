@@ -7,7 +7,7 @@ import { environment } from 'src/enviroments/environment';
   providedIn: 'root'
 })
 export class DocumentService {
-  private baseUrl = `${environment.apiUrl}/api`;
+  private baseUrl = `${environment.apiUrl}api`;
 
   constructor(private http: HttpClient) { }
   private headers = new HttpHeaders({

@@ -5,49 +5,66 @@ import Swal from 'sweetalert2';
 import { FormsModule } from '@angular/forms';
 import { NgIf, NgFor } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
-    selector: 'app-list-document',
-    templateUrl: './list-document.component.html',
-    styleUrls: ['./list-document.component.css'],
-    standalone: true,
-    imports: [NgIf, FormsModule, NgFor,TranslateModule]
+  selector: 'app-list-document',
+  templateUrl: './list-document.component.html',
+  styleUrls: ['./list-document.component.css'],
+  standalone: true,
+  imports: [NgIf, FormsModule, NgFor, TranslateModule]
 })
 export class ListDocumentComponent implements OnInit {
-  folders: any[] = []; 
+  folders: any[] = [];
   filteredFolders: any[] = [];
-    files: any[] = [];   
-  searchQuery: string = ''; 
-  currentFolderId: string = ''; 
+  files: any[] = [];
+  emptyFolder:boolean=false;
+  searchQuery: string = '';
+  currentFolderId: string = '';
   constructor(
     private documentService: DocumentService,
     private validatorsService: ValidatorsService,
     private translate: TranslateService,
+    private spiner: NgxSpinnerService
 
-  ) {}
+  ) { }
 
   ngOnInit() {
+    this.spiner.show();
     this.loadFolders();
   }
 
   loadFolders(): void {
     this.documentService.getFolders().subscribe(folders => {
+      this.spiner.hide();
       console.log(folders);
-      this.folders=folders
+
+      console.log(folders);
+      this.folders = folders
       this.filteredFolders = folders;
-      console.log(this.folders)
+            
+      if(this.filteredFolders.length>0)
+        this.emptyFolder=true
+      else
+      {
+      this.translate.get('emptyFoler').subscribe(translations => {
+
+         Swal.fire(translations)
+      })
+      
+    }
     });
   }
 
   viewFolderContents(folderId: string): void {
     this.documentService.getFilesInFolder(folderId).subscribe(files => {
-      if(files.length>0){
+      if (files.length > 0) {
 
-this.translate.get(['Close', 'contentFolder']).subscribe(translations => {
+        this.translate.get(['Close', 'contentFolder']).subscribe(translations => {
 
-  Swal.fire({
-    title: translations['contentFolder'],
-    html: `
+          Swal.fire({
+            title: translations['contentFolder'],
+            html: `
       <style>
         .file-grid {
           display: flex;
@@ -82,26 +99,26 @@ this.translate.get(['Close', 'contentFolder']).subscribe(translations => {
         `).join('')}
       </div>
     `,
-    showCloseButton: true,
-    showConfirmButton: false,
-  });
-  
-  })
+            showCloseButton: true,
+            showConfirmButton: false,
+          });
+
+        })
       }
-else
-{
-  this.translate.get(['Close', 'empyFolder']).subscribe(translations => {
- Swal.fire({
-   title: translations['empyFolder'],
-   confirmButtonText: translations['Close']
-  })
-} )
-};
-})}
-    
-  
-  
-  
+      else {
+        this.translate.get(['Close', 'empyFolder']).subscribe(translations => {
+          Swal.fire({
+            title: translations['empyFolder'],
+            confirmButtonText: translations['Close']
+          })
+        })
+      };
+    })
+  }
+
+
+
+
   filterFolders(): void {
     if (this.searchQuery) {
       this.filteredFolders = this.folders.filter(folder =>

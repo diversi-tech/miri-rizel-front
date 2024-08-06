@@ -3,50 +3,56 @@ import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators, Form
 import { DocumentService } from '@app/Services/document.service';
 import { ValidatorsService } from '@app/Services/validators.service';
 import Swal from 'sweetalert2';
-import { NgIf } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { MessageService } from 'primeng/api';
+import { FileUploadModule } from 'primeng/fileupload';
+import { BadgeModule } from 'primeng/badge';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '@app/Components/dialog/dialog.component';
 
 @Component({
   selector: 'app-document',
   templateUrl: './document.component.html',
   styleUrls: ['./document.component.css'],
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, NgIf, InputTextModule, TranslateModule]
+  providers: [MessageService],
+  imports: [FormsModule, FileUploadModule, BadgeModule, ReactiveFormsModule, CommonModule, NgIf, NgFor, InputTextModule, TranslateModule]
 })
 export class DocumentComponent implements OnInit {
   file!: File;
+  files: File[] = [];
   documentForm!: FormGroup;
   submitted: boolean = false;
   private originalParent: HTMLElement | null = null;
   trueTitle: boolean = false;
   nameCustomer!: string;
+  totalSize: number = 0;
+  totalSizePercent: number = 0;
   date!: Date;
+
   constructor(
     private documentService: DocumentService,
     private formBuilder: FormBuilder,
     private vlidatorsService: ValidatorsService,
     private translate: TranslateService,
-    private spiner:NgxSpinnerService
-
-  ) {
-
-  }
+    private spinner: NgxSpinnerService,
+    private dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
     this.documentForm = this.formBuilder.group({
       documentId: [0],
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      filePath: ['', [Validators.required, Validators.minLength(8)]],
+      filePath: ['', [Validators.required]],
       relatedTo: ['', [Validators.required]],
       relatedId: [0, [Validators.required]],
       createdDate: ['', [Validators.required]],
-
     });
     this.openEditDocumentPopup();
-
   }
 
   get formControls() { return this.documentForm.controls; }
@@ -56,9 +62,11 @@ export class DocumentComponent implements OnInit {
       return this.vlidatorsService.name(control.value) ? null : { invalidName: 'השם לא תקין' };
     };
   }
+
   setName(name: string) {
     this.nameCustomer = name;
   }
+
   openEditDocumentPopup() {
     const formElement = document.getElementById("addDocument");
     if (formElement) {
@@ -84,48 +92,62 @@ export class DocumentComponent implements OnInit {
       });
     }
   }
+  onSelected(event: any): void {
+    this.files = event.currentFiles;
+    this.totalSize = this.files.reduce((acc, file) => acc + file.size, 0);
+    this.totalSizePercent = this.totalSize / 10000000 * 100;
 
-  onFileChange(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length) {
-      this.file = input.files[0];
-      const title = this.documentForm.controls['title'].value;
-      const formData = new FormData(); {
-        formData.append('file', this.file, title);
-      }
-      this.spiner.show();
-      this.documentService.upFile(formData, this.nameCustomer).subscribe(res => {   
-        this.spiner.hide();
 
-        this.documentForm.patchValue({
-          filePath: res
-        })
-      })
-    };
+
   }
 
+  onSelectedFiles(event: File): void {
+    const title = this.documentForm.controls['title'].value;
+    const formData = new FormData();
+    formData.append('file', event, title);
+    this.spinner.show();
+    this.documentService.upFile(formData, this.nameCustomer).subscribe(() => {
+      this.spinner.hide();
+      Swal.close();
+    });
+  }
   addDocumentSubmit(): void {
     this.submitted = true;
-    this.documentForm.patchValue({
-      createdDate: new Date()
-    });
-    if (this.documentForm.value.description.invalid)
-      return;
-    if (this.documentForm.value.filePath.length < 8)
-      return;
-    if (this.documentForm.value.title.invalid)
-      return;
-    console.log("file",this.documentForm.value.filePath);
-    this.documentService.addDocument(this.documentForm.value,this.nameCustomer).subscribe(res => {
-      this.translate.get(['upLoadFile']).subscribe(translations => {
 
-      alert(translations['upLoadFile'])
-      Swal.close();
-    
-  })
-  })
-}
+    if (this.files[0] == null) {
+      return;
+    }
+    this.onSelectedFiles(this.files[0]);
+  }
   changeTitle() {
     this.trueTitle = true;
+  }
+  formatSize(bytes: number): string {
+    if (bytes === 0) {
+      return '0 B';
+    }
+    const k = 1024;
+    const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  }
+  onRemoveTemplatingFile(event: Event, file: File, removeFileCallback: Function, index: number) {
+    removeFileCallback(file);
+    this.files.splice(index, 1);
+    this.totalSize -= file.size;
+    this.totalSizePercent = this.totalSize / 10000000 * 100;
+  }
+  choose(event: Event, chooseCallback: Function) {
+    chooseCallback();
+  }
+  uploadHandler(event: any) {
+    const formData = new FormData();
+    for (const file of event.files) {
+      formData.append('files', file, file.name);
+    }
+  }
+  customUploadHandler(event: any) {
+    const files = event.files;
+    this.onSelectedFiles(files[0]);
   }
 }

@@ -15,9 +15,41 @@
   margin-right: 20px;
   margin-top: 20px;
 }
+.form-container {
+  display: flex;
+  align-items: flex-start;
+  /* gap: 20px; */
+}
+
+.inputs {
+  flex: 1;
+  
+}
+
+.file {
+  flex: 1;
+  width: 250px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.submit {
+display: block;
+background-color: #5CFFAC;
+color: #000;
+border: none;
+padding: 10px 20px;
+border-radius: 8px;
+cursor: pointer;
+width: 190px;
+}
+button.submit-button:hover {
+background-color: #81F9C5;
+}
 .document{
   display: inline-block;
-  /* padding: 12px 24px; */
   font-size: 16px;
   font-weight: 600;
   color: #ffffff;
@@ -70,13 +102,9 @@ button {
   cursor: pointer;
   width: 350px;
   margin-top: 10px;
-  margin-right: 20px;
-  align-items: center;
-  /* justify-content: center; */
+  margin-left: 25%;
 }
-button:hover {
-  background-color: #81f9c5;
-}
+
 .line {
   background-color: #5CFFAC;
   max-width: 200px;

@@ -26,7 +26,7 @@ export class ProjectService {
   }
   addProject(projectDetails: Project): Observable<any> {
     const url = `${this.apiUrl}`;
-     return this.http.post(url, projectDetails);
+     return this.http.post(url, projectDetails,{responseType: 'text' });
    }
    deleteProject(id: Number): Observable<Boolean> {
     return this.http.delete<Boolean>(`${this.apiUrl}?id=${id}`);
@@ -39,7 +39,7 @@ update(project:Project,id:number): Observable<Project>{
   return this.http.put<Project>(`${this.apiUrl}`, project);
 }
 getProjectById(id:number): Observable<any> {
-  return this.http.get(`${this.apiUrl}projects/getById?id=${id}`);
+  return this.http.get(`${this.apiUrl}getById?id=${id}`);
 }
 
 // getToken(): string | null {
