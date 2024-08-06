@@ -98,16 +98,16 @@ export class AddTaskComponent implements OnInit {
         this.filteredUsers = data
       },
       (error: any) => {
-          this.translate.get(['Close', 'errorServer']).subscribe(translations => {
-            Swal.fire({
-              text: translations['errorServer'],
-              icon: "error",
-              showCancelButton: false,
-              showCloseButton: true,
-              confirmButtonColor: "#d33",
-              confirmButtonText: translations['Close']
-            })
-          })
+          // this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+          //   Swal.fire({
+          //     text: translations['errorServer'],
+          //     icon: "error",
+          //     showCancelButton: false,
+          //     showCloseButton: true,
+          //     confirmButtonColor: "#d33",
+          //     confirmButtonText: translations['Close']
+          //   })
+          // })
         }
       
     );
@@ -116,16 +116,16 @@ export class AddTaskComponent implements OnInit {
         this.statuses = data;
       },
       (error: any) => {
-        this.translate.get(['Close', 'errorServer']).subscribe(translations => {
-          Swal.fire({
-            text: translations['errorServer'],
-            icon: "error",
-            showCancelButton: false,
-            showCloseButton: true,
-            confirmButtonColor: "#d33",
-            confirmButtonText: translations['Close']
-          })
-        })
+        // this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+        //   Swal.fire({
+        //     text: translations['errorServer'],
+        //     icon: "error",
+        //     showCancelButton: false,
+        //     showCloseButton: true,
+        //     confirmButtonColor: "#d33",
+        //     confirmButtonText: translations['Close']
+        //   })
+        // })
       }
     );
     this.taskService.getAllPriorities().subscribe(
@@ -134,16 +134,16 @@ export class AddTaskComponent implements OnInit {
       },
       (error: any) => {
         (error: any) => {
-          this.translate.get(['Close', 'errorServer']).subscribe(translations => {
-            Swal.fire({
-              text: translations['errorServer'],
-              icon: "error",
-              showCancelButton: false,
-              showCloseButton: true,
-              confirmButtonColor: "#d33",
-              confirmButtonText: translations['Close']
-            })
-          })
+          // this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+          //   Swal.fire({
+          //     text: translations['errorServer'],
+          //     icon: "error",
+          //     showCancelButton: false,
+          //     showCloseButton: true,
+          //     confirmButtonColor: "#d33",
+          //     confirmButtonText: translations['Close']
+          //   })
+          // })
         }
       }
     );
@@ -154,16 +154,16 @@ export class AddTaskComponent implements OnInit {
       },
       (error: any) => {
         (error: any) => {
-          this.translate.get(['Close', 'errorServer']).subscribe(translations => {
-            Swal.fire({
-              text: translations['errorServer'],
-              icon: "error",
-              showCancelButton: false,
-              showCloseButton: true,
-              confirmButtonColor: "#d33",
-              confirmButtonText: translations['Close']
-            })
-          })
+          // this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+          //   Swal.fire({
+          //     text: translations['errorServer'],
+          //     icon: "error",
+          //     showCancelButton: false,
+          //     showCloseButton: true,
+          //     confirmButtonColor: "#d33",
+          //     confirmButtonText: translations['Close']
+          //   })
+          // })
         }
       }
     );
@@ -233,14 +233,14 @@ export class AddTaskComponent implements OnInit {
       },
       (error: any) => {
         this.translate.get(['Close', 'error loading']).subscribe(translations => {
-          Swal.fire({
-            text: translations['error loading '],
-            icon: "error",
-            showCancelButton: false,
-            showCloseButton: true,
-            confirmButtonColor: "#d33",
-            confirmButtonText: translations['Close']
-          })
+          // Swal.fire({
+          //   text: translations['error loading '],
+          //   icon: "error",
+          //   showCancelButton: false,
+          //   showCloseButton: true,
+          //   confirmButtonColor: "#d33",
+          //   confirmButtonText: translations['Close']
+          // })
         })
       }
     );
