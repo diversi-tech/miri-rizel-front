@@ -71,9 +71,9 @@ export class UserService {
     );
   }
 
-  loginGoogle(email: string, name: string): Observable<any> {
+  loginGoogle(email: string): Observable<any> {
     return this.http
-    .get<any>(`${this.apiUrl}LoginGoogle?email=${email}&name=${name}`)
+    .get<any>(`${this.apiUrl}LoginGoogle?email=${email}`)
     .pipe(
       // tap((user) => {
       //   localStorage.setItem('user', JSON.stringify(user));

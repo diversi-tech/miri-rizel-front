@@ -60,9 +60,7 @@ export class GoogleComponent {
       
       this.login.getByMail(email).subscribe(res => {
         if (this.userData == "logIn" && res != null) {
-          
-          
-          this.login.loginGoogle(email, userName).subscribe(
+          this.login.loginGoogle(email).subscribe(
             
             
             (response: any) => {
