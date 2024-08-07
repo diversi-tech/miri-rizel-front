@@ -29,7 +29,7 @@ export class GoogleComponent {
   initGoogleOneTap(): void {
     if (window.google.accounts.id) {
       window.google.accounts.id.initialize({
-        client_id: '427515481723-ja7nlkmti3amubd5e5qbtdig27fc06ik.apps.googleusercontent.com',
+        client_id: '43995385201-q9j7i65l1t9t7nqucup4iu0g5k2fkv6u.apps.googleusercontent.com',
         callback: this.handleCredentialResponse.bind(this)
       });
       window.google.accounts.id.prompt();
@@ -54,23 +54,20 @@ export class GoogleComponent {
   handleCredentialResponse(response: any): void {
     if (response.credential) {
       var idToken = response.credential;
-      var decodedToken = this.parseJwt(idToken);
+      var decodedToken = this.parseJwt(idToken) 
       var email = decodedToken.email;
       var userName = decodedToken.name;
+      
       this.login.getByMail(email).subscribe(res => {
         if (this.userData == "logIn" && res != null) {
+          
+          
           this.login.loginGoogle(email, userName).subscribe(
+            
+            
             (response: any) => {
               const user = response.user;
-              if (user.role == 1) {
-                this.router.navigate(['/admin']);
-              }
-              if (user.role == 2) {
-                this.router.navigate(['/worker']);
-              }
-              if (user.role == 3) {
-                this.router.navigate(['/customer']);
-              }
+              this.router.navigate(['/redirect'])
             },
             error => {
               this.dialog.open(DialogComponent, {

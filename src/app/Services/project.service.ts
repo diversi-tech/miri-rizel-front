@@ -26,7 +26,7 @@ export class ProjectService {
   }
   addProject(projectDetails: Project): Observable<any> {
     const url = `${this.apiUrl}`;
-     return this.http.post(url, projectDetails,{responseType: 'text' });
+     return this.http.post(url, projectDetails);
    }
    deleteProject(id: Number): Observable<Boolean> {
     return this.http.delete<Boolean>(`${this.apiUrl}?id=${id}`);
