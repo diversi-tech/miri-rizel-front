@@ -42,7 +42,6 @@ export class ProjectTableComponent implements OnInit {
     private CustomerService: CustomersService
   ) { }
   ngOnInit() {
-    console.log("projectComponent");
     this.taskService.getAll().subscribe(
       (data) => {
         this.tasks = data
@@ -124,7 +123,6 @@ export class ProjectTableComponent implements OnInit {
   }
   filterData(objToFilter: any) {
     let taskFilter: Task[] = this.tasks.filter(u => u.project.projectId == objToFilter.projectId);
-    console.log(taskFilter);
     if (taskFilter.length != 0) {
       let loading: boolean = true;
       let col$types = { 'title': 'text', 'dueDate': 'date', 'createdDate': 'date' };

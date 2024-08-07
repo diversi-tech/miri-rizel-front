@@ -54,7 +54,6 @@ export class UploadFilseComponent implements OnInit,OnChanges {
   }
   ngOnChanges(changes: SimpleChanges) {
     if (changes['user'] && changes['user'].currentValue) {
-      console.log("ngOnChanges",this.user);
       this.nameCustomer=this.user?this.user.firstName+" "+this.user.lastName:"חריגים"
     }
   }

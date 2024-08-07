@@ -173,7 +173,6 @@ export class UsersComponent implements OnInit {
   getAllRoles() {
     this.userService.getAllRoles().subscribe((roles) => {
       this.roles = roles;
-      console.log('getAllRoles');
       this.translateAllRoles();
     });
   }

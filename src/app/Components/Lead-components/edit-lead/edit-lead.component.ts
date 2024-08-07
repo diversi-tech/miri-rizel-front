@@ -98,7 +98,6 @@ export class EditLeadComponent implements OnInit {
   async toEnter() {
     this.submitted = true;
     if (this.editForm.invalid) { return; }
-    console.log(this.editForm.value);
     
     this.lead.editLead(this.editForm.value, this.data).subscribe()
     await this.delay(50);

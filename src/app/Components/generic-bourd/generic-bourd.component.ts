@@ -208,7 +208,7 @@ document(rowData: any){
       case 'IN PROGRESS':
         return 'info';
 
-      case 'DONE':
+      case 'COMPLETE':
         return 'success';
 
       case 'HIGH':
@@ -411,7 +411,6 @@ document(rowData: any){
   }      
   //קבלת מידע הטופס ופניה לפונקציה המתאימה
   async exportToSpreadSheet(eventData: any): Promise<void> {
-    console.log('Submitted values:', eventData);
     const arrayOfArraysData = this.objectsToArrayOfArrays(this.data);
     const titles: string[]=await this.translateTitles(arrayOfArraysData[0]);
     arrayOfArraysData[0]=titles;
