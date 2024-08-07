@@ -29,7 +29,7 @@ export class GoogleComponent {
   initGoogleOneTap(): void {
     if (window.google.accounts.id) {
       window.google.accounts.id.initialize({
-        client_id: '427515481723-ja7nlkmti3amubd5e5qbtdig27fc06ik.apps.googleusercontent.com',
+        client_id: '412263291390-jkirnvmjnk6qbera6qcdq3k6cotqk9o7.apps.googleusercontent.com',
         callback: this.handleCredentialResponse.bind(this)
       });
       window.google.accounts.id.prompt();
