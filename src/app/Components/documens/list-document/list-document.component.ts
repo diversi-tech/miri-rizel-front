@@ -37,9 +37,7 @@ export class ListDocumentComponent implements OnInit {
   loadFolders(): void {
     this.documentService.getFolders().subscribe(folders => {
       this.spiner.hide();
-      console.log(folders);
 
-      console.log(folders);
       this.folders = folders
       this.filteredFolders = folders;
             

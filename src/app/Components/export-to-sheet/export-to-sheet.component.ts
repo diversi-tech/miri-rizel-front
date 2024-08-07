@@ -39,7 +39,6 @@ export class ExportToSheetComponent {
 
   async ngOnInit(): Promise<void> {
     this.existingFiles=await this.sheetsAPI.listGoogleSheets();
-    console.log(this.existingFiles)
   }
 
   existingFiles: any = [];

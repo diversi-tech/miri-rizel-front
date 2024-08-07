@@ -41,8 +41,14 @@ export class TaskService {
     return this.http.put<boolean>(`${this.apiUrl}`, task)
   }
 
+  // updateGoogleId(taskId: number, googleId: string): Observable<any> {
+  //   debugger
+  //   return this.http.put<boolean>(`${this.apiUrl}googleCalendar?taskId=${taskId}&googleId=${googleId}`, {});
+  // }
+
   updateGoogleId(taskId: number, googleId: string): Observable<any> {
-    return this.http.put<boolean>(`${this.apiUrl}googleCalendar?taskId=${taskId}&googleId=${googleId}`, {});
+    debugger
+    return this.http.post<boolean>(`${this.apiUrl}googleCalendar`, { taskId, googleId });
   }
 
   getAllStatus(): Observable<any> {

@@ -115,7 +115,6 @@ authorize: any;
     if (this.projectForm.valid) {
 
       const newProject: Project = this.projectForm.value;
-      console.log('Selected Authorization:', newProject.authorize);
       this.projectService.addProject(newProject)
       
         .subscribe(
