@@ -183,6 +183,9 @@ export class ListLeadsComponent {
           // } else if (result.isDenied) {
           //   Swal.fire(translations['replaceLeadSuccses'], "", "info");
           }
+          else{
+            this.refreshData(); 
+          }
         }))}
       )
       
