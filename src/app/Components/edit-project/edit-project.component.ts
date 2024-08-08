@@ -33,9 +33,7 @@ export class EditProjectComponent {
   custom: Customer[] = [];
   statuses: StatusCodeProject[] = [];
   project: Project = { projectId: 0 };
-  project: Project = { projectId: 0 };
   status: StatusCodeProject = {};
-  customer: Customer = { customerId: 0, status: {} };
   customer: Customer = { customerId: 0, status: {} };
   ProjectForm!: FormGroup;
   submitted = false;
