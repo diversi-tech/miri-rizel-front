@@ -196,6 +196,7 @@ export class ListLeadsComponent {
             this.communicationNew.type = e.type
             this.communicationNew.communicationId = 0
             this.communicationNew.name = e.name
+            this.communicationNew.details = e.details
             this.communicationNew.relatedId = this.max+1;
             console.log(this.communicationNew);
             this.communicationS.AddNewCommunication(this.communicationNew).subscribe((response: Communication) => {
