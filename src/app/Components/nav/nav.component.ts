@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, ViewChild, ViewContainerRef } from '@angular/core';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink,RouterModule} from '@angular/router';
 import { LanguageService } from '@app/Services/language.service';
 import { NgIf, NgFor } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
@@ -27,6 +27,7 @@ import { WINDOW } from '@app/Services/window.token';
     NgIf,
     MatMenuModule,
     MatButtonModule,
+    RouterModule
   ],
 })
 export class NavComponent implements OnInit {

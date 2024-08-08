@@ -273,7 +273,7 @@ export class AccessibilityComponent  implements AfterViewInit {
       this.closeKeyboard();
     }
   }
-
+  
   openKeyboard() {
     if (this.keyboardContainer?.nativeElement) {
       if (!this.keyboardService.isInitialized()) {
@@ -281,7 +281,7 @@ export class AccessibilityComponent  implements AfterViewInit {
       } else {
         this.keyboardService.resetKeyboard(this.keyboardContainer.nativeElement);
       }
-      this.showKeyboard = true;
+      this.showKeyboard = true; 
     } else {
       console.error('keyboardContainer is undefined. Make sure it is properly initialized.');
     }

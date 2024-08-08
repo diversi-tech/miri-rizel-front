@@ -21,15 +21,19 @@
     <label>{{'StatusInput'|translate}} </label>
     <div class="card flex justify-content-center">
       <p-dropdown formControlName="status" [options]="statuses" class="select-field" optionLabel="description"
-      placeholder="{{'StatusInput'|translate}}" class="select-field" />
+        [placeholder]="this.status.description" />
     </div>
-
     <label> {{'CustomerInputSelect'|translate}} </label>
     <div class="card flex justify-content-center">
-      <p-dropdown formControlName="customerId" [options]="custom" optionLabel="firstName"
-      class="select-field" [placeholder]="'CustomerInputSelect'|translate" />
+      <p-dropdown formControlName="customerId" [options]="custom" optionLabel="firstName" class="select-field"
+        [placeholder]="customer.firstName" />
     </div>
-    <br><br />
+    <label> {{'AuthorizeInputSelect' | translate}} </label>
+    <div class="card flex justify-content-center">
+      <p-dropdown formControlName="authorize" [options]="authorizeOptions" optionLabel="label" optionValue="value"
+        placeholder="{{'AuthorizeInput' | translate}}" class="select-field" />
+    </div>
+    <br>
     <button class="submit-button" mat-raised-button type="submit"><label> {{'Send'|translate}} </label></button>
   </form>
 </div>
