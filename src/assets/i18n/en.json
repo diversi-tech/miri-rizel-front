@@ -1,5 +1,6 @@
 {
   "replaceToCustomerToolLip":"Turning a lead into a customer",
+  "replaceToCustomerToolLip":"Turning a lead into a customer",
   "logOut": "Log Out",
   "EditYourDetails": "Edit Your Details",
   "Documents": "Documents",
@@ -278,5 +279,8 @@
   "deleteToolLip":"Deleting an item",
   "popTableToolLip":"Show more items",
   "Documentation": "Documentation",
-  "youAreSure": "Are you sure you want to transfer this lead to a customer?"
+  "youAreSure": "Are you sure you want to transfer this lead to a customer?",
+  "AuthorizeInputSelect":"select authorizel",
+  "ProjectUpdateSuccess":"Project updated successfully",
+  "ProjectAddSuccess":"Project added successfully"
 }
