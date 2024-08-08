@@ -41,7 +41,8 @@ export class ListLeadsComponent {
     private leadService: LeadService,
     private router: Router,
     private resolver: ComponentFactoryResolver,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private communicationS: CommunicationService
   ) {}
 
   ngOnInit() {
