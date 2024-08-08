@@ -320,7 +320,7 @@ bootstrapApplication(AppComponent, {
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              ' 592574124687-bvpc5dmgfms66j1q6725fi5gevmsmtmf.apps.googleusercontent.com'
+              '43995385201-q9j7i65l1t9t7nqucup4iu0g5k2fkv6u.apps.googleusercontent.com'
             ),
           },
         ],

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -26,12 +26,17 @@ import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
   imports: [FormsModule, ReactiveFormsModule, MatInputModule, NgIf, MatFormFieldModule, DropdownModule, TranslateModule,]
 })
 export class AddProjectComponent implements OnInit {
+  @Output() dataRefreshed: EventEmitter<void> = new EventEmitter<void>();
 
   statuses: StatusCodeProject[] = [];
   date: Date = new Date();
   projectForm: FormGroup = new FormGroup({});
   titlePage: string = "AddProject"
   custom: Customer[] = [];
+  authorizeOptions: { label: number, value: number }[] = [
+    { label: 1, value: 1 },
+    { label: 2, value: 2 }]
+authorize: any;
   constructor(
     private fb: FormBuilder,
     private projectService: ProjectService,
@@ -47,25 +52,27 @@ export class AddProjectComponent implements OnInit {
 
 
   ngOnInit(): void {
+    authorize:[null];
     this.date = new Date()
     this.createForm();
+    debugger
     this.statusService.getAllStatus().subscribe(
       (data: any) => {
         this.statuses = data;
       },
-        (error: any) => {
-          this.translate.get(['Close', 'Error Server']).subscribe(translations => {
-            Swal.fire({
-              text: translations['Error Server '],
-              icon: "error",
-              showCancelButton: false,
-              showCloseButton: true,
-              confirmButtonColor: "#d33",
-              confirmButtonText: translations['Close']
-            })
+      (error: any) => {
+        this.translate.get(['Close', 'Error Server']).subscribe(translations => {
+          Swal.fire({
+            text: translations['Error Server '],
+            icon: "error",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#d33",
+            confirmButtonText: translations['Close']
           })
-        }
-      
+        })
+      }
+
     );
     this.customerService.GetAllCustomers().subscribe(
       (data: any) => {
@@ -94,7 +101,8 @@ export class AddProjectComponent implements OnInit {
       endDate: ['', [Validators.required, this.futureDateValidator.bind(this)]],
       status: '',
       customer: ['', Validators.required],
-      createdDate: [new Date()]
+      createdDate: [new Date()],
+      authorize: [null]
     });
     this.dateValidator.bind(this)
   }
@@ -108,6 +116,7 @@ export class AddProjectComponent implements OnInit {
 
       const newProject: Project = this.projectForm.value;
       this.projectService.addProject(newProject)
+      
         .subscribe(
           (response) => {
 
@@ -120,6 +129,7 @@ export class AddProjectComponent implements OnInit {
                     buttonText: translation['close'],
                   },
                 }));
+              this.dataRefreshed.emit();
               Swal.close();
             }
           },

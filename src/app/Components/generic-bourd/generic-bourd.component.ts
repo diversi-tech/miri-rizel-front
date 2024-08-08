@@ -72,6 +72,7 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   @Input() hideEditButton: boolean = false;
 
   @Output() edit = new EventEmitter<any>();
+  @Output() documentation = new EventEmitter<any>();
   @Output() propil = new EventEmitter<any>();
   @Output() replaceToCustomer = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
@@ -84,7 +85,6 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   constructor(
     private resolver: ComponentFactoryResolver,
     private sheetsAPI: SheetsApiService,
-    private translateService: TranslateService,
     private languageService: LanguageService,
     private translate:TranslateService
   ) {}
@@ -126,7 +126,7 @@ document(rowData: any){
 }
 
   onPropil(rowData: any) {
-    this.propil.emit(rowData);
+    this.documentation.emit(rowData);
   }
   onReplaceToCustomer(rowData: any){
     this.translate.get(["youAreSure",'Approve', "Cancle"]).subscribe(translations=> 
@@ -201,10 +201,10 @@ document(rowData: any){
       filterType: 'delete',
     });
     this.columns.push({
-      field: 'propil',
+      field: 'documentation',
       header: '',
       sortable: false,
-      filterType: 'propil'
+      filterType: 'documentation'
     });
     this.columns.push({
       field: 'replaceToCustomer',
@@ -230,19 +230,19 @@ document(rowData: any){
       case 'TO DO':
         return 'danger';
 
-      case 'In PROGRESS':
+      case 'IN PROGRESS':
         return 'info';
 
-      case 'DONE':
+      case 'COMPLETE':
         return 'success';
 
-      case 'High':
+      case 'HIGH':
         return 'danger';
 
-      case 'Low':
+      case 'LOW':
         return 'success';
 
-      case 'Medium':
+      case 'MEDIUM':
         return 'info';
 
       default:
@@ -342,10 +342,10 @@ document(rowData: any){
           container.appendChild(componentRef.location.nativeElement);
           componentRef.instance.loading = false;
           if (edit)  componentRef.instance.hideEditButton = edit 
-          // 
+          
           if (deleteCallBack)
             componentRef.instance.onDelete = deleteCallBack
-          // 
+         
         }
         if (customWidth) {
           const popup = Swal.getPopup();
@@ -436,7 +436,6 @@ document(rowData: any){
   }      
   //קבלת מידע הטופס ופניה לפונקציה המתאימה
   async exportToSpreadSheet(eventData: any): Promise<void> {
-    console.log('Submitted values:', eventData);
     const arrayOfArraysData = this.objectsToArrayOfArrays(this.data);
     const titles: string[]=await this.translateTitles(arrayOfArraysData[0]);
     arrayOfArraysData[0]=titles;
@@ -507,9 +506,9 @@ document(rowData: any){
   }
 
   translateTitles(titles: string[]) :Promise<string[]>{
-    //return titles.forEach(title=> this.translateService.get(title).subscribe(translation=> title= translation));
+    //return titles.forEach(title=> this.translate.get(title).subscribe(translation=> title= translation));
     const translationPromises = titles.map(title => 
-      this.translateService.get(title).toPromise()
+      this.translate.get(title).toPromise()
     );
 
     return Promise.all(translationPromises);

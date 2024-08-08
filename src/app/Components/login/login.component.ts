@@ -98,18 +98,11 @@ export class LoginComponent implements OnInit {
     this.userService.login(email, password).subscribe(
       (user: any) => {
         this.spinner.hide();
-        // if (user.user.role.id == 1) {
-        //   this.router.navigate(['/Dashboard'], { relativeTo: this.active });
-        //   console.log(user.user.role,"user.role");             
-        // }
-        // else{
-        //   this.router.navigate(['/home'], { relativeTo: this.active });
-        // }
+      
         this.router.navigate(['/redirect']).then(() => {
-          // רענן את העמוד לאחר ניווט מוצלח
           setTimeout(() => {
             window.location.reload();
-          }, 100); // ה-delay תלוי בצורך שלך
+          }, 100); 
         });
 
       },

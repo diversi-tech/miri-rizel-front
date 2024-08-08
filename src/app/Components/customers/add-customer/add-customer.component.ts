@@ -64,7 +64,6 @@ export class AddCustomerComponent implements OnInit {
   private loadStatusUsers(): void {
     this.customerService.GetAllStatusUser().subscribe(res => {
       this.statusCodeUser = res;
-      console.log(res);
       if (this.statusCodeUser.length > 0) {
         this.selectedStatus = this.statusCodeUser[0];
       }

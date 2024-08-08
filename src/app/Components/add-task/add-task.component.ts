@@ -19,6 +19,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { InputTextModule } from 'primeng/inputtext';
 import { LanguageService } from '@app/Services/language.service';
+import { GoogleTaskService } from '@app/Services/google-task.service';
+
 interface AutoCompleteCompleteEvent {
   originalEvent: Event;
   query: string;
@@ -77,7 +79,8 @@ export class AddTaskComponent implements OnInit {
     private location: Location,
     private GoogleAuthService: GoogleAuthService,
     private translate: TranslateService,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private googleTaskService: GoogleTaskService
   ) { }
   ngOnInit(): void {
     this.taskForm = this.fb.group({
@@ -98,34 +101,34 @@ export class AddTaskComponent implements OnInit {
         this.filteredUsers = data
       },
       (error: any) => {
-          this.translate.get(['Close', 'errorServer']).subscribe(translations => {
-            Swal.fire({
-              text: translations['errorServer'],
-              icon: "error",
-              showCancelButton: false,
-              showCloseButton: true,
-              confirmButtonColor: "#d33",
-              confirmButtonText: translations['Close']
-            })
-          })
-        }
-      
+        // this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+        //   Swal.fire({
+        //     text: translations['errorServer'],
+        //     icon: "error",
+        //     showCancelButton: false,
+        //     showCloseButton: true,
+        //     confirmButtonColor: "#d33",
+        //     confirmButtonText: translations['Close']
+        //   })
+        // })
+      }
+
     );
     this.taskService.getAllStatus().subscribe(
       (data: any) => {
         this.statuses = data;
       },
       (error: any) => {
-        this.translate.get(['Close', 'errorServer']).subscribe(translations => {
-          Swal.fire({
-            text: translations['errorServer'],
-            icon: "error",
-            showCancelButton: false,
-            showCloseButton: true,
-            confirmButtonColor: "#d33",
-            confirmButtonText: translations['Close']
-          })
-        })
+        // this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+        //   Swal.fire({
+        //     text: translations['errorServer'],
+        //     icon: "error",
+        //     showCancelButton: false,
+        //     showCloseButton: true,
+        //     confirmButtonColor: "#d33",
+        //     confirmButtonText: translations['Close']
+        //   })
+        // })
       }
     );
     this.taskService.getAllPriorities().subscribe(
@@ -134,16 +137,16 @@ export class AddTaskComponent implements OnInit {
       },
       (error: any) => {
         (error: any) => {
-          this.translate.get(['Close', 'errorServer']).subscribe(translations => {
-            Swal.fire({
-              text: translations['errorServer'],
-              icon: "error",
-              showCancelButton: false,
-              showCloseButton: true,
-              confirmButtonColor: "#d33",
-              confirmButtonText: translations['Close']
-            })
-          })
+          // this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+          //   Swal.fire({
+          //     text: translations['errorServer'],
+          //     icon: "error",
+          //     showCancelButton: false,
+          //     showCloseButton: true,
+          //     confirmButtonColor: "#d33",
+          //     confirmButtonText: translations['Close']
+          //   })
+          // })
         }
       }
     );
@@ -154,16 +157,16 @@ export class AddTaskComponent implements OnInit {
       },
       (error: any) => {
         (error: any) => {
-          this.translate.get(['Close', 'errorServer']).subscribe(translations => {
-            Swal.fire({
-              text: translations['errorServer'],
-              icon: "error",
-              showCancelButton: false,
-              showCloseButton: true,
-              confirmButtonColor: "#d33",
-              confirmButtonText: translations['Close']
-            })
-          })
+          // this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+          //   Swal.fire({
+          //     text: translations['errorServer'],
+          //     icon: "error",
+          //     showCancelButton: false,
+          //     showCloseButton: true,
+          //     confirmButtonColor: "#d33",
+          //     confirmButtonText: translations['Close']
+          //   })
+          // })
         }
       }
     );
@@ -176,7 +179,7 @@ export class AddTaskComponent implements OnInit {
       }
     });
 
-    
+
     this.languageService.language$.subscribe(lang => {
       if (lang === 'he') {
         this.styles['text-align'] = 'right';
@@ -185,8 +188,8 @@ export class AddTaskComponent implements OnInit {
         this.styles['text-align'] = 'left';
         this.styles['direction'] = 'ltr';
       }
-      })
-  
+    })
+
   }
   get title() { return this.taskForm.get('title') }
   get priority() { return this.taskForm.get('priority') }
@@ -217,7 +220,7 @@ export class AddTaskComponent implements OnInit {
   loadTask(taskId: number): void {
     this.taskService.getTaskById(taskId).subscribe(
       (task: any) => {
-          this.taskForm.patchValue({
+        this.taskForm.patchValue({
           taskId: task.taskId,
           googleId: task.googleId,
           createdDate: task.createdDate,
@@ -233,14 +236,14 @@ export class AddTaskComponent implements OnInit {
       },
       (error: any) => {
         this.translate.get(['Close', 'error loading']).subscribe(translations => {
-          Swal.fire({
-            text: translations['error loading '],
-            icon: "error",
-            showCancelButton: false,
-            showCloseButton: true,
-            confirmButtonColor: "#d33",
-            confirmButtonText: translations['Close']
-          })
+          // Swal.fire({
+          //   text: translations['error loading '],
+          //   icon: "error",
+          //   showCancelButton: false,
+          //   showCloseButton: true,
+          //   confirmButtonColor: "#d33",
+          //   confirmButtonText: translations['Close']
+          // })
         })
       }
     );
@@ -320,7 +323,8 @@ export class AddTaskComponent implements OnInit {
                   denyButtonText: translations['DontAdd']
                 }).then((result) => {
                   if (result.isConfirmed) {
-                    this.scheduleMeeting(response.taskId)
+                    // this.scheduleMeeting(response.taskId)
+                    this.createTask(response.taskId)
                   } else if (result.isDenied) {
                     Swal.fire(translations['TaskNotAddToGoogle'], "", "info");
                   }
@@ -359,7 +363,8 @@ export class AddTaskComponent implements OnInit {
                 confirmButtonText: translations['Close']
               }).then((res) => {
                 if (this.taskForm.value.googleId)
-                  this.scheduleMeeting(this.taskForm.value.googleId)
+                  // this.scheduleMeeting(this.taskForm.value.googleId)
+                  this.createTask(this.taskForm.value.googleId)
                 this.location.go(this.location.path());
               });
             })
@@ -390,11 +395,32 @@ export class AddTaskComponent implements OnInit {
       description: this.taskForm.value.description
     };
     console.info(eventDetails);
-    if (this.isEdit)
-      // שליחת הקוד אירוע
+    if (this.isEdit) {
       this.GoogleAuthService.updateGoogleEvent(eventDetails, data)
+
+    }
+    // שליחת הקוד אירוע
     else
       // שליחת הקוד משימה
       this.GoogleAuthService.createGoogleEvent(eventDetails, data)
   }
+
+  createTask(data: any) {
+    let appointmentTime = new Date(this.taskForm.value.dueDate);
+    const startTime = appointmentTime.toISOString().slice(0, 18) + '-07:00';
+    const taskDetails = {
+      title: this.taskForm.value.title,
+      notes: this.taskForm.value.description,
+      dueTime: startTime,
+      status:this.taskForm.value.status.description
+    };
+    if (this.isEdit) {
+      // שליחת הקוד אירוע
+      this.googleTaskService.updateGoogleTask(taskDetails, data)
+    }
+    else
+      // שליחת הקוד משימה
+      this.googleTaskService.createSimpleTask(taskDetails, data);
+  }
+
 }

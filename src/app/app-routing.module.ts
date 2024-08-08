@@ -57,7 +57,7 @@ const routes: Routes = [
   { path: 'addLead', component: AddLeadComponent, canActivate: [AuthGuard], data: { roles: [3] } },
   { path: 'editLead', component: EditLeadComponent, canActivate: [AuthGuard], data: { roles: [3] } },
   { path: 'leads', component: ListLeadsComponent, canActivate: [AuthGuard], data: { roles: [3] } },
-  { path: 'propil', component: PropilListComponent, canActivate: [AuthGuard], data: { roles: [3, 2] } },
+  { path: 'documentation', component: PropilListComponent, canActivate: [AuthGuard], data: { roles: [3, 2] } },
   // { path: 'customer', component: CustomersComponent },
   // { path: 'worker', component: WorkerComponentComponent },
   { path: 'users', component: UsersComponent, canActivate: [AuthGuard], data: { roles: [3] } },
@@ -79,7 +79,7 @@ const routes: Routes = [
   { path: 'documents', component: ListDocumentComponent },
   // { path: 'leads', component: ListLeadsComponent },
   // { path: 'Dashboard', component: CustomersDashboardComponent },
-  // { path: 'propil', component: PropilListComponent },
+  // { path: 'documentation', component: PropilListComponent },
   // { path: 'chat', component: ChatComponent },
   {
     path: 'leads',

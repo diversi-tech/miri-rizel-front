@@ -18,6 +18,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ChatComponent } from '@app/Components/chat/chat.component';
 import { AddLeadComponent } from 'src/app/Components/Lead-components/add-lead/add-lead.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { CommunicationService } from '@app/Services/communication.service';
+import { Communication } from '@app/Model/Communication';
 
 @Component({
   selector: 'app-list-leads',
@@ -58,13 +60,29 @@ export class ListLeadsComponent {
     this.popUpAddOrEdit(Lead.leadId);
   }
 
+  communicationaaaa: Communication[] = []
+  leng:number = 0
   onDeleteLead(lead: Lead) {
-    this.leadService.deleteLead(lead.leadId).subscribe((res: any) => {
-      this.loadLeads();
-    });
-  }
-
-  addLead() {
+    this.communicationS.getbyIdLCommunication(lead.leadId).subscribe(res => { console.log(res);
+    this.communicationaaaa = res 
+    console.log(this.communicationaaaa.length);
+    this.leng=this.communicationaaaa.length;
+    this.communicationaaaa.forEach(e => {
+      console.log(e);
+      if(e.communicationId!=null)
+      {
+        this.communicationS.deleteCommunication(e.communicationId).subscribe((res
+        )=>{console.log(res),this.leng-=1,console.log(this.leng);  if(this.leng==0)
+          this.leadService.deleteLead(lead.leadId).subscribe((res: any) => {
+              this.loadLeads();
+         })
+        })
+      }
+  })
+})
+}
+ 
+  addLead(){
     this.componentType = AddLeadComponent;
     let title: string = '';
     //this.translate.get("AddLead").subscribe(tranlation=> title=tranlation);
@@ -100,7 +118,7 @@ export class ListLeadsComponent {
     });
   }
 
-  propil(l: Lead) {
+  documentation(l: Lead) {
     this.componentType = ChatComponent;
     this.popUpPropil(`Communication ${l.firstName}`, l, 'Lead', l.leadId);
   }

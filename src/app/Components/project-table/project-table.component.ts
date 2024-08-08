@@ -42,7 +42,6 @@ export class ProjectTableComponent implements OnInit {
     private CustomerService: CustomersService
   ) { }
   ngOnInit() {
-    console.log("projectComponent");
     this.taskService.getAll().subscribe(
       (data) => {
         this.tasks = data
@@ -124,7 +123,6 @@ export class ProjectTableComponent implements OnInit {
   }
   filterData(objToFilter: any) {
     let taskFilter: Task[] = this.tasks.filter(u => u.project.projectId == objToFilter.projectId);
-    console.log(taskFilter);
     if (taskFilter.length != 0) {
       let loading: boolean = true;
       let col$types = { 'title': 'text', 'dueDate': 'date', 'createdDate': 'date' };
@@ -163,14 +161,14 @@ export class ProjectTableComponent implements OnInit {
         (error: any) => {
           this.tasks = [];
           this.translate.get(['Close', 'errorServer']).subscribe(translations => {
-            Swal.fire({
-              text: translations[ 'errorServer'],
-              icon: "error",
-              showCancelButton: false,
-              showCloseButton: true,
-              confirmButtonColor: "#d33",
-              confirmButtonText: translations['Close']
-            })
+            // Swal.fire({
+            //   text: translations[ 'errorServer'],
+            //   icon: "error",
+            //   showCancelButton: false,
+            //   showCloseButton: true,
+            //   confirmButtonColor: "#d33",
+            //   confirmButtonText: translations['Close']
+            // })
           })
         }
         
@@ -215,8 +213,6 @@ export class ProjectTableComponent implements OnInit {
       },
       });
       }
-
-  
   refreshData() {
     this.ProjectService.getAll().subscribe(
       (p: Array<Project>) => {
@@ -246,14 +242,14 @@ export class ProjectTableComponent implements OnInit {
       },
       (error: any) => {
         this.translate.get(['Close', 'errorServer']).subscribe(translations => {
-          Swal.fire({
-            text: translations[ 'errorServer'],
-            icon: "error",
-            showCancelButton: false,
-            showCloseButton: true,
-            confirmButtonColor: "#d33",
-            confirmButtonText: translations['Close']
-          })
+          // Swal.fire({
+          //   text: translations[ 'errorServer'],
+          //   icon: "error",
+          //   showCancelButton: false,
+          //   showCloseButton: true,
+          //   confirmButtonColor: "#d33",
+          //   confirmButtonText: translations['Close']
+          // })
         })
       }
     );

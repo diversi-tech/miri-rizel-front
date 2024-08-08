@@ -59,7 +59,6 @@ export class NavComponent implements OnInit {
 
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
-    console.log(this.dropdownOpen);
   }
 
   updateLinks() {
@@ -77,7 +76,7 @@ export class NavComponent implements OnInit {
       }
       if (role == 3) {
         this.links.push(
-          { path: '/propil', label: 'Documentation' },
+          { path: '/documentation', label: 'Documentation' },
           { path: '/documents', label: 'Documents' },
           { path: '/task', label: 'Tasks' },
           { path: '/project', label: 'Projects' },
@@ -93,7 +92,6 @@ export class NavComponent implements OnInit {
 
   switchLanguage() {
     this.currentLanguage = this.currentLanguage === 'en' ? 'he' : 'en';
-    console.log(this.currentLanguage);
     this.translate.use(this.currentLanguage);
     this.languageService.setLanguage(this.currentLanguage);
   }
@@ -123,9 +121,6 @@ export class NavComponent implements OnInit {
       )
     }
   }
-  // editUser() {
-  //   this.route.navigate(['/edit-user'])
-  // }
 
   logOut() {
     this.userService.signOut();
@@ -135,5 +130,11 @@ export class NavComponent implements OnInit {
         window.location.reload();
       }, 100);
     });
+  }
+
+  isMenuOpen = false;
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
   }
 }

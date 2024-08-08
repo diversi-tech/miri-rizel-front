@@ -12,7 +12,6 @@ import { RoleCodeUser } from '@app/Model/RoleCodeUser';
 })
 export class UserService {
   constructor(private http: HttpClient) {
-    console.log("The token created!");
   }
   private apiUrl = `${environment.apiUrl}User/`;
 
@@ -35,7 +34,6 @@ export class UserService {
   // }
 
   login(email: string, password: string): Observable<any> {
-    console.log(``);
     
     return this.http
     .get<any>(`${this.apiUrl}Login?email=${email}&password=${password}`)
@@ -59,7 +57,7 @@ export class UserService {
         };
         // console.log("user",user);
         
-        localStorage.setItem('user', JSON.stringify(user));
+        // localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('token', token);
         // const user2 = response.user;
         const encryptedRole = CryptoJS.AES.encrypt(
@@ -71,9 +69,9 @@ export class UserService {
     );
   }
 
-  loginGoogle(email: string, name: string): Observable<any> {
+  loginGoogle(email: string): Observable<any> {
     return this.http
-    .get<any>(`${this.apiUrl}LoginGoogle?email=${email}&name=${name}`)
+    .get<any>(`${this.apiUrl}LoginGoogle?email=${email}`)
     .pipe(
       // tap((user) => {
       //   localStorage.setItem('user', JSON.stringify(user));
@@ -91,7 +89,7 @@ export class UserService {
           email: response.user.email,
           role: response.user.role,
         };
-        localStorage.setItem('user', JSON.stringify(user));
+        // localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('token', token);
         const encryptedRole = CryptoJS.AES.encrypt(
           user.role.id.toString(),
@@ -164,7 +162,7 @@ export class UserService {
   }
 
   signOut() {
-    localStorage.removeItem('user');
+    // localStorage.removeItem('user');
     localStorage.removeItem('token');
     localStorage.removeItem('authData');
   }

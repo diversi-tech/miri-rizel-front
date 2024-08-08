@@ -210,7 +210,7 @@ export class CustomersComponent implements OnInit {
     };
   }
 
-  propil(customer: Customer) {
+  documentation(customer: Customer) {
     this.componentType = ChatComponent;
     this.popUpAddOrEdit(`Communication ${customer.firstName}`, customer, "customer", customer.customerId);
   }

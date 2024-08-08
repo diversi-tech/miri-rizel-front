@@ -1,10 +1,11 @@
 export const environment = {
   production: false,
-  //  apiUrl: 'https://localhost:7222/',
-  apiUrl: 'https://miri-rizel-server-nw23.onrender.com/',
-  //  apiUrl: 'https://miri-rizel-server-3wtc.onrender.com',
+  // apiUrl: 'https://localhost:7222/',
+ //  apiUrl: 'https://miri-rizel-server-nw23.onrender.com/',
+     apiUrl: 'https://miri-rizel-server-3wtc.onrender.com/',
   // CLIENT_ID: "592088999303-njnsom6mvdcn0kpesi2ibtlhmblcfcda.apps.googleusercontent.com",
   // API_KEY: "AIzaSyAe4wCi-LL97X_H7fhfaYnB_0cPqfdYVNU",
-  CLIENT_ID :'797505767772-qhvpc3609kvs82ul23216abgfs3vnncj.apps.googleusercontent.com',
-  API_KEY : 'AIzaSyBF8YlKZHg_lo49Y7mmNV1tD8D8mlI-Gb4'
+  CLIENT_ID:
+    '187886365675-jq13a5c1ovmsjv99m1jeie5i2v49eo2k.apps.googleusercontent.com',
+  API_KEY: 'AIzaSyCOsf2kc-pDrV_rydyY3Ibtcgtjpr9vCKA'
 };

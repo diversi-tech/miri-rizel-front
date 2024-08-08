@@ -32,9 +32,9 @@ export class EditProjectComponent {
   flag: boolean = false;
   custom: Customer[] = [];
   statuses: StatusCodeProject[] = [];
-  project!: Project;
+  project: Project = { projectId: 0 };
   status: StatusCodeProject = {};
-  customer: Customer ={customerId:0,status:{}};
+  customer: Customer = { customerId: 0, status: {} };
   ProjectForm!: FormGroup;
   submitted = false;
   data: any;
@@ -45,18 +45,9 @@ export class EditProjectComponent {
   @Output() ProjectId: EventEmitter<void> = new EventEmitter<void>();
   constructor(private server: ProjectService, private formBuilder: FormBuilder, private pro: ProjectService, private statusService: TaskService,
     private customerService: CustomersService,
-    private languageService: LanguageService,private translate:TranslateService) {
+    private languageService: LanguageService, private translate: TranslateService) {
   }
   ngOnInit() {
-    this.languageService.language$.subscribe(lang=> {
-      if (lang === 'he') {
-        this.styles['text-align'] = 'right';
-        this.styles['direction'] = 'rtl';
-      } else {
-        this.styles['text-align'] = 'left';
-        this.styles['direction'] = 'ltr';
-      }
-      })
     this.statusService.getAllStatus().subscribe(
       (data: any) => {
         this.statuses = data;
@@ -64,7 +55,7 @@ export class EditProjectComponent {
       (error: any) => {
         this.translate.get(['Close', 'errorServer']).subscribe(translations => {
           Swal.fire({
-            text: translations[ 'errorServer'],
+            text: translations['errorServer'],
             icon: "error",
             showCancelButton: false,
             showCloseButton: true,
@@ -81,7 +72,7 @@ export class EditProjectComponent {
       (error: any) => {
         this.translate.get(['Close', 'errorServer']).subscribe(translations => {
           Swal.fire({
-            text: translations[ 'errorServer'],
+            text: translations['errorServer'],
             icon: "error",
             showCancelButton: false,
             showCloseButton: true,
@@ -91,15 +82,29 @@ export class EditProjectComponent {
         })
       }
     );
+    this.languageService.language$.subscribe(lang => {
+      if (lang === 'he') {
+        this.styles['text-align'] = 'right';
+        this.styles['direction'] = 'rtl';
+      } else {
+        this.styles['text-align'] = 'left';
+        this.styles['direction'] = 'ltr';
+      }
+    })
+   
   }
   setData(data: any) {
-    // debugger;
+    debugger;
     this.data = data;
-    this.server.getProjectById(this.data).subscribe((project2: Project) => {
-      this.project = project2;
-      this.fullForm();
-    });
+    this.server.getProjectById(this.data).subscribe(
+          (project2: Project) => {
+            this.project = project2;
+            debugger
+            this.fullForm();
+          }
+    );
   }
+ 
   extractDate(dateTime: string): string {
     const date = new Date(dateTime);
     const year = date.getFullYear();
@@ -108,6 +113,7 @@ export class EditProjectComponent {
     return `${year}-${month}-${day}`;
   }
   fullForm() {
+    debugger
     if (!this.project) { console.error('Project data is not available'); return; }
     this.status = this.project.status!;
     this.customer = this.project.customer!
@@ -120,7 +126,7 @@ export class EditProjectComponent {
       status: [this.project.status, Validators.required],
       createdDate: [this.extractDate(String(this.project.createdDate)), Validators.required],
       customer: [this.project.customer, Validators.required],
-      isActive:[true]
+      isActive: [true]
     });
     this.flag = true;
   }

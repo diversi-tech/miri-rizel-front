@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { environment } from 'src/enviroments/environment';
 import Swal from 'sweetalert2';
 declare const gapi: any;
 declare const google: any;
@@ -8,28 +9,25 @@ declare const google: any;
   providedIn: 'root',
 })
 export class SheetsApiService {
-  CLIENT_ID =
-    '797505767772-qhvpc3609kvs82ul23216abgfs3vnncj.apps.googleusercontent.com';
-  API_KEY = 'AIzaSyBF8YlKZHg_lo49Y7mmNV1tD8D8mlI-Gb4';
+  CLIENT_ID = environment.CLIENT_ID;
+  API_KEY = environment.API_KEY;
   DISCOVERY_DOC = 'https://sheets.googleapis.com/$discovery/rest?version=v4';
   // SCOPES =
   //   'https://www.googleapis.com/auth/spreadsheets.readonly  https://www.googleapis.com/auth/drive.readonly';
-    SCOPE=
-    'https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/drive.file';
-    CALLBACK='http://localhost:4200';
+  SCOPE ='https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/drive.file';
+  CALLBACK = 'http://localhost:4200';
   tokenClient: any;
   gapiInited = false;
   gisInited = false;
 
   //טעינת הגאפי והגיס-----------------------------------
 
-  constructor(private translate:TranslateService) {
+  constructor(private translate: TranslateService) {
     this.loadGapi();
     this.loadGis();
   }
 
   loadGapi(): void {
-    console.log('loadGapi');
     const script = document.createElement('script');
     script.src = 'https://apis.google.com/js/api.js';
     script.onload = () => this.gapiLoaded();
@@ -44,18 +42,18 @@ export class SheetsApiService {
   initializeGapiClient(): void {
     gapi.load('client', () => {
       gapi.client
-      .init({
-        apiKey: this.API_KEY,
-        discoveryDocs: [
-          'https://sheets.googleapis.com/$discovery/rest?version=v4',
-        ],
-      })
-      .then(() => {
-        this.gapiInited = true;
-        this.maybeEnableButtons();
-        //קריאה לhandle
-        //this.handleAuthClick();
-      });
+        .init({
+          apiKey: this.API_KEY,
+          discoveryDocs: [
+            'https://sheets.googleapis.com/$discovery/rest?version=v4',
+          ],
+        })
+        .then(() => {
+          this.gapiInited = true;
+          this.maybeEnableButtons();
+          //קריאה לhandle
+          //this.handleAuthClick();
+        });
     });
   }
   loadGis(): void {
@@ -70,7 +68,7 @@ export class SheetsApiService {
     this.tokenClient = google.accounts.oauth2.initTokenClient({
       client_id:
         this.CLIENT_ID,
-      scope:this.SCOPE,
+      scope: this.SCOPE,
       callback: this.CALLBACK,
     });
     this.gisInited = true;
@@ -79,22 +77,21 @@ export class SheetsApiService {
 
   maybeEnableButtons(): void {
     if (this.gapiInited) {
-     // console.log('gapiInited is true');
-     this.translate.get(['Close', 'gapiInited is true']).subscribe(translations => {
-      Swal.fire({
-        text: translations[ 'gapiInited is true'],
-        icon: "error",
-        showCancelButton: false,
-        showCloseButton: true,
-        confirmButtonColor: "#d33",
-        confirmButtonText: translations['Close']
-      })
-    })
+      // console.log('gapiInited is true');
+      //  this.translate.get(['Close', 'gapiInited is true']).subscribe(translations => {
+      //   Swal.fire({
+      //     text: translations[ 'gapiInited is true'],
+      //     icon: "error",
+      //     showCancelButton: false,
+      //     showCloseButton: true,
+      //     confirmButtonColor: "#d33",
+      //     confirmButtonText: translations['Close']
+      //   })
+      // })
     } else {
-      console.log('gapiInited is false');
       this.translate.get(['Close', 'gapiInited is false']).subscribe(translations => {
         Swal.fire({
-          text: translations[ 'gapiInited is false'],
+          text: translations['gapiInited is false'],
           icon: "error",
           showCancelButton: false,
           showCloseButton: true,
@@ -105,20 +102,20 @@ export class SheetsApiService {
     }
 
     if (this.gisInited) {
-      this.translate.get(['Close', 'gapiInited is true']).subscribe(translations => {
-        Swal.fire({
-          text: translations[ 'gapiInited is true'],
-          icon: "error",
-          showCancelButton: false,
-          showCloseButton: true,
-          confirmButtonColor: "#d33",
-          confirmButtonText: translations['Close']
-        })
-      })
+      // this.translate.get(['Close', 'gapiInited is true']).subscribe(translations => {
+      //   Swal.fire({
+      //     text: translations[ 'gapiInited is true'],
+      //     icon: "error",
+      //     showCancelButton: false,
+      //     showCloseButton: true,
+      //     confirmButtonColor: "#d33",
+      //     confirmButtonText: translations['Close']
+      //   })
+      // })
     } else {
       this.translate.get(['Close', 'gapiInited is false']).subscribe(translations => {
         Swal.fire({
-          text: translations[ 'gapiInited is false'],
+          text: translations['gapiInited is false'],
           icon: "error",
           showCancelButton: false,
           showCloseButton: true,
@@ -136,7 +133,7 @@ export class SheetsApiService {
         console.log('spreadSheetBtn not found');
         this.translate.get(['Close', 'spreadSheetBtn not found']).subscribe(translations => {
           Swal.fire({
-            text: translations[ 'spreadSheetBtn not found'],
+            text: translations['spreadSheetBtn not found'],
             icon: "error",
             showCancelButton: false,
             showCloseButton: true,
@@ -194,7 +191,7 @@ export class SheetsApiService {
     if (!gapi || !gapi.client) {
       this.translate.get(['Close', 'gapi client not loaded']).subscribe(translations => {
         Swal.fire({
-          text: translations[ 'gapi client not loaded'],
+          text: translations['gapi client not loaded'],
           icon: "error",
           showCancelButton: false,
           showCloseButton: true,
@@ -234,14 +231,15 @@ export class SheetsApiService {
         console.log('GAPI client not loaded.');
         this.translate.get(['Close', 'gapi client not loaded']).subscribe(translations => {
           Swal.fire({
-            text: translations[ 'gapi client not loaded'],
+            text: translations['gapi client not loaded'],
             icon: "error",
             showCancelButton: false,
             showCloseButton: true,
             confirmButtonColor: "#d33",
             confirmButtonText: translations['Close']
           })
-        })      }
+        })
+      }
 
       // Ensure the Google Drive API is initialized
       await gapi.client.load('drive', 'v3');
@@ -265,7 +263,7 @@ export class SheetsApiService {
     } catch (error) {
       this.translate.get(['Close', 'cc']).subscribe(translations => {
         Swal.fire({
-          text: translations[ 'Error listing Google Sheets'],
+          text: translations['Error listing Google Sheets'],
           icon: "error",
           showCancelButton: false,
           showCloseButton: true,
@@ -288,7 +286,7 @@ export class SheetsApiService {
       if (!sheets) {
         this.translate.get(['Close', 'No sheets found.']).subscribe(translations => {
           Swal.fire({
-            text: translations[ 'No sheets found.'],
+            text: translations['No sheets found.'],
             icon: "error",
             showCancelButton: false,
             showCloseButton: true,
@@ -302,10 +300,10 @@ export class SheetsApiService {
       const sheetNames = sheets.map((sheet: any) => sheet.properties.title);
       return sheetNames;
     } catch (error) {
-     
+
       this.translate.get(['Close', 'Error getting sheet names:']).subscribe(translations => {
         Swal.fire({
-          text: translations[ 'Error getting sheet names:'+error],
+          text: translations['Error getting sheet names:' + error],
           icon: "error",
           showCancelButton: false,
           showCloseButton: true,
@@ -340,7 +338,7 @@ export class SheetsApiService {
     } catch (err) {
       this.translate.get(['Close', 'Error creating spreadsheet or adding data:']).subscribe(translations => {
         Swal.fire({
-          text: translations[ 'Error creating spreadsheet or adding data:'+err],
+          text: translations['Error creating spreadsheet or adding data:' + err],
           icon: "error",
           showCancelButton: false,
           showCloseButton: true,
@@ -459,7 +457,7 @@ export class SheetsApiService {
     } catch (error) {
       this.translate.get(['Close', 'Error adding sheet:']).subscribe(translations => {
         Swal.fire({
-          text: translations[ 'Error adding sheet:'+error],
+          text: translations['Error adding sheet:' + error],
           icon: "error",
           showCancelButton: false,
           showCloseButton: true,
@@ -517,7 +515,7 @@ export class SheetsApiService {
     } catch (erorr) {
       this.translate.get(['Close', 'error']).subscribe(translations => {
         Swal.fire({
-          text: translations[ 'error'+erorr],
+          text: translations['error' + erorr],
           icon: "error",
           showCancelButton: false,
           showCloseButton: true,

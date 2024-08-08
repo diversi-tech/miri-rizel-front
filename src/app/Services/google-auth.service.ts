@@ -12,6 +12,7 @@ declare var google: any;
 })
 
 export class GoogleAuthService {
+
   private CLIENT_ID = environment.CLIENT_ID;
   private API_KEY = environment.API_KEY;
   private DISCOVERY_DOC = "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest";
@@ -20,7 +21,7 @@ export class GoogleAuthService {
   private gapiInited = false;
   private gisInited = false;
 
-  constructor(private ngZone: NgZone, private taskService: TaskService,private translate:TranslateService) {
+  constructor(private ngZone: NgZone, private taskService: TaskService, private translate: TranslateService) {
     this.loadGapi();
     this.loadGis();
   }
@@ -75,32 +76,32 @@ export class GoogleAuthService {
 
   public createGoogleEvent(eventDetails: any, taskId: number) {
     if (!this.gapiInited || !this.gisInited) {
-    
+
       this.translate.get(['Close', 'GAPI or GIS not initialized']).subscribe(translations => {
-        Swal.fire({
-          text: translations[ 'GAPI or GIS not initialized'],
-          icon: "error",
-          showCancelButton: false,
-          showCloseButton: true,
-          confirmButtonColor: "#d33",
-          confirmButtonText: translations['Close']
-        })
+        // Swal.fire({
+        //   text: translations['GAPI or GIS not initialized'],
+        //   icon: "error",
+        //   showCancelButton: false,
+        //   showCloseButton: true,
+        //   confirmButtonColor: "#d33",
+        //   confirmButtonText: translations['Close']
+        // })
       })
-    
+
       this.reinitializeGapi();
       return;
     }
     this.tokenClient.callback = async (resp: any) => {
       if (resp.error !== undefined) {
         this.translate.get(['Close', 'Error during token request']).subscribe(translations => {
-          Swal.fire({
-            text: translations[ 'Error during token request'],
-            icon: "error",
-            showCancelButton: false,
-            showCloseButton: true,
-            confirmButtonColor: "#d33",
-            confirmButtonText: translations['Close']
-          })
+          // Swal.fire({
+          //   text: translations['Error during token request'],
+          //   icon: "error",
+          //   showCancelButton: false,
+          //   showCloseButton: true,
+          //   confirmButtonColor: "#d33",
+          //   confirmButtonText: translations['Close']
+          // })
         })
         throw resp;
       }
@@ -113,18 +114,18 @@ export class GoogleAuthService {
         this.tokenClient.requestAccessToken({ prompt: "" });
       }
     } catch (error) {
-     this.translate.get(['Close', 'Error requesting access token']).subscribe(translations => {
-      Swal.fire({
-        text: translations[ 'Error requesting access token'],
-        icon: "error",
-        showCancelButton: false,
-        showCloseButton: true,
-        confirmButtonColor: "#d33",
-        confirmButtonText: translations['Close']
+      this.translate.get(['Close', 'Error requesting access token']).subscribe(translations => {
+        Swal.fire({
+          text: translations['Error requesting access token'],
+          icon: "error",
+          showCancelButton: false,
+          showCloseButton: true,
+          confirmButtonColor: "#d33",
+          confirmButtonText: translations['Close']
+        })
       })
-    })
     }
-   
+
   }
 
   private async scheduleEvent(eventDetails: any, taskId: number) {
@@ -140,7 +141,7 @@ export class GoogleAuthService {
         dateTime: eventDetails.startTime,
         timeZone: "Asia/Jerusalem",
       },
-      attendees: [{ email: eventDetails.email }],
+      // attendees: [{ email: eventDetails.email }],
       reminders: {
         useDefault: false,
         overrides: [
@@ -155,12 +156,13 @@ export class GoogleAuthService {
     });
     request.execute((event: any) => {
       console.log("event created: ", event);
+      console.log(taskId, event.id);
       this.taskService.updateGoogleId(taskId, event.id).subscribe((res) => {
-      
+
       }, (err) => {
         this.translate.get(['Close', 'error']).subscribe(translations => {
           Swal.fire({
-            text: translations[ 'error'],
+            text: translations['error'],
             icon: "error",
             showCancelButton: false,
             showCloseButton: true,
@@ -169,16 +171,16 @@ export class GoogleAuthService {
           })
         })
       })
-      this.translate.get(['GoogleTaskSuccess','viewTaskBord','clickHere']).subscribe(translation=>
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: translation['GoogleTaskSuccess'],
-        html: `${translation['viewTaskBord']}       
+      this.translate.get(['GoogleTaskSuccess', 'viewTaskBord', 'clickHere']).subscribe(translation =>
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: translation['GoogleTaskSuccess'],
+          html: `${translation['viewTaskBord']}       
     <a href="${event.htmlLink}" target="_blank" autofocus> ${translation['clickHere']}</a> `,
-        showConfirmButton: false,
-        timer: 3000
-      }));
+          showConfirmButton: false,
+          timer: 3000
+        }));
     });
   }
 
@@ -186,7 +188,7 @@ export class GoogleAuthService {
     if (!this.gapiInited || !this.gisInited) {
       this.translate.get(['Close', 'GAPI or GIS not initialized']).subscribe(translations => {
         Swal.fire({
-          text: translations[ 'GAPI or GIS not initialized'],
+          text: translations['GAPI or GIS not initialized'],
           icon: "error",
           showCancelButton: false,
           showCloseButton: true,
@@ -201,7 +203,7 @@ export class GoogleAuthService {
       if (resp.error !== undefined) {
         this.translate.get(['Close', 'Error during token request']).subscribe(translations => {
           Swal.fire({
-            text: translations[ 'Error during token request'],
+            text: translations['Error during token request'],
             icon: "error",
             showCancelButton: false,
             showCloseButton: true,
@@ -222,7 +224,7 @@ export class GoogleAuthService {
     } catch (error) {
       this.translate.get(['Close', 'Error requesting access token']).subscribe(translations => {
         Swal.fire({
-          text: translations[ 'Error requesting access token'],
+          text: translations['Error requesting access token'],
           icon: "error",
           showCancelButton: false,
           showCloseButton: true,
@@ -230,8 +232,8 @@ export class GoogleAuthService {
           confirmButtonText: translations['Close']
         })
       })
-      }
-    
+    }
+
   }
 
   private async scheduleUpdateEvent(eventDetails: any, googleId: string) {
@@ -263,17 +265,17 @@ export class GoogleAuthService {
     });
     request.execute((event: any) => {
       console.log("event updated: ", event);
-      this.translate.get(['TaskUpdateSuccess','viewTaskBord','clickHere']).subscribe(translation=>
-      
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: translation['TaskUpdateSuccess'],
-        html: `${translation['viewTaskBord']}
+      this.translate.get(['TaskUpdateSuccess', 'viewTaskBord', 'clickHere']).subscribe(translation =>
+
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: translation['TaskUpdateSuccess'],
+          html: `${translation['viewTaskBord']}
     <a href="${event.htmlLink}" target="_blank" autofocus>${translation['clickHere']}/</a> `,
-        showConfirmButton: false,
-        timer: 3000
-      }));
+          showConfirmButton: false,
+          timer: 3000
+        }));
     });
   }
 
@@ -282,7 +284,7 @@ export class GoogleAuthService {
     if (!this.gapiInited || !this.gisInited) {
       this.translate.get(['Close', 'GAPI or GIS not initialized']).subscribe(translations => {
         Swal.fire({
-          text: translations[ 'GAPI or GIS not initialized'],
+          text: translations['GAPI or GIS not initialized'],
           icon: "error",
           showCancelButton: false,
           showCloseButton: true,
@@ -297,7 +299,7 @@ export class GoogleAuthService {
       if (resp.error !== undefined) {
         this.translate.get(['Close', 'Error during token request']).subscribe(translations => {
           Swal.fire({
-            text: translations[ 'Error during token request'],
+            text: translations['Error during token request'],
             icon: "error",
             showCancelButton: false,
             showCloseButton: true,
@@ -307,7 +309,7 @@ export class GoogleAuthService {
         })
         throw resp;
       }
-      
+
       await this.scheduleDeleteEvent(googleId);
     };
     try {
@@ -321,7 +323,7 @@ export class GoogleAuthService {
     } catch (error) {
       this.translate.get(['Close', 'Error requesting access token']).subscribe(translations => {
         Swal.fire({
-          text: translations[ 'Error requesting access token'],
+          text: translations['Error requesting access token'],
           icon: "error",
           showCancelButton: false,
           showCloseButton: true,
@@ -340,18 +342,18 @@ export class GoogleAuthService {
 
     request.execute((event: any) => {
       console.log("event updated: ", event);
-      this.translate.get(['deleteTask','viewTaskBord','clickHere']).subscribe(translation=>
+      this.translate.get(['deleteTask', 'viewTaskBord', 'clickHere']).subscribe(translation =>
 
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: translation['deleteTask'],
-        html: `${translation['deleteTask']}
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: translation['deleteTask'],
+          html: `${translation['deleteTask']}
     <a href="${event.htmlLink}" target="_blank" autofocus> ${translation['clickHere']}</a> `,
-        showConfirmButton: false,
-        timer: 3000
-      }));
+          showConfirmButton: false,
+          timer: 3000
+        }));
     });
   }
-  
+
 }
