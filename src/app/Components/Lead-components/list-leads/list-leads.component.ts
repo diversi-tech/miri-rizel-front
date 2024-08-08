@@ -59,7 +59,6 @@ export class ListLeadsComponent {
       console.log(e);
       if(e.communicationId!=null)
       {
-        alert(e.communicationId)
         this.communicationS.deleteCommunication(e.communicationId).subscribe((res
         )=>{console.log(res),this.leng-=1,console.log(this.leng);  if(this.leng==0)
           this.leadService.deleteLead(lead.leadId).subscribe((res: any) => {
