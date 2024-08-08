@@ -67,9 +67,13 @@ export class ListLeadsComponent {
     this.communicationS.getbyIdLCommunication(lead.leadId).subscribe(res => { console.log(res);
     this.communicationaaaa = res 
     console.log(this.communicationaaaa.length);
+    if(this.communicationaaaa.length == 0)
+      this.leadService.deleteLead(lead.leadId).subscribe((res: any) => {
+        this.loadLeads();
+   })
+   else{
     this.leng=this.communicationaaaa.length;
     this.communicationaaaa.forEach(e => {
-      console.log(e);
       if(e.communicationId!=null)
       {
         this.communicationS.deleteCommunication(e.communicationId).subscribe((res
@@ -79,7 +83,7 @@ export class ListLeadsComponent {
          })
         })
       }
-  })
+  })}
 })
 }
  
