@@ -44,8 +44,10 @@ body {
 }
 
 .nav-item:hover {
-  background-color: rgba(242, 239, 239, 0.871);
-  border-radius: 10px;
+  border-bottom: 3px solid #51f9a2c4;
+  border-radius: 0%;
+  /* background-color: rgba(242, 239, 239, 0.871);
+  border-radius: 10px; */
 }
 
 .profile-icon {
