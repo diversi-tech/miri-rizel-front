@@ -215,8 +215,6 @@ export class ProjectTableComponent implements OnInit {
       },
       });
       }
-
-  
   refreshData() {
     this.ProjectService.getAll().subscribe(
       (p: Array<Project>) => {
