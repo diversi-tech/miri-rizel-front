@@ -8,7 +8,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
-// import { ApexOptions, NgApexchartsModule } from 'ng-apexcharts';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { Subject, takeUntil } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -30,6 +29,7 @@ import { GenericBourdComponent } from '@app/Components/generic-bourd/generic-bou
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '@app/Services/auth.service';
 import { AddCustomerComponent } from '../customers/add-customer/add-customer.component';
+import { NewComponent } from '../new/new.component';
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
@@ -349,6 +349,10 @@ export class HomePageComponent implements OnInit, OnDestroy {
   addTask() {
     this.componentType = AddTaskComponent;
     this.popUpAddOrEdit("Add Task");
+  }
+  addDocumentation() {
+    this.componentType = NewComponent;
+    this.popUpAddOrEdit("");
   }
  
 
