@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Customer } from '@app/Model/Customer';
 import { Lead } from '@app/Model/Lead';
 import { Observable } from 'rxjs';
 import { environment } from 'src/enviroments/environment';
@@ -36,5 +37,9 @@ export class LeadService {
 
   deleteLead(id: Number): Observable<boolean> {
     return this.http.delete<boolean>(`${this.apiUrl}?id=${id}`);
+  }
+
+  replaceToCustomer(l: Lead): Observable<Customer> {
+    return this.http.post<Customer>(`${this.apiUrl}/Replace`, l);
   }
 }

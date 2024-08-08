@@ -275,5 +275,9 @@
   "deleteToolLip":"מחיקת פריט זה",
   "popTableToolLip":"הצגת פריטים נוספים",
   "requardTitle": "הוסף כותרת",
-  "Documentation": "תיעוד"
+  "Documentation": "תיעוד",
+
+  "GoToTheCustomerPage": "למעבר לעמוד הלקוחות" ,
+  "replaceLeadSuccses": "הליד נהפך ללקוח בהצלחה!",
+  "youAreSure":"האם אתם בטוח שברצונך להעביר לי זה ללקוח?"
 }
