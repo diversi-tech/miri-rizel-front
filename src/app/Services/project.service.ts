@@ -10,6 +10,7 @@ import { environment } from 'src/enviroments/environment';
 export class ProjectService {
   
   private apiUrl = `${environment.apiUrl}Projects/`
+  private apiUrl1 = `${environment.apiUrl}Code/`
 
   constructor(private http: HttpClient) {}
   // getToken() {
@@ -41,7 +42,10 @@ update(project:Project,id:number): Observable<Project>{
 getProjectById(id:number): Observable<any> {
   return this.http.get(`${this.apiUrl}getById?id=${id}`);
 }
-
+getallStatus(): Observable<any> {
+  return this.http.get(`${this.apiUrl1}getAllStatusProject`);
+ 
+}
 // getToken(): string | null {
 //   const tokenJson = localStorage.getItem('token');
 //   if (tokenJson) {
