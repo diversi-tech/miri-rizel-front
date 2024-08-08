@@ -1,4 +1,5 @@
 {
+  "replaceToCustomerToolLip":"הפיכת ליד ללקוח",
   "logOut": "התנתקות",
   "EditYourDetails": "עריכת פרטי משתמש",
   "CustomerInputSelect": "בחירת לקוח",
@@ -275,6 +276,9 @@
   "deleteToolLip":"מחיקת פריט זה",
   "popTableToolLip":"הצגת פריטים נוספים",
   "requardTitle": "הוסף כותרת",
+  "GoToTheCustomerPage": "למעבר לעמוד הלקוחות" ,
+  "replaceLeadSuccses": "הליד נהפך ללקוח בהצלחה!",
+  "youAreSure":"האם אתם בטוח שברצונך להעביר ליד זה ללקוח?",
   "Documentation": "תיעוד",
   "AuthorizeInputSelect":"בחר הרשאה",
   "ProjectUpdateSuccess":"הפרויקט עודכן בהצלחה",

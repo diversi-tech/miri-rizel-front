@@ -32,7 +32,7 @@ export class EditProjectComponent {
   flag: boolean = false;
   custom: Customer[] = [];
   statuses: StatusCodeProject[] = [];
-  project!: Project;
+  project: Project = { projectId: 0 };
   status: StatusCodeProject = {};
   customer: Customer = { customerId: 0, status: {} };
   ProjectForm!: FormGroup;
@@ -99,6 +99,16 @@ export class EditProjectComponent {
         // })
       }
     );
+    this.languageService.language$.subscribe(lang => {
+      if (lang === 'he') {
+        this.styles['text-align'] = 'right';
+        this.styles['direction'] = 'rtl';
+      } else {
+        this.styles['text-align'] = 'left';
+        this.styles['direction'] = 'ltr';
+      }
+    })
+   
   }
   setData(data: any) {
     console.log("data", data);
@@ -109,6 +119,7 @@ export class EditProjectComponent {
       this.fullForm();
     });
   }
+ 
   extractDate(dateTime: string): string {
     const date = new Date(dateTime);
     const year = date.getFullYear();
@@ -117,6 +128,7 @@ export class EditProjectComponent {
     return `${year}-${month}-${day}`;
   }
   fullForm() {
+    debugger
     if (!this.project) { console.error('Project data is not available'); return; }
     this.status = this.project.status!;
     this.customer = this.project.customer!

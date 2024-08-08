@@ -1,4 +1,5 @@
 {
+  "replaceToCustomerToolLip":"Turning a lead into a customer",
   "logOut": "Log Out",
   "EditYourDetails": "Edit Your Details",
   "Documents": "Documents",
@@ -240,7 +241,6 @@
   "zoom_in": "zoom",
   "keyboard": "keyboard",
   "requardTitle":"Add a title",
-  "Documentation": "Documentation",
   "ViewTheTasksToSubmitToday": "View tasks to submit today",
   "shortName": "השם חייב להכיל לפחות 2 אותיות",
   "shortLast": "השם חייב להכיל לפחות 2 אותיות",
@@ -277,6 +277,8 @@
   "propilToolLip":"Adding documentation",
   "deleteToolLip":"Deleting an item",
   "popTableToolLip":"Show more items",
+  "Documentation": "Documentation",
+  "youAreSure": "Are you sure you want to transfer this lead to a customer?",
   "AuthorizeInputSelect":"select authorizel",
   "ProjectUpdateSuccess":"Project updated successfully",
   "ProjectAddSuccess":"Project added successfully"

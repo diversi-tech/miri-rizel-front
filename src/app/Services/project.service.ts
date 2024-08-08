@@ -10,6 +10,7 @@ import { environment } from 'src/enviroments/environment';
 export class ProjectService {
 
   private apiUrl = `${environment.apiUrl}Projects/`
+  private apiUrl1 = `${environment.apiUrl}Code/`
 
   constructor(private http: HttpClient) { }
   // getToken() {

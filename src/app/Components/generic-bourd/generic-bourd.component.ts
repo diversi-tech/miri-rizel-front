@@ -73,6 +73,8 @@ export class GenericBourdComponent implements OnInit, OnChanges {
 
   @Output() edit = new EventEmitter<any>();
   @Output() documentation = new EventEmitter<any>();
+  @Output() propil = new EventEmitter<any>();
+  @Output() replaceToCustomer = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
   @Output() dataUpdated = new EventEmitter<any>();
   @Output() addDocument = new EventEmitter<any>();
@@ -125,6 +127,23 @@ document(rowData: any){
 
   onPropil(rowData: any) {
     this.documentation.emit(rowData);
+  }
+  onReplaceToCustomer(rowData: any){
+    this.translate.get(["youAreSure",'Approve', "Cancle"]).subscribe(translations=> 
+      Swal.fire({
+        icon: "question",
+        title: translations['youAreSure'],
+        showCancelButton: true,
+        cancelButtonText: translations['Cancle'],
+        confirmButtonText: translations['Approve']
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.replaceToCustomer.emit(rowData);
+        }
+        else{
+          Swal.close();
+        }
+      }))
   }
 
   onDelete(rowData: any) {
@@ -186,6 +205,12 @@ document(rowData: any){
       header: '',
       sortable: false,
       filterType: 'documentation'
+    });
+    this.columns.push({
+      field: 'replaceToCustomer',
+      header: '',
+      sortable: false,
+      filterType: 'replaceToCustomer'
     });
     this.columns.push({
       field: 'document',
@@ -317,10 +342,10 @@ document(rowData: any){
           container.appendChild(componentRef.location.nativeElement);
           componentRef.instance.loading = false;
           if (edit)  componentRef.instance.hideEditButton = edit 
-          // 
+          
           if (deleteCallBack)
             componentRef.instance.onDelete = deleteCallBack
-          // 
+         
         }
         if (customWidth) {
           const popup = Swal.getPopup();
