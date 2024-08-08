@@ -20,14 +20,15 @@ import { StatusCodeProject } from '@app/Model/StatusCodeProject';
 import { Priority } from '@app/Model/Priority';
 import { ProjectService } from '@app/Services/project.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { GoogleTaskService } from '@app/Services/google-task.service';
 
 
 @Component({
-    selector: 'app-task-board',
-    templateUrl: './task-board.component.html',
-    styleUrls: ['./task-board.component.css'],
-    standalone: true,
-    imports: [GenericBourdComponent,TranslateModule],
+  selector: 'app-task-board',
+  templateUrl: './task-board.component.html',
+  styleUrls: ['./task-board.component.css'],
+  standalone: true,
+  imports: [GenericBourdComponent, TranslateModule],
 })
 
 export class TaskBoardComponent implements OnInit {
@@ -42,8 +43,8 @@ export class TaskBoardComponent implements OnInit {
   @ViewChild(GenericBourdComponent) genericBourd!: GenericBourdComponent;
   @ViewChild('popupContainer', { read: ViewContainerRef }) popupContainer!: ViewContainerRef;
 
-  constructor(private location: Location
-    , private taskService: TaskService, private userService: UserService, private projectService: ProjectService, private resolver: ComponentFactoryResolver, private dialog: MatDialog,private translate:TranslateService) { }
+  constructor(private location: Location, private googletaskService: GoogleTaskService
+    , private taskService: TaskService, private userService: UserService, private projectService: ProjectService, private resolver: ComponentFactoryResolver, private dialog: MatDialog, private translate: TranslateService) { }
 
   ngOnInit() {
     this.taskService.getAllPriorities().subscribe(
@@ -67,28 +68,26 @@ export class TaskBoardComponent implements OnInit {
 
     this.taskService.getAll().subscribe(
       (tasks: Array<Task>) => {
-        this.tasks = tasks.filter(o=>o.project?.isActive==true);
-        console.log(this.tasks);
+        this.tasks = tasks.filter(o => o.project?.isActive == true);
         this.userService.getAll().subscribe(
           (users: Array<User>) => {
             this.users = users;
             this.loading = false;
-            console.log(this.users);
           },
           (error: any) => {
             this.loading = false;
             this.translate.get(['Close', 'errorServer']).subscribe(translations => {
-              Swal.fire({
-                text: translations[ 'errorServer'],
-                icon: "error",
-                showCancelButton: false,
-                showCloseButton: true,
-                confirmButtonColor: "#d33",
-                confirmButtonText: translations['Close']
-              })
+              // Swal.fire({
+              //   text: translations[ 'errorServer'],
+              //   icon: "error",
+              //   showCancelButton: false,
+              //   showCloseButton: true,
+              //   confirmButtonColor: "#d33",
+              //   confirmButtonText: translations['Close']
+              // })
             })
           }
-        
+
         );
       },
 
@@ -142,26 +141,28 @@ export class TaskBoardComponent implements OnInit {
     this.taskService.deleteTask(task.taskId!).subscribe(
       (data: any) => {
         if (data == true) {
-          this.translate.get(['deleteTask','Close']).subscribe(translion=>
-          Swal.fire({
-            text: translion['deleteTask'],
-            icon: "success",
-            showCancelButton: false,
-            showCloseButton: true,
-            confirmButtonColor: "#3085D6",
-            confirmButtonText: translion['Close']
-          }).then((result) => {
-            this.taskService.getAll().subscribe((data) => {
-              this.tasks = data
-            })
-          }));
+          this.translate.get(['deleteTask', 'Close']).subscribe(translion =>
+            Swal.fire({
+              text: translion['deleteTask'],
+              icon: "success",
+              showCancelButton: false,
+              showCloseButton: true,
+              confirmButtonColor: "#3085D6",
+              confirmButtonText: translion['Close']
+            }).then((result) => {
+              if (task.googleId!="")
+                this.googletaskService.deleteTask(task.googleId!)
+              this.taskService.getAll().subscribe((data) => {
+                this.tasks = data
+              })
+            }));
         }
       },
       (error: any) => {
         this.loading = false;
         this.translate.get(['Close', 'errorServer']).subscribe(translations => {
           Swal.fire({
-            text: translations[ 'errorServer'],
+            text: translations['errorServer'],
             icon: "error",
             showCancelButton: false,
             showCloseButton: true,

@@ -72,7 +72,7 @@ export class GenericBourdComponent implements OnInit, OnChanges {
   @Input() hideEditButton: boolean = false;
 
   @Output() edit = new EventEmitter<any>();
-  @Output() propil = new EventEmitter<any>();
+  @Output() documentation = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
   @Output() dataUpdated = new EventEmitter<any>();
   @Output() addDocument = new EventEmitter<any>();
@@ -124,7 +124,7 @@ document(rowData: any){
 }
 
   onPropil(rowData: any) {
-    this.propil.emit(rowData);
+    this.documentation.emit(rowData);
   }
 
   onDelete(rowData: any) {
@@ -182,10 +182,10 @@ document(rowData: any){
       filterType: 'delete',
     });
     this.columns.push({
-      field: 'propil',
+      field: 'documentation',
       header: '',
       sortable: false,
-      filterType: 'propil'
+      filterType: 'documentation'
     });
     this.columns.push({
       field: 'document',
@@ -208,7 +208,7 @@ document(rowData: any){
       case 'IN PROGRESS':
         return 'info';
 
-      case 'DONE':
+      case 'COMPLETE':
         return 'success';
 
       case 'HIGH':
@@ -411,7 +411,6 @@ document(rowData: any){
   }      
   //קבלת מידע הטופס ופניה לפונקציה המתאימה
   async exportToSpreadSheet(eventData: any): Promise<void> {
-    console.log('Submitted values:', eventData);
     const arrayOfArraysData = this.objectsToArrayOfArrays(this.data);
     const titles: string[]=await this.translateTitles(arrayOfArraysData[0]);
     arrayOfArraysData[0]=titles;

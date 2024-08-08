@@ -78,14 +78,14 @@ export class GoogleAuthService {
     if (!this.gapiInited || !this.gisInited) {
 
       this.translate.get(['Close', 'GAPI or GIS not initialized']).subscribe(translations => {
-        Swal.fire({
-          text: translations['GAPI or GIS not initialized'],
-          icon: "error",
-          showCancelButton: false,
-          showCloseButton: true,
-          confirmButtonColor: "#d33",
-          confirmButtonText: translations['Close']
-        })
+        // Swal.fire({
+        //   text: translations['GAPI or GIS not initialized'],
+        //   icon: "error",
+        //   showCancelButton: false,
+        //   showCloseButton: true,
+        //   confirmButtonColor: "#d33",
+        //   confirmButtonText: translations['Close']
+        // })
       })
 
       this.reinitializeGapi();
@@ -94,14 +94,14 @@ export class GoogleAuthService {
     this.tokenClient.callback = async (resp: any) => {
       if (resp.error !== undefined) {
         this.translate.get(['Close', 'Error during token request']).subscribe(translations => {
-          Swal.fire({
-            text: translations['Error during token request'],
-            icon: "error",
-            showCancelButton: false,
-            showCloseButton: true,
-            confirmButtonColor: "#d33",
-            confirmButtonText: translations['Close']
-          })
+          // Swal.fire({
+          //   text: translations['Error during token request'],
+          //   icon: "error",
+          //   showCancelButton: false,
+          //   showCloseButton: true,
+          //   confirmButtonColor: "#d33",
+          //   confirmButtonText: translations['Close']
+          // })
         })
         throw resp;
       }
