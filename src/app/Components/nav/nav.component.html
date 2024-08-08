@@ -14,14 +14,13 @@
             </button>
         </mat-menu>
 
-        <button class="create-design-btn log-in-btn" routerLink="/login" >{{'logIn'|translate}}</button>
+        <button class="create-design-btn log-in-btn" routerLink="/login">{{'logIn'|translate}}</button>
         <button class="create-design-btn sign-up-btn" routerLink="/sign-up">{{'signUp'|translate}}</button>
 
-        <i class="nav-icon pi pi-language language-btn" (click)="switchLanguage()"
-            [title]="'switchLanguage'|translate"></i>
+        <i class="nav-icon pi pi-language language-btn" (click)="switchLanguage()" [title]="'switchLanguage'|translate"></i>
     </div>
     <div class="nav-center">
-        <div class="nav-item" *ngFor="let link of links">
+        <div class="nav-item" *ngFor="let link of links" routerLinkActive="active" [routerLink]="link.path">
             <a [routerLink]="link.path">{{ link.label | translate }}</a>
         </div>
     </div>
@@ -30,10 +29,14 @@
             <img src="assets/images/logo.jpeg" title="Copy Right" routerLink="/home">
         </div>
     </div>
+    <button class="menu-icon" (click)="toggleMenu()">☰</button>
 </nav>
+<div class="mobile-menu" [class.open]="isMenuOpen">
+    <div class="nav-item" *ngFor="let link of links">
+        <a [routerLink]="link.path" (click)="toggleMenu()">{{ link.label | translate }}</a>
+    </div>
+</div>
 <ng-template #popupContainer></ng-template> -->
-
-
 <nav class="navbar">
     <div class="nav-left">
         <div title="userName" class="profile-icon" [matMenuTriggerFor]="profileMenu">
@@ -53,12 +56,22 @@
         <button class="create-design-btn log-in-btn" routerLink="/login">{{'logIn'|translate}}</button>
         <button class="create-design-btn sign-up-btn" routerLink="/sign-up">{{'signUp'|translate}}</button>
 
-        <i class="nav-icon pi pi-language language-btn" (click)="switchLanguage()" [title]="'switchLanguage'|translate"></i>
+        <i class="nav-icon pi pi-language language-btn" (click)="switchLanguage()"
+            [title]="'switchLanguage'|translate"></i>
     </div>
     <div class="nav-center">
-        <div class="nav-item" *ngFor="let link of links">
-            <a [routerLink]="link.path">{{ link.label | translate }}</a>
+        <!-- <div class="nav-item" *ngFor="let link of links">
+            <a [routerLink]="link.path" routerLinkActive="active">{{ link.label | translate }}</a>
+        </div> -->
+        <div class="nav-center">
+            <div *ngFor="let link of links">
+                <a class="nav-item" [routerLink]="link.path" routerLinkActive="active">
+                    {{ link.label | translate }}
+                </a>
+            </div>
         </div>
+
+
     </div>
     <div class="nav-right">
         <div class="logo">

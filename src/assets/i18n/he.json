@@ -275,5 +275,8 @@
   "deleteToolLip":"מחיקת פריט זה",
   "popTableToolLip":"הצגת פריטים נוספים",
   "requardTitle": "הוסף כותרת",
-  "Documentation": "תיעוד"
+  "Documentation": "תיעוד",
+  "AuthorizeInputSelect":"בחר הרשאה",
+  "ProjectUpdateSuccess":"הפרויקט עודכן בהצלחה",
+  "ProjectAddSuccess":"הפרויקט נוסף בהצלחה"
 }

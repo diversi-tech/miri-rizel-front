@@ -6,26 +6,38 @@ import { Injectable } from '@angular/core';
 export class ValidatorsService {
 
   constructor() { }
- 
-   phone(input: string): boolean {
+
+  phone(input: string): boolean {
     if (!/^\d+$/.test(input)) {
       return false;
     }
-      if (input.length < 9|| input.length > 10) {
+    if (input.length < 9 || input.length > 10) {
       return false;
     }
-  
+
     // אם הגענו לכאן, זה אומר שהמחרוזת תקינה
     return true;
   }
+  // name(input: string): boolean {
+  //   if (!input) {
+  //     return false;
+  //   }
+  //   if (!/^[a-zA-Zא-ת]+$/.test(input)) {
+  //     return false;
+  //   }
+  //   if (/^(.)\1+$/.test(input)) {
+  //     return false;
+  //   }
+  //   if (input.length < 2 || input.length > 22) {
+  //     return false;
+  //   }
+  //   return true;
+  // }
   name(input: string): boolean {
     if (!input) {
       return false;
     }
-    if (!/^[a-zA-Zא-ת]+$/.test(input)) {
-      return false;
-    }
-    if (/^(.)\1+$/.test(input)) {
+    if (!/^[a-zA-Zא-ת\s]+$/.test(input)) { // מתיר אותיות בעברית ואנגלית ורווחים בלבד
       return false;
     }
     if (input.length < 2 || input.length > 22) {
@@ -33,6 +45,7 @@ export class ValidatorsService {
     }
     return true;
   }
+
   futureDate(): (date: string) => boolean {
     return (date: string): boolean => {
       const today = new Date();
@@ -44,5 +57,5 @@ export class ValidatorsService {
 
 
 
-  
+
 }

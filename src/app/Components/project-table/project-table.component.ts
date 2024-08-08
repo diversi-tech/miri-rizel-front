@@ -68,18 +68,18 @@ export class ProjectTableComponent implements OnInit {
         this.loading = false;
       },
       (error) => {
-        this.translate.get(['Close', 'unAuthorize']).subscribe(translations => {
-          Swal.fire({
-            text: translations['unAuthorize'],
-            icon: "error",
-            showCancelButton: false,
-            showCloseButton: true,
-            confirmButtonColor: "#d33",
-            confirmButtonText: translations['Close']
-          });
-        });
-        this.router.navigate(['../home']);
-        this.loading = true;
+        // this.translate.get(['Close', 'unAuthorize']).subscribe(translations => {
+        //   Swal.fire({
+        //     text: translations['unAuthorize'],
+        //     icon: "error",
+        //     showCancelButton: false,
+        //     showCloseButton: true,
+        //     confirmButtonColor: "#d33",
+        //     confirmButtonText: translations['Close']
+        //   });
+        // });
+        // this.router.navigate(['../home']);
+        // this.loading = true;
       }
     );
   }
@@ -88,7 +88,6 @@ export class ProjectTableComponent implements OnInit {
   onDeleteProject(p: Project) {
     this.ProjectService.deleteProject(p.projectId).subscribe(
       (res: any) => {
-
         // Remove the project from the local list after successful deletion
         this.loadP()
         this.translate.get(['deleteProject','OK']).subscribe(translation=>

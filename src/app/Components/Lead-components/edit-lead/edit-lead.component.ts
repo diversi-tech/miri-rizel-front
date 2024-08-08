@@ -53,9 +53,9 @@ export class EditLeadComponent implements OnInit {
       lastName: [this.LeadToKnowInput.lastName, [Validators.required]],
       phone: [this.LeadToKnowInput.phone, [Validators.required]],
       source: [this.LeadToKnowInput.source, [Validators.required]],
-      lastContactedDate: [this.extractDate(String(this.LeadToKnowInput.lastContactedDate)), [Validators.required, this.futureDateValidator()]],
+      lastContactedDate: [this.extractDate(String(this.LeadToKnowInput.lastContactedDate)), [Validators.required]],
       businessName: [this.LeadToKnowInput.businessName, [Validators.required]],
-      notes: [this.LeadToKnowInput.notes, [Validators.required]],
+      notes: [this.LeadToKnowInput.notes, []],
     });
     this.flag = true;
   }

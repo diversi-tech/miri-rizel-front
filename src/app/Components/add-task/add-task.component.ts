@@ -200,13 +200,16 @@ export class AddTaskComponent implements OnInit {
   get project() { return this.taskForm.get('project') }
 
   futureDateValidator(control: AbstractControl): ValidationErrors | null {
-    if (this.isEdit)
+    if (this.isEdit) {
       return null;
+    }
     const selectedDate = new Date(control.value);
     const today = new Date();
-    // today.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+    selectedDate.setHours(0, 0, 0, 0);
     return selectedDate >= today ? null : { notFutureDate: true };
   }
+  
   userExistsValidator(user: User) {
     if (user && !this.users.find(u => u.userId === user.userId))
       return false

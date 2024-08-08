@@ -276,5 +276,8 @@
   "documentToolLip":"Adding a document",
   "propilToolLip":"Adding documentation",
   "deleteToolLip":"Deleting an item",
-  "popTableToolLip":"Show more items"
+  "popTableToolLip":"Show more items",
+  "AuthorizeInputSelect":"select authorizel",
+  "ProjectUpdateSuccess":"Project updated successfully",
+  "ProjectAddSuccess":"Project added successfully"
 }
