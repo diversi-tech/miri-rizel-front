@@ -238,5 +238,6 @@
   "keyboard": "keyboard",
   "emptyFoler":"No folders available to view",
   "requardTitle":"Add a title",
-  "Documentation": "Documentation"
+  "Documentation": "Documentation",
+  "youAreSure": "Are you sure you want to transfer this lead to a customer?"
 }

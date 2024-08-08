@@ -266,5 +266,8 @@
   "keyboard": "לוח מקשים על המסך",
   "emptyFoler": "אין תקיות זמינות להצגה",
   "requardTitle": "הוסף כותרת",
-  "Documentation": "תעוד"
+  "Documentation": "תעוד",
+  "GoToTheCustomerPage": "למעבר לעמוד הלקוחות" ,
+  "replaceLeadSuccses": "הליד נהפך ללקוח בהצלחה!",
+  "youAreSure":"האם אתם בטוח שברצונך להעביר לי זה ללקוח?"
 }

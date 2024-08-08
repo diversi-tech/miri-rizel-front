@@ -96,6 +96,10 @@
                   <button pButton type="button" class="p-button-info" icon="pi pi-external-link"
                     *ngIf="getTypeOfCol(col, rowIndex) == 'propil'" (click)="onPropil(rowData)"></button>
                 </div>
+                <div *ngIf="replaceToCustomer.observers.length > 0">
+                  <button pButton type="button" class="p-button-info" icon="pi pi-arrow-right-arrow-left"
+                    *ngIf="getTypeOfCol(col, rowIndex) == 'replaceToCustomer'" (click)="onReplaceToCustomer(rowData)"></button>
+                </div>
                 <div *ngIf="delete.observers.length > 0">
                   <button pButton type="button" class="p-button-danger" icon="pi pi-trash"
                     *ngIf="getTypeOfCol(col, rowIndex) == 'delete'" (click)="onDelete(rowData)"></button>
