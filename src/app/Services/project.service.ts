@@ -35,23 +35,25 @@ export class ProjectService {
   }
   getTaskByProject(projectId: string): Observable<any> {
     return this.http.get(`${this.apiUrl}getAllTasks${projectId}`);
-  }
-  update(project: Project, id: number): Observable<Project> {
-    console.log(project,id);
-    project.projectId=id
-    return this.http.put<Project>(`${this.apiUrl}`, project);
-  }
-  getProjectById(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}getById?id=${id}`);
-  }
-
-  // getToken(): string | null {
-  //   const tokenJson = localStorage.getItem('token');
-  //   if (tokenJson) {
-  //     const t = JSON.parse(tokenJson);
-  //     return t.token ;
-  //   }
-  //   return null;
-  // }
+}
+update(project:Project,id:number): Observable<Project>{
+  project.projectId = id;
+  return this.http.put<Project>(`${this.apiUrl}`, project);
+}
+getProjectById(id:number): Observable<any> {
+  return this.http.get(`${this.apiUrl}getById?id=${id}`);
+}
+getallStatus(): Observable<any> {
+  return this.http.get(`${this.apiUrl1}getAllStatusProject`);
+ 
+}
+// getToken(): string | null {
+//   const tokenJson = localStorage.getItem('token');
+//   if (tokenJson) {
+//     const t = JSON.parse(tokenJson);
+//     return t.token ;
+//   }
+//   return null;
+// }
 }
 

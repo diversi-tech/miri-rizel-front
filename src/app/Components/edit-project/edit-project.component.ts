@@ -33,7 +33,9 @@ export class EditProjectComponent {
   custom: Customer[] = [];
   statuses: StatusCodeProject[] = [];
   project: Project = { projectId: 0 };
+  project: Project = { projectId: 0 };
   status: StatusCodeProject = {};
+  customer: Customer = { customerId: 0, status: {} };
   customer: Customer = { customerId: 0, status: {} };
   ProjectForm!: FormGroup;
   submitted = false;
@@ -51,7 +53,7 @@ export class EditProjectComponent {
     private statusService: TaskService,
     private customerService: CustomersService,
     private languageService: LanguageService,
-     private translate: TranslateService) {
+    private translate: TranslateService) {
   }
   ngOnInit() {
     console.log("edit component");
@@ -108,7 +110,17 @@ export class EditProjectComponent {
         this.styles['direction'] = 'ltr';
       }
     })
-   
+
+    this.languageService.language$.subscribe(lang => {
+      if (lang === 'he') {
+        this.styles['text-align'] = 'right';
+        this.styles['direction'] = 'rtl';
+      } else {
+        this.styles['text-align'] = 'left';
+        this.styles['direction'] = 'ltr';
+      }
+    })
+
   }
   setData(data: any) {
     console.log("data", data);
@@ -119,7 +131,8 @@ export class EditProjectComponent {
       this.fullForm();
     });
   }
- 
+
+
   extractDate(dateTime: string): string {
     const date = new Date(dateTime);
     const year = date.getFullYear();
@@ -128,6 +141,7 @@ export class EditProjectComponent {
     return `${year}-${month}-${day}`;
   }
   fullForm() {
+    debugger
     debugger
     if (!this.project) { console.error('Project data is not available'); return; }
     this.status = this.project.status!;
