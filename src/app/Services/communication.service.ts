@@ -27,5 +27,11 @@ export class CommunicationService {
     return this.http.delete<boolean>(`${this.apiUrl}?id=${communicationId}` );
   } 
   
+  getbyIdLCommunication(communicationId:number){
+    return this.http.get<Communication[]>(`${this.apiUrl}/GetByIdL?id=${communicationId}` );
+  } 
 
+  getbyIdCCommunication(communicationId:number){
+    return this.http.get<Communication[]>(`${this.apiUrl}/GetByIdC?id=${communicationId}` );
+  } 
 }

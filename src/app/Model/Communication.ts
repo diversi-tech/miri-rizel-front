@@ -1,7 +1,7 @@
 import { RelatedToProject } from "@app/Model/RelatedToCode";
 
 export interface Communication {
-    communicationId?: Number;
+    communicationId?: number;
     type?: string;
     date?: Date | string;
     details?: string;

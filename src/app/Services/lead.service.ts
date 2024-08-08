@@ -29,7 +29,7 @@ export class LeadService {
     return this.http.get<Lead[]>(`${this.apiUrl}`);
   }
 
-  editLead(lead: Lead,id:Number): Observable<Lead>  {
+  editLead(lead: Lead,id:number): Observable<Lead>  {
     lead.leadId = id;
     return this.http.put<Lead>(`${this.apiUrl}`, lead);
   }
