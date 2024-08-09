@@ -15,7 +15,6 @@ export class ValidatorsService {
       return false;
     }
   
-    // אם הגענו לכאן, זה אומר שהמחרוזת תקינה
     return true;
   }
   name(input: string): boolean {
