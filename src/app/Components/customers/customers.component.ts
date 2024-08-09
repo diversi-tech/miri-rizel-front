@@ -139,8 +139,8 @@ export class CustomersComponent implements OnInit {
       if (res == true) {
       this.translate.get(['EmailFound','error','OK']).subscribe(translation=>{
         Swal.fire({
-          title: translation['emailFound'],
-          text: translation['error'],
+          title: translation['error'],
+          text: translation['EmailFound'],
           icon: 'error',
           confirmButtonText: translation['OK']
         });
