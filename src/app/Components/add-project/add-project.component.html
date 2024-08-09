@@ -65,6 +65,7 @@
   </div>
   <div class="card flex justify-content-center">
     <p-dropdown 
+      [disabled]="!isAdmin"
       formControlName="authorize" 
       [options]="authorizeOptions" 
       optionLabel="label"
@@ -72,8 +73,8 @@
       placeholder="{{'AuthorizeInput' | translate}}" 
       class="select-field"
     />
-    
   </div>
-  <button type="submit" class="submit-button"><label *ngIf="!projectForm.valid">{{'YourDeatailsWorng'|translate}}
-    </label><label *ngIf="projectForm.valid">{{'CreateProject'|translate}}</label></button>
+  
+    <button type="submit" class="submit-button"><label *ngIf="!projectForm.valid">{{'YourDeatailsWorng'|translate}}
+      </label><label *ngIf="projectForm.valid">{{'CreateProject'|translate}}</label></button>
 </form>

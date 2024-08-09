@@ -42,7 +42,6 @@ export class ProjectTableComponent implements OnInit {
     private CustomerService: CustomersService
   ) { }
   ngOnInit() {
-    console.log("projectComponent");
     this.taskService.getAll().subscribe(
       (data) => {
         this.tasks = data
@@ -69,18 +68,18 @@ export class ProjectTableComponent implements OnInit {
         this.loading = false;
       },
       (error) => {
-        this.translate.get(['Close', 'unAuthorize']).subscribe(translations => {
-          Swal.fire({
-            text: translations['unAuthorize'],
-            icon: "error",
-            showCancelButton: false,
-            showCloseButton: true,
-            confirmButtonColor: "#d33",
-            confirmButtonText: translations['Close']
-          });
-        });
-        this.router.navigate(['../home']);
-        this.loading = true;
+        // this.translate.get(['Close', 'unAuthorize']).subscribe(translations => {
+        //   Swal.fire({
+        //     text: translations['unAuthorize'],
+        //     icon: "error",
+        //     showCancelButton: false,
+        //     showCloseButton: true,
+        //     confirmButtonColor: "#d33",
+        //     confirmButtonText: translations['Close']
+        //   });
+        // });
+        // this.router.navigate(['../home']);
+        // this.loading = true;
       }
     );
   }
@@ -89,7 +88,6 @@ export class ProjectTableComponent implements OnInit {
   onDeleteProject(p: Project) {
     this.ProjectService.deleteProject(p.projectId).subscribe(
       (res: any) => {
-
         // Remove the project from the local list after successful deletion
         this.loadP()
         this.translate.get(['deleteProject','OK']).subscribe(translation=>
@@ -124,17 +122,16 @@ export class ProjectTableComponent implements OnInit {
   }
   filterData(objToFilter: any) {
     let taskFilter: Task[] = this.tasks.filter(u => u.project.projectId == objToFilter.projectId);
-    console.log(taskFilter);
     if (taskFilter.length != 0) {
       let loading: boolean = true;
-      let col$types = { 'title': 'text', 'dueDate': 'date', 'createdDate': 'date' };
+      let col$types = { 'title': 'text', 'dueDate': 'date', 'createdDate': 'date','status':'position' };
       let positionD = [this.statuses];
       let objData = [this.projects];
       let objFields = ['name'];
       const deletecallback = (row: any) => {
         this.onDeleteTask(row)
       }
-      this.genericBourd.PopTable(taskFilter, loading, col$types, objData, objFields, positionD, '800px', deletecallback, true);
+      this.genericBourd.PopTable(taskFilter, loading, col$types, objData, objFields, positionD, '1000px', deletecallback, true);
 
     } else {
       this.translate.get(['close', 'notasks']).subscribe(translations => {
@@ -163,14 +160,14 @@ export class ProjectTableComponent implements OnInit {
         (error: any) => {
           this.tasks = [];
           this.translate.get(['Close', 'errorServer']).subscribe(translations => {
-            Swal.fire({
-              text: translations[ 'errorServer'],
-              icon: "error",
-              showCancelButton: false,
-              showCloseButton: true,
-              confirmButtonColor: "#d33",
-              confirmButtonText: translations['Close']
-            })
+            // Swal.fire({
+            //   text: translations[ 'errorServer'],
+            //   icon: "error",
+            //   showCancelButton: false,
+            //   showCloseButton: true,
+            //   confirmButtonColor: "#d33",
+            //   confirmButtonText: translations['Close']
+            // })
           })
         }
         
@@ -215,8 +212,6 @@ export class ProjectTableComponent implements OnInit {
       },
       });
       }
-
-  
   refreshData() {
     this.ProjectService.getAll().subscribe(
       (p: Array<Project>) => {
@@ -246,14 +241,14 @@ export class ProjectTableComponent implements OnInit {
       },
       (error: any) => {
         this.translate.get(['Close', 'errorServer']).subscribe(translations => {
-          Swal.fire({
-            text: translations[ 'errorServer'],
-            icon: "error",
-            showCancelButton: false,
-            showCloseButton: true,
-            confirmButtonColor: "#d33",
-            confirmButtonText: translations['Close']
-          })
+          // Swal.fire({
+          //   text: translations[ 'errorServer'],
+          //   icon: "error",
+          //   showCancelButton: false,
+          //   showCloseButton: true,
+          //   confirmButtonColor: "#d33",
+          //   confirmButtonText: translations['Close']
+          // })
         })
       }
     );

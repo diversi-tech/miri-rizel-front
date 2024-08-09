@@ -226,6 +226,12 @@ futureDateValidator(): ValidatorFn {
   };
 }
 
+  documentation(customer: Customer) {
+    this.componentType = ChatComponent;
+    this.popUpAddOrEdit(`Communication ${customer.firstName}`, customer, "customer", customer.customerId);
+  }
+  popupOpen = false;
+  componentType!: Type<any>;
 propil(customer: Customer) {
   this.componentType = ChatComponent;
   this.popUpAddOrEdit(`Communication ${customer.firstName}`, customer, "customer", customer.customerId);

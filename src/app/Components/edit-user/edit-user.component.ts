@@ -140,7 +140,6 @@ export class EditUserComponent implements OnInit {
         filtered.push(role);
       }
     }
-    console.log('filtered: ' + filtered);
     this.roles = filtered;
   }
 

@@ -53,9 +53,9 @@ export class EditLeadComponent implements OnInit {
       lastName: [this.LeadToKnowInput.lastName, [Validators.required]],
       phone: [this.LeadToKnowInput.phone, [Validators.required]],
       source: [this.LeadToKnowInput.source, [Validators.required]],
-      lastContactedDate: [this.extractDate(String(this.LeadToKnowInput.lastContactedDate)), [Validators.required, this.futureDateValidator()]],
+      lastContactedDate: [this.extractDate(String(this.LeadToKnowInput.lastContactedDate)), [Validators.required]],
       businessName: [this.LeadToKnowInput.businessName, [Validators.required]],
-      notes: [this.LeadToKnowInput.notes, [Validators.required]],
+      notes: [this.LeadToKnowInput.notes, []],
     });
     this.flag = true;
   }
@@ -98,7 +98,6 @@ export class EditLeadComponent implements OnInit {
   async toEnter() {
     this.submitted = true;
     if (this.editForm.invalid) { return; }
-    console.log(this.editForm.value);
     
     this.lead.editLead(this.editForm.value, this.data).subscribe()
     await this.delay(50);

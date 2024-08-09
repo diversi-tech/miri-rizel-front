@@ -16,6 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import Swal from 'sweetalert2';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
+import { AuthService } from '@app/Services/auth.service';
 
 
 @Component({
@@ -33,10 +34,11 @@ export class AddProjectComponent implements OnInit {
   projectForm: FormGroup = new FormGroup({});
   titlePage: string = "AddProject"
   custom: Customer[] = [];
-  authorizeOptions: { label: number, value: number }[] = [
-    { label: 1, value: 1 },
-    { label: 2, value: 2 }]
-authorize: any;
+  authorizeOptions: { label: string, value: number }[] = [
+    { label: "Worker", value: 1 },
+    { label: "Admin", value: 2 }]
+  authorize: any;
+  isAdmin: boolean = false
   constructor(
     private fb: FormBuilder,
     private projectService: ProjectService,
@@ -44,53 +46,33 @@ authorize: any;
     private customerService: CustomersService,
     private dialog: MatDialog,
     private router: Router,
-    private translate: TranslateService
-
-
+    private translate: TranslateService,
+    private authService: AuthService
   ) { }
 
-
-
   ngOnInit(): void {
-    authorize:[null];
+    authorize: [null];
     this.date = new Date()
     this.createForm();
-    debugger
     this.statusService.getAllStatus().subscribe(
       (data: any) => {
         this.statuses = data;
       },
       (error: any) => {
-        this.translate.get(['Close', 'Error Server']).subscribe(translations => {
-          Swal.fire({
-            text: translations['Error Server '],
-            icon: "error",
-            showCancelButton: false,
-            showCloseButton: true,
-            confirmButtonColor: "#d33",
-            confirmButtonText: translations['Close']
-          })
-        })
       }
-
     );
     this.customerService.GetAllCustomers().subscribe(
       (data: any) => {
         this.custom = data;
       },
       (error: any) => {
-        this.translate.get(['Close', 'Error Server']).subscribe(translations => {
-          Swal.fire({
-            text: translations['Error Server '],
-            icon: "error",
-            showCancelButton: false,
-            showCloseButton: true,
-            confirmButtonColor: "#d33",
-            confirmButtonText: translations['Close']
-          })
-        })
       }
     );
+    const role = this.authService.getRole();
+    if (role === 3) this.isAdmin = true;
+    console.log("onInit");
+    console.log("isAdmin", this.isAdmin);
+    console.log("role", role);
   }
 
   createForm() {
@@ -108,6 +90,7 @@ authorize: any;
   }
 
   onSubmit() {
+    debugger
     if (this.projectForm.invalid) {
       this.projectForm.markAllAsTouched();
       return;
@@ -115,34 +98,52 @@ authorize: any;
     if (this.projectForm.valid) {
 
       const newProject: Project = this.projectForm.value;
-      console.log('Selected Authorization:', newProject.authorize);
+      console.log(newProject);
+
       this.projectService.addProject(newProject)
-      
         .subscribe(
           (response) => {
-
             if (response) {
-              this.translate.get(['seccesaddProject', 'close']).subscribe(translation =>
-                this.dialog.open(DialogComponent, {
-                  data: {
-                    title: translation['seccesaddProject'],
-                    context: newProject.name,
-                    buttonText: translation['close'],
-                  },
-                }));
-              this.dataRefreshed.emit();
-              Swal.close();
+              console.log("add success!!!");
+              this.translate.get(['Close', 'ProjectAddSuccess']).subscribe(translations => {
+                Swal.fire({
+                  text: translations['ProjectAddSuccess'],
+                  icon: "success",
+                  showCancelButton: false,
+                  showCloseButton: true,
+                  confirmButtonColor: "#3085D6",
+                  confirmButtonText: translations['Close']
+                })
+              })
             }
+
+            else {
+              this.translate.get(['Close', 'ProblemMessage']).subscribe(translations => {
+                Swal.fire({
+                  text: translations['ProblemMessage'],
+                  icon: "error",
+                  showCancelButton: false,
+                  showCloseButton: true,
+                  confirmButtonColor: "#d33",
+                  confirmButtonText: translations['Close']
+                })
+              })
+            }
+            this.dataRefreshed.emit();
           },
           (error) => {
             this.translate.get(['Error adding project', 'close']).subscribe(translation =>
-              this.dialog.open(DialogComponent, {
-                data: {
-                  title: translation['Error adding project'],
-                  context: newProject.name,
-                  buttonText: translation['close'],
-                },
-              }));
+              this.translate.get(['Close', 'ProblemMessage']).subscribe(translations => {
+                Swal.fire({
+                  text: translations['ProblemMessage'],
+                  icon: "error",
+                  showCancelButton: false,
+                  showCloseButton: true,
+                  confirmButtonColor: "#d33",
+                  confirmButtonText: translations['Close']
+                })
+              })
+            );
             Swal.close();
           }
         );
