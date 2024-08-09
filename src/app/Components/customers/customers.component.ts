@@ -48,7 +48,7 @@ export class CustomersComponent implements OnInit {
     'direction': 'rtl'     // ברירת מחדל עברית
   };
 
-  constructor(private resolver: ComponentFactoryResolver, private router: Router, private formBuilder: FormBuilder, private customerService: CustomersService, private validatorsService: ValidatorsService, private languageService: LanguageService,private translate :TranslateService) { }
+  constructor(private resolver: ComponentFactoryResolver, private router: Router, private formBuilder: FormBuilder, private customerService: CustomersService, private validatorsService: ValidatorsService, private languageService: LanguageService, private translate: TranslateService) { }
 
   ngOnInit(): void {
     this.customerForm = this.formBuilder.group({
@@ -128,25 +128,24 @@ export class CustomersComponent implements OnInit {
   addCustomer() {
     this.editOrAddCustomerPopup("AddCustomerTitle", "addCustomer");
   }
-
   addCustomerSubmit() {
     this.submitted1 = true;
     if (this.customerForm.invalid) {
       return;
     }
-  
+
     this.customerService.existsEmail(this.customerForm.value.email).subscribe(res => {
       if (res == true) {
-      this.translate.get(['EmailFound','error','OK']).subscribe(translation=>{
-        Swal.fire({
-          title: translation['error'],
-          text: translation['EmailFound'],
-          icon: 'error',
-          confirmButtonText: translation['OK']
-        });
-      })
-      
-       
+        this.translate.get(['EmailFound', 'error', 'OK']).subscribe(translation => {
+          Swal.fire({
+            title: translation['error'],
+            text: translation['EmailFound'],
+            icon: 'error',
+            confirmButtonText: translation['OK']
+          });
+        })
+
+
         return;
       } else {
         this.newCustomer = this.customerForm.value;
@@ -157,144 +156,136 @@ export class CustomersComponent implements OnInit {
           this.loadCustomers();
           this.customerForm.reset();
           this.submitted1 = false;
-  
+
           Swal.close();
         });
       }
     });
   }
-  
+  editCustomer(customer: Customer) {
+    this.customerService.GetCustomerById(customer.customerId).subscribe((res1: any) => {
+      if (res1.createdDate)
+        res1.createdDate = new Date(res1.createdDate);
+      const status = res1.status as StatusCodeUser
+      res1.status = status
+      this.customerForm.setValue(res1);
+      this.editOrAddCustomerPopup("EditCustomerTitle", "editCustomer");
+    });
+  }
+  editCustomerSubmit(): void {
+    this.submitted = true;
+    if (this.customerForm.invalid) {
+      return;
+    }
+    this.customerService.EditCustomer(this.customerForm.value).subscribe(() => {
+      Swal.close();
+      this.loadCustomers();
+      this.customerForm.reset();
+      this.submitted = false;
+    });
+  }
+  deleteCustomer(customer: Customer) {
+    customer.status.description = 'Inactive';
+    customer.status.id = 2;
+    this.customerService.DeleteCustomer(customer).subscribe(() => {
+      this.loadCustomers();
+    });
 
-editCustomer(customer: Customer) {
-  this.customerService.GetCustomerById(customer.customerId).subscribe((res1: any) => {
-    if (res1.createdDate)
-      res1.createdDate = new Date(res1.createdDate);
-    const status = res1.status as StatusCodeUser
-    res1.status = status
-    this.customerForm.setValue(res1);
-    this.editOrAddCustomerPopup("EditCustomerTitle", "editCustomer");
-  });
-}
-
-editCustomerSubmit(): void {
-  this.submitted = true;
-  if(this.customerForm.invalid) {
-  return;
-}
-this.customerService.EditCustomer(this.customerForm.value).subscribe(() => {
-  Swal.close();
-  this.loadCustomers();
-  this.customerForm.reset();
-  this.submitted = false;
-});
+  }
+  selectItem(event: any) {
+    this.status = event.target.value;
+    this.selectedStatus = this.statusCodeUser.find(s => s.id == this.status) as StatusCodeUser;
   }
 
-deleteCustomer(customer: Customer) {
-  customer.status.description = 'Inactive';
-  customer.status.id = 2;
+  customNameValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      return this.validatorsService.name(control.value) ? null : { invalidName: true };
+    };
+  }
 
+  customPhoneValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      return this.validatorsService.phone(control.value) ? null : { invalidPhone: true };
+    };
+  }
 
-
-  this.customerService.DeleteCustomer(customer).subscribe(() => {
-    this.loadCustomers();
-  });
-
-}
-selectItem(event: any) {
-  this.status = event.target.value;
-  this.selectedStatus = this.statusCodeUser.find(s => s.id == this.status) as StatusCodeUser;
-}
-
-customNameValidator(): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    return this.validatorsService.name(control.value) ? null : { invalidName: true };
-  };
-}
-
-customPhoneValidator(): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    return this.validatorsService.phone(control.value) ? null : { invalidPhone: true };
-  };
-}
-
-futureDateValidator(): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    const selectedDate = new Date(control.value);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return selectedDate >= today ? null : { notFutureDate: true };
-  };
-}
+  futureDateValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const selectedDate = new Date(control.value);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return selectedDate >= today ? null : { notFutureDate: true };
+    };
+  }
 
   documentation(customer: Customer) {
     this.componentType = ChatComponent;
     this.popUpAddOrEdit(`Communication ${customer.firstName}`, customer, "customer", customer.customerId);
   }
+ 
+  propil(customer: Customer) {
+    this.componentType = ChatComponent;
+    this.popUpAddOrEdit(`Communication ${customer.firstName}`, customer, "customer", customer.customerId);
+  }
   popupOpen = false;
   componentType!: Type<any>;
-propil(customer: Customer) {
-  this.componentType = ChatComponent;
-  this.popUpAddOrEdit(`Communication ${customer.firstName}`, customer, "customer", customer.customerId);
-}
-popupOpen = false;
-componentType!: Type<any>;
 
-popUpAddOrEdit(title: string, l: Customer, s: String, id: Number) {
-  this.popupOpen = true;
-  Swal.fire({
-    title: title,
-    html: '<div id="popupContainer"></div>',
-    showConfirmButton: false,
-    didOpen: () => {
-      const container = document.getElementById('popupContainer');
-      if (container) {
-        const factory = this.resolver.resolveComponentFactory(this.componentType);
-        const componentRef = this.popupContainer.createComponent(factory);
-        if (l != null && l != undefined)
-          componentRef.instance.setData(l, s, id);
-        container.appendChild(componentRef.location.nativeElement);
-      }
-    },
-    didClose: () => {
-      this.popupOpen = false; // Set popupOpen to false when the pop-up is closed
-    }
-  });
-  this.logNumbersWhilePopupOpen();
-}
-
-logNumbersWhilePopupOpen() {
-  let counter = 0;
-  const interval = setInterval(() => {
-    if (this.popupOpen) {
-      counter++;
-    } else {
-      clearInterval(interval);
-    }
-  }, 1000);
-}
-popUpAddDocument(nameCustomer: string) {
-  this.componentType = DocumentComponent;
-  Swal.fire({
-    html: '<div id="popupContainer"></div>',
-    showConfirmButton: false,
-    didOpen: () => {
-      const container = document.getElementById('popupContainer');
-      if (container) {
-        console.log(this.componentType);
-        if (this.componentType && this.resolver) {
+  popUpAddOrEdit(title: string, l: Customer, s: String, id: Number) {
+    this.popupOpen = true;
+    Swal.fire({
+      title: title,
+      html: '<div id="popupContainer"></div>',
+      showConfirmButton: false,
+      didOpen: () => {
+        const container = document.getElementById('popupContainer');
+        if (container) {
           const factory = this.resolver.resolveComponentFactory(this.componentType);
           const componentRef = this.popupContainer.createComponent(factory);
+          if (l != null && l != undefined)
+            componentRef.instance.setData(l, s, id);
           container.appendChild(componentRef.location.nativeElement);
-          componentRef.instance.setName(nameCustomer);
+        }
+      },
+      didClose: () => {
+        this.popupOpen = false; // Set popupOpen to false when the pop-up is closed
+      }
+    });
+    this.logNumbersWhilePopupOpen();
+  }
+
+  logNumbersWhilePopupOpen() {
+    let counter = 0;
+    const interval = setInterval(() => {
+      if (this.popupOpen) {
+        counter++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 1000);
+  }
+  popUpAddDocument(nameCustomer: string) {
+    this.componentType = DocumentComponent;
+    Swal.fire({
+      html: '<div id="popupContainer"></div>',
+      showConfirmButton: false,
+      didOpen: () => {
+        const container = document.getElementById('popupContainer');
+        if (container) {
+          console.log(this.componentType);
+          if (this.componentType && this.resolver) {
+            const factory = this.resolver.resolveComponentFactory(this.componentType);
+            const componentRef = this.popupContainer.createComponent(factory);
+            container.appendChild(componentRef.location.nativeElement);
+            componentRef.instance.setName(nameCustomer);
+          }
         }
       }
-    }
-  });
-}
+    });
+  }
 
-addDocument(customer: Customer) {
-  const fullName = customer.firstName! + " " + customer.lastName!;
-  this.popUpAddDocument(fullName);
-}
+  addDocument(customer: Customer) {
+    const fullName = customer.firstName! + " " + customer.lastName!;
+    this.popUpAddDocument(fullName);
+  }
 
 }
