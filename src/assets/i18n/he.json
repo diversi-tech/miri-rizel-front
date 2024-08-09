@@ -69,6 +69,7 @@
   "InvalidEmailFormat": "כתובת מייל אינה תקנית",
   "Users": "משתמשים",
   "EmailNotFound": "כתובת המייל אינה מופיעה במערכת",
+  "EmailFound": "כתובת המייל  מופיעה במערכת",
   "EditCustomerTitle": "עריכת לקוח",
   "AddCustomerTitle": "הוספת לקוח",
   "NameInput": "הכנס שם פרויקט",
