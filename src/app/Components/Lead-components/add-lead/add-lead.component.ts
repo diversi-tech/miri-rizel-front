@@ -89,6 +89,20 @@ export class AddLeadComponent implements OnInit{
   }
   submitForm = () => {
     let formData = this.userForm.value;
+    this.leadSrv.existsEmail(this.userForm.value.email).subscribe(res => {
+      if (res == true) {
+      this.translate.get(['EmailFound','error','OK']).subscribe(translation=>{
+        Swal.fire({
+          title: translation['error'],
+          text: translation['EmailFound'],
+          icon: 'error',
+          confirmButtonText: translation['OK']
+        });
+      })
+      
+       
+        return;
+      } else {
     this.leadSrv.addLead(formData).subscribe((lead) => {
       //alert('הליד נוסף בהצלחה' + lead);
       this.translate.get('addLeadSuccess').subscribe((translation) =>
@@ -103,6 +117,7 @@ export class AddLeadComponent implements OnInit{
       );
     });
   };
+})}
 
   backListLeadsPage = () => {
     this.router.navigate(['leads']);
