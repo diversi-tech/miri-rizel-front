@@ -25,6 +25,9 @@ export class LeadService {
   addLead(lead: Lead): Observable<Lead> {
     return this.http.post<Lead>(`${this.apiUrl}`, lead);
   }
+  existsEmail(email: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.apiUrl}/existsEmail?Email=${email}`,);
+  }
 
   getAllLeads(): Observable<Lead[]> {
     return this.http.get<Lead[]>(`${this.apiUrl}`);
