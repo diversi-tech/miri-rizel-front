@@ -42,7 +42,11 @@ export class CustomersService {
   GetAllStatusUser(): Observable<StatusCodeUser[]> {
     return this.http.get<StatusCodeUser[]>(`${this.apiUrl}GetAllStatus`, );
   }
-
+  existsEmail(email: string): Observable<boolean> {
+    console.log('Checking email existence:', email); // לבדוק אם מתבצע קריאה
+    return this.http.get<boolean>(`${this.apiUrl}existsEmail?Email=${email}`);
+  }
+  
   // getToken() {
   //   return localStorage.getItem('token');
   // }
