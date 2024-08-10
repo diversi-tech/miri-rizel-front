@@ -55,7 +55,7 @@
             </div>
         </div>
 
-        <label for="lastContactedDate">{{'lastContactedDate'|translate}}</label>
+        <!-- <label for="lastContactedDate">{{'lastContactedDate'|translate}}</label>
         <div class="card flex justify-content-center">
             <input id="lastContactedDate" formControlName="lastContactedDate" type="date" id="title" pInputText
                 class="input-field" />
@@ -64,18 +64,19 @@
                 <span *ngIf="editForm.get('lastContactedDate')!.errors?.['notFutureDate']"> התאריך חייב להיות עתידי</span>
                 <span *ngIf="editForm.controls['lastContactedDate'].errors['lastContactedDate']">{{"Invalid lastcontacted date format." | translate}}</span>
             </div>
-        </div>
-
-        <!-- <label for="lastContactedDate">{{'lastContactedDate'|translate}}</label>
-        <div class="card">
-            <p-calendar id="lastContactedDate" formControlName="lastContactedDate" type="date" class="input-field"></p-calendar>
-                <div class="error-message" *ngIf="submitted && editForm.controls['lastContactedDate'].errors">
-                    <span *ngIf="editForm.controls['lastContactedDate'].errors['required']">{{"last contacted date is required." | translate}}</span>
-                    <span *ngIf="editForm.get('lastContactedDate')!.errors?.['notFutureDate']"> התאריך חייב להיות עתידי</span>
-                    <span *ngIf="editForm.controls['lastContactedDate'].errors['lastContactedDate']">{{"Invalid last contacted date format." | translate}}</span>
-                </div>
         </div> -->
 
+        <label for="lastContactedDate">{{ "lastContactedDate" | translate }}</label>
+        <p-calendar id="date" type="date" formControlName="lastContactedDate" placeholder="mm/dd/yyyy"
+            class="input-field"></p-calendar>
+        <div class="error-message" *ngIf="submitted && editForm.controls['lastContactedDate'].errors">
+            <span *ngIf="editForm.controls['lastContactedDate'].errors['required']">
+                {{ "RequiredField" | translate }}
+            </span>
+            <span *ngIf="editForm.controls['lastContactedDate'].errors?.['notFutureDate']">
+                {{ "DueDateError" | translate }}</span>
+        </div>
+        
         <label for="businessName">{{'businessName'|translate}}</label>
         <div class="card flex justify-content-center">
             <input id="businessName" formControlName="businessName" type="text" id="title" pInputText
