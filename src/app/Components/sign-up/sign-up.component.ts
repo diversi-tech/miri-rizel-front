@@ -143,7 +143,7 @@ export class SignUpComponent {
       },
       (error) => {
         this.spiner.hide();
-        console.log(error);
+        // console.log(error);
         if (error.status == 409)
           this.dialog.open(DialogComponent, {
             data: {

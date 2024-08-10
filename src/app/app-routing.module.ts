@@ -34,6 +34,7 @@ import { NoAuthGuard } from './Guard/noAuth.guard';
 import { error403Component } from './Components/errors/error-403.component';
 import { RoleBasedGuard } from './Guard/role-based.guard';
 import { PlaceholderComponent } from './Components/Placeholder/Placeholder.component';
+import { CodeGuard } from './Guard/code.guard';
 const routes: Routes = [
   // 1=customer, 2=worker, 3=admin
   { path: '', pathMatch: 'full', redirectTo: 'redirect' },
@@ -76,7 +77,7 @@ const routes: Routes = [
   // { path: 'add-task/:id', component: AddTaskComponent },
   // { path: 'addLead', component: AddLeadComponent },
   // { path: 'editLead', component: EditLeadComponent },
-  { path: 'documents', component: ListDocumentComponent },
+  { path: 'documents', component: ListDocumentComponent  ,canActivate: [AuthGuard], data: { roles: [3, 2] } },
   // { path: 'leads', component: ListLeadsComponent },
   // { path: 'Dashboard', component: CustomersDashboardComponent },
   // { path: 'documentation', component: PropilListComponent },
@@ -86,10 +87,15 @@ const routes: Routes = [
     component: ListLeadsComponent,
     children: [{ path: '', component: LeadComponent }],
   },
+  // {
+  //   path: 'ResetPassword',
+  //   component: ResetPasswordComponent,
+  //   canActivate: [AuthCodeGuard],
+  // },
   {
     path: 'ResetPassword',
     component: ResetPasswordComponent,
-    canActivate: [AuthCodeGuard],
+    canActivate: [CodeGuard],
   },
   { path: '403-not-found', pathMatch: 'full', component: error403Component },
   { path: '404-not-found', pathMatch: 'full', component: error404Component },

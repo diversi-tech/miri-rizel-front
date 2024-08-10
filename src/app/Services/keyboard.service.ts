@@ -34,7 +34,7 @@ export class KeyboardService {
   }
 
   onKeyPress(button: string) {
-    console.log("Button pressed", button);
+    // console.log("Button pressed", button);
   }
 
   setActiveInput(input: HTMLInputElement, formControl?: FormControl) {

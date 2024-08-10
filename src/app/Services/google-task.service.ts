@@ -61,7 +61,7 @@ export class GoogleTaskService {
       discoveryDocs: [this.DISCOVERY_DOC],
     });
     this.gapiInited = true;
-    console.log('GAPI client initialized');
+    // console.log('GAPI client initialized');
   }
 
   private gisLoaded() {
@@ -73,11 +73,11 @@ export class GoogleTaskService {
           console.error('Error during token request', tokenResponse.error);
           throw tokenResponse;
         }
-        console.log('Token received');
+        // console.log('Token received');
       },
     });
     this.gisInited = true;
-    console.log('GIS client initialized');
+    // console.log('GIS client initialized');
   }
 
   private reinitializeGapi() {
@@ -88,20 +88,20 @@ export class GoogleTaskService {
       })
       .then(() => {
         this.gapiInited = true;
-        console.log('GAPI client reinitialized');
+        // console.log('GAPI client reinitialized');
       });
   }
 
   public createSimpleTask(taskDetails: any, taskId: number) {
     if (!this.gapiInited || !this.gisInited) {
-      console.error('GAPI or GIS not initialized');
+      // console.error('GAPI or GIS not initialized');
       this.reinitializeGapi();
       return;
     }
 
     this.tokenClient.callback = async (resp: any) => {
       if (resp.error !== undefined) {
-        console.error('Error during token request', resp.error);
+        // console.error('Error during token request', resp.error);
         throw resp;
       }
       await this.addTask(taskDetails, taskId);
@@ -116,11 +116,11 @@ export class GoogleTaskService {
     } catch (error) {
       console.error('Error requesting access token', error);
     }
-    console.log('Token request initiated');
+    // console.log('Token request initiated');
   }
 
   private async addTask(taskDetails: any, taskId: number) {
-    console.log("taskDetails", taskDetails);
+    // console.log("taskDetails", taskDetails);
 
     const task = {
       title: taskDetails.title,
@@ -144,17 +144,17 @@ export class GoogleTaskService {
           timer: 3000,
         });
         // שמירה של הקוד משימה במסד
-        console.log('Task created:', taskId);
-        console.log(task.id);
+        // console.log('Task created:', taskId);
+        // console.log(task.id);
         this.taskService.updateGoogleId(taskId, task.id).subscribe((res) => {
-          console.log(res);
+          // console.log(res);
         }, (err) => {
-          console.log(err);
+          // console.log(err);
         })
 
       });
     } catch (error) {
-      console.error('Error creating task:', error);
+      // console.error('Error creating task:', error);
     }
   }
 
@@ -190,11 +190,11 @@ export class GoogleTaskService {
     } catch (error) {
       console.error('Error requesting access token', error);
     }
-    console.log('Token request initiated');
+    // console.log('Token request initiated');
   }
 
   private async modifyTask(taskDetails: any) {
-    console.log("taskDetails", taskDetails);
+    // console.log("taskDetails", taskDetails);
 
     const task = {
       id: taskDetails.googleId,
@@ -203,7 +203,7 @@ export class GoogleTaskService {
       due: taskDetails.dueTime,
       ...(taskDetails.status == 'COMPLETE' && { status: 'completed' })
     };
-    console.log("task", task);
+    // console.log("task", task);
 
 
     try {
@@ -214,6 +214,16 @@ export class GoogleTaskService {
       });
 
       request.execute((task: any) => {
+        if (task.code == 404) {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: 'לא ניתן היה לעדכן את המשימה',
+            showConfirmButton: false,
+            timer: 3000,
+          });
+          return;
+        }
         Swal.fire({
           position: 'top-end',
           icon: 'success',
@@ -221,10 +231,10 @@ export class GoogleTaskService {
           showConfirmButton: false,
           timer: 3000,
         });
-        console.log('Task updated:', task);
+        // console.log('Task updated:', task);
       });
     } catch (error) {
-      console.error('Error updating task:', error);
+      // console.error('Error updating task:', error);
     }
   }
 
@@ -250,9 +260,9 @@ export class GoogleTaskService {
         this.tokenClient.requestAccessToken({ prompt: '' });
       }
     } catch (error) {
-      console.error('Error requesting access token', error);
+      // console.error('Error requesting access token', error);
     }
-    console.log('Token request initiated');
+    // console.log('Token request initiated');
   }
 
   private async removeTask(taskId: string) {
@@ -270,10 +280,10 @@ export class GoogleTaskService {
           showConfirmButton: false,
           timer: 3000,
         });
-        console.log('Task deleted:', taskId);
+        // console.log('Task deleted:', taskId);
       });
     } catch (error) {
-      console.error('Error deleting task:', error);
+      // console.error('Error deleting task:', error);
     }
   }
 }

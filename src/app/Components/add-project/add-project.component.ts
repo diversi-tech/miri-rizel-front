@@ -70,9 +70,9 @@ export class AddProjectComponent implements OnInit {
     );
     const role = this.authService.getRole();
     if (role === 3) this.isAdmin = true;
-    console.log("onInit");
-    console.log("isAdmin", this.isAdmin);
-    console.log("role", role);
+    // console.log("onInit");
+    // console.log("isAdmin", this.isAdmin);
+    // console.log("role", role);
   }
 
   createForm() {
@@ -98,13 +98,13 @@ export class AddProjectComponent implements OnInit {
     if (this.projectForm.valid) {
 
       const newProject: Project = this.projectForm.value;
-      console.log(newProject);
+      // console.log(newProject);
 
       this.projectService.addProject(newProject)
         .subscribe(
           (response) => {
             if (response) {
-              console.log("add success!!!");
+              // console.log("add success!!!");
               this.translate.get(['Close', 'ProjectAddSuccess']).subscribe(translations => {
                 Swal.fire({
                   text: translations['ProjectAddSuccess'],

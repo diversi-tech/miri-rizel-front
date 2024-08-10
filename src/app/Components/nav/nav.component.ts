@@ -68,12 +68,13 @@ export class NavComponent implements OnInit {
       this.links = [];
       if (role === 2) {
         this.links.push(
+          { path: '/documentation', label: 'Documentation' },
+          { path: '/documents', label: 'Documents' },
           { path: '/task', label: 'Tasks' },
           { path: '/project', label: 'Projects' },
           { path: '/customer', label: 'Customers' },
           { path: '/home', label: 'HomePage' }
         );
-
       }
       if (role == 3) {
         this.links.push(
@@ -83,10 +84,10 @@ export class NavComponent implements OnInit {
           { path: '/project', label: 'Projects' },
           { path: '/leads', label: 'Leads' },
           { path: '/customer', label: 'Customers' },
+          
           { path: '/users', label: 'Users' },
           { path: '/home', label: 'HomePage' }
         );
-
       }
     }
   }

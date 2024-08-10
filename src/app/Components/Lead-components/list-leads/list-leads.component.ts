@@ -66,7 +66,7 @@ export class ListLeadsComponent {
   onDeleteLead(lead: Lead) {
     this.communicationS.getbyIdLCommunication(lead.leadId).subscribe(res => { console.log(res);
     this.communicationaaaa = res 
-    console.log(this.communicationaaaa.length);
+    // console.log(this.communicationaaaa.length);
     if(this.communicationaaaa.length == 0)
       this.leadService.deleteLead(lead.leadId).subscribe((res: any) => {
         this.loadLeads();
