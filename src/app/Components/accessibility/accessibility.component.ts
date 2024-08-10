@@ -262,7 +262,7 @@ export class AccessibilityComponent  implements AfterViewInit {
 
   ngAfterViewInit() {
     // This will log the keyboardContainer after the view has initialized
-    console.log(this.keyboardContainer); 
+    // console.log(this.keyboardContainer); 
   }
 
   handleSwitch7Change(event: any): void {

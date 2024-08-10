@@ -84,7 +84,7 @@ export class UploadFilseComponent implements OnInit,OnChanges {
     this.submitted = true;
     // debugger
     if (this.documentForm.invalid) {
-      console.log('Form is invalid:', this.documentForm.errors);
+      // console.log('Form is invalid:', this.documentForm.errors);
       Object.keys(this.documentForm.controls).forEach(key => {
         const controlErrors: ValidationErrors | null = this.documentForm.get(key)!.errors;
         if (controlErrors != null) {

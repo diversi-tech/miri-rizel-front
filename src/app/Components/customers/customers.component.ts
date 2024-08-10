@@ -271,7 +271,7 @@ export class CustomersComponent implements OnInit {
       didOpen: () => {
         const container = document.getElementById('popupContainer');
         if (container) {
-          console.log(this.componentType);
+          // console.log(this.componentType);
           if (this.componentType && this.resolver) {
             const factory = this.resolver.resolveComponentFactory(this.componentType);
             const componentRef = this.popupContainer.createComponent(factory);

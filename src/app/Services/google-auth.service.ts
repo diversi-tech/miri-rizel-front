@@ -155,8 +155,8 @@ export class GoogleAuthService {
       resource: event,
     });
     request.execute((event: any) => {
-      console.log("event created: ", event);
-      console.log(taskId, event.id);
+      // console.log("event created: ", event);
+      // console.log(taskId, event.id);
       this.taskService.updateGoogleId(taskId, event.id).subscribe((res) => {
 
       }, (err) => {
@@ -264,7 +264,7 @@ export class GoogleAuthService {
       resource: event,
     });
     request.execute((event: any) => {
-      console.log("event updated: ", event);
+      // console.log("event updated: ", event);
       this.translate.get(['TaskUpdateSuccess', 'viewTaskBord', 'clickHere']).subscribe(translation =>
 
         Swal.fire({
@@ -313,7 +313,7 @@ export class GoogleAuthService {
       await this.scheduleDeleteEvent(googleId);
     };
     try {
-      console.log("try");
+      // console.log("try");
 
       if (gapi.client.getToken() === null) {
         this.tokenClient.requestAccessToken({ prompt: "consent" });
@@ -341,7 +341,7 @@ export class GoogleAuthService {
     });
 
     request.execute((event: any) => {
-      console.log("event updated: ", event);
+      // console.log("event updated: ", event);
       this.translate.get(['deleteTask', 'viewTaskBord', 'clickHere']).subscribe(translation =>
 
         Swal.fire({

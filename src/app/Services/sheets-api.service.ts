@@ -130,7 +130,7 @@ export class SheetsApiService {
       if (spreadSheetBtn) {
         spreadSheetBtn.style.visibility = 'visible';
       } else {
-        console.log('spreadSheetBtn not found');
+        // console.log('spreadSheetBtn not found');
         this.translate.get(['Close', 'spreadSheetBtn not found']).subscribe(translations => {
           Swal.fire({
             text: translations['spreadSheetBtn not found'],
@@ -228,7 +228,7 @@ export class SheetsApiService {
     try {
       // Ensure GAPI is loaded
       if (!gapi || !gapi.client) {
-        console.log('GAPI client not loaded.');
+        // console.log('GAPI client not loaded.');
         this.translate.get(['Close', 'gapi client not loaded']).subscribe(translations => {
           Swal.fire({
             text: translations['gapi client not loaded'],

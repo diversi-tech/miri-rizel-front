@@ -54,7 +54,7 @@ export class EditProjectComponent {
     private translate: TranslateService) {
   }
   ngOnInit() {
-    console.log("edit component");
+    // console.log("edit component");
 
     this.languageService.language$.subscribe(lang => {
       if (lang === 'he') {
@@ -121,10 +121,10 @@ export class EditProjectComponent {
 
   }
   setData(data: any) {
-    console.log("data", data);
+    // console.log("data", data);
     this.data = data;
     this.server.getProjectById(this.data).subscribe((project2: any) => {
-      console.log(project2);
+      // console.log(project2);
       this.project = project2[0];
       this.fullForm();
     });
@@ -159,8 +159,8 @@ export class EditProjectComponent {
     this.flag = true;
   }
   async toEnter() {
-    console.log("toEnter");
-    console.log("this.ProjectForm.value, this.data", this.ProjectForm.value, this.data);
+    // console.log("toEnter");
+    // console.log("this.ProjectForm.value, this.data", this.ProjectForm.value, this.data);
     // this.server.update(this.ProjectForm.value, this.data).subscribe(() => Swal.close())
     // await this.delay(50);
     // Object.keys(this.ProjectForm.controls).forEach((key) => {
@@ -169,7 +169,7 @@ export class EditProjectComponent {
     // this.dataRefreshed.emit();
     // Swal.close();
     this.server.update(this.ProjectForm.value, this.data).subscribe((res) => {
-      console.log(res);
+      // console.log(res);
       if (res) {
         this.translate.get(['Close', 'ProjectUpdateSuccess']).subscribe(translations => {
           Swal.fire({
@@ -196,7 +196,7 @@ export class EditProjectComponent {
         })
       }
     }, (err) => {
-      console.log(err);
+      // console.log(err);
       this.translate.get(['Close', 'ProblemMessage']).subscribe(translations => {
         Swal.fire({
           text: translations['ProblemMessage'],
