@@ -124,14 +124,14 @@ export class ProjectTableComponent implements OnInit {
     let taskFilter: Task[] = this.tasks.filter(u => u.project.projectId == objToFilter.projectId);
     if (taskFilter.length != 0) {
       let loading: boolean = true;
-      let col$types = { 'title': 'text', 'dueDate': 'date', 'createdDate': 'date' };
+      let col$types = { 'title': 'text', 'dueDate': 'date', 'createdDate': 'date','status':'position' };
       let positionD = [this.statuses];
       let objData = [this.projects];
       let objFields = ['name'];
       const deletecallback = (row: any) => {
         this.onDeleteTask(row)
       }
-      this.genericBourd.PopTable(taskFilter, loading, col$types, objData, objFields, positionD, '800px', deletecallback, true);
+      this.genericBourd.PopTable(taskFilter, loading, col$types, objData, objFields, positionD, '1000px', deletecallback, true);
 
     } else {
       this.translate.get(['close', 'notasks']).subscribe(translations => {

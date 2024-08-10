@@ -188,6 +188,7 @@ document(rowData: any){
         sortable: false,
         filterType: 'popTable',
       });
+
     this.columns.push({
       field: 'edit',
       header: '',
@@ -200,18 +201,20 @@ document(rowData: any){
       sortable: false,
       filterType: 'delete',
     });
+  if(this.delete.observers.length > 0){
     this.columns.push({
       field: 'documentation',
       header: '',
       sortable: false,
       filterType: 'documentation'
-    });
+    });}
+    if(this.replaceToCustomer.observers.length > 0){
     this.columns.push({
       field: 'replaceToCustomer',
       header: '',
       sortable: false,
       filterType: 'replaceToCustomer'
-    });
+    });}
     this.columns.push({
       field: 'document',
       header: '',

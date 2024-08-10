@@ -15,24 +15,10 @@ export class ValidatorsService {
       return false;
     }
 
-    // אם הגענו לכאן, זה אומר שהמחרוזת תקינה
+
     return true;
   }
-  // name(input: string): boolean {
-  //   if (!input) {
-  //     return false;
-  //   }
-  //   if (!/^[a-zA-Zא-ת]+$/.test(input)) {
-  //     return false;
-  //   }
-  //   if (/^(.)\1+$/.test(input)) {
-  //     return false;
-  //   }
-  //   if (input.length < 2 || input.length > 22) {
-  //     return false;
-  //   }
-  //   return true;
-  // }
+
   name(input: string): boolean {
     if (!input) {
       return false;

@@ -19,7 +19,10 @@ import { ChatComponent } from '@app/Components/chat/chat.component';
 import { AddLeadComponent } from 'src/app/Components/Lead-components/add-lead/add-lead.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CommunicationService } from '@app/Services/communication.service';
+import { CustomersService } from '@app/Services/customers.service';
 import { Communication } from '@app/Model/Communication';
+import { RelatedToProject } from '@app/Model/RelatedToCode';
+import { Customer } from '@app/Model/Customer';
 
 @Component({
   selector: 'app-list-leads',
@@ -42,8 +45,9 @@ export class ListLeadsComponent {
     private router: Router,
     private resolver: ComponentFactoryResolver,
     private translate: TranslateService,
-    private communicationS: CommunicationService
-  ) {}
+    private communicationS: CommunicationService,
+    private CustomersServiceS: CustomersService
+  ) { }
 
   ngOnInit() {
     this.loadLeads();
@@ -62,32 +66,34 @@ export class ListLeadsComponent {
   }
 
   communicationaaaa: Communication[] = []
-  leng:number = 0
+  leng: number = 0
   onDeleteLead(lead: Lead) {
-    this.communicationS.getbyIdLCommunication(lead.leadId).subscribe(res => { console.log(res);
-    this.communicationaaaa = res 
-    // console.log(this.communicationaaaa.length);
-    if(this.communicationaaaa.length == 0)
-      this.leadService.deleteLead(lead.leadId).subscribe((res: any) => {
-        this.loadLeads();
-   })
-   else{
-    this.leng=this.communicationaaaa.length;
-    this.communicationaaaa.forEach(e => {
-      if(e.communicationId!=null)
-      {
-        this.communicationS.deleteCommunication(e.communicationId).subscribe((res
-        )=>{console.log(res),this.leng-=1,console.log(this.leng);  if(this.leng==0)
-          this.leadService.deleteLead(lead.leadId).subscribe((res: any) => {
-              this.loadLeads();
-         })
+    this.communicationS.getbyIdLCommunication(lead.leadId).subscribe(res => {
+      console.log(res);
+      this.communicationaaaa = res
+      console.log(this.communicationaaaa.length);
+      if (this.communicationaaaa.length == 0)
+        this.leadService.deleteLead(lead.leadId).subscribe((res: any) => {
+          this.loadLeads();
+        })
+      else {
+        this.leng = this.communicationaaaa.length;
+        this.communicationaaaa.forEach(e => {
+          if (e.communicationId != null) {
+            this.communicationS.deleteCommunication(e.communicationId).subscribe((res
+            ) => {
+              console.log(res), this.leng -= 1, console.log(this.leng); if (this.leng == 0)
+                this.leadService.deleteLead(lead.leadId).subscribe((res: any) => {
+                  this.loadLeads();
+                })
+            })
+          }
         })
       }
-  })}
-})
-}
- 
-  addLead(){
+    })
+  }
+
+  addLead() {
     this.componentType = AddLeadComponent;
     let title: string = '';
     //this.translate.get("AddLead").subscribe(tranlation=> title=tranlation);
@@ -168,9 +174,67 @@ export class ListLeadsComponent {
     }, 1000); // Log every second
   }
 
+  r: RelatedToProject={ id: 1, description: "Customer" };
+  communicationNew: Communication ={ communicationId: 0,type: '',date: new Date(),
+    details: '',relatedTo: new Object(),relatedId: 0,name: ''};
+  communicationaaaa2: Communication[] = []
+  cUSTOMER: Customer[] = []
+  leng2: number = 0
+  max: number = 0
   replaceStateToCustomer(lead: Lead) {
-    this.leadService.replaceToCustomer(lead).subscribe(customer=> { this.refreshData(); 
-      this.translate.get(["replaceLeadSuccses", "GoToTheCustomerPage", 'Approve']).subscribe(translations=> 
+    this.CustomersServiceS.GetAllCustomers().subscribe((res:any) => {this.cUSTOMER=res,
+      this.max=this.cUSTOMER[this.cUSTOMER.length-1].customerId;
+    this.communicationS.getbyIdLCommunication(lead.leadId).subscribe(res => {
+      this.communicationaaaa2 = res
+      console.log(this.communicationaaaa2.length);
+      if (this.communicationaaaa2.length != 0) {
+        this.leng = this.communicationaaaa2.length;
+        this.communicationaaaa2.forEach(e => {
+          if (e.communicationId != null) {
+            this.communicationNew.relatedTo =  this.r;
+            this.communicationNew.date = e.date
+            this.communicationNew.type = e.type
+            this.communicationNew.communicationId = 0
+            this.communicationNew.name = e.name
+            this.communicationNew.details = e.details
+            this.communicationNew.relatedId = this.max+1;
+            console.log(this.communicationNew);
+            this.communicationS.AddNewCommunication(this.communicationNew).subscribe((response: Communication) => {
+              if(e.communicationId!=null) this.communicationS.deleteCommunication(e.communicationId).subscribe(data =>
+                this.leadService.replaceToCustomer(lead).subscribe(customer => {
+                  this.refreshData();
+                  this.translate.get(["replaceLeadSuccses", "GoToTheCustomerPage", 'Approve']).subscribe(translations =>
+                    Swal.fire({
+                      icon: "success",
+                      title: translations['replaceLeadSuccses'],
+                      //text: translations['AddTaskToGoogle'],
+                      showDenyButton: true,
+                      showCancelButton: false,
+                      confirmButtonText: translations['GoToTheCustomerPage'],
+                      denyButtonText: translations['Approve'],
+            
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        // this.scheduleMeeting(response.taskId)
+                        this.router.navigate(['/customer'])
+                        // } else if (result.isDenied) {
+                        //   Swal.fire(translations['replaceLeadSuccses'], "", "info");
+                      }
+                      else {
+                        this.refreshData();
+                      }
+                    }))
+                }
+                )
+              )
+          });
+          }
+        })
+      }
+      else{
+    this.leadService.replaceToCustomer(lead).subscribe(customer => {
+      this.refreshData();
+      this.translate.get(["replaceLeadSuccses", "GoToTheCustomerPage", 'Approve']).subscribe(translations =>
         Swal.fire({
           icon: "success",
           title: translations['replaceLeadSuccses'],
@@ -179,20 +243,24 @@ export class ListLeadsComponent {
           showCancelButton: false,
           confirmButtonText: translations['GoToTheCustomerPage'],
           denyButtonText: translations['Approve'],
-          
+
         }).then((result) => {
           if (result.isConfirmed) {
             // this.scheduleMeeting(response.taskId)
             this.router.navigate(['/customer'])
-          // } else if (result.isDenied) {
-          //   Swal.fire(translations['replaceLeadSuccses'], "", "info");
+            // } else if (result.isDenied) {
+            //   Swal.fire(translations['replaceLeadSuccses'], "", "info");
           }
-          else{
-            this.refreshData(); 
+          else {
+            this.refreshData();
           }
-        }))}
-      )
-      
-       }
-    
+        }))
+    }
+    )
+  }
+    })
+  })
+
+  }
+
 }

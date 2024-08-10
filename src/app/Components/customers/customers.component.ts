@@ -14,7 +14,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { DocumentComponent } from '@app/Components/documens/document/document.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '@app/Services/language.service';
 
 @Component({
@@ -48,7 +48,7 @@ export class CustomersComponent implements OnInit {
     'direction': 'rtl'     // ברירת מחדל עברית
   };
 
-  constructor(private resolver: ComponentFactoryResolver, private router: Router, private formBuilder: FormBuilder, private customerService: CustomersService, private validatorsService: ValidatorsService, private languageService: LanguageService) { }
+  constructor(private resolver: ComponentFactoryResolver, private router: Router, private formBuilder: FormBuilder, private customerService: CustomersService, private validatorsService: ValidatorsService, private languageService: LanguageService, private translate: TranslateService) { }
 
   ngOnInit(): void {
     this.customerForm = this.formBuilder.group({
@@ -128,27 +128,40 @@ export class CustomersComponent implements OnInit {
   addCustomer() {
     this.editOrAddCustomerPopup("AddCustomerTitle", "addCustomer");
   }
-
   addCustomerSubmit() {
     this.submitted1 = true;
     if (this.customerForm.invalid) {
       return;
     }
-    this.newCustomer = this.customerForm.value;
-    this.selectedStatus = this.customerForm.value.status as StatusCodeUser
-    this.newCustomer.status = this.selectedStatus;
-    this.newCustomer.customerId = 0;
-    this.newCustomer.customerId = 0;
-    this.customerService.AddNewCustomer(this.newCustomer).subscribe(() => {
-      this.loadCustomers();
-      this.customerForm.reset();
-      this.submitted1 = false;
+
+    this.customerService.existsEmail(this.customerForm.value.email).subscribe(res => {
+      if (res == true) {
+        this.translate.get(['EmailFound', 'error', 'OK']).subscribe(translation => {
+          Swal.fire({
+            title: translation['error'],
+            text: translation['EmailFound'],
+            icon: 'error',
+            confirmButtonText: translation['OK']
+          });
+        })
 
 
-      Swal.close();
+        return;
+      } else {
+        this.newCustomer = this.customerForm.value;
+        this.selectedStatus = this.customerForm.value.status as StatusCodeUser
+        this.newCustomer.status = this.selectedStatus;
+        this.newCustomer.customerId = 0;
+        this.customerService.AddNewCustomer(this.newCustomer).subscribe(() => {
+          this.loadCustomers();
+          this.customerForm.reset();
+          this.submitted1 = false;
+
+          Swal.close();
+        });
+      }
     });
   }
-
   editCustomer(customer: Customer) {
     this.customerService.GetCustomerById(customer.customerId).subscribe((res1: any) => {
       if (res1.createdDate)
@@ -159,7 +172,6 @@ export class CustomersComponent implements OnInit {
       this.editOrAddCustomerPopup("EditCustomerTitle", "editCustomer");
     });
   }
-
   editCustomerSubmit(): void {
     this.submitted = true;
     if (this.customerForm.invalid) {
@@ -172,13 +184,9 @@ export class CustomersComponent implements OnInit {
       this.submitted = false;
     });
   }
-
   deleteCustomer(customer: Customer) {
     customer.status.description = 'Inactive';
     customer.status.id = 2;
-
-
-
     this.customerService.DeleteCustomer(customer).subscribe(() => {
       this.loadCustomers();
     });
@@ -211,6 +219,11 @@ export class CustomersComponent implements OnInit {
   }
 
   documentation(customer: Customer) {
+    this.componentType = ChatComponent;
+    this.popUpAddOrEdit(`Communication ${customer.firstName}`, customer, "customer", customer.customerId);
+  }
+ 
+  propil(customer: Customer) {
     this.componentType = ChatComponent;
     this.popUpAddOrEdit(`Communication ${customer.firstName}`, customer, "customer", customer.customerId);
   }
