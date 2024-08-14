@@ -57,8 +57,7 @@ export class EditUserComponent implements OnInit {
     direction: 'rtl', // ברירת מחדל עברית
   };
   desc: string = '';
-  // @ViewChild(GenericBourdComponent) genericBourd: GenericBourdComponent;
-
+  
   constructor(
     private userService: UserService,
     private translate: TranslateService,
@@ -69,7 +68,6 @@ export class EditUserComponent implements OnInit {
     if(this.userId!=0){
       this.userService.getUserById(this.userId).subscribe((user) => {
         this.user = user;
-        // this.desc= user.role? user.role.description: '';
         const role = this.authService.getRole();
         if (role === 3) this.isAdmin = true;
         this.getAllRolesAndTranslate();

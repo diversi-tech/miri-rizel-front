@@ -206,7 +206,6 @@ export class ListLeadsComponent {
                     Swal.fire({
                       icon: "success",
                       title: translations['replaceLeadSuccses'],
-                      //text: translations['AddTaskToGoogle'],
                       showDenyButton: true,
                       showCancelButton: false,
                       confirmButtonText: translations['GoToTheCustomerPage'],
@@ -214,10 +213,7 @@ export class ListLeadsComponent {
             
                     }).then((result) => {
                       if (result.isConfirmed) {
-                        // this.scheduleMeeting(response.taskId)
                         this.router.navigate(['/customer'])
-                        // } else if (result.isDenied) {
-                        //   Swal.fire(translations['replaceLeadSuccses'], "", "info");
                       }
                       else {
                         this.refreshData();
@@ -237,7 +233,6 @@ export class ListLeadsComponent {
         Swal.fire({
           icon: "success",
           title: translations['replaceLeadSuccses'],
-          //text: translations['AddTaskToGoogle'],
           showDenyButton: true,
           showCancelButton: false,
           confirmButtonText: translations['GoToTheCustomerPage'],
@@ -245,10 +240,7 @@ export class ListLeadsComponent {
 
         }).then((result) => {
           if (result.isConfirmed) {
-            // this.scheduleMeeting(response.taskId)
             this.router.navigate(['/customer'])
-            // } else if (result.isDenied) {
-            //   Swal.fire(translations['replaceLeadSuccses'], "", "info");
           }
           else {
             this.refreshData();
