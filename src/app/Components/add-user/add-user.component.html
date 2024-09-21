@@ -1,52 +1,64 @@
-<div class="add-container">
-    <h2>add User</h2>
-    <form [formGroup]="addForm" (ngSubmit)="toEnter()">
+<form class="addUser" id="addUser" [formGroup]="userForm" (ngSubmit)="addUserSubmit()" [style]="this.styles">
+    <h1>{{ this.titlePage | translate }}</h1>
+    <div class="line"></div>
 
-        <div>
-            <label for="firstName">first Name</label>
-            <input id="firstName" formControlName="firstName" type="text" />
-            <div *ngIf="submitted && addForm.controls['firstName'].errors">
-                <span *ngIf="addForm.controls['firstName'].errors['required']">firstName is required.</span>
-                <span *ngIf="addForm.controls['firstName'].errors['firstName']">Invalid firstName format.</span>
-            </div>
-        </div>
+    <label for="firstName">{{ "firstName" | translate }}</label>
+    <input type="text" formControlName="firstName" pInputText class="input-field" />
+    <div class="error-message" *ngIf="submitted && userForm.controls['firstName'].errors">
+        <span *ngIf="userForm.controls['firstName'].errors['required']">
+            {{ "RequiredField" | translate }}
+        </span>
+    </div>
 
-        <div>
-            <label for="lastName">last Name</label>
-            <input id="lastName" formControlName="lastName" type="text" />
-            <div *ngIf="submitted && addForm.controls['lastName'].errors">
-                <span *ngIf="addForm.controls['lastName'].errors['required']">lastName is required.</span>
-                <span *ngIf="addForm.controls['lastName'].errors['lastName']">Invalid lastName format.</span>
-            </div>
-        </div>
-    
-        <div>
-            <label for="password">Password</label>
-            <input id="password" formControlName="password" [(ngModel)]="userDetails.password" type="password" />
-            <div *ngIf="submitted && addForm.controls['password'].errors">
-                <span *ngIf="addForm.controls['password'].errors['required']">Password is required.</span>
-            </div>
-        </div>
+    <label for="lastName">{{ "lastName" | translate }}</label>
+    <input type="text" formControlName="lastName" pInputText class="input-field" />
+    <div class="error-message" *ngIf="submitted && userForm.controls['lastName'].errors">
+        <span *ngIf="userForm.controls['lastName'].errors['required']">
+            {{ "RequiredField" | translate }}
+        </span>
+    </div>
 
-        <div>
-            <label for="ConfirmPassword">Confirm Password</label>
-            <input id="ConfirmPassword" formControlName="ConfirmPassword" [(ngModel)]="userDetails.password2" type="password" (ngModelChange)="validatePasswords()"/>
-            <div *ngIf="submitted && addForm.controls['ConfirmPassword'].errors">
-                <span *ngIf="addForm.controls['ConfirmPassword'].errors['required']">Password is required.</span>
-                <span *ngIf="addForm.controls['ConfirmPassword'].errors['email']">Invalid Password format.</span>
-            </div>
-            <mat-hint *ngIf="!passwordsMatch && userDetails.password !== '' && userDetails.password2 !== ''" align="end"
-            style="color: red;">Passwords do not match.</mat-hint>
-        </div>
+    <div class="form-group"></div>
+    <label for="role">{{ "role" | translate }}</label>
+    <p-dropdown id="role" formControlName="role" [options]="roleOptions" optionLabel="description"
+        [placeholder]="'AuthorizeInputSelect' | translate" class="select-field"></p-dropdown>
+    <div class="error-message" *ngIf="submitted && userForm.controls['role'].errors">
+        <span *ngIf="userForm.controls['role'].errors['required']">
+            {{ "RequiredField" | translate }}
+        </span>
+    </div>
 
-        <div>
-            <label for="email">Email</label>
-            <input id="email" formControlName="email" type="text" />
-            <div *ngIf="submitted && addForm.controls['email'].errors">
-                <span *ngIf="addForm.controls['email'].errors['required']">Email is required.</span>
-                <span *ngIf="addForm.controls['email'].errors['email']">Invalid email format.</span>
-            </div>
-        </div>
-        <button mat-raised-button type="submit" [disabled]="!passwordsMatch">Add</button>
-    </form>
-</div>
+    <label for="email">{{ "email" | translate }}</label>
+    <input type="email" formControlName="email" pInputText class="input-field" />
+    <div class="error-message" *ngIf="submitted && userForm.controls['email'].errors">
+        <span *ngIf="userForm.controls['email'].errors['required']">
+            {{ "RequiredField" | translate }}
+        </span>
+        <span *ngIf="userForm.controls['email'].errors['email']">
+            {{ "InvalidEmailError" | translate }}
+        </span>
+    </div>
+
+    <label for="password">{{ "PasswordInputLabel" | translate }}</label>
+    <input type="password" formControlName="password" pInputText class="input-field" />
+    <div class="error-message" *ngIf="submitted && userForm.controls['password'].errors">
+        <span *ngIf="userForm.controls['password'].errors['required']">
+            {{ "RequiredField" | translate }}
+        </span>
+        <span *ngIf="userForm.controls['password'].errors['minlength']">
+            {{ "PasswordTooShort" | translate }}
+        </span>
+    </div>
+
+    <label for="confirmPassword">{{ "PasswordAuthentication" | translate }}</label>
+    <input type="password" formControlName="confirmPassword" pInputText class="input-field" />
+    <!-- <div
+    class="error-message"
+    *ngIf="submitted && userForm.errors?.passwordMismatch"
+  > 
+    <span>{{ "PasswordsDoNotMatch" | translate }}</span>
+  </div> -->
+
+
+    <button type="submit" class="submit">{{ "Approve" | translate }}</button>
+</form>
