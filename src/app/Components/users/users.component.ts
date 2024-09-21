@@ -20,6 +20,7 @@ import { SignUpComponent } from '@app/Components/sign-up/sign-up.component';
 import { Router } from '@angular/router';
 import { AuthService } from '@app/Services/auth.service';
 import { LanguageService } from '@app/Services/language.service';
+import { AddUserComponent } from '../add-user/add-user.component';
 
 @Component({
   selector: 'app-users',
@@ -96,9 +97,9 @@ export class UsersComponent implements OnInit {
   }
 
   addUser() {
-    // this.componentType = SignUpComponent;
-    // this.popUpAddOrEdit();
-    this.router.navigate(['/sign-up']);
+    this.componentType = AddUserComponent;
+    this.popUpAddOrEdit();
+    // this.router.navigate(['/sign-up']);
   }
 
   deleteUser(user: User) {

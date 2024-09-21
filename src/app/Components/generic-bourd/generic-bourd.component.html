@@ -155,6 +155,10 @@
                   <button pButton type="button" class="p-button-info" icon="pi pi-external-link"
                     *ngIf="getTypeOfCol(col, rowIndex) == 'documentation'" (click)="onPropil(rowData)"></button>
                 </div>
+                <div *ngIf="replaceToCustomer.observers.length > 0">
+                  <button pButton type="button" class="p-button-info" icon="pi pi-arrow-right-arrow-left"
+                    *ngIf="getTypeOfCol(col, rowIndex) == 'replaceToCustomer'" (click)="onReplaceToCustomer(rowData)"[pTooltip]="'replaceToCustomerToolLip' | translate"></button>
+                </div>
               </div>
             </div>
           </div>

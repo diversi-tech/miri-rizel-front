@@ -22,8 +22,8 @@ export class UserService {
   // private headers = new HttpHeaders({
   //   Authorization: `Bearer ${this.getToken()}`,
   // });
- 
- 
+
+
   //אין פונקציה כזו בקונטרלר!!
   // editUser(email: any): Observable<any> {
   //   return this.http.get(`${this.apiUrl}?email=${email}`);
@@ -34,70 +34,70 @@ export class UserService {
   // }
 
   login(email: string, password: string): Observable<any> {
-    
-    return this.http
-    .get<any>(`${this.apiUrl}Login?email=${email}&password=${password}`)
-    .pipe(
-      // tap((user) => {
-      //   localStorage.setItem('user', JSON.stringify(user));
-      // }),
-      // tap((token) => {
-      //   localStorage.setItem('token', JSON.stringify(token));
 
-      //  console.log(token)
-      // })
-      tap((response) => {
-        const token = response.token;
-        const user = {
-          userId: response.user.userId,
-          firstName: response.user.firstName,
-          lastName: response.user.lastName,
-          email: response.user.email,
-          role: response.user.role,
-        };
-        // console.log("user",user);
-        
-        // localStorage.setItem('user', JSON.stringify(user));
-        localStorage.setItem('token', token);
-        // const user2 = response.user;
-        const encryptedRole = CryptoJS.AES.encrypt(
-          user.role.id.toString(),
-          'encryptionKey'
-        ).toString();
-        localStorage.setItem('authData', encryptedRole);
-      })
-    );
+    return this.http
+      .get<any>(`${this.apiUrl}Login?email=${email}&password=${password}`)
+      .pipe(
+        // tap((user) => {
+        //   localStorage.setItem('user', JSON.stringify(user));
+        // }),
+        // tap((token) => {
+        //   localStorage.setItem('token', JSON.stringify(token));
+
+        //  console.log(token)
+        // })
+        tap((response) => {
+          const token = response.token;
+          const user = {
+            userId: response.user.userId,
+            firstName: response.user.firstName,
+            lastName: response.user.lastName,
+            email: response.user.email,
+            role: response.user.role,
+          };
+          // console.log("user",user);
+
+          // localStorage.setItem('user', JSON.stringify(user));
+          localStorage.setItem('token', token);
+          // const user2 = response.user;
+          const encryptedRole = CryptoJS.AES.encrypt(
+            user.role.id.toString(),
+            'encryptionKey'
+          ).toString();
+          localStorage.setItem('authData', encryptedRole);
+        })
+      );
   }
 
   loginGoogle(email: string): Observable<any> {
     return this.http
-    .get<any>(`${this.apiUrl}LoginGoogle?email=${email}`)
-    .pipe(
-      // tap((user) => {
-      //   localStorage.setItem('user', JSON.stringify(user));
-      // }),
-      // tap((token) => {
-      //   localStorage.setItem('token', JSON.stringify(token));
-      //  console.log(token)
-      // })
-      tap((response) => {
-        const token = response.token;
-        const user = {
-          userId: response.user.userId,
-          firstName: response.user.firstName,
-          lastName: response.user.lastName,
-          email: response.user.email,
-          role: response.user.role,
-        };
-        // localStorage.setItem('user', JSON.stringify(user));
-        localStorage.setItem('token', token);
-        const encryptedRole = CryptoJS.AES.encrypt(
-          user.role.id.toString(),
-          'encryptionKey'
-        ).toString();
-        localStorage.setItem('authData', encryptedRole);
-      })
-    );
+      .get<any>(`${this.apiUrl}LoginGoogle?email=${email}`)
+      .pipe(
+        // tap((user) => {
+        //   localStorage.setItem('user', JSON.stringify(user));
+        // }),
+        // tap((token) => {
+        //   localStorage.setItem('token', JSON.stringify(token));
+        //  console.log(token)
+        // })
+        tap((response) => {
+          const token = response.token;
+          const user = {
+            userId: response.user.userId,
+            firstName: response.user.firstName,
+            lastName: response.user.lastName,
+            email: response.user.email,
+            role: response.user.role,
+          };
+          // localStorage.setItem('user', JSON.stringify(user));
+          localStorage.setItem('token', token);
+          const encryptedRole = CryptoJS.AES.encrypt(
+            user.role.id.toString(),
+            'encryptionKey'
+          ).toString();
+          localStorage.setItem('authData', encryptedRole);
+        })
+      );
   }
 
   getAll(): Observable<any> {
@@ -128,12 +128,14 @@ export class UserService {
   }
 
   getUserById(id: Number) {
-    
+
     return this.http.get<User>(`${this.apiUrl}GetById?id=${id}`);
   }
   addUser(userDetails: any): Observable<any> {
+    debugger
     const url = `${this.apiUrl}`;
-    userDetails.role = { id: 1, description: 'Customer' };
+    if (!userDetails.role)
+      userDetails.role = { id: 1, description: 'Customer' };
     return this.http.post(url, userDetails);
   }
 

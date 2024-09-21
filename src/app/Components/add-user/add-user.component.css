@@ -1,44 +1,70 @@
 
-   .add-container {
-    max-width: 400px;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background: #f9f9f9;
-  }
-  
-  .add-container form div {
-    margin-bottom: 15px;
-  }
-  
-  .add-container label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .add-container input {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-  }
-  
-  .add-container button {
-    width: 100%;
-    padding: 10px;
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .add-container button:hover {
-    background: #0056b3;
-  }
-  
-  .add-container div span {
-    color: red;
-    font-size: 12px;
-  }
-  
+
+.addUser {
+  font-size: 18px;
+  max-width: 600px;
+  margin: auto;
+  padding: 15px;
+}
+.addUser label {
+  font-weight: bold;
+  color: #505050;
+}
+h1{
+  text-align: center;
+  color: #000000;
+}
+.line {
+  background-color: #5CFFAC;
+  max-width: 200px;
+  height: 10px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+
+.input-field {
+  width: 400px;
+}
+.input-field:hover {
+  border-color: #5CFFAC !important;
+}
+
+::ng-deep .select-field .p-inputtext {
+  width: 350px;
+}
+
+::ng-deep .select-field .p-inputtext:hover {
+  border-color: #5CFFAC !important;
+}
+
+::ng-deep .input-field .p-inputtext {
+  width: 600px;
+}
+
+::ng-deep .input-field .p-inputtext:hover {
+  border-color: #5CFFAC !important;
+}
+
+
+.submit {
+  font-size: 20px;
+  background-color: #5CFFAC;
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 400px;
+  margin-top: 10px;
+  align-items: center;
+}
+
+.error-message {
+  color: #ff0000;
+  font-size: 15px;
+  margin-top: 5px;
+}
+
+.submit:hover {
+  background-color: #81f9c5;
+}

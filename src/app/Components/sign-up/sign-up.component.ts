@@ -13,7 +13,7 @@ import { GoogleComponent } from '@app/Components/google/google.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgIf } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { DropdownModule } from 'primeng/dropdown';
 import { DialogComponent } from '@app/Components/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -24,6 +24,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { EmailService } from '@app/Services/sendEmailSignUp';
 import { KeyboardService } from '@app/Services/keyboard.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-sign-up',
@@ -64,6 +65,7 @@ export class SignUpComponent {
     private Keyboardservice: KeyboardService,
     private userService: UserService,
     private spiner: NgxSpinnerService,
+    private translate: TranslateService,
   ) {
     this.signUpForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -114,59 +116,105 @@ export class SignUpComponent {
       return;
     }
     this.spiner.show();
-    this.userService.addUser(this.signUpForm.value).subscribe(
-      () => {
-        this.emailService.sendEmailSignUp(this.signUpForm.value).subscribe(() => {
-          
-          this.userService.login(this.signUpForm.value.email,this.signUpForm.value.password).subscribe( 
-            (user: any) => {
-            this.spiner.hide();
-            this.router.navigate(['/redirect']);
-
-           } )
-
-
-        },
-          (error) => {
-            this.spiner.hide();
-            this.dialog.open(DialogComponent, {
-              data: {
-                title: 'שגיאה',
-                context: 'לא קיים חשבון שזאת כתובת המייל שלו',
-                buttonText: 'סגור',
-              },
-            });
-           
-          }
-        );
-
+    this.userService.addUser(this.signUpForm.value).subscribe(() => {
+      this.spiner.hide();
+      this.emailService.sendEmailSignUp(this.signUpForm.value).toPromise()
+      this.userService.login(this.signUpForm.value.email, this.signUpForm.value.password).subscribe((res) => {
+        this.router.navigate(['/redirect']).then(() => {
+          setTimeout(() => {
+            window.location.reload();
+          }, 100);
+        });
       },
+        (err) => {
+          console.log(err);
+        })
+    },
       (error) => {
-        this.spiner.hide();
-        // console.log(error);
+        this.spiner.hide()
         if (error.status == 409)
-          this.dialog.open(DialogComponent, {
-            data: {
-              title: 'שגיאה',
-              context: 'כתובת מייל כבר קיימת',
-              buttonText: 'סגור',
-            },
-          }
-          );
-        else{
-          this.spiner.hide();
-       
-          this.dialog.open(DialogComponent, {
-            data: {
-              title: 'שגיאה',
-              context: 'אין אפשרות להרשם כעת , נסה שוב במועד מאוחר יותר',
-              buttonText: 'סגור',
-            },
-          });
-        }
-      }
-    );
+          this.translate.get(['Close', 'EmailExist']).subscribe(translations => {
+            Swal.fire({
+              text: translations['EmailExist'],
+              icon: "error",
+              showCancelButton: false,
+              showCloseButton: true,
+              confirmButtonColor: "#d33",
+              confirmButtonText: translations['Close']
+            })
+          })
+        else
+          this.translate.get(['Close', 'ProblemMessage']).subscribe(translations => {
+            Swal.fire({
+              text: translations['ProblemMessage'],
+              icon: "error",
+              showCancelButton: false,
+              showCloseButton: true,
+              confirmButtonColor: "#d33",
+              confirmButtonText: translations['Close']
+            })
+          })
+      })
   }
+  // async toEnter() {
+  //   this.submitted = true;
+  //   if (this.signUpForm.invalid) {
+  //     return;
+  //   }
+  //   this.spiner.show();
+  //   this.userService.addUser(this.signUpForm.value).subscribe(
+  //     () => {
+  //       this.emailService.sendEmailSignUp(this.signUpForm.value).subscribe(() => {
+
+  //         this.userService.login(this.signUpForm.value.email, this.signUpForm.value.password).subscribe(
+  //           (user: any) => {
+  //             this.spiner.hide();
+  //             this.router.navigate(['/redirect']);
+
+  //           })
+
+
+  //       },
+  //         (error) => {
+  //           this.spiner.hide();
+  //           this.dialog.open(DialogComponent, {
+  //             data: {
+  //               title: 'שגיאה',
+  //               context: 'לא קיים חשבון שזאת כתובת המייל שלו',
+  //               buttonText: 'סגור',
+  //             },
+  //           });
+
+  //         }
+  //       );
+
+  //     },
+  //     (error) => {
+  //       this.spiner.hide();
+  //       // console.log(error);
+  //       if (error.status == 409)
+  //         this.dialog.open(DialogComponent, {
+  //           data: {
+  //             title: 'שגיאה',
+  //             context: 'כתובת מייל כבר קיימת',
+  //             buttonText: 'סגור',
+  //           },
+  //         }
+  //         );
+  //       else {
+  //         this.spiner.hide();
+
+  //         this.dialog.open(DialogComponent, {
+  //           data: {
+  //             title: 'שגיאה',
+  //             context: 'אין אפשרות להרשם כעת , נסה שוב במועד מאוחר יותר',
+  //             buttonText: 'סגור',
+  //           },
+  //         });
+  //       }
+  //     }
+  //   );
+  // }
 
   @ViewChild('emailInput') emailInput!: ElementRef;
   @ViewChild('passwordInput') passwordInput!: ElementRef;
