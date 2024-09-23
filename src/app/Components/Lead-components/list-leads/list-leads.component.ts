@@ -174,67 +174,43 @@ export class ListLeadsComponent {
     }, 1000); // Log every second
   }
 
-  r: RelatedToProject={ id: 1, description: "Customer" };
-  communicationNew: Communication ={ communicationId: 0,type: '',date: new Date(),
-    details: '',relatedTo: new Object(),relatedId: 0,name: ''};
+  r: RelatedToProject = { id: 1, description: "Customer" };
+  communicationNew: Communication = {
+    communicationId: 0, type: '', date: new Date(),
+    details: '', relatedTo: new Object(), relatedId: 0, name: ''
+  };
+
   communicationaaaa2: Communication[] = []
   cUSTOMER: Customer[] = []
   leng2: number = 0
   max: number = 0
+  communicationList: Communication[] = []
+
   replaceStateToCustomer(lead: Lead) {
-    this.CustomersServiceS.GetAllCustomers().subscribe((res:any) => {this.cUSTOMER=res,
-      this.max=this.cUSTOMER[this.cUSTOMER.length-1].customerId;
-    this.communicationS.getbyIdLCommunication(lead.leadId).subscribe(res => {
-      this.communicationaaaa2 = res
-      console.log(this.communicationaaaa2.length);
-      if (this.communicationaaaa2.length != 0) {
-        this.leng = this.communicationaaaa2.length;
-        this.communicationaaaa2.forEach(e => {
-          if (e.communicationId != null) {
-            this.communicationNew.relatedTo =  this.r;
-            this.communicationNew.date = e.date
-            this.communicationNew.type = e.type
-            this.communicationNew.communicationId = 0
-            this.communicationNew.name = e.name
-            this.communicationNew.details = e.details
-            this.communicationNew.relatedId = this.max+1;
-            console.log(this.communicationNew);
-            this.communicationS.AddNewCommunication(this.communicationNew).subscribe((response: Communication) => {
-              if(e.communicationId!=null) this.communicationS.deleteCommunication(e.communicationId).subscribe(data =>
-                this.leadService.replaceToCustomer(lead).subscribe(customer => {
-                  this.refreshData();
-                  this.translate.get(["replaceLeadSuccses", "GoToTheCustomerPage", 'Approve']).subscribe(translations =>
-                    Swal.fire({
-                      icon: "success",
-                      title: translations['replaceLeadSuccses'],
-                      //text: translations['AddTaskToGoogle'],
-                      showDenyButton: true,
-                      showCancelButton: false,
-                      confirmButtonText: translations['GoToTheCustomerPage'],
-                      denyButtonText: translations['Approve'],
-            
-                    }).then((result) => {
-                      if (result.isConfirmed) {
-                        // this.scheduleMeeting(response.taskId)
-                        this.router.navigate(['/customer'])
-                        // } else if (result.isDenied) {
-                        //   Swal.fire(translations['replaceLeadSuccses'], "", "info");
-                      }
-                      else {
-                        this.refreshData();
-                      }
-                    }))
-                }
-                )
-              )
-          });
+    console.log("replace2 Function:)");
+    var relatedId: number;
+    // המרת ליד ללקוח
+    this.leadService.replaceToCustomer(lead).subscribe((res: any) => {
+      console.log(res);
+      // שליפה של כל התיעודים של הליד
+      this.communicationS.getbyIdLCommunication(lead.leadId).subscribe((list => {
+        if (list) {
+          console.log("list", list);
+          this.communicationList = list
+          // מזהה לקוח החדש שנוצר
+          relatedId = res.Id
+          // העברה של התיעוד ללקוח
+          if (this.communicationList.length > 0) {
+            this.communicationList.forEach((communication) => {
+              console.log(communication);
+              this.communicationS.updateCommunication(communication.communicationId!, this.r.id, relatedId).subscribe();
+            });
           }
-        })
-      }
-      else{
-    this.leadService.replaceToCustomer(lead).subscribe(customer => {
+        }
+      }))
       this.refreshData();
-      this.translate.get(["replaceLeadSuccses", "GoToTheCustomerPage", 'Approve']).subscribe(translations =>
+
+      this.translate.get(["replaceLeadSuccses", "GoToTheCustomerPage", 'Approve']).subscribe((translations) => {
         Swal.fire({
           icon: "success",
           title: translations['replaceLeadSuccses'],
@@ -243,24 +219,136 @@ export class ListLeadsComponent {
           showCancelButton: false,
           confirmButtonText: translations['GoToTheCustomerPage'],
           denyButtonText: translations['Approve'],
-
         }).then((result) => {
           if (result.isConfirmed) {
-            // this.scheduleMeeting(response.taskId)
             this.router.navigate(['/customer'])
-            // } else if (result.isDenied) {
-            //   Swal.fire(translations['replaceLeadSuccses'], "", "info");
           }
           else {
             this.refreshData();
           }
-        }))
-    }
-    )
-  }
-    })
-  })
+        })
+      })
 
+    },
+      (err) => {
+        console.log(err);
+      })
   }
+
+  // replaceStateToCustomer(lead: Lead) {
+  //   console.log("replace Function:)");
+  //   this.CustomersServiceS.GetAllCustomers().subscribe((res: any) => {
+  //     this.cUSTOMER = res
+  //     console.log("this.cUSTOMER", this.cUSTOMER);
+  //     if (this.cUSTOMER.length != 0)
+  //       this.max = this.cUSTOMER[this.cUSTOMER.length - 1].customerId;
+  //     else this.max = 0
+  //     console.log("max", this.max);
+  //     this.communicationS.getbyIdLCommunication(lead.leadId).subscribe(res => {
+  //       this.communicationaaaa2 = res
+  //       console.log(this.communicationaaaa2.length);
+  //       if (this.communicationaaaa2.length != 0) {
+  //         this.leng = this.communicationaaaa2.length;
+  //         this.communicationaaaa2.forEach(e => {
+  //           if (e.communicationId != null) {
+  //             this.communicationNew.relatedTo = this.r;
+  //             this.communicationNew.date = e.date
+  //             this.communicationNew.type = e.type
+  //             this.communicationNew.communicationId = 0
+  //             this.communicationNew.name = e.name
+  //             this.communicationNew.details = e.details
+  //             this.communicationNew.relatedId = this.max + 1;
+  //             console.log(this.communicationNew);
+  //             console.log("i am here!!!");
+
+  //             this.leadService.replaceToCustomer(lead).subscribe(customer => {
+  //               console.log("customer", customer);
+  //               this.refreshData();
+  //               this.translate.get(["replaceLeadSuccses", "GoToTheCustomerPage", 'Approve']).subscribe(translations =>
+  //                 Swal.fire({
+  //                   icon: "success",
+  //                   title: translations['replaceLeadSuccses'],
+  //                   //text: translations['AddTaskToGoogle'],
+  //                   showDenyButton: true,
+  //                   showCancelButton: false,
+  //                   confirmButtonText: translations['GoToTheCustomerPage'],
+  //                   denyButtonText: translations['Approve'],
+
+  //                 }).then((result) => {
+  //                   if (result.isConfirmed) {
+  //                     // this.scheduleMeeting(response.taskId)
+  //                     this.router.navigate(['/customer'])
+  //                     // } else if (result.isDenied) {
+  //                     //   Swal.fire(translations['replaceLeadSuccses'], "", "info");
+  //                   }
+  //                   else {
+  //                     this.refreshData();
+  //                   }
+  //                 }))
+  //             })
+
+  //             this.communicationS.AddNewCommunication(this.communicationNew).subscribe((response: Communication) => {
+  //               console.log("response", response);
+
+  //               if (e.communicationId != null) this.communicationS.deleteCommunication(e.communicationId).subscribe(data =>
+  //                 this.leadService.replaceToCustomer(lead).subscribe(customer => {
+  //                   this.refreshData();
+  //                   this.translate.get(["replaceLeadSuccses", "GoToTheCustomerPage", 'Approve']).subscribe(translations =>
+  //                     Swal.fire({
+  //                       icon: "success",
+  //                       title: translations['replaceLeadSuccses'],
+  //                       //text: translations['AddTaskToGoogle'],
+  //                       showDenyButton: true,
+  //                       showCancelButton: false,
+  //                       confirmButtonText: translations['GoToTheCustomerPage'],
+  //                       denyButtonText: translations['Approve'],
+
+  //                     }).then((result) => {
+  //                       if (result.isConfirmed) {
+  //                         // this.scheduleMeeting(response.taskId)
+  //                         this.router.navigate(['/customer'])
+  //                         // } else if (result.isDenied) {
+  //                         //   Swal.fire(translations['replaceLeadSuccses'], "", "info");
+  //                       }
+  //                       else {
+  //                         this.refreshData();
+  //                       }
+  //                     }))
+  //                 }
+  //                 )
+  //               )
+  //             });
+  //           }
+  //         })
+  //       }
+  //       // במקרה שאין לו תיעוד
+  //       else {
+  //         this.leadService.replaceToCustomer(lead).subscribe(customer => {
+  //           this.refreshData();
+  //           this.translate.get(["replaceLeadSuccses", "GoToTheCustomerPage", 'Approve']).subscribe(translations =>
+  //             Swal.fire({
+  //               icon: "success",
+  //               title: translations['replaceLeadSuccses'],
+  //               //text: translations['AddTaskToGoogle'],
+  //               showDenyButton: true,
+  //               showCancelButton: false,
+  //               confirmButtonText: translations['GoToTheCustomerPage'],
+  //               denyButtonText: translations['Approve'],
+
+  //             }).then((result) => {
+  //               if (result.isConfirmed) {
+  //                 this.router.navigate(['/customer'])
+  //               }
+  //               else {
+  //                 this.refreshData();
+  //               }
+  //             }))
+  //         }
+  //         )
+  //       }
+  //     })
+  //   })
+
+  // }
 
 }

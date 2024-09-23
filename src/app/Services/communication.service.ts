@@ -10,28 +10,41 @@ import { environment } from 'src/enviroments/environment';
 })
 export class CommunicationService {
 
-  constructor(private http:HttpClient) { }
-  
-  apiUrl=`${environment.apiUrl}Communication`
+  constructor(private http: HttpClient) { }
 
-  AddNewCommunication(requestBody:Communication):Observable<Communication>{
-    requestBody.name= ""; 
-    return this.http.post<Communication>(`${this.apiUrl}`,requestBody);
+  apiUrl = `${environment.apiUrl}Communication`
+
+  AddNewCommunication(requestBody: Communication): Observable<Communication> {
+    requestBody.name = "";
+    return this.http.post<Communication>(`${this.apiUrl}`, requestBody);
   }
 
-  readAll():Observable<Communication[]>{
+  readAll(): Observable<Communication[]> {
     return this.http.get<Communication[]>(`${this.apiUrl}`);
-  } 
+  }
 
-  deleteCommunication(communicationId:number):Observable<boolean>{
-    return this.http.delete<boolean>(`${this.apiUrl}?id=${communicationId}` );
-  } 
-  
-  getbyIdLCommunication(communicationId:number){
-    return this.http.get<Communication[]>(`${this.apiUrl}/GetByIdL?id=${communicationId}` );
-  } 
+  deleteCommunication(communicationId: number): Observable<boolean> {
+    console.log("deleteCommunicationService");
+    return this.http.delete<boolean>(`${this.apiUrl}?id=${communicationId}`);
+  }
 
-  getbyIdCCommunication(communicationId:number){
-    return this.http.get<Communication[]>(`${this.apiUrl}/GetByIdC?id=${communicationId}` );
-  } 
+  getbyIdLCommunication(communicationId: number) {
+    return this.http.get<Communication[]>(`${this.apiUrl}/GetByIdL?id=${communicationId}`);
+  }
+
+  getbyIdCCommunication(communicationId: number) {
+    return this.http.get<Communication[]>(`${this.apiUrl}/GetByIdC?id=${communicationId}`);
+  }
+
+  updateCommunication(communicationId: number, relatedId: any, relatedTo: any) {
+    console.log("updateService");
+
+    const body = {
+      communicationId: communicationId,
+      relatedId: relatedId,
+      relatedTo: relatedTo
+    };
+
+    return this.http.post<any>(`${this.apiUrl}/UpdateCommunication`, body);
+  }
 }
