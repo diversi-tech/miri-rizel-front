@@ -97,14 +97,12 @@ export class LoginComponent implements OnInit {
     const password = this.pass.value;
     this.userService.login(email, password).subscribe(
       (user: any) => {
-        this.spinner.hide();
-      
         this.router.navigate(['/redirect']).then(() => {
           setTimeout(() => {
             window.location.reload();
           }, 100); 
         });
-
+        this.spinner.hide();
       },
       (error) => {
         if (error.status == 404) {
@@ -147,9 +145,7 @@ export class LoginComponent implements OnInit {
             }))
         }
       }
-
     )
-    this.spinner.hide();
   }
   resetPassword() {
     if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email.value)) {
