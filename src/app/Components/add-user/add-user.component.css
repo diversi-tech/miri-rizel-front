@@ -1,21 +1,22 @@
-
-
 .addUser {
   font-size: 18px;
   max-width: 600px;
   margin: auto;
   padding: 15px;
 }
+
 .addUser label {
   font-weight: bold;
   color: #505050;
 }
-h1{
+
+h1 {
   text-align: center;
   color: #000000;
 }
+
 .line {
-  background-color: #5CFFAC;
+  background-color: #49c1ba;
   max-width: 200px;
   height: 10px;
   margin: 0 auto;
@@ -25,8 +26,9 @@ h1{
 .input-field {
   width: 400px;
 }
+
 .input-field:hover {
-  border-color: #5CFFAC !important;
+  border-color: #49c1ba !important;
 }
 
 ::ng-deep .select-field .p-inputtext {
@@ -34,7 +36,7 @@ h1{
 }
 
 ::ng-deep .select-field .p-inputtext:hover {
-  border-color: #5CFFAC !important;
+  border-color: #49c1ba !important;
 }
 
 ::ng-deep .input-field .p-inputtext {
@@ -42,13 +44,13 @@ h1{
 }
 
 ::ng-deep .input-field .p-inputtext:hover {
-  border-color: #5CFFAC !important;
+  border-color: #49c1ba !important;
 }
 
 
 .submit {
   font-size: 20px;
-  background-color: #5CFFAC;
+  background-color: #49c1ba;
   color: #000;
   border: none;
   padding: 10px 20px;
@@ -66,5 +68,6 @@ h1{
 }
 
 .submit:hover {
-  background-color: #81f9c5;
+  /* background-color: #63fff7; */
+  background-color: rgba(26, 128, 123, 0.852);
 }

@@ -25,20 +25,26 @@
 .chat-message {
   display: flex;
   flex-direction: column;
-  height: 200px; /* גובה קבוע */
-  width: 400px; /* רוחב קבוע */
+  height: 200px;
+  /* גובה קבוע */
+  width: 400px;
+  /* רוחב קבוע */
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  overflow: hidden; /* להסתיר תוכן שחורג */
+  overflow: hidden;
+  /* להסתיר תוכן שחורג */
 }
 
 .response-message {
-  height: 150px; /* גובה קבוע */
-  width: 100%; /* רוחב אחיד עם ההורה */
+  height: 150px;
+  /* גובה קבוע */
+  width: 100%;
+  /* רוחב אחיד עם ההורה */
   background-color: #d9f2e6;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  overflow-y: auto; /* גלילה פנימית אם התוכן חורג */
+  overflow-y: auto;
+  /* גלילה פנימית אם התוכן חורג */
   margin-bottom: 10px;
   padding: 10px;
   border-radius: 5px;
@@ -57,7 +63,7 @@
 
 .message-date {
   font-size: 12px;
-  color: #5CFFAC;
+  color: #49c1ba;
 }
 
 .bodyOfCommunication {
@@ -66,9 +72,10 @@
 
 
 
-.text-base-color{
-  color: #5CFFAC;
+.text-base-color {
+  color: #49c1ba;
 }
+
 /* #con{
   direction: rtl;
 } */
@@ -76,12 +83,12 @@
 .custom-button {
   background-color: white !important;
   border-bottom: 2px solid transparent !important;
-  margin-right: 1.5rem !important; 
+  margin-right: 1.5rem !important;
   transition: border-color 0.3s ease !important;
 }
 
 .custom-button:hover {
-  border-color: #5CFFAC !important;
+  border-color: #49c1ba !important;
 }
 
 .response-input {
@@ -96,48 +103,53 @@
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
-  background-color: #5CFFAC;
+  background-color: #49c1ba;
   color: white;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .send-button:hover {
-  background-color: #5CFFAC;
+  background-color: #49c1ba;
 }
 
 .delete-icon {
-  float: right;  /* Position to the right */
-  cursor: pointer;  /* Change cursor on hover */
+  float: right;
+  /* Position to the right */
+  cursor: pointer;
+  /* Change cursor on hover */
   text-decoration: none;
+
   /* Style for visited link */
   &.visited {
-      text-decoration: none; /* Remove underline */
+    text-decoration: none;
+    /* Remove underline */
   }
 
   /* Style for normal link */
   &.unvisited {
-      text-decoration: none; /* Remove underline */
+    text-decoration: none;
+    /* Remove underline */
   }
 }
 
-.message-date{
+.message-date {
   font-size: 12px;
-  color: #5CFFAC;
+  color: #49c1ba;
 }
 
-.bodyOfCommunication{
+.bodyOfCommunication {
   font-size: 20px;
 }
 
 .p-button-danger {
-  background-color:transparent; 
+  background-color: transparent;
   border: none;
   color: #0c0101;
 }
 
 .p-button-danger:hover {
-  background-color:rgb(229, 226, 226); 
+  background-color: rgb(229, 226, 226);
 }
 
 

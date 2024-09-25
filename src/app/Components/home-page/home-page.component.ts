@@ -42,7 +42,7 @@ import { NewComponent } from '../new/new.component';
 export class HomePageComponent implements OnInit, OnDestroy {
 
   constructor(private router: Router, private _userService: UserService, private authService: AuthService, private TaskService: TaskService, private _leadService: LeadService, private _customerService: CustomersService, private resolver: ComponentFactoryResolver,
-    private ProjectService: ProjectService, private translate: TranslateService,  private cdr: ChangeDetectorRef
+    private ProjectService: ProjectService, private translate: TranslateService, private cdr: ChangeDetectorRef
   ) { }
   isAdmin: boolean = false;
   user: User | any
@@ -77,7 +77,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.TaskService.getAll().subscribe(
       (data: any) => {
         this.tasks = data;
-        this.cdr.markForCheck(); 
+        this.cdr.markForCheck();
       },
       (error: any) => {
         // this.translate.get(['Close', 'errorServer']).subscribe(translations => {
@@ -95,7 +95,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this._leadService.getAllLeads().subscribe(
       (data: Lead[]) => {
         this.leads = data;
-        this.cdr.markForCheck(); 
+        this.cdr.markForCheck();
       },
       (error: any) => {
         // this.translate.get(['Close', 'errorServer']).subscribe(translations => {
@@ -117,27 +117,27 @@ export class HomePageComponent implements OnInit, OnDestroy {
       this.user = this.users.find(u => u.userId == idtoken)
       if (!this.user)
         this.user.firstName = "משתמש"
-      this.cdr.markForCheck(); 
+      this.cdr.markForCheck();
     },
-    (error: any) => {
-      // this.translate.get(['Close', 'errorServer']).subscribe(translations => {
-      //   Swal.fire({
-      //     text: translations[ 'errorServer'],
-      //     icon: "error",
-      //     showCancelButton: false,
-      //     showCloseButton: true,
-      //     confirmButtonColor: "#d33",
-      //     confirmButtonText: translations['Close']
-      //   })
-      // })
-    }
+      (error: any) => {
+        // this.translate.get(['Close', 'errorServer']).subscribe(translations => {
+        //   Swal.fire({
+        //     text: translations[ 'errorServer'],
+        //     icon: "error",
+        //     showCancelButton: false,
+        //     showCloseButton: true,
+        //     confirmButtonColor: "#d33",
+        //     confirmButtonText: translations['Close']
+        //   })
+        // })
+      }
     )
     this._customerService.GetAllCustomers().subscribe(
       (data: Customer[]) => {
         this.customers = data;
         this.calculateStats();
         this.initChart();
-        this.cdr.markForCheck(); 
+        this.cdr.markForCheck();
       },
       (error: any) => {
         // this.translate.get(['Close', 'errorServer']).subscribe(translations => {
@@ -156,7 +156,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.ProjectService.getAll().subscribe(
       (p: Array<Project>) => {
         this.projects = p.slice(0, 7);
-        this.cdr.markForCheck(); 
+        this.cdr.markForCheck();
       },
       (error) => {
         this.loading = true;
@@ -164,7 +164,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.TaskService.getAllStatus().subscribe(
       (data) => {
         this.statuses = data
-        this.cdr.markForCheck(); 
+        this.cdr.markForCheck();
       },
       (error: any) => {
         // this.translate.get(['Close', 'errorServer']).subscribe(translations => {
@@ -182,7 +182,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.TaskService.getAllPriorities().subscribe(
       (data) => {
         this.priorities = data
-        this.cdr.markForCheck(); 
+        this.cdr.markForCheck();
 
       },
       (error: any) => {
@@ -199,7 +199,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
       }
     );
     this.loading = false;
-    this.cdr.markForCheck(); 
+    this.cdr.markForCheck();
   }
 
   calculateStats() {
@@ -250,7 +250,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
       stroke: {
         width: 2,
       },
-      colors: ['#5CFFAC', '#A0A0A0', '#7F7F7F'],
+      colors: ['#49c1ba', '#A0A0A0', '#7F7F7F'],
       tooltip: {
         followCursor: true,
         theme: 'dark',
@@ -317,36 +317,39 @@ export class HomePageComponent implements OnInit, OnDestroy {
       if (this.genericBourd) {
         this.genericBourd.PopTable(taskFilter, loading, col$types, objData, objFields, positionD, "1000px");
       } else {
-          this.translate.get(['Close', 'genericBourd is not initialized']).subscribe(translations => {
-            Swal.fire({
-              text: translations[ 'genericBourd is not initialized'],
-              icon: "error",
-              showCancelButton: false,
-              showCloseButton: true,
-              confirmButtonColor: "#d33",
-              confirmButtonText: translations['Close']
-            })
+        this.translate.get(['Close', 'genericBourd is not initialized']).subscribe(translations => {
+          Swal.fire({
+            text: translations['genericBourd is not initialized'],
+            icon: "error",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#d33",
+            confirmButtonText: translations['Close']
           })
+        })
       }
     } else {
       Swal.fire({
         text: 'no tasks',
         showCancelButton: false,
         showCloseButton: true,
-        confirmButtonColor: "#5CFFAC",
+        confirmButtonColor: "#49c1ba",
         confirmButtonText: 'Close'
       });
     }
   }
   addLead() {
+    debugger
+    console.log("addLead");
     this.componentType = AddLeadComponent;
     this.popUpAddOrEdit("Add Lead");
   }
-  addCustomer(){
+  addCustomer() {
     this.componentType = AddCustomerComponent;
     this.popUpAddOrEdit("AddCustomerTitle");
-  }  
+  }
   addTask() {
+    debugger
     this.componentType = AddTaskComponent;
     this.popUpAddOrEdit("Add Task");
   }
@@ -354,9 +357,10 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.componentType = NewComponent;
     this.popUpAddOrEdit("");
   }
- 
+
 
   popUpAddOrEdit(title: string) {
+    debugger
     Swal.fire({
       html: '<div id="popupContainer"></div>',
       showConfirmButton: false,
@@ -364,7 +368,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
         const container = document.getElementById('popupContainer');
         if (container) {
           const factory = this.resolver.resolveComponentFactory(this.componentType);
-          
+
           const componentRef = this.popupContainer.createComponent(factory);
           componentRef.instance.dataRefreshed.subscribe(() => {
           })
@@ -377,7 +381,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   getAllTask(): Task[] {
     return this.tasks
   }
-  getTodoTasks(): Task[] { 
+  getTodoTasks(): Task[] {
     if (this.tasks)
       return this.tasks.filter(task => task.status?.description === "TO DO");
     return []
@@ -391,7 +395,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   getTodoTasksFromToday(): Task[] {
     const today = new Date().toDateString();
     return this.getTodoTasks().filter(task => {
-      if (task.createdDate) {        
+      if (task.createdDate) {
         return new Date(task.createdDate).toDateString() === today;
       }
       return false;

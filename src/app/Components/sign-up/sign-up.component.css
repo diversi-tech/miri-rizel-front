@@ -66,27 +66,27 @@ mat-form-field {
   }
 
   .mat-form-field-outline {
-    color: #5CFFAC;
+    color: #49c1ba;
   }
 
   .mat-form-field-underline {
-    background-color: #5CFFAC;
+    background-color: #49c1ba;
   }
 
   .mat-form-field-outline-thick {
-    color: #5CFFAC;
+    color: #49c1ba;
   }
 
   .mat-form-field-outline-start {
-    border-left-color: #5CFFAC;
+    border-left-color: #49c1ba;
   }
 
   .mat-form-field-outline-end {
-    border-right-color: #5CFFAC;
+    border-right-color: #49c1ba;
   }
 
   .mat-form-field-outline-gap {
-    border-top-color: #5CFFAC;
+    border-top-color: #49c1ba;
   }
 
   .mat-input-element {
@@ -95,7 +95,7 @@ mat-form-field {
   }
 
   .mat-form-field-ripple {
-    background-color: #5CFFAC !important;
+    background-color: #49c1ba !important;
   }
 }
 
@@ -103,14 +103,14 @@ mat-form-field {
   width: 100%;
   padding: 10px;
   border-radius: 0 20px 20px 0;
-  background-color: #5CFFAC;
+  background-color: #49c1ba;
   color: #fff;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: #4cd99b;
+    background-color: rgba(48, 175, 168, 0.852);
   }
 
   &:disabled {
@@ -122,14 +122,14 @@ mat-form-field {
 .forgot-password {
   text-align: center;
   cursor: pointer;
-  color: #5CFFAC;
+  color: #49c1ba;
 }
 
 .signup-text {
   text-align: center;
 
   a {
-    color: #5CFFAC;
+    color: #49c1ba;
     cursor: pointer;
     text-decoration: underline;
   }
@@ -154,5 +154,6 @@ app-google {
 }
 
 .signUp-inputs .card {
-  margin-bottom: 1rem; /* המרווח בין השדות */
+  margin-bottom: 1rem;
+  /* המרווח בין השדות */
 }

@@ -7,7 +7,7 @@
 }
 
 .line {
-  background-color: #5CFFAC;
+  background-color: #49c1ba;
   max-width: 200px;
   height: 10px;
   margin: 0 auto;
@@ -22,7 +22,7 @@
 .card label {
   font-weight: bold;
   color: #ffffff;
-   /* text-align: right;  */
+  /* text-align: right;  */
 }
 
 .card {
@@ -39,7 +39,7 @@
 
 button.submit-button {
   font-size: 20px;
-  background-color: #5cffac;
+  background-color: #49c1ba;
   color: #000;
   border: none;
   padding: 10px 20px;
@@ -49,29 +49,30 @@ button.submit-button {
   margin-top: 10px;
   align-items: center;
 }
+
 button.submit-button:hover {
-  background-color: #81f9c5;
+  background-color: rgba(26, 128, 123, 0.852);
 }
 
 .input-field {
   width: 400px;
 }
-.input-field:hover {
-  border-color: #5cffac !important;
-}
+
 
 ::ng-deep .input-field .p-inputtext {
   width: 600px;
 }
+
 ::ng-deep .input-field .p-inputtext:hover {
-  border-color: #5cffac !important;
+  border-color: #49c1ba !important;
 }
 
 ::ng-deep .select-field .p-inputtext {
   width: 350px;
 }
+
 ::ng-deep .select-field .p-inputtext:hover {
-  border-color: #5cffac !important;
+  border-color: #49c1ba !important;
 }
 
 ::ng-deep .p-autocomplete-dropdown {
@@ -79,6 +80,7 @@ button.submit-button:hover {
   border-color: #000000 !important;
   color: black !important;
 }
+
 ::ng-deep .p-autocomplete-dropdown:hover {
   background-color: #f0f0f0 !important;
 }
@@ -86,5 +88,3 @@ button.submit-button:hover {
 .div:where(.swal2-container) .swal2-html-container {
   padding-top: 0px !important;
 }
-
-

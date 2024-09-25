@@ -15,6 +15,7 @@
   margin-right: 20px;
   margin-top: 20px;
 }
+
 .form-container {
   display: flex;
   align-items: flex-start;
@@ -23,7 +24,7 @@
 
 .inputs {
   flex: 1;
-  
+
 }
 
 .file {
@@ -36,24 +37,26 @@
 }
 
 .submit {
-display: block;
-background-color: #5CFFAC;
-color: #000;
-border: none;
-padding: 10px 20px;
-border-radius: 8px;
-cursor: pointer;
-width: 190px;
+  display: block;
+  background-color: #49c1ba;
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 190px;
 }
+
 button.submit-button:hover {
-background-color: #81F9C5;
+  background-color: rgba(48, 175, 168, 0.852);
 }
-.document{
+
+.document {
   display: inline-block;
   font-size: 16px;
   font-weight: 600;
   color: #ffffff;
-  background-color: #5CFFAC;
+  background-color: #49c1ba;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -66,7 +69,7 @@ background-color: #81F9C5;
 }
 
 .document-file:hover {
-  background-color: #5CFFAC;
+  background-color: #49c1ba;
 }
 
 .addDocument {
@@ -94,7 +97,7 @@ background-color: #81F9C5;
 
 button {
   font-size: 20px;
-  background-color: #5CFFAC;
+  background-color: #49c1ba;
   color: #000;
   border: none;
   padding: 10px 20px;
@@ -106,18 +109,19 @@ button {
 }
 
 .line {
-  background-color: #5CFFAC;
+  background-color: #49c1ba;
   max-width: 200px;
   height: 10px;
   margin: 0 auto;
   margin-bottom: 10px;
 }
 
- h1 {
+h1 {
   color: #000000;
   text-align: center;
 
 }
+
 .addDocument div span {
   color: red;
   font-size: 12px;
@@ -127,7 +131,9 @@ button {
   margin-left: 400px;
   margin-right: 20px;
   margin-top: 20px;
-}.file-grid {
+}
+
+.file-grid {
   display: flex;
   flex-wrap: wrap;
 }
@@ -140,9 +146,11 @@ button {
 .thumbnail {
   width: 100px;
   height: 100px;
-  object-fit: cover; /* ensures the image covers the area without distorting */
+  object-fit: cover;
+  /* ensures the image covers the area without distorting */
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 5px;
-  cursor: pointer; /* סמן עכבר של לחיצה */
+  cursor: pointer;
+  /* סמן עכבר של לחיצה */
 }

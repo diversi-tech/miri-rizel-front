@@ -13,7 +13,7 @@
 
 /* הכפתורים למעלה */
 button {
-    background-color: #51f9a2c4;
+    background-color: #49c1ba;
     border: none;
     color: #fff;
     margin-left: 10px;
@@ -31,7 +31,7 @@ button:hover {
 }
 
 .p-button-success:hover {
-    background-color: #51f9a2c4;
+    background-color: rgb(73,193,186);
 }
 
 /* הכפתור של העריכה */

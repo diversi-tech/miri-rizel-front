@@ -1,6 +1,7 @@
-.text-base-color{
-  color: #5CFFAC;
+.text-base-color {
+  color: #49c1ba;
 }
+
 /* #con{
   direction: rtl;
 } */
@@ -8,13 +9,15 @@
 .custom-button {
   background-color: white !important;
   border-bottom: 2px solid transparent !important;
-  margin-right: 1.5rem !important; 
+  margin-right: 1.5rem !important;
   transition: border-color 0.3s ease !important;
 }
 
 .custom-button:hover {
-  border-color: #5CFFAC !important;
+  border-color: #49c1ba !important;
 }
+
 .project-container.border-b {
-  border-bottom: 1px solid #d3d3d3; /* אפור בהיר */
+  border-bottom: 1px solid #d3d3d3;
+  /* אפור בהיר */
 }

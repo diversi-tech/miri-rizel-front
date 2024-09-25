@@ -21,17 +21,18 @@
     display: block;
     /* margin-top: 20px; */
 
-/* font-size: 20px; */
-background-color: #5CFFAC;
-color: #000;
-border: none;
-padding: 10px 20px;
-border-radius: 8px;
-cursor: pointer;
-width: 190px;
-/* margin-top: 10px; */
-/* align-items: center; */
+    /* font-size: 20px; */
+    background-color: #49c1ba;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 190px;
+    /* margin-top: 10px; */
+    /* align-items: center; */
 }
+
 button.submit-button:hover {
-background-color: #81F9C5;
+    background-color: rgba(48, 175, 168, 0.852);
 }
