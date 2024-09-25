@@ -1,42 +1,41 @@
 .new-message-form-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .message-input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-bottom: 10px;
-  }
-  
-  .send-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    background-color: #5CFFAC;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .send-button:hover {
-    background-color: #5CFFAC;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
-  .line {
-    background-color: #5CFFAC;
-    max-width: 200px;
-    height: 10px;
-    margin: 0 auto;
-    margin-bottom: 10px;
-    
-  }
- 
-  .error-message {
-    color: red;
-    font-size: 0.9em;
-    margin-top: 5px;
-  }
-  
+.message-input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.send-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #49c1ba;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.send-button:hover {
+  background-color: #49c1ba;
+}
+
+.line {
+  background-color: #49c1ba;
+  max-width: 200px;
+  height: 10px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 5px;
+}

@@ -6,7 +6,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'miri': '#5CFFAC',
+        // 'miri': '#49c1ba',
+        'miri': '#49c1ba',
       },
     },
   },

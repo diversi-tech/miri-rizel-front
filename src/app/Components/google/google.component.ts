@@ -95,7 +95,7 @@ export class GoogleComponent {
             this.dialog.open(DialogComponent, {
               data: {
                 title: 'הצלחה',
-                context: 'נרשמתה במערכת בהצלחה',
+                context: 'נרשמת במערכת בהצלחה',
                 buttonText: 'סגור',
               },
             });

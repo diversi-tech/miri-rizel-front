@@ -131,12 +131,14 @@ button,
 }
 
 .green-switch .ui-inputswitch-checked .ui-inputswitch-slider {
-    background-color: #5CFFAC;
+    /* background-color: #49c1ba; */
+    background-color: #49c1ba;
 }
 
 /* שים את הסגנון בקובץ CSS או SCSS של הרכיב */
 :host ::ng-deep .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
-    background-color: #5CFFAC !important;
+    /* background-color: #49c1ba !important; */
+    background-color: #49c1ba !important;
 }
 
 /* שים את הסגנון בקובץ CSS או SCSS של הרכיב */
@@ -145,8 +147,9 @@ button,
 }
 
 :host ::ng-deep .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
-    background-color: #5CFFAC !important;
-    box-shadow: 0 0 0 2px #5CFFAC !important; /* מסגרת זוהרת ירוקה */
+    background-color: #49c1ba !important;
+    box-shadow: 0 0 0 2px #49c1ba !important;
+    /* מסגרת זוהרת ירוקה */
 }
 
 /* שים את הסגנון בקובץ CSS או SCSS של הרכיב */
@@ -156,33 +159,41 @@ button,
 
 /* אנימציה למסגרת ירוקה רק בזמן המעבר */
 :host ::ng-deep .p-inputswitch .p-inputswitch-slider {
-    transition: box-shadow 0.3s ease-in-out; /* עדכון ההנפשה של המסגרת */
+    transition: box-shadow 0.3s ease-in-out;
+    /* עדכון ההנפשה של המסגרת */
 }
 
 /* שינוי צבע המסגרת הזוהרת רק בזמן המעבר (בהתמקדות או כשלוחצים על הסוויץ') */
 :host ::ng-deep .p-inputswitch:active .p-inputswitch-slider {
-    box-shadow: 0 0 0 2px #5CFFAC !important; /* מסגרת זוהרת ירוקה בעת מעבר */
+    box-shadow: 0 0 0 2px #49c1ba !important;
+    /* מסגרת זוהרת ירוקה בעת מעבר */
 }
 
 /* שינוי צבע המסגרת הזוהרת רק בזמן מעבר בין מצבים */
 :host ::ng-deep .p-inputswitch:focus .p-inputswitch-slider {
-    box-shadow: 0 0 0 2px #5CFFAC !important; /* מסגרת זוהרת ירוקה בזמן פוקוס */
+    box-shadow: 0 0 0 2px #49c1ba !important;
+    /* מסגרת זוהרת ירוקה בזמן פוקוס */
 }
 
 /* ודא שהקונטיינר של כל פריט נמתח לאורך התצוגה */
 .container-item {
     display: flex;
-    align-items: center; /* ממקם את האייקון והסוויץ' במרכז */
-    margin-bottom: 5px; /* רווח בין שורות של פריטים */
+    align-items: center;
+    /* ממקם את האייקון והסוויץ' במרכז */
+    margin-bottom: 5px;
+    /* רווח בין שורות של פריטים */
 }
 
 /* התאם את התצוגה של האייקון והסוויץ' */
 .container-item span {
-    margin-right: 10px; /* רווח בין האייקון לסוויץ' */
-    font-size: 24px; /* גודל האייקון */
+    margin-right: 10px;
+    /* רווח בין האייקון לסוויץ' */
+    font-size: 24px;
+    /* גודל האייקון */
 }
 
 /* התאמה לצורת הסוויץ' */
 .container-item p-inputSwitch {
-    margin-left: auto; /* מיקום הסוויץ' בצד ימין */
+    margin-left: auto;
+    /* מיקום הסוויץ' בצד ימין */
 }

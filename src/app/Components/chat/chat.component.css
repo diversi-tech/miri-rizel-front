@@ -27,7 +27,7 @@
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  /* background-color: #5CFFAC; */
+  /* background-color: #49c1ba; */
   width: 360px;
 }
 
@@ -67,7 +67,7 @@
 
 .send-button {
   padding: 10px 20px;
-  background-color: #5CFFAC;
+  background-color: #49c1ba;
   border: none;
   color: white;
   border-radius: 4px;
@@ -75,7 +75,9 @@
 }
 
 .send-button:hover {
-  background-color: #5CFFAC;
+  /* background-color: #49c1ba; */
+  background-color: rgba(48, 175, 168, 0.852);
+
 }
 
 .chat-input-container {
@@ -135,7 +137,7 @@
 
 .send-button {
   padding: 10px 20px;
-  background-color: #5CFFAC;
+  background-color: #49c1ba;
   border: none;
   color: white;
   border-radius: 4px;
@@ -143,5 +145,6 @@
 }
 
 .send-button:hover {
-  background-color: #5CFFAC;
+  background-color: rgba(48, 175, 168, 0.852);
+  /* background-color: #49c1ba; */
 }
