@@ -17,7 +17,6 @@ export class AuthGuard implements CanActivate {
 
     const token = this.authService.accessToken;
     if (token == "" || this.jwtHelper.isTokenExpired(token)) {
-      window.location.reload();
       this.translate.get('unConnectToConnect').subscribe(translation =>
         Swal.fire({
           position: "top-end",
@@ -26,7 +25,11 @@ export class AuthGuard implements CanActivate {
           showConfirmButton: false,
           timer: 2000
         }))
-      this.router.navigate(['/login']);
+      this.router.navigate(['/login']).then(() => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 100); 
+      });
       return false;
     }
 
