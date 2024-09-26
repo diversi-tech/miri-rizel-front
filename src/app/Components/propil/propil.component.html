@@ -1,73 +1,28 @@
-<!-- <div class="mini-chat-container">
-  <div class="chat-message">
-    <div id="communi" class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
-      <div class="flex items-start justify-between">
-        <div class="text-lg font-medium tracking-tight leading-6 truncate">
-          <div class="message-date"> 
-            <span>{{ communication.date | date: 'short' }}</span>
-          </div>
-          <div class="message-body-body">
-            <h3 *ngIf="communication.relatedTo?.id==1">Customer: {{ communication.name }}</h3>
-            <h3 *ngIf="communication.relatedTo?.id==2">Lead: {{ communication.name }}</h3>
-          </div>
+<div class="card-container card flex justify-content-center">
+  <p-card class="card-hover title" header={{communication.name}} [style]="{ width: '360px' }">
+    <ng-template pTemplate="header">
+      <p class="color-line"></p>
+    </ng-template>
+    <div class="body" *ngFor="let response of responses">
+      <div>
+        <div class="flex-row">
+          <button pButton type="button" class="p-button-danger" icon="pi pi-trash"
+            (click)="deleteMessage(response)"></button>
+          <p><b>תאריך</b> {{ response.date | date: 'dd-MM-yyyy' }}</p>
         </div>
-        <div class="message-header">
-          <button pButton type="button" class="p-button-danger" icon="pi pi-trash" (click)="deleteMessage(communication)"></button>
-        </div>
+        <p><b>נושא</b></p>
+        <p>{{response.details}}</p>
+        <p><b>תוכן</b></p>
+        <p>{{response.type}}</p>
       </div>
-      <h3 class="bodyOfCommunication">{{ communication.type }}</h3>
-      <h4 class="bodyOfCommunication">{{ communication.details }}</h4>
+      <p class="line"></p>
     </div>
 
-    <div class="responses">
-      <div *ngFor="let response of responses" class="response-message">
-        <div class="message-header">
-          <span class="message-date">{{ response.date | date: 'short' }}</span>
-          <button pButton type="button" class="p-button-danger" icon="pi pi-trash" (click)="deleteMessage(response)"></button>
-        </div>
-        <div class="message-body">
-          <p>{{ response.details }}</p>
-        </div>
+    <!-- <ng-template pTemplate="footer">
+      <div class="flex gap-3 mt-1">
+        <p-button label="Cancel" severity="secondary" class="w-full" styleClass="w-full" />
+        <p-button label="Save" class="w-full" styleClass="w-full" />
       </div>
-    </div>
-  </div>
-</div>
- -->
-
-
-
-
- <div class="mini-chat-container">
-  <div class="chat-message">
-    <div id="communi" class="chat-message-container">
-      <div class="flex items-start justify-between">
-        <div class="message-info">
-          <div class="message-date"> 
-            <span>{{ communication.date | date: 'short' }}</span>
-          </div>
-          <div class="message-body-body">
-            <h3 *ngIf="communication.relatedTo?.id==1">Customer: {{ communication.name }}</h3>
-            <h3 *ngIf="communication.relatedTo?.id==2">Lead: {{ communication.name }}</h3>
-          </div>
-        </div>
-        <div class="message-header">
-          <button pButton type="button" class="p-button-danger" icon="pi pi-trash" (click)="deleteMessage(communication)"></button>
-        </div>
-      </div>
-      <h3 class="bodyOfCommunication">{{ communication.type }}</h3>
-      <h4 class="bodyOfCommunication">{{ communication.details }}</h4>
-    </div>
-
-    <div class="responses">
-      <div *ngFor="let response of responses" class="response-message">
-        <div class="message-header">
-          <span class="message-date">{{ response.date | date: 'short' }}</span>
-          <button pButton type="button" class="p-button-danger" icon="pi pi-trash" (click)="deleteMessage(response)"></button>
-        </div>
-        <div class="message-body">
-          <p>{{ response.details }}</p>
-        </div>
-      </div>
-    </div>
-  </div>
+    </ng-template> -->
+  </p-card>
 </div>

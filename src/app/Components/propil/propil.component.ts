@@ -23,6 +23,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { SharedModule } from 'primeng/api';
 import { ToolbarModule } from 'primeng/toolbar';
 import { Renderer2 } from '@angular/core';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-propil',
@@ -30,6 +31,7 @@ import { Renderer2 } from '@angular/core';
   styleUrls: ['./propil.component.css'],
   standalone: true,
   imports: [ToolbarModule,
+    CardModule,
     SharedModule,
     ButtonModule,
     TooltipModule,
@@ -42,13 +44,13 @@ import { Renderer2 } from '@angular/core';
     TagModule,
     MultiSelectModule,
     TranslateModule,
-    DatePipe,NgIf,NgFor,CommonModule, DatePipe,GenericBourdComponent,MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule, MatTabsModule, MatButtonToggleModule, NgApexchartsModule, MatTableModule, NgClass, CurrencyPipe]
+    DatePipe, NgIf, NgFor, CommonModule, DatePipe, GenericBourdComponent, MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule, MatTabsModule, MatButtonToggleModule, NgApexchartsModule, MatTableModule, NgClass, CurrencyPipe]
 })
 export class PropilComponent implements OnInit {
   @Input() communication!: Communication;
   responses: Communication[] = [];
   responseForm!: FormGroup;
-  
+
   @Output() deleteMessageEvent = new EventEmitter<any>();
 
   constructor(
@@ -64,7 +66,10 @@ export class PropilComponent implements OnInit {
 
   fetchResponses(): void {
     this.communicationService.readAll().subscribe(res => {
-      this.responses = res.filter(comm => comm.relatedId === this.communication.communicationId);
+      console.log("res in comm :)))")
+      console.log(res);
+      console.log(this.communication.communicationId);      
+      this.responses = res.filter(comm => comm.relatedId === this.communication.relatedId);
     });
   }
 
@@ -94,6 +99,7 @@ export class PropilComponent implements OnInit {
     this.communicationService.deleteCommunication(message.communicationId).subscribe(() => {
       this.deleteMessageEvent.emit(message);
     });
+    window.location.reload()
   }
 
 }

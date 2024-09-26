@@ -90,26 +90,26 @@ export class ProjectTableComponent implements OnInit {
       (res: any) => {
         // Remove the project from the local list after successful deletion
         this.loadP()
-        this.translate.get(['deleteProject','OK']).subscribe(translation=>
-        Swal.fire({
-          text: translation['deleteProject'],
-          icon: "success",
-          showCancelButton: false,
-          showCloseButton: true,
-          confirmButtonColor: "#3085D6",
-          confirmButtonText:translation['OK']
-        }))
+        this.translate.get(['deleteProject', 'OK']).subscribe(translation =>
+          Swal.fire({
+            text: translation['deleteProject'],
+            icon: "success",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#3085D6",
+            confirmButtonText: translation['OK']
+          }))
       },
       (error) => {
-        this.translate.get(['errorDeletProject','Close']).subscribe(translation=>
-        Swal.fire({
-          text: translation['errorDeletProject'],
-          icon: "error",
-          showCancelButton: false,
-          showCloseButton: true,
-          confirmButtonColor: "#d33",
-          confirmButtonText: translation['Close']
-        }))
+        this.translate.get(['errorDeletProject', 'Close']).subscribe(translation =>
+          Swal.fire({
+            text: translation['errorDeletProject'],
+            icon: "error",
+            showCancelButton: false,
+            showCloseButton: true,
+            confirmButtonColor: "#d33",
+            confirmButtonText: translation['Close']
+          }))
       }
     );
     Swal.close();
@@ -124,7 +124,7 @@ export class ProjectTableComponent implements OnInit {
     let taskFilter: Task[] = this.tasks.filter(u => u.project.projectId == objToFilter.projectId);
     if (taskFilter.length != 0) {
       let loading: boolean = true;
-      let col$types = { 'title': 'text', 'dueDate': 'date', 'createdDate': 'date','status':'position' };
+      let col$types = { 'title': 'text', 'dueDate': 'date', 'createdDate': 'date', 'status': 'position' };
       let positionD = [this.statuses];
       let objData = [this.projects];
       let objFields = ['name'];
@@ -132,7 +132,6 @@ export class ProjectTableComponent implements OnInit {
         this.onDeleteTask(row)
       }
       this.genericBourd.PopTable(taskFilter, loading, col$types, objData, objFields, positionD, '1000px', deletecallback, true);
-
     } else {
       this.translate.get(['close', 'notasks']).subscribe(translations => {
         Swal.fire({
@@ -148,7 +147,7 @@ export class ProjectTableComponent implements OnInit {
   addProject() {
     this.componentType = AddProjectComponent;
     this.popUpAddOrEdit("Add project", null)
-   
+
   }
   fetchTasks(projectId: string): void {
     if (projectId) {
@@ -170,14 +169,14 @@ export class ProjectTableComponent implements OnInit {
             // })
           })
         }
-        
-        
+
+
       );
     } else {
       this.errorMessage = 'Please enter a valid project code.';
       this.translate.get(['Close', 'Please enter a valid project code.']).subscribe(translations => {
         Swal.fire({
-          text: translations[ 'Please enter a valid project code.'],
+          text: translations['Please enter a valid project code.'],
           icon: "error",
           showCancelButton: false,
           showCloseButton: true,
@@ -186,8 +185,8 @@ export class ProjectTableComponent implements OnInit {
         })
       })
     }
-    }
-  
+  }
+
   onEditProject(p: Project) {
     this.componentType = EditProjectComponent;
     this.popUpAddOrEdit("edit project", p.projectId);
@@ -199,19 +198,20 @@ export class ProjectTableComponent implements OnInit {
       didOpen: () => {
         const container = document.getElementById('popupContainer');
         if (container) {
-          if(container==undefined)
+          if (container == undefined)
             console.log(",l;,");
           const factory = this.resolver.resolveComponentFactory(this.componentType);
           const componentRef = this.popupContainer.createComponent(factory);
-          if(l!=null && l!=undefined)         
-          componentRef.instance.setData(l);
+          if (l != null && l != undefined)
+            componentRef.instance.setData(l);
           container.appendChild(componentRef.location.nativeElement);
           componentRef.instance.dataRefreshed.subscribe(() => {
-            this.refreshData();})
+            this.refreshData();
+          })
         }
       },
-      });
-      }
+    });
+  }
   refreshData() {
     this.ProjectService.getAll().subscribe(
       (p: Array<Project>) => {
@@ -224,19 +224,19 @@ export class ProjectTableComponent implements OnInit {
     this.taskService.deleteTask(task.taskId!).subscribe(
       (data: any) => {
         if (data == true) {
-          this.translate.get(['deleteTask', 'Close']).subscribe(translations => 
-          Swal.fire({
-            text: translations['deleteTask'],
-            icon: "success",
-            showCancelButton: false,
-            showCloseButton: true,
-            confirmButtonColor: "#3085D6",
-            confirmButtonText: translations['Close']
-          }).then((result) => {
-            this.taskService.getAll().subscribe((data) => {
-              this.tasks = data
-            })
-          }))
+          this.translate.get(['deleteTask', 'Close']).subscribe(translations =>
+            Swal.fire({
+              text: translations['deleteTask'],
+              icon: "success",
+              showCancelButton: false,
+              showCloseButton: true,
+              confirmButtonColor: "#3085D6",
+              confirmButtonText: translations['Close']
+            }).then((result) => {
+              this.taskService.getAll().subscribe((data) => {
+                this.tasks = data
+              })
+            }))
         }
       },
       (error: any) => {

@@ -1,222 +1,79 @@
-.responses {
-  margin-top: 10px;
+.card {
+  overflow: hidden;
+  /* מונע מהתוכן לחרוג מהקופסה */
 }
 
-.response-message {
-  margin-bottom: 10px;
-  padding: 10px;
-  border-radius: 5px;
-  background-color: #d9f2e6;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.p-card {
+  word-wrap: break-word;
+  /* מוודא שהמילים נשברות ולא יוצאות החוצה */
+  text-overflow: ellipsis;
+  /* אם יש טקסט ארוך מדי, הוסף שלוש נקודות בסוף */
+  max-height: 200px;
+  /* קביעת גובה מקסימלי במקרה שהטקסט ארוך מדי */
 }
 
-.message-header {
-  margin-bottom: 5px;
-  font-size: 0.8em;
-  color: #999;
+.p-card {
+  max-height: 300px;
+  /* גובה מקסימלי */
+  overflow-y: auto;
+  /* אפשר גלילה אם התוכן חורג */
 }
 
-.response-input-container {
-  display: flex;
+.card {
+  text-align: right;
   align-items: center;
-  margin-top: 10px;
+  padding: 7%;
+  margin: 7px;
 }
 
-.chat-message {
-  display: flex;
-  flex-direction: column;
-  height: 200px;
-  /* גובה קבוע */
-  width: 400px;
-  /* רוחב קבוע */
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  /* להסתיר תוכן שחורג */
-}
-
-.response-message {
-  height: 150px;
-  /* גובה קבוע */
-  width: 100%;
-  /* רוחב אחיד עם ההורה */
-  background-color: #d9f2e6;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  overflow-y: auto;
-  /* גלילה פנימית אם התוכן חורג */
-  margin-bottom: 10px;
-  padding: 10px;
-  border-radius: 5px;
-}
-
-/* הפוך את התוכן לנגיש עם גלילה פנימית */
-.message-body {
-  overflow-y: auto;
-}
-
-.message-header {
-  margin-bottom: 5px;
-  font-size: 0.8em;
-  color: #999;
-}
-
-.message-date {
-  font-size: 12px;
-  color: #49c1ba;
-}
-
-.bodyOfCommunication {
-  font-size: 20px;
-}
-
-
-
-.text-base-color {
-  color: #49c1ba;
-}
-
-/* #con{
-  direction: rtl;
-} */
-
-.custom-button {
-  background-color: white !important;
-  border-bottom: 2px solid transparent !important;
-  margin-right: 1.5rem !important;
-  transition: border-color 0.3s ease !important;
-}
-
-.custom-button:hover {
-  border-color: #49c1ba !important;
-}
-
-.response-input {
-  flex-grow: 1;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-right: 10px;
-}
-
-.send-button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
+.color-line {
   background-color: #49c1ba;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  height: 30px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
 }
 
-.send-button:hover {
+.line{
   background-color: #49c1ba;
+  height: 2px;
 }
 
-.delete-icon {
-  float: right;
-  /* Position to the right */
-  cursor: pointer;
-  /* Change cursor on hover */
-  text-decoration: none;
-
-  /* Style for visited link */
-  &.visited {
-    text-decoration: none;
-    /* Remove underline */
-  }
-
-  /* Style for normal link */
-  &.unvisited {
-    text-decoration: none;
-    /* Remove underline */
-  }
-}
-
-.message-date {
-  font-size: 12px;
-  color: #49c1ba;
-}
-
-.bodyOfCommunication {
-  font-size: 20px;
-}
-
-.p-button-danger {
+.p-button-danger{
   background-color: transparent;
-  border: none;
-  color: #0c0101;
+  border:none;
+  color:#49c1ba;
 }
 
-.p-button-danger:hover {
-  background-color: rgb(229, 226, 226);
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-hover:hover {
+  transform: translateY(-10px); /* מרימה את הכרטיס */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* מוסיפה צל חזק יותר */
+}
+
+.card-container {
+  padding: 20px;
 }
 
 
-.mini-chat-container {
-  /* עיצובים נוספים אם יש */
-}
-
-.chat-message {
-  /* עיצובים נוספים אם יש */
-}
-
-.chat-message-container {
+.flex-row {
   display: flex;
-  flex-direction: column;
-  flex: auto;
-  padding: 1.5rem;
-  background-color: var(--bg-card);
-  box-shadow: var(--shadow);
-  border-radius: 1rem;
-  overflow: hidden;
+  align-items: center; /* ממרכז את הכפתור והטקסט אנכית */
+  justify-content: space-between; /* מוסיף רווח בין התאריך לכפתור */
 }
 
-.message-info {
-  font-size: 1.125rem;
-  font-weight: 500;
-  letter-spacing: -0.015em;
-  line-height: 1.5rem;
-  overflow: hidden;
+.flex-row p {
+  margin: 0; /* מסיר רווחים בין הפסקאות */
 }
 
-.message-date {
-  font-size: 0.75rem;
-  color: var(--text-color-secondary);
+.title{
+  text-align: center;
 }
 
-.bodyOfCommunication {
-  font-size: 1.25rem;
+.body{
+  text-align: right;
 }
 
-.responses {
-  margin-top: 0.625rem;
-}
-
-.response-message {
-  margin-bottom: 0.625rem;
-  padding: 0.625rem;
-  border-radius: 0.3125rem;
-  background-color: var(--response-bg);
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
-}
-
-.message-header {
-  margin-bottom: 0.3125rem;
-  font-size: 0.8em;
-  color: #999;
-}
-
-.message-body {
-  /* עיצובים נוספים אם יש */
-}
-
-.p-button-danger {
-  background-color: transparent;
-  border: none;
-  color: #0c0101;
-}
-
-.p-button-danger:hover {
-  background-color: rgb(229, 226, 226);
-}
