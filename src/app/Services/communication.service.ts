@@ -15,6 +15,8 @@ export class CommunicationService {
   apiUrl = `${environment.apiUrl}Communication`
 
   AddNewCommunication(requestBody: Communication): Observable<Communication> {
+    console.log("addnewCommunication",requestBody);
+    
     requestBody.name = "";
     return this.http.post<Communication>(`${this.apiUrl}`, requestBody);
   }

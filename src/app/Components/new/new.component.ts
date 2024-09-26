@@ -27,14 +27,14 @@ import { SharedModule } from 'primeng/api';
     DropdownModule,
     AutoCompleteModule,
     SharedModule,
-    TranslateModule, FormsModule,CommonModule,ReactiveFormsModule]
+    TranslateModule, FormsModule, CommonModule, ReactiveFormsModule]
 })
 export class NewComponent {
   @Output() dataRefreshed: EventEmitter<void> = new EventEmitter<void>();
   @Output() messageSent = new EventEmitter<Communication>();
   newMessageForm: FormGroup;
 
-  constructor(private cdr: ChangeDetectorRef,private resolver: ComponentFactoryResolver, private leadservice: LeadService, private customerService: CustomersService, private formBuilder: FormBuilder, private communicationService: CommunicationService) {
+  constructor(private cdr: ChangeDetectorRef, private resolver: ComponentFactoryResolver, private leadservice: LeadService, private customerService: CustomersService, private formBuilder: FormBuilder, private communicationService: CommunicationService) {
     this.newMessageForm = this.formBuilder.group({
       details: ['', Validators.required],
       communicationId: [0],
@@ -46,7 +46,7 @@ export class NewComponent {
     });
   }
   r!: RelatedToProject;
-  firstName!:Lead | Customer;
+  firstName!: Lead | Customer;
 
   async sendMessage() {
     if (!this.newMessageForm.valid) {
@@ -55,17 +55,17 @@ export class NewComponent {
     if (this.newMessageForm.value.relatedTo == "Lead") {
       this.r = { id: 2, description: "Lead" };
       this.namesl.forEach(e => {
-        if(e.leadId==this.newMessageForm.value.relatedId)
-          this.firstName=e;
+        if (e.leadId == this.newMessageForm.value.relatedId)
+          this.firstName = e;
       });
     }
     else {
       this.r = { id: 1, description: "Customer" };
       this.namesc.forEach(e => {
-        if(e.customerId==this.newMessageForm.value.relatedId)
-          this.firstName=e;
+        if (e.customerId == this.newMessageForm.value.relatedId)
+          this.firstName = e;
       });
-    }    
+    }
     this.newMessageForm.value.relatedTo = this.r;
     this.newMessageForm.value.date = new Date(new Date().getTime() - (new Date().getTimezoneOffset()) * 60000);
     this.newMessageForm.value.type = this.newMessageForm.value.type;
@@ -78,8 +78,8 @@ export class NewComponent {
       // this.dataRefreshed.emit(); // Emit event to trigger data refresh
       // this.cdr.detectChanges(); // Manually trigger change detection
       // Swal.close(); // Close the popup
-  });
-  await this.delay(50);
+    });
+    await this.delay(50);
     Object.keys(this.newMessageForm.controls).forEach((key) => {
       this.newMessageForm.controls[key].markAsUntouched();
     });
@@ -99,10 +99,10 @@ export class NewComponent {
     const selectedOption = (event.target as HTMLSelectElement).value;
     if (selectedOption === 'Lead') {
       this.leadservice.getAllLeads()
-      .subscribe((names: Lead[]) => {
-        this.namesl = names;
-        this.namesc = []
-      });
+        .subscribe((names: Lead[]) => {
+          this.namesl = names;
+          this.namesc = []
+        });
     } else if (selectedOption === 'Customer') {
       this.customerService.GetAllCustomers().subscribe((names: Customer[]) => {
         this.namesc = names;

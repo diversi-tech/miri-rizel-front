@@ -32,8 +32,9 @@ export class PropilListComponent implements OnInit {
   @ViewChild(NewComponent) newComponentInstance!: NewComponent;
   constructor(private resolver: ComponentFactoryResolver, private communicationService: CommunicationService) { }
 
-  ngOnInit(): void {
-    this.fetchCommunications();
+  ngOnInit(): void {    
+    // this.fetchCommunications();
+    this.refreshData()
   }
 
   fetchCommunications(): void {
@@ -77,6 +78,7 @@ export class PropilListComponent implements OnInit {
   }
 
   addCommunication() {
+    console.log("addcommunication :)");
     this.componentType = NewComponent;
     this.popUpAddOrEdit();
   }
@@ -98,14 +100,36 @@ export class PropilListComponent implements OnInit {
     });
   }
 
+  // refreshData() {
+  //   this.communicationService.readAll()
+  //   .subscribe(
+  //     (c: Array<Communication>) => {
+  //       this.communications = c;
+  //       this.communicationsFilter = c;
+  //     })
+  // }
+
   refreshData() {
     this.communicationService.readAll()
-    .subscribe(
-      (c: Array<Communication>) => {
-        this.communications = c;
-        this.communicationsFilter = c;
-      })
+      .subscribe((c: Array<Communication>) => {
+        // שמירה על רשימה חדשה עם ערכים ייחודיים של relatedId
+        const uniqueRelatedIds = new Set(); // סט לשמירת ערכים ייחודיים
+        this.communications = c.filter((communication) => {
+          console.log(communication);
+          console.log(communication.relatedId);
+          console.log(uniqueRelatedIds);
+          
+          // אם relatedId עדיין לא בסט, הוסף אותו
+          if (!uniqueRelatedIds.has(communication.relatedId)) {
+            uniqueRelatedIds.add(communication.relatedId); // הוספת relatedId לסט
+            return true; // שמור את האיבר
+          }
+          return false; // הסר את האיבר
+        });
+        this.communicationsFilter = this.communications; // עדכון הרשימה המסוננת
+      });
   }
+  
 
 
 }

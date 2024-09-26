@@ -86,27 +86,39 @@
                   [severity]="getSeverity(rowData[col.field].description)"></p-tag>
                 <div *ngIf="edit.observers.length > 0">
                   <button pButton type="button" class="p-button-secondary" icon="pi pi-pencil"
-                    *ngIf="getTypeOfCol(col, rowIndex) == 'edit'" (click)="onEdit(rowData)" [pTooltip]="'editToolLip' | translate"></button>
+                    *ngIf="getTypeOfCol(col, rowIndex) == 'edit'" (click)="onEdit(rowData)"
+                    [pTooltip]="'editToolLip' | translate"></button>
                 </div>
                 <div *ngIf="addDocument.observers.length > 0">
                   <button pButton type="button" class="p-button-danger" icon="pi pi-file"
-                    *ngIf="getTypeOfCol(col, rowIndex) == 'document'" (click)="document(rowData)"[pTooltip]="'documentToolLip' | translate"></button>
+                    *ngIf="getTypeOfCol(col, rowIndex) == 'document'" (click)="document(rowData)"
+                    [pTooltip]="'documentToolLip' | translate"></button>
                 </div>
                 <div *ngIf="documentation.observers.length > 0">
                   <button pButton type="button" class="p-button-info" icon="pi pi-external-link"
-                    *ngIf="getTypeOfCol(col, rowIndex) == 'documentation'" (click)="onPropil(rowData)" [pTooltip]="'propilToolLip' | translate"></button>
+                    *ngIf="getTypeOfCol(col, rowIndex) == 'documentation'" (click)="onPropil(rowData)"
+                    [pTooltip]="'propilToolLip' | translate"></button>
                 </div>
                 <div *ngIf="replaceToCustomer.observers.length > 0">
                   <button pButton type="button" class="p-button-info" icon="pi pi-arrow-right-arrow-left"
-                    *ngIf="getTypeOfCol(col, rowIndex) == 'replaceToCustomer'" (click)="onReplaceToCustomer(rowData)"[pTooltip]="'replaceToCustomerToolLip' | translate"></button>
+                    *ngIf="getTypeOfCol(col, rowIndex) == 'replaceToCustomer'" (click)="onReplaceToCustomer(rowData)"
+                    [pTooltip]="'replaceToCustomerToolLip' | translate"></button>
                 </div>
                 <div *ngIf="delete.observers.length > 0">
                   <button pButton type="button" class="p-button-danger" icon="pi pi-trash"
-                    *ngIf="getTypeOfCol(col, rowIndex) == 'delete'" (click)="onDelete(rowData)" [pTooltip]="'deleteToolLip' | translate"></button>
+                    *ngIf="getTypeOfCol(col, rowIndex) == 'delete'" (click)="onDelete(rowData)"
+                    [pTooltip]="'deleteToolLip' | translate"></button>
+                </div>
+                <div *ngIf="showProjectPerCustomer.observers.length > 0">
+                  <button pButton type="button" class="p-button-info" icon="pi pi-angle-down"
+                    *ngIf="getTypeOfCol(col, rowIndex) == 'showProjectPerCustomer'" (click)="onShowProjectPerCustomer(rowData)"
+                    [pTooltip]="'showProjectPerCustomerToolLip' | translate"></button>
                 </div>
                 <button pButton type="button" class="p-button-Help" icon="pi pi-angle-down"
-                  *ngIf="getTypeOfCol(col, rowIndex) == 'popTable'" (click)="getDataForPopTable(rowData)"[pTooltip]="'popTableToolLip' | translate"></button>
+                  *ngIf="getTypeOfCol(col, rowIndex) == 'popTable'" (click)="getDataForPopTable(rowData)"
+                  [pTooltip]="'popTableToolLip' | translate"></button>
               </td>
+              
             </tr>
           </ng-template>
         </ng-container>
@@ -157,7 +169,17 @@
                 </div>
                 <div *ngIf="replaceToCustomer.observers.length > 0">
                   <button pButton type="button" class="p-button-info" icon="pi pi-arrow-right-arrow-left"
-                    *ngIf="getTypeOfCol(col, rowIndex) == 'replaceToCustomer'" (click)="onReplaceToCustomer(rowData)"[pTooltip]="'replaceToCustomerToolLip' | translate"></button>
+                    *ngIf="getTypeOfCol(col, rowIndex) == 'replaceToCustomer'" (click)="onReplaceToCustomer(rowData)"
+                    [pTooltip]="'replaceToCustomerToolLip' | translate"></button>
+                </div>
+                <div *ngIf="documentation.observers.length > 0">
+                  <button pButton type="button" class="p-button-info" icon="pi pi-external-link"
+                    *ngIf="getTypeOfCol(col, rowIndex) == 'documentation'" (click)="onPropil(rowData)"></button>
+                </div>
+                <div *ngIf="showProjectPerCustomer.observers.length > 0">
+                  <button pButton type="button" class="p-button-info" icon="pi pi pi-angle-down"
+                    *ngIf="getTypeOfCol(col, rowIndex) == 'showProjectPerCustomer'" (click)="onShowProjectPerCustomer(rowData)"
+                    [pTooltip]="'showProjectPerCustomerToolLip' | translate"></button>
                 </div>
               </div>
             </div>

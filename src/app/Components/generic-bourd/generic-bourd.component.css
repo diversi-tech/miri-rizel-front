@@ -115,10 +115,6 @@ p-table tbody tr {
     transition: background-color 0.3s ease;
 }
 
-p-table tbody tr:hover {
-    background-color: #b5de38;
-}
-
 
 .list-container {
     /* text-align: center; */
@@ -284,4 +280,3 @@ p-table tbody tr:hover {
     width: auto;
     margin: 10px;
 }
- 
