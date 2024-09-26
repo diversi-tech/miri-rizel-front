@@ -1,5 +1,7 @@
 .chat-page-container {
   display: flex;
+  justify-content: start;
+  align-items: stretch;
   gap: 20px;
 }
 
@@ -7,13 +9,13 @@
   margin-right: 100px;
 }
 
-.chat-list-container {
+/* .chat-list-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
   padding: 20px;
   flex-grow: 1;
-}
+} */
 
 .send-button {
   padding: 10px 20px;
@@ -43,3 +45,24 @@
 #adds {
   margin-left: 100px;
 }
+
+.container {
+  display: flex;
+  flex-wrap: wrap; /* מאפשר לגלוש לשורה הבאה כאשר אין מקום */
+  justify-content: center;
+  align-items: stretch;
+   /* מרכז את הכרטיסים באופן אופקי */
+  /* gap: 20px; רווח בין הכרטיסים */
+  /* padding: 20px; */
+}
+
+.card {
+  flex: 1 1 300px; /* כרטיס יתפוס לפחות 300px ויכול להתרחב */
+  background-color: #f8f9fa;
+  padding: 20px;
+  /* justify-content: start; */
+  /* align-items: stretch; */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+

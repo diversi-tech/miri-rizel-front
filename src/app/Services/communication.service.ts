@@ -26,7 +26,7 @@ export class CommunicationService {
   }
 
   deleteCommunication(communicationId: number): Observable<boolean> {
-    console.log("deleteCommunicationService");
+    console.log("deleteCommunicationService",communicationId);
     return this.http.delete<boolean>(`${this.apiUrl}?id=${communicationId}`);
   }
 

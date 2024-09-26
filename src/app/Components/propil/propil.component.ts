@@ -96,10 +96,11 @@ export class PropilComponent implements OnInit {
   }
 
   deleteMessage(message: any): void {
+    console.log("message",message)
     this.communicationService.deleteCommunication(message.communicationId).subscribe(() => {
       this.deleteMessageEvent.emit(message);
     });
-    window.location.reload()
+    // window.location.reload()
   }
 
 }
