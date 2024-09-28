@@ -1,10 +1,10 @@
 <br><br><br><br>
 <div class="flex items-center justify-between mt-6 sm:mt-0 space-x-3">
     <div id="adds">
-        <button (click)="addTask()" class="custom-button" mat-flat-button>
+        <!-- <button (click)="addTask()" class="custom-button" mat-flat-button>
             <span class="pi pi-plus ml-2"></span>
             <span class="ml-2">{{'task' | translate}}</span>
-        </button>
+        </button> -->
         <button (click)="addCommunication()" class="custom-button" mat-flat-button>
             <span class="pi pi-plus ml-2"></span>
             <span class="ml-2">{{'communication' | translate}}</span>
@@ -19,14 +19,12 @@
     </div>
 </div>
 <br><br>
-<div class="flex-auto border-t -mt-px pt-4 sm:pt-6 bg-gray-100">
-    <div class="w-full max-w-screen-xl mx-auto ">
+    <div class="w-full max-w-screen-xl">
         <div class="chat-page-container">
-            <div class="chat-list-container">
+            <div class="chat-list-container container">
                 <app-propil *ngFor="let communication of communicationsFilter" [communication]="communication"
                     (deleteMessageEvent)="deleteMessage($event)"></app-propil>
             </div>
         </div>
     </div>
-</div>
 <div #popupContainer></div>

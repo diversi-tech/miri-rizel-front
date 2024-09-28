@@ -131,16 +131,16 @@ export class SheetsApiService {
         spreadSheetBtn.style.visibility = 'visible';
       } else {
         // console.log('spreadSheetBtn not found');
-        this.translate.get(['Close', 'spreadSheetBtn not found']).subscribe(translations => {
-          Swal.fire({
-            text: translations['spreadSheetBtn not found'],
-            icon: "error",
-            showCancelButton: false,
-            showCloseButton: true,
-            confirmButtonColor: "#d33",
-            confirmButtonText: translations['Close']
-          })
-        })
+        // this.translate.get(['Close', 'spreadSheetBtn not found']).subscribe(translations => {
+        //   Swal.fire({
+        //     text: translations['spreadSheetBtn not found'],
+        //     icon: "error",
+        //     showCancelButton: false,
+        //     showCloseButton: true,
+        //     confirmButtonColor: "#d33",
+        //     confirmButtonText: translations['Close']
+        //   })
+        // })
       }
     }
   }

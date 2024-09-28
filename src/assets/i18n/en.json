@@ -284,5 +284,7 @@
   "ProjectUpdateSuccess": "Project updated successfully",
   "ProjectAddSuccess": "Project added successfully",
   "EmailExist": "The email address already appears in the system",
-  "AddUserTitle": "Add User"
+  "AddUserTitle": "Add User",
+  "showProjectPerCustomerToolLip": "Show projects for customer",
+  "communication":"communication"
 }

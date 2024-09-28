@@ -6,9 +6,9 @@
 .p-card {
   word-wrap: break-word;
   /* מוודא שהמילים נשברות ולא יוצאות החוצה */
-  text-overflow: ellipsis;
+  /* text-overflow: ellipsis; */
   /* אם יש טקסט ארוך מדי, הוסף שלוש נקודות בסוף */
-  max-height: 200px;
+  max-height: 50px;
   /* קביעת גובה מקסימלי במקרה שהטקסט ארוך מדי */
 }
 
@@ -55,7 +55,7 @@
 }
 
 .card-container {
-  padding: 20px;
+  padding: 10px;
 }
 
 
@@ -77,3 +77,7 @@
   text-align: right;
 }
 
+.response-details {
+  max-height: 100px; /* גובה מקסימלי */
+  overflow: hidden; /* הסתרת תוכן מעבר לגובה */
+}

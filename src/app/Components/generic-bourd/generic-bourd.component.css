@@ -280,3 +280,7 @@ p-table tbody tr {
     width: auto;
     margin: 10px;
 }
+
+.btn{
+    margin:-5px !important;
+}

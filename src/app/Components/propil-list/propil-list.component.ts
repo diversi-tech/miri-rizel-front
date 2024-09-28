@@ -22,7 +22,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './propil-list.component.html',
   styleUrls: ['./propil-list.component.css'],
   standalone: true,
-  imports: [TranslateModule,NgFor, NewComponent, PropilComponent, GenericBourdComponent, MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule,
+  imports: [TranslateModule, NgFor, NewComponent, PropilComponent, GenericBourdComponent, MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule,
     MatTabsModule, MatButtonToggleModule, NgApexchartsModule, NgFor, NgIf, MatTableModule, NgClass, CurrencyPipe],
 
 })
@@ -32,7 +32,7 @@ export class PropilListComponent implements OnInit {
   @ViewChild(NewComponent) newComponentInstance!: NewComponent;
   constructor(private resolver: ComponentFactoryResolver, private communicationService: CommunicationService) { }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
     // this.fetchCommunications();
     this.refreshData()
   }
@@ -60,9 +60,8 @@ export class PropilListComponent implements OnInit {
     }
   }
 
-  deleteMessage(message: any): void {
-    this.communications = this.communications.filter(comm => comm.communicationId !== message.communicationId);
-    this.communicationsFilter = this.communicationsFilter.filter(comm => comm.communicationId !== message.communicationId);
+  deleteMessage(message:any): void {
+    this.refreshData();
   }
 
   onDeleteMessageFromChild(message: any): void {
@@ -93,7 +92,8 @@ export class PropilListComponent implements OnInit {
           const factory = this.resolver.resolveComponentFactory(this.componentType);
           const componentRef = this.popupContainer.createComponent(factory);
           componentRef.instance.dataRefreshed.subscribe(() => {
-            this.refreshData();})
+            this.refreshData();
+          })
           container.appendChild(componentRef.location.nativeElement);
         }
       },
@@ -118,7 +118,7 @@ export class PropilListComponent implements OnInit {
           console.log(communication);
           console.log(communication.relatedId);
           console.log(uniqueRelatedIds);
-          
+
           // אם relatedId עדיין לא בסט, הוסף אותו
           if (!uniqueRelatedIds.has(communication.relatedId)) {
             uniqueRelatedIds.add(communication.relatedId); // הוספת relatedId לסט
@@ -129,7 +129,7 @@ export class PropilListComponent implements OnInit {
         this.communicationsFilter = this.communications; // עדכון הרשימה המסוננת
       });
   }
-  
+
 
 
 }

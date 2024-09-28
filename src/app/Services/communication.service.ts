@@ -15,9 +15,9 @@ export class CommunicationService {
   apiUrl = `${environment.apiUrl}Communication`
 
   AddNewCommunication(requestBody: Communication): Observable<Communication> {
-    console.log("addnewCommunication",requestBody);
-    
     requestBody.name = "";
+    requestBody.details = requestBody.type
+    requestBody.type = ""
     return this.http.post<Communication>(`${this.apiUrl}`, requestBody);
   }
 
@@ -26,7 +26,7 @@ export class CommunicationService {
   }
 
   deleteCommunication(communicationId: number): Observable<boolean> {
-    console.log("deleteCommunicationService");
+    console.log("deleteCommunicationService", communicationId);
     return this.http.delete<boolean>(`${this.apiUrl}?id=${communicationId}`);
   }
 
