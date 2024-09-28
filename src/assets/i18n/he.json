@@ -286,5 +286,6 @@
   "ProjectAddSuccess": "הפרויקט נוסף בהצלחה",
   "EmailExist": "כתובת המייל כבר מופיעה במערכת",
   "AddUserTitle": "הוספת משתמש",
-  "showProjectPerCustomerToolLip": "הצגת פרויקטים ללקוח"
+  "showProjectPerCustomerToolLip": "הצגת פרויקטים ללקוח",
+  "communication":"תיעוד"
 }
