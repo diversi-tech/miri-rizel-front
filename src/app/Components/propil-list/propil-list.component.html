@@ -1,10 +1,6 @@
 <br><br><br><br>
 <div class="flex items-center justify-between mt-6 sm:mt-0 space-x-3">
     <div id="adds">
-        <!-- <button (click)="addTask()" class="custom-button" mat-flat-button>
-            <span class="pi pi-plus ml-2"></span>
-            <span class="ml-2">{{'task' | translate}}</span>
-        </button> -->
         <button (click)="addCommunication()" class="custom-button" mat-flat-button>
             <span class="pi pi-plus ml-2"></span>
             <span class="ml-2">{{'communication' | translate}}</span>
@@ -19,12 +15,43 @@
     </div>
 </div>
 <br><br>
-    <div class="w-full max-w-screen-xl">
+
+    <!-- <div class="w-full max-w-screen-xl">
         <div class="chat-page-container">
             <div class="chat-list-container container">
                 <app-propil *ngFor="let communication of communicationsFilter" [communication]="communication"
                     (deleteMessageEvent)="deleteMessage($event)"></app-propil>
             </div>
         </div>
+    </div> -->
+    <div class="card-container">
+        <div *ngFor="let item of communicationsFilter" class="card">
+            <div class="card-header">
+                <h3>{{ item.firstName }} {{ item.lastName }}</h3>
+            </div>
+            <div class="card-content">
+                <!-- לולאה פנימית להצגת תתי-האובייקטים -->
+                <div *ngIf="item.communications && item.communications.length" class="sub-items">
+                    <ul>
+                        <div class="sub-item" *ngFor="let subItem of item.communications">
+                            <li>
+                                <strong>תאריך:</strong> {{ subItem.date | date: 'dd-MM-yyyy' }}
+                            </li>
+                            <li>
+                                <strong>נושא:</strong> {{ subItem.type }}
+                            </li>
+                            <li>
+                                <strong>תוכן:</strong> {{ subItem.details }}
+                            </li>
+                            <button pButton type="button" class="p-button-danger" icon="pi pi-trash"
+                                (click)="deleteMessage(subItem)"></button>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+            <div class="card-footer">
+            </div>
+        </div>
     </div>
+    
 <div #popupContainer></div>
