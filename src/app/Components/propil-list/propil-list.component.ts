@@ -1,4 +1,4 @@
-import { CurrencyPipe, NgClass, NgFor, NgIf } from '@angular/common';
+import { CurrencyPipe, DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, ComponentFactoryResolver, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { Communication } from '@app/Model/Communication';
 import { CommunicationService } from '@app/Services/communication.service';
@@ -16,19 +16,20 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { TranslateModule } from '@ngx-translate/core';
+import { CommunicationsListComponent } from "../communications-list/communications-list.component";
 
 @Component({
   selector: 'app-propil-list',
   templateUrl: './propil-list.component.html',
   styleUrls: ['./propil-list.component.css'],
   standalone: true,
-  imports: [TranslateModule, NgFor, NewComponent, PropilComponent, GenericBourdComponent, MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule,
-    MatTabsModule, MatButtonToggleModule, NgApexchartsModule, NgFor, NgIf, MatTableModule, NgClass, CurrencyPipe],
+  imports: [TranslateModule, NgFor, NewComponent, DatePipe, PropilComponent, GenericBourdComponent, MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule,
+    MatTabsModule, MatButtonToggleModule, NgApexchartsModule, NgFor, NgIf, MatTableModule, NgClass, CurrencyPipe, CommunicationsListComponent],
 
 })
 export class PropilListComponent implements OnInit {
-  communications: Communication[] = [];
-  communicationsFilter: Communication[] = [];
+  communications: any[] = [];
+  communicationsFilter: any[] = [];
   @ViewChild(NewComponent) newComponentInstance!: NewComponent;
   constructor(private resolver: ComponentFactoryResolver, private communicationService: CommunicationService) { }
 
@@ -38,29 +39,32 @@ export class PropilListComponent implements OnInit {
   }
 
   fetchCommunications(): void {
-    this.communicationService.readAll().subscribe(res => {
+    this.communicationService.getAllPerId().subscribe(res => {
       this.communications = res;
       this.communicationsFilter = res;
     });
   }
 
-  addNewMessage(newMessage: Communication): void {
+  addNewMessage(newMessage: any): void {
     this.communications.push(newMessage);
     this.fetchCommunications()
   }
 
   applyFilter(filterType: string): void {
+    console.log(filterType);
+    console.log(this.communicationsFilter);
+
     this.communicationsFilter = this.communications;
     if (filterType === 'Lead') {
-      this.communicationsFilter = this.communications.filter(comm => comm.relatedTo?.id === 2);
+      this.communicationsFilter = this.communications.filter(comm => comm.type == "Customer");
     } else if (filterType === 'Customer') {
-      this.communicationsFilter = this.communications.filter(comm => comm.relatedTo?.id === 1);
+      this.communicationsFilter = this.communications.filter(comm => comm.type === "Lead");
     } else {
       this.communicationsFilter = [...this.communications];
     }
   }
 
-  deleteMessage(message:any): void {
+  deleteMessage(message: any): void {
     this.refreshData();
   }
 
@@ -110,22 +114,22 @@ export class PropilListComponent implements OnInit {
   // }
 
   refreshData() {
-    this.communicationService.readAll()
-      .subscribe((c: Array<Communication>) => {
-        // שמירה על רשימה חדשה עם ערכים ייחודיים של relatedId
-        const uniqueRelatedIds = new Set(); // סט לשמירת ערכים ייחודיים
-        this.communications = c.filter((communication) => {
-          console.log(communication);
-          console.log(communication.relatedId);
-          console.log(uniqueRelatedIds);
+    console.log("refresh data");
 
-          // אם relatedId עדיין לא בסט, הוסף אותו
-          if (!uniqueRelatedIds.has(communication.relatedId)) {
-            uniqueRelatedIds.add(communication.relatedId); // הוספת relatedId לסט
-            return true; // שמור את האיבר
-          }
-          return false; // הסר את האיבר
-        });
+    this.communicationService.getAllPerId()
+      .subscribe((c: Array<any>) => {
+        this.communications = c
+        // שמירה על רשימה חדשה עם ערכים ייחודיים של relatedId
+        // const uniqueRelatedIds = new Set(); // סט לשמירת ערכים ייחודיים
+        // this.communications = c.filter((communication) => {
+
+        //   // אם relatedId עדיין לא בסט, הוסף אותו
+        //   if (!uniqueRelatedIds.has(communication.relatedId)) {
+        //     uniqueRelatedIds.add(communication.relatedId); // הוספת relatedId לסט
+        //     return true; // שמור את האיבר
+        //   }
+        //   return false; // הסר את האיבר
+        // });
         this.communicationsFilter = this.communications; // עדכון הרשימה המסוננת
       });
   }
