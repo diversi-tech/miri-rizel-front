@@ -35,6 +35,7 @@ import { error403Component } from './Components/errors/error-403.component';
 import { RoleBasedGuard } from './Guard/role-based.guard';
 import { PlaceholderComponent } from './Components/Placeholder/Placeholder.component';
 import { CodeGuard } from './Guard/code.guard';
+import { CommunicationsListComponent } from './Components/communications-list/communications-list.component';
 const routes: Routes = [
   // 1=customer, 2=worker, 3=admin
   { path: '', pathMatch: 'full', redirectTo: 'redirect' },
@@ -42,7 +43,7 @@ const routes: Routes = [
   { path: 'home', component: HomePageComponent, canActivate: [AuthGuard], data: { roles: [2, 3] } },
   { path: 'redirect', canActivate: [RoleBasedGuard], component: PlaceholderComponent },
   { path: 'Dashboard', component: CustomersDashboardComponent, canActivate: [AuthGuard], data: { roles: [1, 2, 3] } },
-  
+
   { path: 'worker', component: WorkerComponentComponent, canActivate: [AuthGuard], data: { roles: [3] } },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: { roles: [3] } },
   { path: 'customer', component: CustomersComponent, canActivate: [AuthGuard], data: { roles: [3, 2] } },
@@ -54,6 +55,7 @@ const routes: Routes = [
   { path: 'project', component: ProjectTableComponent, canActivate: [AuthGuard], data: { roles: [3, 2] } },
   { path: 'projectTable', component: ProjectTableComponent, canActivate: [AuthGuard], data: { roles: [3, 2] } },
   { path: 'customer-profile', component: CustomerProfileComponent, canActivate: [AuthGuard], data: { roles: [3, 2] } },
+  { path: 'communications', component: CommunicationsListComponent, canActivate: [AuthGuard], data: { roles: [3, 2] } },
   { path: 'add-task', component: AddTaskComponent, canActivate: [AuthGuard], data: { roles: [3, 2] } },
   { path: 'addLead', component: AddLeadComponent, canActivate: [AuthGuard], data: { roles: [3] } },
   { path: 'editLead', component: EditLeadComponent, canActivate: [AuthGuard], data: { roles: [3] } },
@@ -77,7 +79,7 @@ const routes: Routes = [
   // { path: 'add-task/:id', component: AddTaskComponent },
   // { path: 'addLead', component: AddLeadComponent },
   // { path: 'editLead', component: EditLeadComponent },
-  { path: 'documents', component: ListDocumentComponent  ,canActivate: [AuthGuard], data: { roles: [3, 2] } },
+  { path: 'documents', component: ListDocumentComponent, canActivate: [AuthGuard], data: { roles: [3, 2] } },
   // { path: 'leads', component: ListLeadsComponent },
   // { path: 'Dashboard', component: CustomersDashboardComponent },
   // { path: 'documentation', component: PropilListComponent },

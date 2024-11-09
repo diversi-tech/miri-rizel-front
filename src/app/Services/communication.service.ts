@@ -37,6 +37,10 @@ export class CommunicationService {
     return this.http.get<Communication[]>(`${this.apiUrl}/GetByIdC?id=${communicationId}`);
   }
 
+  getAllPerId(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/ListById`)
+  }
+
   updateCommunication(communicationId: number, relatedId: any, relatedTo: any) {
     console.log("updateService");
 
